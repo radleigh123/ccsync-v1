@@ -2,10 +2,10 @@
 
 ### Steps to replicate
 ```bash
-# development
 npm install
-npm run dev
 
+# development
+npm run dev
 # production
 npm start
 ```

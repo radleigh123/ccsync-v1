@@ -1,2 +1,17 @@
-node_modules
-dist
+node_modules/
+.vite/
+
+# Build outputs
+dist/
+build/
+
+# env
+.env
+.env.local
+.env.*.local
+
+# IDE configs
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
