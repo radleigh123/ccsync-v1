@@ -1,38 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+    <!-- TODO: Refactor importing, find ways to mainstream -->
+    <link rel="stylesheet" href="../../scss/styles.scss" />
+    <script type="module" src="../../js/main.js"></script>
+    <!-- Bootstrap CSS -->
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
+      rel="nofollow"
+      integrity="sha384-r4NyP46KrjDleawBgD5tp8Y7UzmLA05oM1iAEQ17CSuDqnUK2+k9luXQOfXJCJ4I"
+      crossorigin="anonymous"
+    />
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Login</title>
-  <!-- TODO: Refactor importing, find ways to mainstream -->
-  <link rel="stylesheet" href="../../scss/styles.scss">
-  <script type="module" src="../../js/main.js"></script>
-</head>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+    />
 
-<body>
-  <!-- 
-    Maybe header here and there or everywhere
-    -->
-  <div class="container mt-5">
-    <h2>Login</h2>
-    <form>
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" required />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body class="vh-100 vw-100 m-0 p-0" style="overflow: hidden">
+    <div class="container-fluid h-100">
+      <div class="row h-100 g-0">
+        <div
+          class="col-12 px-5 col-md-6 d-flex align-items-center justify-content-center bg-white"
+          style="height: 100vh"
+        >
+          <div class="w-75">
+            <div class="card shadow-lg border-0 rounded-4">
+              <div
+                class="card-body p-5 d-flex flex-column justify-content-center"
+                style="gap: 3rem"
+              >
+                <div class="text-center">
+                  <h1 class="fw-bold mb-1">WELCOME,</h1>
+                  <h1 class="fw-bold mb-3">TECHNOSTUD!</h1>
+                  <p class="mb-0">Please enter your ID number to get started</p>
+                </div>
+                <form class="needs-validation was-validated" novalidate>
+                  <div class="input-group">
+                    <span class="input-group-text" id="idNumber">
+                      <i class="bi bi-person-vcard text-black"></i>
+                    </span>
+                    <input
+                      type="text"
+                      placeholder="eg. 23213267"
+                      id="idNumber"
+                      class="form-control"
+                      aria-describedby="idNumber"
+                      required
+                      pattern="\\d{8}"
+                    />
+
+                    <div class="invalid-feedback fs-7">
+                      Please enter a valid 8-digit ID number.
+                    </div>
+                  </div>
+
+                  <div class="text-end mt-3">
+                    <a
+                      href="forgot-password.html"
+                      class="text-decoration-none text-black fs-7"
+                      >Forgot password?</a
+                    >
+                  </div>
+                  <div>
+                    <button
+                      class="btn btn-custom w-100 rounded-pill mt-5 fw-bold"
+                      type="submit"
+                    >
+                      Login
+                    </button>
+                  </div>
+                  <div
+                    class="text-center d-flex justify-content-center align-items-center gap-2 mt-3"
+                  >
+                    <span class="mb-0">Don't have an account?</span>
+                    <a href="register.html" class="text-decoration-none fs-7"
+                      >Register</a
+                    >
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-12 col-md-6 d-flex flex-column align-items-center justify-content-center bg-light position-relative"
+          style="height: 100vh"
+        >
+          <div
+            class="position-absolute w-100 h-100 d-flex justify-content-center align-items-center"
+            style="top: 0; left: 0; z-index: 2"
+          >
+            <img
+              src="../../assets/PSITSlogo.png"
+              alt="PSITS Logo"
+              style="max-width: 300px; height: auto"
+            />
+          </div>
+          <img
+            src="../../assets/bg.png"
+            alt="Login Illustration"
+            class="img-fluid h-100 w-100 object-fit-cover"
+            style="max-height: 100vh; max-width: 100vw; z-index: 1"
+          />
+        </div>
       </div>
-
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" required />
-      </div>
-      <button class="btn btn-primary" type="submit">Login</button>
-    </form>
-  </div>
-  <div class="container mt-3">
-    <p class="m-0">Forgot your password? <a href="forgot-password.html">Reset it here</a></p>
-    <p class="m-0">Don't have an account? <a href="register.html">Register here</a></p>
-  </div>
-</body>
-
+    </div>
+  </body>
 </html>

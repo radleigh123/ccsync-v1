@@ -93,4 +93,23 @@ $success: #7952b3;
 
 body {
   padding: 1.5rem;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+
+}
+
+.btn-custom {
+  background: linear-gradient(90deg, #FED154 0%, #F5A302 100%);
+  color: #fff;
+  border: none;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
+}
+
+.card-login {
+  height: 500px;
+}
+
+.form-custom{
+  background: linear-gradient(90deg, #F5A302 0%, #FED154 100%);
+  border: none;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
 }
