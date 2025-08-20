@@ -1,5 +1,4 @@
-# CCSync-V1 [Bootstrap + Vite]
-*source:* https://getbootstrap.com/docs/5.3/getting-started/vite/
+# CCSync [Bootstrap + Vite]
 
 ### Steps to replicate
 ```bash
@@ -17,18 +16,18 @@ ccsync-v1/
 │   ├── pages/                    # All HTML pages (login, dashboard, etc.)
 │   │   ├── auth/
 │   │   │   └── login.html
+│   │   │   └── register.html
+│   │   │   └── forgot-password.html
 │   │   ├── dashboard/
 │   │   │   └── dashboard.html
-│   │   └── ...                   # More page folders
-│   ├── js/                       # JavaScript files
+│   ├── js/
 │   │   ├── main.js               # Main JS entry
 │   │   ├── components/           
 │   │   └── pages/                # JS specific to each page
-│   ├── scss/                     # SCSS styles
+│   ├── scss/
 │   │   ├── styles.scss           # Main SCSS entry
 │   │   ├── components/           
 │   │   ├── pages/                # SCSS for specific pages
-│   │   └── ...                   # More SCSS files
 │   └── assets/                   # Images, fonts, etc.
 │
 ├── public/                       # Static files (if needed)
@@ -38,3 +37,6 @@ ccsync-v1/
 └── README.md                     # Project documentation
 ```
 
+---
+Documentation:
+- https://getbootstrap.com/docs/5.3/getting-started/vite/
