@@ -2,8 +2,11 @@
 
 ### Steps to replicate
 ```bash
+# development
 npm install
-npm run build
+npm run dev
+
+# production
 npm start
 ```
 
@@ -32,9 +35,9 @@ ccsync-v1/
 │
 ├── public/                       # Static files (if needed)
 │
-├── vite.config.js                # Vite config
-├── package.json                  # NPM dependencies
-└── README.md                     # Project documentation
+├── vite.config.js
+├── package.json
+└── README.md
 ```
 
 ---
