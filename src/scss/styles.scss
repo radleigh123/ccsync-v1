@@ -112,3 +112,42 @@ body {
   border: none;
   box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
 } */
+
+// Toggle global options
+
+// Override
+.btn-primary-ccsync {
+  background: linear-gradient(90deg, #FED154 0%, #F5A302 100%);
+  color: white;
+  border: none;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
+  transition: background 0.2s;
+
+  &:hover,
+  &:focus {
+    background: linear-gradient(90deg, #F5A302 0%, #FED154 100%);
+    color: white;
+  }
+}
+
+.link-primary-ccsync {
+  color: #3B413C;
+  text-decoration-color: #3B413C !important;
+  text-underline-offset: 0.3rem;
+
+  &:hover,
+  &:focus {
+    color: #F5A302;
+    text-decoration-color: #F5A302 !important;
+  }
+}
+
+input::placeholder {
+    color: #b3b3b3 !important;
+    opacity: 1; // Override default opacity
+}
+
+input.form-control:focus {
+  box-shadow: 0 0 0 0.2rem rgba(245, 163, 2, 0.25);
+  border-color: #CFB964;
+}

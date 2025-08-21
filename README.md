@@ -1,6 +1,6 @@
 # CCSync [Bootstrap + Vite]
 
-### Steps to replicate
+**Steps to replicate**
 ```bash
 npm install
 
@@ -39,6 +39,17 @@ ccsync-v1/
 ├── package.json
 └── README.md
 ```
+#### Custom styles
+Elements that are commonly used throughout the app can be placed in the main SCSS, for ease of access. For specific ones, they can be placed on a seperate file located parallel to their HTML.
+
+| Current overridden classes | description |
+| - | - |
+| `btn-primary-ccsync` | lorem ipsum |
+| `link-primary-ccsync` | lorem ipsum |
+
+| Current overridden pseudo-classes | description |
+| - | - |
+| `input.form-control:focus`  | lorem ipsum |
 
 ### Additionals
 **Helpful plugins**
