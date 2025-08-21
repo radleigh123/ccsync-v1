@@ -2,7 +2,6 @@ node_modules/
 .vite/
 
 # Build outputs
-dist/
 build/
 
 # env
