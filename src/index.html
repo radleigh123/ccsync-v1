@@ -4,37 +4,138 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Bootstrap w/ Vite</title>
+  <title>CCSync - Home</title>
   <link rel="icon" href="/assets/logo/icons8-sync-50.svg" type="image/x-icon">
   <link rel="stylesheet" href="/scss/styles.scss">
   <script type="module" src="/js/main.js"></script>
 </head>
 
 <body>
-  <div class="container pt-4 px-1 mx-auto">
-    <header class="d-flex justify-content-between align-items-md-center pb-3 mb-5 border-bottom">
-      <h1 class="h4">
-        <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
-          <img src="/assets/logo/icons8-sync-50.svg" alt="sync image" width="32" height="32" class="d-inline-block me-2">
-          <span>CCSync</span>
-        </a>
-      </h1>
-      <a href="https://github.com/radleigh123/ccsync-v1" target="_blank" rel="noopener">View on GitHub</a>
-    </header>
-  </div>
-  <div class="container">
-    <h2>Routes</h2>
-    <ul class="icon-list">
-      <li><a href="pages/auth/login.html">LOGIN</a></li>
-      <li><a href="pages/auth/forgot-password.html">FORGOT PASSWORD</a></li>
-      <li><a href="pages/auth/register.html">REGISTER</a></li>
-      <li><a href="pages/dashboard/index.html">DASHBOARD</a></li>
-    </ul>
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm">
+    <div class="container">
+      <a class="navbar-brand d-flex align-items-center" href="/">
+        <img src="/assets/logo/icons8-sync-50.svg" alt="CCSync Logo" width="32" height="32" class="d-inline-block me-2">
+        <span class="fw-bold">CCSync</span>
+      </a>
+      
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link active" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/auth/register.html">Register</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/pages/auth/login.html">Login</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
 
-    <hr class="mt-5 mb-4">
+  <!-- Hero Section -->
+  <section class="hero-section py-5 bg-light">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-lg-6">
+          <h1 class="display-4 fw-bold mb-4">Welcome to CCSync</h1>
+          <p class="lead mb-4">The ultimate platform for seamless collaboration and synchronization. Connect, collaborate, and create amazing things together.</p>
+          <div class="d-flex gap-3">
+            <a href="/pages/auth/register.html" class="btn btn-primary-ccsync btn-lg">Get Started</a>
+            <a href="#features" class="btn btn-outline-secondary btn-lg">Learn More</a>
+          </div>
+        </div>
+        <div class="col-lg-6 text-center">
+          <img src="/assets/PSITSlogo.png" alt="CCSync Platform" class="img-fluid" style="max-width: 400px;">
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <p class="text-muted">Alpha Bravo Charlie Delta Echo. Licensed MIT.</p>
-  </div>
+  <!-- Features Section -->
+  <section id="features" class="py-5">
+    <div class="container">
+      <div class="text-center mb-5">
+        <h2 class="display-5 fw-bold mb-3">Why Choose CCSync?</h2>
+        <p class="lead text-muted">Discover the features that make us the best choice for your collaboration needs</p>
+      </div>
+      
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <div class="bg-primary-ccsync bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <img src="/assets/logo/icons8-sync-50.svg" alt="Sync Icon" width="40" height="40">
+              </div>
+              <h5 class="card-title fw-bold">Real-time Sync</h5>
+              <p class="card-text text-muted">Experience seamless real-time synchronization across all your devices and team members.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <div class="bg-primary-ccsync bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-shield-check fs-1 text-primary-ccsync"></i>
+              </div>
+              <h5 class="card-title fw-bold">Secure & Reliable</h5>
+              <p class="card-text text-muted">Your data is protected with enterprise-grade security and 99.9% uptime guarantee.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-md-4">
+          <div class="card h-100 border-0 shadow-sm">
+            <div class="card-body text-center p-4">
+              <div class="bg-primary-ccsync bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 80px; height: 80px;">
+                <i class="bi bi-people fs-1 text-primary-ccsync"></i>
+              </div>
+              <h5 class="card-title fw-bold">Team Collaboration</h5>
+              <p class="card-text text-muted">Work together efficiently with powerful collaboration tools and shared workspaces.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="py-5 bg-primary-ccsync text-white">
+    <div class="container text-center">
+      <h2 class="fw-bold mb-3">Ready to Get Started?</h2>
+      <p class="lead mb-4">Join thousands of users who trust CCSync for their collaboration needs</p>
+      <a href="/pages/auth/register.html" class="btn btn-light btn-lg fw-bold">Create Your Account</a>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-dark text-white py-4">
+    <div class="container">
+      <div class="row align-items-center">
+        <div class="col-md-6">
+          <div class="d-flex align-items-center">
+            <img src="/assets/logo/icons8-sync-50.svg" alt="CCSync Logo" width="24" height="24" class="me-2">
+            <span class="fw-bold">CCSync</span>
+          </div>
+          <p class="mb-0 mt-2 text-muted">© 2024 CCSync. All rights reserved.</p>
+        </div>
+        <div class="col-md-6 text-md-end">
+          <div class="d-flex gap-3 justify-content-md-end">
+            <a href="/pages/auth/login.html" class="text-muted text-decoration-none">Login</a>
+            <a href="/pages/auth/register.html" class="text-muted text-decoration-none">Register</a>
+            <a href="/pages/auth/forgot-password.html" class="text-muted text-decoration-none">Forgot Password</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
 </body>
 
 </html>
