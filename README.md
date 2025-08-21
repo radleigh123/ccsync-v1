@@ -27,6 +27,9 @@ The system aims to replace manual forms and logs for semestral requirements (suc
 ![Forgot Password Page](./src/assets/screenshots/forgot-password.png)
 
 **Home Page**
+![Home Page](./src/assets/screenshots/homepage-1.png)
+![Home Page](./src/assets/screenshots/homepage-2.png)
+![Home Page](./src/assets/screenshots/homepage-3.png)
 
 
 **Steps to replicate**
