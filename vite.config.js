@@ -2,6 +2,7 @@ import { resolve } from 'path'
 import { preview } from 'vite'
 
 export default {
+    base: '/ccsync-v1/',
     root: resolve(__dirname, 'src'),
     build: {
         outDir: '../dist',
