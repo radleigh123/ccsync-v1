@@ -22,53 +22,91 @@
       </h1>
     </header>
   </div> -->
-  <div class="container mt-5">
+  <div class="register-container container px-3 mt-5">
+    <!-- FIXME: validation need fix
+      Recommended that server-side handles validations, for now we'll manually use JS.
+      source: https://getbootstrap.com/docs/5.3/forms/validation/#server-side:~:text=%3C/form%3E-,Server%2Dside,-We%20recommend%20using
+    -->
     <h2>Register</h2>
     <form class="row g-3 needs-validation" novalidate>
       <div class="col-md-6">
-        <label for="firstNameInput" class="col-sm-2 col-form-label col-form-label-sm">First Name</label>
-        <input type="text" class="form-control is-valid" id="firstNameInput" placeholder="First name" required />
-        <!-- TODO: To give feedback or not to give feedback -->
-        <!-- <div class="valid-feedback">
+        <label for="firstNameInput" class="col-sm col-form-label col-form-label-sm">First Name</label>
+        <input type="text" class="form-control" id="firstNameInput" placeholder="First name" required />
+        <div class="valid-feedback">
           Looks good!
-        </div> -->
+        </div>
+        <div class="invalid-feedback">
+          Please input your first name.
+        </div>
       </div>
       <div class="col-md-6">
-        <label for="lastNameInput" class="col-sm-2 col-form-label col-form-label-sm">Last Name</label>
-        <input type="text" class="form-control is-valid" id="lastNameInput" placeholder="Last name" required />
-      </div>
-
-      <div class="col-12">
-        <label for="emailInput" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
-        <input type="email" class="form-control is-valid" id="emailInput" placeholder="Email" required />
+        <label for="lastNameInput" class="col-sm col-form-label col-form-label-sm">Last Name</label>
+        <input type="text" class="form-control" id="lastNameInput" placeholder="Last name" required />
         <div class="valid-feedback">
           Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Please input your last name.
         </div>
       </div>
 
       <div class="col-12">
-        <label for="passwordInput" class="col-sm-2 col-form-label col-form-label-sm">Password</label>
-        <input type="password" class="form-control is-valid" id="passwordInput" placeholder="Password" required />
+        <label for="emailInput" class="col-sm col-form-label col-form-label-sm">Email</label>
+        <input type="email" class="form-control" id="emailInput" placeholder="Email" required />
         <div class="valid-feedback">
           Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Invalid email address
+        </div>
+      </div>
+
+      <div class="col-12">
+        <label for="passwordInput" class="col-sm col-form-label col-form-label-sm">Password</label>
+        <input type="password" class="form-control" id="passwordInput" placeholder="Password" required />
+        <div class="valid-feedback">
+          Looks good!
+        </div>
+        <div class="invalid-feedback">
+          Password must contain:
+          <ul class="m-0">
+            <li>At least one lowercase letter</li>
+            <li>At least one UPPERCASE letter</li>
+            <li>At least one number</li>
+            <li>Minimum 8 characters</li>
+          </ul>
         </div>
       </div>
       <div class="col-12">
-        <label for="confirmPasswordInput" class="col-sm-2 col-form-label col-form-label-sm">Confirm Password</label>
-        <input type="password" class="form-control is-valid" id="confirmPasswordInput" placeholder="Confirm password" required />
+        <label for="confirmPasswordInput" class="col-sm col-form-label col-form-label-sm">Confirm Password</label>
+        <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm password" required />
         <div class="valid-feedback">
           Looks good!
         </div>
-      </div>
-      <div class="col-12 mt-4">
-        <button class="btn btn-primary" type="submit">Register</button>
+        <div class="invalid-feedback">
+          Confirm password does not match.
+        </div>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-4 text-center">
+          <button class="btn btn-secondary w-100" type="submit">Create account</button>
       </div>
     </form>
+    <div class="container mt-4 text-center">
+      <p>Already have an account? <a href="login.html">Log in</a></p>
+    </div>
   </div>
-  <div class="container mt-3">
-    <p>Already have an account? <a href="login.html">Login here</a></p>
-  </div>
-<div class="container mt-5">
+  <!-- <div class="register-container container mt-5">
     <button type="button" class="btn btn-primary me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Toggle offcanvas</button>
     <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
       <div class="offcanvas-header">
@@ -91,6 +129,6 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 
 </html>

@@ -40,6 +40,13 @@ ccsync-v1/
 └── README.md
 ```
 
+### Additionals
+**Helpful plugins**
+- **Todo Tree** (Gruntfuggly) - helps identify and list out TODOs
+- **Bootstrap 5 Quick Snippets** (Anbuselvan Rocky) - helpful snippets for quick development
+
+<br>
+
 ---
 Documentation:
 - https://getbootstrap.com/docs/5.3/getting-started/vite/

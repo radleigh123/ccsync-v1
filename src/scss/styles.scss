@@ -18,14 +18,14 @@
 //
 // Import all of Bootstrap's CSS
 
-// @import "bootstrap/scss/bootstrap";
+@import "bootstrap/scss/bootstrap";
 
 // Option 2
 //
 // Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
 
 // Toggle global options
-$enable-gradients: true;
+/* $enable-gradients: true;
 $enable-shadows: true;
 
 $offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
@@ -111,4 +111,4 @@ body {
   background: linear-gradient(90deg, #F5A302 0%, #FED154 100%);
   border: none;
   box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
-}
+} */
