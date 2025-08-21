@@ -6,13 +6,13 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Register</title>
   <link rel="icon" href="/assets/logo/icons8-sync-50.svg" type="image/x-icon">
-  <link rel="stylesheet" href="/scss/styles.scss">
+  <link rel="stylesheet" href="/scss/pages/auth/register.scss">
   <script type="module" src="/js/main.js" defer></script>
   <script type="module" src="/js/pages/auth/register.js" defer></script>
 </head>
 
 <body>
-  <div class="container pt-4 px-1 mx-auto">
+  <!-- <div class="container pt-4 px-1 mx-auto">
     <header class="d-flex justify-content-between align-items-md-center pb-3 mb-5 border-bottom">
       <h1 class="h4">
         <a href="/" class="d-flex align-items-center text-dark text-decoration-none">
@@ -21,55 +21,74 @@
         </a>
       </h1>
     </header>
-  </div>
+  </div> -->
   <div class="container mt-5">
     <h2>Register</h2>
-    <form>
-      <div class="mb-3">
-        <label class="form-label">Name</label>
-        <input type="text" class="form-control" required />
+    <form class="row g-3 needs-validation" novalidate>
+      <div class="col-md-6">
+        <label for="firstNameInput" class="col-sm-2 col-form-label col-form-label-sm">First Name</label>
+        <input type="text" class="form-control is-valid" id="firstNameInput" placeholder="First name" required />
+        <!-- TODO: To give feedback or not to give feedback -->
+        <!-- <div class="valid-feedback">
+          Looks good!
+        </div> -->
+      </div>
+      <div class="col-md-6">
+        <label for="lastNameInput" class="col-sm-2 col-form-label col-form-label-sm">Last Name</label>
+        <input type="text" class="form-control is-valid" id="lastNameInput" placeholder="Last name" required />
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Email</label>
-        <input type="email" class="form-control" required />
+      <div class="col-12">
+        <label for="emailInput" class="col-sm-2 col-form-label col-form-label-sm">Email</label>
+        <input type="email" class="form-control is-valid" id="emailInput" placeholder="Email" required />
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </div>
 
-      <div class="mb-3">
-        <label class="form-label">Password</label>
-        <input type="password" class="form-control" required />
+      <div class="col-12">
+        <label for="passwordInput" class="col-sm-2 col-form-label col-form-label-sm">Password</label>
+        <input type="password" class="form-control is-valid" id="passwordInput" placeholder="Password" required />
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </div>
-
-      <div class="mb-3">
-        <label class="form-label">Confirm Password</label>
-        <input type="password" class="form-control" required />
+      <div class="col-12">
+        <label for="confirmPasswordInput" class="col-sm-2 col-form-label col-form-label-sm">Confirm Password</label>
+        <input type="password" class="form-control is-valid" id="confirmPasswordInput" placeholder="Confirm password" required />
+        <div class="valid-feedback">
+          Looks good!
+        </div>
       </div>
-
-      <button class="btn btn-primary" type="submit">Register</button>
+      <div class="col-12 mt-4">
+        <button class="btn btn-primary" type="submit">Register</button>
+      </div>
     </form>
   </div>
   <div class="container mt-3">
     <p>Already have an account? <a href="login.html">Login here</a></p>
   </div>
-  <button type="button" class="btn btn-primary me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Toggle offcanvas</button>
-  <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-    <div class="offcanvas-header">
-      <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
-      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-    </div>
-    <div class="offcanvas-body">
-      <div>
-        Placeholder Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi quisquam id eius? Obcaecati ipsam, quasi eaque velit natus veritatis aliquid quidem minus aut sequi laudantium, impedit voluptates accusantium nobis doloribus?
+<div class="container mt-5">
+    <button type="button" class="btn btn-primary me-3" data-bs-toggle="offcanvas" data-bs-target="#offcanvasExample">Toggle offcanvas</button>
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasExampleLabel">Offcanvas</h5>
+        <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
       </div>
-      <div class="dropdown mt-3">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
-          Dropdown button
-        </button>
-        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <li><a class="dropdown-item" href="#">Action</a></li>
-          <li><a class="dropdown-item" href="#">Another action</a></li>
-          <li><a class="dropdown-item" href="#">Something else here</a></li>
-        </ul>
+      <div class="offcanvas-body">
+        <div>
+          Placeholder Lorem ipsum dolor, sit amet consectetur adipisicing elit. Modi quisquam id eius? Obcaecati ipsam, quasi eaque velit natus veritatis aliquid quidem minus aut sequi laudantium, impedit voluptates accusantium nobis doloribus?
+        </div>
+        <div class="dropdown mt-3">
+          <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown">
+            Dropdown button
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a class="dropdown-item" href="#">Action</a></li>
+            <li><a class="dropdown-item" href="#">Another action</a></li>
+            <li><a class="dropdown-item" href="#">Something else here</a></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>

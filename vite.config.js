@@ -11,6 +11,7 @@ export default {
                 login: resolve(__dirname, 'src', 'pages', 'auth', 'login.html'),
                 register: resolve(__dirname, 'src', 'pages', 'auth', 'register.html'),
                 forgotPassword: resolve(__dirname, 'src', 'pages', 'auth', 'forgot-password.html'),
+                dashboard: resolve(__dirname, 'src', 'pages', 'dashboard', 'index.html'),
             }
         }
     },
