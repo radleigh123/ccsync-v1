@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
+  <link rel="icon" href="/ccsync-v1/assets/icons8-sync-50-BnVejtSM.svg" type="image/x-icon">
+  <script type="module" crossorigin src="/ccsync-v1/assets/register-DhjpEp7I.js"></script>
+  <link rel="modulepreload" crossorigin href="/ccsync-v1/assets/main-B_59QPUW.js">
+  <link rel="stylesheet" crossorigin href="/ccsync-v1/assets/main-DTMZ_7DU.css">
+  <link rel="stylesheet" crossorigin href="/ccsync-v1/assets/register-Daoq7aFa.css">
+</head>
+
+<body>
+  <div class="register-container container min-vh-100 d-flex justify-content-center align-items-center px-3 overflow-auto">
+
+    <div class="container py-4">
+
+      <!-- FIXME: validation need fix
+      Recommended that server-side handles validations, for now we'll just manually use JS.
+      source: https://getbootstrap.com/docs/5.3/forms/validation/#server-side:~:text=%3C/form%3E-,Server%2Dside,-We%20recommend%20using
+      -->
+      <div class="container pb-md-5 text-center">
+        <a href="/" class="align-items-center">
+          <img src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%20width='50px'%20height='50px'%20baseProfile='basic'%3e%3cpolygon%20fill='%23577be6'%20points='39,35.39%2036,37.12%2036,46.36%2033,48.09%2013,36.55%2013,28.46%2016,26.73%2020,29.04%2020,32.51%2029,37.7%2029,33.08%2026,31.35%2034,26.73'/%3e%3cpolygon%20fill='%23577be6'%20points='37,13.45%2037,21.54%2034,23.27%2030,20.96%2030,17.49%2021,12.3%2021,16.92%2024,18.65%2016,23.27%2011,14.61%2014,12.88%2014,3.64%2017,1.91'/%3e%3cpolygon%20fill='%236189ff'%20points='33,35.392%2036,37.124%2031,28.464%2026,31.351%2029,33.083%2029,41.166%2017,34.238%2017,30.774%2013,28.464%2013,36.547%2033,48.094'/%3e%3cpolygon%20fill='%236189ff'%20points='14,16.34%2011,14.608%2016,23.268%2021,20.381%2018,18.649%2018,10.566%2030,17.494%2030,20.959%2034,23.268%2034,15.185%2014,3.638'/%3e%3cpolygon%20fill='%234460b3'%20points='34,15.185%2037,13.453%2037,21.536%2034,23.268'/%3e%3cpolygon%20fill='%234460b3'%20points='33,35.392%2036,37.124%2036,46.362%2033,48.094'/%3e%3cpolygon%20fill='%234460b3'%20points='18,10.566%2021,12.298%2021,16.917%2018,18.649'/%3e%3cpolygon%20fill='%234460b3'%20points='17,30.774%2020,29.041%2020,32.506%2017,34.238'/%3e%3crect%20width='3.464'%20height='10'%20x='33.268'%20y='26.928'%20fill='%234d6dcc'%20transform='rotate(-30%2034.998%2031.93)'/%3e%3c/svg%3e" alt="sync image" width="50" height="50" class="me-2">
+        </a>
+        <div class="mt-3">
+          <p class="h5 fw-bold fs-5 fs-md-4">Create an account</p>
+          <p class="fs-6 opacity-75">Enter your details below to create your account</p>
+        </div>
+      </div>
+      <form class="row g-3 needs-validation" novalidate>
+        <div class="col-md-6 my-1">
+          <label for="firstNameInput" class="fw-bold col-sm col-form-label col-form-label-sm">First Name</label>
+          <input type="text" class="form-control" id="firstNameInput" placeholder="First name" required />
+          <div class="valid-feedback m-0">
+            Looks good!
+          </div>
+          <div class="invalid-feedback m-0">
+            Please input your first name.
+          </div>
+          </div>
+        <div class="col-md-6 my-1">
+          <label for="lastNameInput" class="fw-bold col-sm col-form-label col-form-label-sm">Last Name</label>
+          <input type="text" class="form-control" id="lastNameInput" placeholder="Last name" required />
+          <div class="valid-feedback m-0">
+            Looks good!
+          </div>
+          <div class="invalid-feedback m-0">
+            Please input your last name.
+          </div>
+          </div>
+
+        <div class="col-12 my-1">
+          <label for="emailInput" class="fw-bold col-sm col-form-label col-form-label-sm">Email</label>
+          <input type="email" class="form-control" id="emailInput" placeholder="Email" required />
+          <div class="valid-feedback m-0">
+            Looks good!
+          </div>
+          <div class="invalid-feedback m-0">
+            Invalid email address
+          </div>
+          </div>
+
+        <div class="col-12 my-1">
+          <label for="passwordInput" class="fw-bold col-sm col-form-label col-form-label-sm">Password</label>
+          <input type="password" class="form-control" id="passwordInput" placeholder="Password" required />
+          <div class="valid-feedback m-0">
+            Looks good!
+          </div>
+          <div class="invalid-feedback m-0">
+            Password must contain:
+            <ul class="m-0">
+              <li>At least one lowercase letter</li>
+              <li>At least one UPPERCASE letter</li>
+              <li>At least one number</li>
+              <li>Minimum 8 characters</li>
+            </ul>
+          </div>
+          </div>
+        <div class="col-12 my-1">
+          <label for="confirmPasswordInput" class="fw-bold col-sm col-form-label col-form-label-sm">Confirm Password</label>
+          <input type="password" class="form-control" id="confirmPasswordInput" placeholder="Confirm password" required />
+          <div class="valid-feedback m-0">
+            Looks good!
+          </div>
+          <div class="invalid-feedback m-0">
+            Confirm password does not match.
+          </div>
+        </div>
+        <div class="col-12">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="invalidCheck" required>
+            <label class="form-check-label" for="invalidCheck">
+              Agree to terms and conditions
+            </label>
+            <div class="invalid-feedback">
+              You must agree before submitting.
+            </div>
+          </div>
+        </div>
+        <div class="col-12 mt-4 text-center">
+          <button class="btn btn-primary-ccsync w-100 fw-bold" type="submit">Create account</button>
+          </div>
+          </form>
+          <div class="container mt-4 text-center">
+        <p>Already have an account? <a class="link-primary-ccsync fw-bold" href="login.html">Log in</a></p>
+        </div>
+    </div>
+
+  </div>
+</body>
+
+</html>
