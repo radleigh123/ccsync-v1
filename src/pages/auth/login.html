@@ -5,10 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Login</title>
     <!-- TODO: Refactor importing, find ways to mainstream -->
-    <link rel="stylesheet" href="../../scss/styles.scss" />
-    <script type="module" src="../../js/main.js"></script>
+    <link rel="stylesheet" href="/scss/styles.scss" />
+    <link rel="stylesheet" href="/scss/pages/auth/login.scss" />
+    <script type="module" src="/js/main.js"></script>
+    <script type="module" src="/js/pages/auth/login.js"></script>
     <!-- Bootstrap CSS -->
-    <link
+    <!-- 
+    Commented out since bootstrap (styles.scss) has already been imported.
+    Add `login.scss` inside 'styles/pages/auth' for overriding elements.
+    -->
+    <!-- <link
       rel="stylesheet"
       href="https://stackpath.bootstrapcdn.com/bootstrap/5.0.0-alpha1/css/bootstrap.min.css"
       rel="nofollow"
@@ -26,14 +32,14 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100..900&family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&display=swap"
       rel="stylesheet"
-    />
+    /> -->
   </head>
   <body class="vh-100 vw-100 m-0 p-0" style="overflow: hidden">
-    <div class="container-fluid h-100">
+    <div class="container-fluid h-100 px-0">
       <div class="row h-100 g-0">
         <div
-          class="col-12 px-5 col-md-6 d-flex align-items-center justify-content-center bg-white"
-          style="height: 100vh"
+          class="col-12 col-md-6 d-flex align-items-center justify-content-center bg-white"
+          style="height: 100vh; min-width: 500px;"
         >
           <div class="w-75">
             <div class="card shadow-lg border-0 rounded-4">
@@ -44,15 +50,15 @@
                 <div class="text-center">
                   <h1 class="fw-bold mb-1">WELCOME,</h1>
                   <h1 class="fw-bold mb-3">TECHNOSTUD!</h1>
-                  <p class="mb-0">Please enter your ID number to get started</p>
+                  <p class="mb-0 px-0">Please enter your ID number to get started</p>
                 </div>
-                <form class="needs-validation was-validated" novalidate>
+                <form class="needs-validation" novalidate>
                   <div class="input-group">
                     <span class="input-group-text" id="idNumber">
                       <i class="bi bi-person-vcard text-black"></i>
                     </span>
                     <input
-                      type="text"
+                      type="number"
                       placeholder="eg. 23213267"
                       id="idNumber"
                       class="form-control"
@@ -60,22 +66,25 @@
                       required
                       pattern="\\d{8}"
                     />
-
-                    <div class="invalid-feedback fs-7">
+                    <div class="valid-feedback fs-6">
+                      <!--  -->
+                    </div>
+                    <div class="invalid-feedback fs-6">
                       Please enter a valid 8-digit ID number.
                     </div>
                   </div>
 
-                  <div class="text-end mt-3">
+                  <div class="text-end mt-2">
                     <a
                       href="forgot-password.html"
-                      class="text-decoration-none text-black fs-7"
+                      class="text-decoration-none text-black fs-6"
                       >Forgot password?</a
                     >
                   </div>
+                  <!-- class="btn btn-custom w-100 rounded-pill mt-5 fw-bold" -->
                   <div>
                     <button
-                      class="btn btn-custom w-100 rounded-pill mt-5 fw-bold"
+                      class="btn btn-primary-ccsync w-100 rounded-pill mt-5 fw-bold"
                       type="submit"
                     >
                       Login
@@ -85,7 +94,7 @@
                     class="text-center d-flex justify-content-center align-items-center gap-2 mt-3"
                   >
                     <span class="mb-0">Don't have an account?</span>
-                    <a href="register.html" class="text-decoration-none fs-7"
+                    <a href="register.html" class="link-primary-ccsync fw-bold"
                       >Register</a
                     >
                   </div>
