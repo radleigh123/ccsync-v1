@@ -1,7 +1,7 @@
 # CCSync: A PHP-Based Student and Semestral Management System for Digitized Record Keeping and Record Efficiency
 **Live Demo:** [https://radleigh123.github.io/ccsync-v1/](https://radleigh123.github.io/ccsync-v1/)
 
-**Backend**: Click [here](https://radleigh123.github.io/ccsync-v1/tree/master/temp) (Setting up a simple server)
+**Backend**: Click [here](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/temp) (Setting up a simple server)
 > NOTE: **Local only**
 
 ## 📌 Project Description  
