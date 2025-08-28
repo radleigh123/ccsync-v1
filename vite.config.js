@@ -13,6 +13,7 @@ export default {
                 register: resolve(__dirname, 'src', 'pages', 'auth', 'register.html'),
                 forgotPassword: resolve(__dirname, 'src', 'pages', 'auth', 'forgot-password.html'),
                 dashboard: resolve(__dirname, 'src', 'pages', 'dashboard', 'index.html'),
+                profile: resolve(__dirname, 'src', 'pages', 'profile', 'profile.html'),
             }
         }
     },
@@ -20,7 +21,7 @@ export default {
         port: 5137
     },
     preview: {
-        port: 4137
+        port: 5137
     },
     css: {
         preprocessorOptions: {

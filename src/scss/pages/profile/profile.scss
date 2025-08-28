@@ -1,0 +1,11 @@
+@import "/scss/styles";
+
+.card-no-hover {
+  transition: none !important;
+  
+  &:hover {
+    transform: none !important;
+    box-shadow: inherit !important;
+    cursor: default !important;
+  }
+}
