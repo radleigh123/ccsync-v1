@@ -10,22 +10,13 @@
 
 1. Locate your XAMPP installation directory Typically:
    - Windows: `C:\xampp\htdocs` 
-2. Create a new folder for the project Example:
+2. Create the following folders for the project:
     ```
-    C:\xampp\htdocs\demo\ccsync
+    C:\xampp\htdocs\demo\ccsync\auth\
+    C:\xampp\htdocs\demo\ccsync\config\
     ```
-3. Copy the `index.php` file From this repository’s current directory, copy and paste index.php into your newly created **ccsync** folder.
-
-#### Running the Server
-
-1. Start Apache via XAMPP Control Panel
-    - Open XAMPP.
-    - Click **Start** next to **Apache**.
-2. Access the server in your browser Navigate to:
-    ```
-    http://localhost/ccsync/demo/index.php
-    ```
-3. DONE
+3. Copy the `login.php` & `register.php` file From this repository’s current directory and paste into **auth** folder.
+4. Copy the `database.php` and paste into **config** folder.
 
 ---
 
