@@ -1,6 +1,5 @@
-# CCSync [Bootstrap + Vite]
-
-# CCSync: A PHP-Based Student and Semestral Management System for Digitized Record Keeping and Record Efficiency  
+# CCSync: A PHP-Based Student and Semestral Management System for Digitized Record Keeping and Record Efficiency
+**Live Demo:** [https://radleigh123.github.io/ccsync-v1/](https://radleigh123.github.io/ccsync-v1/)
 
 ## 📌 Project Description  
 **CCSync** is a PHP-based student and semestral management platform designed to streamline and digitize organizational processes, starting with the College of Computer Studies.  
@@ -31,6 +30,7 @@ The system aims to replace manual forms and logs for semestral requirements (suc
 ![Home Page](./src/assets/screenshots/homepage-2.png)
 ![Home Page](./src/assets/screenshots/homepage-3.png)
 
+---
 
 **Steps to replicate**
 ```bash
