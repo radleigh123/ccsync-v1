@@ -223,3 +223,28 @@ input.form-control:focus {
   color: #F5A302 !important;
   font-weight: 600;
 }
+
+@media (max-width: 991.98px) {
+  body {
+    padding-top: 62px;
+  }
+
+  .hero-section {
+    position: relative;
+    background: url('/assets/PSITSlogo.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1;
+  }
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8); // Adjust alpha for desired transparency
+    z-index: 2;
+    pointer-events: none;
+  }
+  .hero-section > * {
+    position: relative;
+    z-index: 3;
+  }
+}
