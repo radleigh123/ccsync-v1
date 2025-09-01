@@ -4,6 +4,10 @@
 **Backend**: Click [here](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/temp) (Setting up a simple server)
 > NOTE: **Local only**
 
+## CCSync Development Doc
+
+- [Creating a new page/feature](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/src/js)
+
 ## 📌 Project Description  
 **CCSync** is a PHP-based student and semestral management platform designed to streamline and digitize organizational processes, starting with the College of Computer Studies.  
 It manages student records, requirements, events, and officer information, ensuring smooth and paperless transactions.  
