@@ -25,6 +25,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const profilePane = document.getElementById('v-pills-profile');
     let profileLoaded = false;
 
+    // FIXME: On Build, SCRIPT PATH IS UNKNOWN
     const PROFILE_HTML_PATH = '/ccsync-v1/pages/profile/profile.html';
     const PROFILE_SCRIPT_SRC = '/ccsync-v1/js/pages/profile/profile.js';
 
