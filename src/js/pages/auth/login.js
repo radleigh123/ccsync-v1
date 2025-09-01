@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", () => {
             if (data.success) {
                 localStorage.setItem("user", JSON.stringify(data.user));
                 // Redirect to home
-                window.location.href = "/ccsync-v1/pages/profile/profile.html";
+                window.location.href = "/ccsync-v1/pages/dashboard/dashboard.html";
             } else {
                 errorMsg.textContent = data.message || "Login failed";
             }
