@@ -1,3 +1,6 @@
+import '/js/utils/core.js';
+import '/scss/pages/auth/login.scss';
+
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("#login-form");
     const errorMsg = document.querySelector("#error-msg");

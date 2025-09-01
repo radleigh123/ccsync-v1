@@ -1,3 +1,6 @@
+import '/js/utils/core.js';
+import '/scss/pages/profile/profile.scss';
+
 document.addEventListener("DOMContentLoaded", () => {
     const user = localStorage.getItem("user");
     if (!user) {

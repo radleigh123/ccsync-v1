@@ -36,4 +36,10 @@ export default {
             },
         },
     },
+    resolve: {
+        alias: {
+            '~bootstrap': 'node_modules/bootstrap',
+            '~aos': 'node_modules/aos'
+        }
+    }
 }

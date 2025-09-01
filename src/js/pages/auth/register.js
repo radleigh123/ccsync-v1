@@ -1,6 +1,5 @@
-import '/scss/styles.scss';
+import '/js/utils/core.js';
 import '/scss/pages/auth/register.scss';
-// Import only the Bootstrap components we need
 import { Popover } from 'bootstrap';
 
 document.addEventListener("DOMContentLoaded", () => {
