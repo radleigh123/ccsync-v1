@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function () {
         localStorage.setItem('sidebar-collapsed', sidebar.classList.contains('collapsed'));
     });
 
-    // Lazy-load
+    // Profile Load
     const profileTabBtn = document.getElementById('v-pills-profile-tab');
     const profilePane = document.getElementById('v-pills-profile');
     let profileLoaded = false;
@@ -71,6 +71,61 @@ document.addEventListener('DOMContentLoaded', function () {
 
     if (profileTabBtn.classList.contains('active')) {
         loadProfileIntoPane();
+    }
+
+    // Home/Dashboard Load
+    const homeTabBtn = document.getElementById('v-pills-home-tab');
+    const homePane = document.getElementById('v-pills-home');
+    let homeLoaded = false;
+
+    const HOME_HTML_PATH = '/ccsync-v1/pages/home/home.html';
+    const HOME_SCRIPT_SRC = '/ccsync-v1/js/pages/home/home.js';
+
+    async function loadHomeIntoPane() {
+        if (homeLoaded) return;
+        try {
+            const res = await fetch(HOME_HTML_PATH, { cache: 'no-store' });
+            if (!res.ok) throw new Error('Failed to fetch home content: ' + res.status);
+            const html = await res.text();
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+
+            // Prefer <main>, fallback to .container or body
+            const fragment = doc.querySelector('main') || doc.querySelector('.container') || doc.body;
+            homePane.innerHTML = fragment ? fragment.innerHTML : html;
+
+            // Dynamically import home module and call its init function
+            try {
+                const module = await import(HOME_SCRIPT_SRC);
+                if (module && typeof module.initHome === 'function') {
+                    module.initHome();
+                }
+            } catch (impErr) {
+                // Fallback: if import path differs on server, attempt to append script tag
+                if (!document.querySelector(`script[src="${HOME_SCRIPT_SRC}"]`)) {
+                    const s = document.createElement('script');
+                    s.type = 'module';
+                    s.src = HOME_SCRIPT_SRC;
+                    s.defer = true;
+                    document.body.appendChild(s);
+                }
+            }
+
+            homeLoaded = true;
+        } catch (err) {
+            console.error(err);
+            homePane.innerHTML = '<p class="text-danger">Failed to load dashboard content.</p>';
+        }
+    }
+
+    if (homeTabBtn) {
+        homeTabBtn.addEventListener('click', loadHomeIntoPane);
+        homeTabBtn.addEventListener('shown.bs.tab', loadHomeIntoPane);
+
+        // Load home content if it's the active tab on page load
+        if (homeTabBtn.classList.contains('active')) {
+            loadHomeIntoPane();
+        }
     }
 
     const logout = document.querySelector("#v-pills-logout-tab");
