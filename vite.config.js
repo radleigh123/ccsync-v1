@@ -12,8 +12,9 @@ export default {
                 login: resolve(__dirname, 'src', 'pages', 'auth', 'login.html'),
                 register: resolve(__dirname, 'src', 'pages', 'auth', 'register.html'),
                 forgotPassword: resolve(__dirname, 'src', 'pages', 'auth', 'forgot-password.html'),
-                dashboard: resolve(__dirname, 'src', 'pages', 'dashboard', 'dashboard.html'),
                 profile: resolve(__dirname, 'src', 'pages', 'profile', 'profile.html'),
+                home: resolve(__dirname, 'src', 'pages', 'home', 'home.html'),
+                settings: resolve(__dirname, 'src', 'pages', 'settings', 'settings.html'),
             }
         }
     },

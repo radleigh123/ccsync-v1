@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Settings</title>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Sidebar -->
+				<div class="col-auto sidebar py-3 bg-light" id="sidebar">
+					<div
+						class="sidebar-header d-flex align-items-center px-3 mb-4">
+						<a
+							class="navbar-brand d-flex align-items-center"
+							href="/">
+							<img
+								src="/assets/logo/icons8-sync-50.svg"
+								alt="Logo"
+								class="sidebar-logo me-2" />
+							<span class="sidebar-title">CCSync</span>
+						</a>
+						<button class="btn btn-sm ms-auto" id="sidebar-toggle">
+							<i class="bi bi-chevron-left"></i>
+						</button>
+					</div>
+
+					<div
+						class="nav flex-column nav-pills"
+						id="v-pills-tab"
+						aria-orientation="vertical">
+						<a
+							class="nav-link mb-2"
+							href="/ccsync-v1/pages/home/home.html">
+							<i class="bi bi-house-door me-2"></i>
+							<span class="menu-text">Home</span>
+						</a>
+						<a
+							class="nav-link mb-2"
+							href="/ccsync-v1/pages/profile/profile.html">
+							<i class="bi bi-person me-2"></i>
+							<span class="menu-text">Profile</span>
+						</a>
+						<a
+							class="nav-link active mb-2"
+							href="/ccsync-v1/pages/settings/settings.html">
+							<i class="bi bi-gear me-2"></i>
+							<span class="menu-text">Settings</span>
+						</a>
+						<a id="logout-link" class="nav-link mb-2" href="#">
+							<i class="bi bi-box-arrow-in-left me-2"></i>
+							<span class="menu-text">Logout</span>
+						</a>
+					</div>
+				</div>
+				<div class="col">
+					<p class="display-1">SETTINGS</p>
+				</div>
+			</div>
+		</div>
+
+		<script type="module" src="/js/pages/settings/settings.js"></script>
+	</body>
+</html>

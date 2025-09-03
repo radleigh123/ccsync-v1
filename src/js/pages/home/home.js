@@ -1,5 +1,7 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
+import { setSidebar } from '/js/utils/components/sidebar.js';
+import { setupLogout } from "/js/utils/navigation.js";
 
 export function initHome() {
     const user = localStorage.getItem("user");
@@ -20,9 +22,6 @@ export function initHome() {
     // You can add more selectors and assignments as needed
 }
 
-// If loaded directly, run init on DOM ready
-if (document.readyState === 'loading') {
-    document.addEventListener("DOMContentLoaded", initHome);
-} else {
-    initHome();
-}
+document.addEventListener("DOMContentLoaded", initHome);
+document.addEventListener("DOMContentLoaded", setupLogout);
+document.addEventListener("DOMContentLoaded", setSidebar, setupLogout);

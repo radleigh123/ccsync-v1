@@ -8,7 +8,7 @@ export function setupNavigation() {
     if (user) {
         nav.innerHTML = `
         <li class="nav-item">
-            <a class="nav-link active" href="/">Home</a>
+            <a class="nav-link" href="/ccsync-v1/pages/home/home.html">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/ccsync-v1/pages/profile/profile.html">Profile</a>
@@ -21,7 +21,7 @@ export function setupNavigation() {
     } else {
         nav.innerHTML = `
         <li class="nav-item">
-            <a class="nav-link active" href="/">Home</a>
+            <a class="nav-link" href="/ccsync-v1/pages/home/home.html">Home</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="/ccsync-v1/pages/auth/register.html">Register</a>

@@ -1,5 +1,7 @@
 import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
+import { setSidebar } from "/js/utils/components/sidebar.js";
+import { setupLogout } from "/js/utils/navigation.js";
 
 export function initProfile() {
     const user = localStorage.getItem("user");
@@ -31,9 +33,6 @@ export function initProfile() {
     }
 }
 
-// If this module is loaded directly in a full page, run init on DOM ready.
-/* if (document.readyState === 'loading') {
-    document.addEventListener("DOMContentLoaded", initProfile);
-} else {
-    initProfile();
-} */
+document.addEventListener("DOMContentLoaded", setSidebar);
+document.addEventListener("DOMContentLoaded", setupLogout);
+document.addEventListener("DOMContentLoaded", initProfile);
