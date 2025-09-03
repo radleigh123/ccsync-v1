@@ -36,3 +36,8 @@ export function initProfile() {
 document.addEventListener("DOMContentLoaded", setSidebar);
 document.addEventListener("DOMContentLoaded", setupLogout);
 document.addEventListener("DOMContentLoaded", initProfile);
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("edit-profile-btn").onclick = function () {
+        location.href = "/ccsync-v1/pages/settings/settings.html";
+    }
+});

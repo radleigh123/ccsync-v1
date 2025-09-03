@@ -1,0 +1,41 @@
+.main-content-bg {
+    position: relative;
+    padding: 2rem;
+    color: #fff;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/bg.png');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4) saturate(1.2); // Darken background and increase saturation slightly
+        z-index: -1;
+    }
+}
+
+.card {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border: none;
+
+    .card-body {
+        color: #212529;
+    }
+}
+
+.main-content-bg p {
+    font-weight: 400;
+}
+
+.main-content-bg h2 {
+    font-weight: 600;
+    margin-bottom: 1rem;
+}
+
+.main-content-bg hr {
+    border-color: rgba(255, 255, 255, 0.3);
+}
