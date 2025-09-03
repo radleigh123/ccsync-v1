@@ -12,7 +12,9 @@ export default {
                 login: resolve(__dirname, 'src', 'pages', 'auth', 'login.html'),
                 register: resolve(__dirname, 'src', 'pages', 'auth', 'register.html'),
                 forgotPassword: resolve(__dirname, 'src', 'pages', 'auth', 'forgot-password.html'),
-                dashboard: resolve(__dirname, 'src', 'pages', 'dashboard', 'index.html'),
+                profile: resolve(__dirname, 'src', 'pages', 'profile', 'profile.html'),
+                home: resolve(__dirname, 'src', 'pages', 'home', 'home.html'),
+                settings: resolve(__dirname, 'src', 'pages', 'settings', 'settings.html'),
             }
         }
     },
@@ -20,7 +22,7 @@ export default {
         port: 5137
     },
     preview: {
-        port: 4137
+        port: 5137
     },
     css: {
         preprocessorOptions: {
@@ -35,4 +37,10 @@ export default {
             },
         },
     },
+    /* resolve: {
+        alias: {
+            '~bootstrap': 'node_modules/bootstrap',
+            '~aos': 'node_modules/aos'
+        }
+    } */
 }

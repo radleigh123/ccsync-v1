@@ -1,122 +1,9 @@
-// Override Bootstrap's Sass default variables
-//
-// Nearly all variables in Bootstrap are written with the `!default` flag.
-// This allows you to override the default values of those variables before
-// you import Bootstrap's source Sass files.
-//
-// Overriding the default variable values is the best way to customize your
-// CSS without writing _new_ styles. For example, you can either change
-// `$body-color` or write more CSS that override's Bootstrap's CSS like so:
-// `body { color: red; }`.
-
-
-//
-// Bring in Bootstrap
-//
-
-// Option 1
-//
-// Import all of Bootstrap's CSS
-
 @import "bootstrap/scss/bootstrap";
 
 // Add Bootstrap Icons
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css");
-
-// Option 2
-//
-// Place variable overrides first, then import just the styles you need. Note that some stylesheets are required no matter what.
-
-// Toggle global options
-/* $enable-gradients: true;
-$enable-shadows: true;
-
-$offcanvas-box-shadow: 0 1rem 3rem rgba(0, 0, 0, .175);
-
-// Include functions first
-@import "bootstrap/scss/functions";
-
-// Customize some defaults
-$body-color: #333;
-$body-bg: #fff;
-$border-radius: .4rem;
-
-// Required
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/variables-dark";
-@import "bootstrap/scss/maps";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
-@import "bootstrap/scss/root";
-@import "bootstrap/scss/reboot";
-
-@import "bootstrap/scss/type";
-// @import "bootstrap/scss/images";
-@import "bootstrap/scss/containers";
-@import "bootstrap/scss/grid";
-// @import "bootstrap/scss/tables";
-// @import "bootstrap/scss/forms";
-@import "bootstrap/scss/buttons";
-@import "bootstrap/scss/transitions";
-@import "bootstrap/scss/dropdown";
-// @import "bootstrap/scss/button-group";
-// @import "bootstrap/scss/nav";
-// @import "bootstrap/scss/navbar"; // Requires nav
-// @import "bootstrap/scss/card";
-// @import "bootstrap/scss/breadcrumb";
-// @import "bootstrap/scss/accordion";
-// @import "bootstrap/scss/pagination";
-// @import "bootstrap/scss/badge";
-// @import "bootstrap/scss/alert";
-// @import "bootstrap/scss/progress";
-// @import "bootstrap/scss/list-group";
-@import "bootstrap/scss/close";
-// @import "bootstrap/scss/toasts";
-@import "bootstrap/scss/modal"; // Requires transitions
-// @import "bootstrap/scss/tooltip";
-@import "bootstrap/scss/popover";
-// @import "bootstrap/scss/carousel";
-// @import "bootstrap/scss/spinners";
-@import "bootstrap/scss/offcanvas"; // Requires transitions
-// @import "bootstrap/scss/placeholders";
-
-// Helpers
-// @import "bootstrap/scss/helpers";
-
-// Utilities
-@import "bootstrap/scss/utilities/api";
-
-
-//
-// Custom styles
-//
-
-@import "icon-list";
-
-body {
-  padding: 1.5rem;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-
-}
-
-.btn-custom {
-  background: linear-gradient(90deg, #FED154 0%, #F5A302 100%);
-  color: #fff;
-  border: none;
-  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
-}
-
-.card-login {
-  height: 500px;
-}
-
-.form-custom{
-  background: linear-gradient(90deg, #F5A302 0%, #FED154 100%);
-  border: none;
-  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.15);
-} */
-
-// Toggle global options
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "bootstrap-icons/font/bootstrap-icons";
+// source: https://icons.getbootstrap.com/#usage:~:text=//%20Update%20the%20import%20directory%20to%20point%20to%20it%E2%80%98s%20location%20within%20node_modules%0A%24bootstrap%2Dicons%2Dfont%2Ddir%3A%20%22bootstrap%2Dicons/font/fonts%22%3B%0A%0A//%20Import%20the%20Sass%20files%20as%20usual%0A%40import%20%22bootstrap%2Dicons/font/bootstrap%2Dicons%22%3B
 
 // Override
 .btn-primary-ccsync {
@@ -146,8 +33,8 @@ body {
 }
 
 input::placeholder {
-    color: #b3b3b3 !important;
-    opacity: 1; // Override default opacity
+  color: #b3b3b3 !important;
+  opacity: 1; // Override default opacity
 }
 
 input.form-control:focus {
@@ -184,7 +71,7 @@ input.form-control:focus {
   transform: translateY(0);
   box-shadow: 0 2px 10px rgba(245, 163, 2, 0.3);
 }
-  
+
 // Homepage specific styles
 .hero-section {
   background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
@@ -222,4 +109,31 @@ input.form-control:focus {
 .nav-link.active {
   color: #F5A302 !important;
   font-weight: 600;
+}
+
+@media (max-width: 991.98px) {
+  .hero-section {
+    position: relative;
+    background: url('/assets/PSITSlogo.png') no-repeat center center;
+    background-size: cover;
+    z-index: 1;
+  }
+
+  .hero-section::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: rgba(255, 255, 255, 0.8); // Adjust alpha for desired transparency
+    z-index: 2;
+    pointer-events: none;
+  }
+
+  .hero-section>* {
+    position: relative;
+    z-index: 3;
+  }
+}
+
+.text-indigo {
+  color: rgb(97, 137, 255) !important;
 }

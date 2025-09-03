@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>Dashboard - CCSync</title>
+	</head>
+	<body>
+		<div class="container-fluid">
+			<div class="row">
+				<!-- Sidebar -->
+				<div class="col-auto sidebar py-3 bg-light" id="sidebar">
+					<div
+						class="sidebar-header d-flex align-items-center px-3 mb-4">
+						<a class="navbar-brand d-flex align-items-center" href="/">
+							<img
+								src="/assets/logo/icons8-sync-50.svg"
+								alt="Logo"
+								class="sidebar-logo me-2" />
+							<span class="sidebar-title">CCSync</span>
+						</a>
+						<button class="btn btn-sm ms-auto" id="sidebar-toggle">
+							<i class="bi bi-chevron-left"></i>
+						</button>
+					</div>
+
+					<div
+						class="nav flex-column nav-pills"
+						id="v-pills-tab"
+						aria-orientation="vertical">
+						<a
+							class="nav-link active mb-2"
+							href="/ccsync-v1/pages/home/home.html">
+							<i class="bi bi-house-door me-2"></i>
+							<span class="menu-text">Home</span>
+						</a>
+						<a
+							class="nav-link mb-2"
+							href="/ccsync-v1/pages/profile/profile.html">
+							<i class="bi bi-person me-2"></i>
+							<span class="menu-text">Profile</span>
+						</a>
+						<a
+							class="nav-link mb-2"
+							href="/ccsync-v1/pages/settings/settings.html">
+							<i class="bi bi-gear me-2"></i>
+							<span class="menu-text">Settings</span>
+						</a>
+						<a
+							id="logout-link"
+							class="nav-link mb-2"
+							href="#">
+							<i class="bi bi-box-arrow-in-left me-2"></i>
+							<span class="menu-text">Logout</span>
+						</a>
+					</div>
+				</div>
+
+				<main class="col content-area" id="content-area">
+					<div class="row mb-4">
+						<div class="col-md-8">
+							<h1>Welcome back, [UNKNOWN USER]!</h1>
+							<p class="text-muted">
+								Last sync: Today at 2:45 PM
+							</p>
+						</div>
+						<div class="col-md-4 text-end">
+							<button class="btn btn-primary-ccsync">
+								<i class="bi bi-arrow-repeat"></i>
+								Sync Now
+							</button>
+							<button class="btn btn-outline-secondary ms-2">
+								<i class="bi bi-upload"></i>
+								Upload
+							</button>
+						</div>
+					</div>
+
+					<div class="row mb-4">
+						<div class="col-md-4">
+							<div class="card h-100">
+								<div class="card-body">
+									<h5 class="card-title">Storage</h5>
+									<div class="progress mb-3">
+										<div
+											class="progress-bar"
+											role="progressbar"
+											style="width: 65%"
+											aria-valuenow="65"
+											aria-valuemin="0"
+											aria-valuemax="100">
+											65%
+										</div>
+									</div>
+									<p class="card-text">
+										6.5 GB of 10 GB used
+									</p>
+									<a
+										href="#"
+										class="btn btn-sm btn-outline-primary">
+										Upgrade Plan
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card h-100">
+								<div class="card-body">
+									<h5 class="card-title">Sync Status</h5>
+									<p class="card-text text-success">
+										<i class="bi bi-check-circle"></i>
+										All files up to date
+									</p>
+									<p class="card-text">3 devices connected</p>
+									<a
+										href="#"
+										class="btn btn-sm btn-outline-primary">
+										Manage Devices
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card h-100">
+								<div class="card-body">
+									<h5 class="card-title">Quick Stats</h5>
+									<p class="card-text">Total Files: 256</p>
+									<p class="card-text">Shared Files: 15</p>
+									<p class="card-text">
+										Last Backup: Sep 1, 2025
+									</p>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-8">
+							<div class="card mb-4">
+								<div
+									class="card-header d-flex justify-content-between align-items-center">
+									<h5 class="mb-0">Recent Files</h5>
+									<a href="#" class="btn btn-sm btn-link">
+										View All
+									</a>
+								</div>
+								<div class="list-group list-group-flush">
+									<a
+										href="#"
+										class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+										<div>
+											<i
+												class="bi bi-file-earmark-text me-2"></i>
+											<span>Q3 Report.docx</span>
+										</div>
+										<span class="text-muted small">
+											Modified 2 hours ago
+										</span>
+									</a>
+									<a
+										href="#"
+										class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+										<div>
+											<i
+												class="bi bi-file-earmark-image me-2"></i>
+											<span>Presentation.pptx</span>
+										</div>
+										<span class="text-muted small">
+											Modified yesterday
+										</span>
+									</a>
+									<a
+										href="#"
+										class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+										<div>
+											<i
+												class="bi bi-file-earmark-spreadsheet me-2"></i>
+											<span>Budget.xlsx</span>
+										</div>
+										<span class="text-muted small">
+											Modified 3 days ago
+										</span>
+									</a>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4">
+							<div class="card mb-4">
+								<div class="card-header">
+									<h5 class="mb-0">Recent Activity</h5>
+								</div>
+								<div class="list-group list-group-flush">
+									<div class="list-group-item">
+										<p class="mb-1">
+											<strong>You</strong>
+											uploaded 5 files
+										</p>
+										<p class="text-muted small mb-0">
+											Today at 10:23 AM
+										</p>
+									</div>
+									<div class="list-group-item">
+										<p class="mb-1">
+											<strong>System</strong>
+											completed backup
+										</p>
+										<p class="text-muted small mb-0">
+											Yesterday at 11:15 PM
+										</p>
+									</div>
+									<div class="list-group-item">
+										<p class="mb-1">
+											<strong>Sarah</strong>
+											shared a folder with you
+										</p>
+										<p class="text-muted small mb-0">
+											Aug 30, 2025
+										</p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</main>
+			</div>
+		</div>
+
+		<footer class="bg-light text-center py-3 mt-5">
+			<small>&copy; 2025 CCSync. All rights reserved.</small>
+		</footer>
+		<script type="module" src="/js/pages/home/home.js" defer></script>
+	</body>
+</html>
