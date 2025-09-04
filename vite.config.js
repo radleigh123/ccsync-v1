@@ -15,6 +15,7 @@ export default {
                 profile: resolve(__dirname, 'src', 'pages', 'profile', 'profile.html'),
                 home: resolve(__dirname, 'src', 'pages', 'home', 'home.html'),
                 settings: resolve(__dirname, 'src', 'pages', 'settings', 'settings.html'),
+                designSystem: resolve(__dirname, 'src', 'design-system.html'),
             }
         }
     },

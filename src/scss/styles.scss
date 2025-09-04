@@ -1,9 +1,22 @@
-@import "bootstrap/scss/bootstrap";
+/*
+ * CCSync Design System
+ * Main entry point for all design system components
+ */
 
-// Add Bootstrap Icons
+// Import design system components in order
+@import "variables";
+@import "utilities";
+@import "typography";
+@import "components";
+@import "responsive";
+@import "icon-list";
+
+// Bootstrap Icons
 $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
 @import "bootstrap-icons/font/bootstrap-icons";
-// source: https://icons.getbootstrap.com/#usage:~:text=//%20Update%20the%20import%20directory%20to%20point%20to%20it%E2%80%98s%20location%20within%20node_modules%0A%24bootstrap%2Dicons%2Dfont%2Ddir%3A%20%22bootstrap%2Dicons/font/fonts%22%3B%0A%0A//%20Import%20the%20Sass%20files%20as%20usual%0A%40import%20%22bootstrap%2Dicons/font/bootstrap%2Dicons%22%3B
+
+// Import Bootstrap with our custom variables
+@import "bootstrap/scss/bootstrap";
 
 // Override
 .btn-primary-ccsync {

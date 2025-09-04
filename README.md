@@ -1,102 +1,192 @@
-# CCSync: A PHP-Based Student and Semestral Management System for Digitized Record Keeping and Record Efficiency
-**Live Demo:** [https://radleigh123.github.io/ccsync-v1/](https://radleigh123.github.io/ccsync-v1/)
+# CCSync - A PHP-Based Student and Semestral Management System for Digitized Record Keeping and Record Efficiency
 
-**NOTE**: Requires a local server to run PHP files.
-Click [here](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/temp) (Setting up a simple server)
+![CCSync Logo](src/assets/logo/icons8-sync-50.svg)
 
-## CCSync Development Doc
+CCSync is a comprehensive student and semestral management platform designed to streamline academic management and digitize organizational processes for educational institutions, starting with the College of Computer Studies.
 
-- [Creating a new page/feature](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/src/pages)
+## 🔗 Live Demo
 
-## 📌 Project Description  
-**CCSync** is a PHP-based student and semestral management platform designed to streamline and digitize organizational processes, starting with the College of Computer Studies.  
-It manages student records, requirements, events, and officer information, ensuring smooth and paperless transactions.  
-The system aims to replace manual forms and logs for semestral requirements (such as membership fees and event attendance) with a centralized, consistent, and accessible platform.  
+- [CCSync Application](https://radleigh123.github.io/ccsync-v1/)
+- [Design System](https://radleigh123.github.io/ccsync-v1/design-system.html)
 
----
+**NOTE**: Backend functionality requires a local PHP server. 
+[See backend setup instructions](https://github.com/radleigh123/ccsync-v1/tree/keane/feature/auth-fix/temp).
 
-## 👥 Group Members  
+## 📖 Overview
+
+CCSync is a PHP-based student and semestral management platform designed to streamline and digitize organizational processes, starting with the College of Computer Studies.
+
+It manages student records, requirements, events, and officer information, ensuring smooth and paperless transactions.
+The system aims to replace manual forms and logs for semestral requirements (such as membership fees and event attendance) with a centralized, consistent, and accessible platform.
+
+## 👥 Project Team  
 - **IGOT, Went Ruzel**  
 - **INTING, Keane Radleigh**  
 - **JAKOSALEM, Joshua**  
 - **TUNDAG, Laine Pearl** 
 
-## 📸 Screenshots 
+## �️ Tech Stack
 
-- **Login Page**  
-![Login Page](./src/assets/screenshots/login.png)  
+### Frontend
+- Vite.js (Build tool)
+- Vanilla JavaScript (Core programming)
+- SCSS/Sass (Styling with enhanced design system)
+- Bootstrap 5 (Component framework)
+- Bootstrap Icons (Icon library)
 
-- **Register Page**  
-![Register Page](./src/assets/screenshots/register.png)  
+### Backend
+- PHP (Server-side processing)
+- MySQL (Database)
+- RESTful API architecture
 
-- **Forgot Password Page**  
-![Forgot Password Page](./src/assets/screenshots/forgot-password.png)
+## 📂 Project Structure
 
-**Home Page**
-![Home Page](./src/assets/screenshots/homepage-1.png)
-![Home Page](./src/assets/screenshots/homepage-2.png)
-![Home Page](./src/assets/screenshots/homepage-3.png)
-
----
-
-**Steps to replicate**
-```bash
-npm install
-
-# development
-npm run dev
-# production
-npm start
-```
-
-### Project structure
-```
+```plaintext
 ccsync-v1/
-│
+├── docs/                  # Documentation files
+│   └── design-system.md
+├── public/                # Static files
 ├── src/
-│   ├── index.html                # Main entry HTML
-│   ├── pages/                    # All HTML pages (login, dashboard, etc.)
-│   │   ├── auth/
-│   │   │   └── login.html
-│   │   │   └── register.html
-│   │   │   └── forgot-password.html
-│   │   ├── dashboard/
-│   │   │   └── dashboard.html
+│   ├── assets/            # Images, icons, and other static assets
 │   ├── js/
-│   │   ├── main.js               # Main JS entry
-│   │   ├── components/           
-│   │   └── pages/                # JS specific to each page
-│   ├── scss/
-│   │   ├── styles.scss           # Main SCSS entry
-│   │   ├── components/           
-│   │   ├── pages/                # SCSS for specific pages
-│   └── assets/                   # Images, fonts, etc.
-│
-├── public/                       # Static files (if needed)
-│
+│   │   ├── pages/         # Page-specific JavaScript
+│   │   │   ├── auth/
+│   │   │   ├── home/
+│   │   │   └── ...
+│   │   └── utils/
+│   │       ├── components/# Reusable UI components
+│   │       └── core.js    # Core dependencies and imports
+│   ├── pages/             # HTML pages organized by feature
+│   │   ├── auth/
+│   │   ├── home/
+│   │   ├── profile/
+│   │   └── settings/
+│   └── scss/
+│       ├── components/    # Component-specific styles
+│       ├── pages/         # Page-specific styles
+│       ├── _components.scss
+│       ├── _responsive.scss
+│       ├── _typography.scss
+│       ├── _utilities.scss
+│       ├── _variables.scss
+│       └── styles.scss       # Main stylesheet entry point
+├── temp/                  # Backend PHP files
+│   ├── auth/
+│   ├── config/
+│   └── MySQL_DB/
 ├── vite.config.js
 ├── package.json
 └── README.md
 ```
-#### Custom styles
-Elements that are commonly used throughout the app can be placed in the main SCSS, for ease of access. For specific ones, they can be placed on a seperate file located parallel to their HTML.
 
-| Current overridden classes | description |
-| - | - |
-| `btn-primary-ccsync` | lorem ipsum |
-| `link-primary-ccsync` | lorem ipsum |
+## 🔧 Setup Instructions
 
-| Current overridden pseudo-classes | description |
-| - | - |
-| `input.form-control:focus`  | lorem ipsum |
+### Frontend Development
 
-### Additionals
-**Helpful plugins**
+1. Clone the repository:
+
+   ```bash
+   git clone https://github.com/radleigh123/ccsync-v1.git
+   cd ccsync-v1
+   ```
+
+2. Install dependencies:
+
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+
+   ```bash
+   npm run dev
+   ```
+
+4. Open your browser and navigate to:
+   ```
+   http://localhost:5137
+   ```
+
+## 🔐 Authentication Flow
+
+CCSync uses a secure authentication flow:
+
+1. **Registration**:
+   - User provides name, email, and password
+   - Password is hashed using PHP's `password_hash()` function
+   - User data is stored in MySQL database
+
+2. **Login**:
+   - User provides email and password
+   - Server validates credentials and returns user data and token
+   - Frontend stores authentication data in localStorage
+
+3. **Session Management**:
+   - Authentication state is checked on page load
+   - Unauthenticated users are redirected to login
+   - Session token expires after set duration
+
+4. **Logout**:
+   - Clears local storage data
+   - Redirects to login page
+
+## 📸 Screenshots 
+
+### Authentication Screens
+
+- **Login Page**  
+  ![Login Page](./src/assets/screenshots/login.png)  
+
+- **Register Page**  
+  ![Register Page](./src/assets/screenshots/register.png)  
+
+- **Forgot Password Page**  
+  ![Forgot Password Page](./src/assets/screenshots/forgot-password.png)
+
+### Main Application
+
+- **Home Page**
+  ![Home Page](./src/assets/screenshots/homepage-1.png)
+  ![Home Page](./src/assets/screenshots/homepage-2.png)
+  ![Home Page](./src/assets/screenshots/homepage-3.png)
+
+## 🎨 Design System
+
+CCSync includes a comprehensive design system with consistent UI components:
+
+- **Color System**: Branded colors with semantic meaning
+- **Typography**: Consistent text styles and hierarchies
+- **Components**: Reusable UI elements with defined behavior
+- **Spacing**: Consistent layout spacing
+- **Responsive Utilities**: Classes for adaptive layouts
+
+You can view the design system documentation in the [design-system.md](./docs/design-system.md) file or explore the [live design system page](https://radleigh123.github.io/ccsync-v1/design-system.html).
+
+### Coding Standards
+
+- Follow established naming conventions:
+  - Files: lowercase with hyphens (`user-settings.html`)
+  - JS functions: camelCase (`initUserSettings()`)
+  - CSS classes: kebab-case (`.user-settings-container`)
+- Always import core utilities first in JavaScript files
+- Use absolute paths for imports starting with `/`
+- Follow the design system for consistent UI
+
+### Helpful VS Code Plugins
+
 - **Todo Tree** (Gruntfuggly) - helps identify and list out TODOs
 - **Bootstrap 5 Quick Snippets** (Anbuselvan Rocky) - helpful snippets for quick development
+- **Live Sass Compiler** - For compiling SCSS files in real-time
+- **Prettier** - Code formatter for consistent style
 
-<br>
+## 📄 License
 
----
-Documentation:
-- https://getbootstrap.com/docs/5.3/getting-started/vite/
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 👏 Acknowledgments
+
+- [Bootstrap](https://getbootstrap.com/) - Frontend component library
+- [Vite](https://vitejs.dev/) - Build tooling
+- [Bootstrap Icons](https://icons.getbootstrap.com/) - Icon library
+- [Inter Font](https://rsms.me/inter/) - Typography
+- [Bootstrap Vite Guide](https://getbootstrap.com/docs/5.3/getting-started/vite/) - Documentation

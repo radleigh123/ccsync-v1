@@ -1,0 +1,117 @@
+// Typography styles
+
+@import "variables";
+
+// Base typography styles
+body {
+  font-family: $font-family-base;
+  font-size: $font-size-base;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-base;
+  color: $dark;
+}
+
+// Headings
+h1, h2, h3, h4, h5, h6,
+.h1, .h2, .h3, .h4, .h5, .h6 {
+  font-family: $font-family-headings;
+  font-weight: $font-weight-bold;
+  line-height: $line-height-sm;
+  margin-bottom: $spacer;
+}
+
+h1, .h1 {
+  font-size: 2.5rem;
+}
+
+h2, .h2 {
+  font-size: 2rem;
+}
+
+h3, .h3 {
+  font-size: 1.75rem;
+}
+
+h4, .h4 {
+  font-size: 1.5rem;
+}
+
+h5, .h5 {
+  font-size: 1.25rem;
+}
+
+h6, .h6 {
+  font-size: 1rem;
+}
+
+// Responsive typography
+@media (max-width: map-get($grid-breakpoints, md)) {
+  h1, .h1 {
+    font-size: 2rem;
+  }
+
+  h2, .h2 {
+    font-size: 1.75rem;
+  }
+
+  h3, .h3 {
+    font-size: 1.5rem;
+  }
+}
+
+// Paragraph and text
+p {
+  margin-top: 0;
+  margin-bottom: $spacer;
+}
+
+.lead {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-normal;
+  line-height: $line-height-lg;
+}
+
+.small, small {
+  font-size: $font-size-sm;
+}
+
+.text-truncate {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Lists
+ul, ol {
+  padding-left: 2rem;
+  margin-top: 0;
+  margin-bottom: $spacer;
+}
+
+ul ul,
+ul ol,
+ol ul,
+ol ol {
+  margin-bottom: 0;
+}
+
+// Links
+a {
+  color: $primary-ccsync;
+  text-decoration: none;
+  
+  &:hover {
+    color: $primary-ccsync-dark;
+    text-decoration: underline;
+  }
+}
+
+// Helper text classes
+.text-uppercase { text-transform: uppercase !important; }
+.text-lowercase { text-transform: lowercase !important; }
+.text-capitalize { text-transform: capitalize !important; }
+
+.text-nowrap { white-space: nowrap !important; }
+.text-break { word-wrap: break-word !important; }
+
+.text-primary-ccsync { color: $primary-ccsync !important; }
