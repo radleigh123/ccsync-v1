@@ -1,7 +1,7 @@
 .floating-action-btn {
     position: fixed;
-    top: 30px; // Changed from bottom to top
-    left: 30px; // Changed from right to left
+    bottom: 30px; // Changed from bottom to top
+    right: 30px; // Changed from right to left
     width: 60px;
     height: 60px;
     border-radius: 50%;
@@ -41,8 +41,8 @@
 
 .nav-card {
     position: fixed;
-    top: 100px; // Changed from bottom to top
-    left: 30px; // Changed from right to left
+    bottom: 100px; // Changed from bottom to top
+    right: 30px; // Changed from right to left
     width: 280px;
     background: white;
     border-radius: 8px;
