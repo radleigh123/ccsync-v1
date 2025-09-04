@@ -1,0 +1,1 @@
+import"./styles-CZ9-VYpJ.js";document.addEventListener("DOMContentLoaded",function(){[...document.querySelectorAll('[data-bs-toggle="tooltip"]')].map(o=>new bootstrap.Tooltip(o)),[...document.querySelectorAll('[data-bs-toggle="popover"]')].map(o=>new bootstrap.Popover(o))});

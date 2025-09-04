@@ -1,0 +1,1 @@
+import"./styles-CZ9-VYpJ.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("back-link");e&&(e.setAttribute("href",document.referrer),e.onclick=function(){return history.back(),!1})});
