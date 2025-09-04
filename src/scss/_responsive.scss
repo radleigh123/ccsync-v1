@@ -1,0 +1,220 @@
+// Responsive layout rules
+
+@import "variables";
+
+// Container adjustments
+.container-fluid {
+  width: 100%;
+  padding-right: $spacer;
+  padding-left: $spacer;
+  margin-right: auto;
+  margin-left: auto;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    padding-right: $spacer * 2;
+    padding-left: $spacer * 2;
+  }
+}
+
+.container-narrow {
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-right: $spacer;
+  padding-left: $spacer;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    padding-right: $spacer * 2;
+    padding-left: $spacer * 2;
+  }
+}
+
+// Responsive visibility helpers
+.hide-xs {
+  @media (max-width: #{map-get($grid-breakpoints, sm) - 1px}) {
+    display: none !important;
+  }
+}
+
+.hide-sm {
+  @media (max-width: #{map-get($grid-breakpoints, md) - 1px}) {
+    display: none !important;
+  }
+}
+
+.hide-md {
+  @media (max-width: #{map-get($grid-breakpoints, lg) - 1px}) {
+    display: none !important;
+  }
+}
+
+.hide-lg {
+  @media (max-width: #{map-get($grid-breakpoints, xl) - 1px}) {
+    display: none !important;
+  }
+}
+
+.show-xs {
+  @media (min-width: map-get($grid-breakpoints, sm)) {
+    display: none !important;
+  }
+}
+
+.show-sm {
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    display: none !important;
+  }
+}
+
+.show-md {
+  @media (min-width: map-get($grid-breakpoints, lg)) {
+    display: none !important;
+  }
+}
+
+.show-lg {
+  @media (min-width: map-get($grid-breakpoints, xl)) {
+    display: none !important;
+  }
+}
+
+// Responsive text adjustments
+.text-responsive {
+  font-size: 1rem;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    font-size: 1.1rem;
+  }
+  
+  @media (min-width: map-get($grid-breakpoints, lg)) {
+    font-size: 1.2rem;
+  }
+}
+
+// Responsive padding/margin adjustments
+.p-responsive {
+  padding: $spacer;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    padding: $spacer * 2;
+  }
+  
+  @media (min-width: map-get($grid-breakpoints, lg)) {
+    padding: $spacer * 3;
+  }
+}
+
+.m-responsive {
+  margin: $spacer;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    margin: $spacer * 2;
+  }
+  
+  @media (min-width: map-get($grid-breakpoints, lg)) {
+    margin: $spacer * 3;
+  }
+}
+
+// Responsive height/width classes
+.vh-100-sm-down {
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    height: 100vh !important;
+  }
+}
+
+.vh-100-md-down {
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    height: 100vh !important;
+  }
+}
+
+.vw-100-sm-down {
+  @media (max-width: map-get($grid-breakpoints, sm)) {
+    width: 100vw !important;
+  }
+}
+
+.vw-100-md-down {
+  @media (max-width: map-get($grid-breakpoints, md)) {
+    width: 100vw !important;
+  }
+}
+
+// Responsive flex utilities
+.flex-direction-responsive {
+  flex-direction: column;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    flex-direction: row;
+  }
+}
+
+.flex-direction-responsive-reverse {
+  flex-direction: column-reverse;
+  
+  @media (min-width: map-get($grid-breakpoints, md)) {
+    flex-direction: row;
+  }
+}
+
+// Mobile-first responsive grid system enhancements
+.row-cols-responsive {
+  display: flex;
+  flex-wrap: wrap;
+  margin-right: -($spacer * 0.5);
+  margin-left: -($spacer * 0.5);
+  
+  > * {
+    flex: 0 0 auto;
+    width: 100%;
+    padding-right: $spacer * 0.5;
+    padding-left: $spacer * 0.5;
+    margin-bottom: $spacer;
+  }
+  
+  @media (min-width: map-get($grid-breakpoints, sm)) {
+    > * {
+      width: 50%;
+    }
+  }
+  
+  @media (min-width: map-get($grid-breakpoints, lg)) {
+    > * {
+      width: 33.333333%;
+    }
+  }
+}
+
+// Mobile navigation helpers
+.mobile-menu {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: $white;
+  z-index: $z-index-modal;
+  padding: $spacer;
+  overflow-y: auto;
+  
+  &.show {
+    display: block;
+  }
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba($dark, 0.5);
+  z-index: $z-index-modal - 1;
+  display: none;
+  
+  &.show {
+    display: block;
+  }
+}

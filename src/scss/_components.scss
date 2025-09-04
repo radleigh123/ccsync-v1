@@ -1,0 +1,240 @@
+// Common components
+
+@import "variables";
+
+// Card component enhancements
+.card {
+  border-radius: $border-radius;
+  border: 1px solid $gray-300;
+  box-shadow: $box-shadow-sm;
+  transition: $transition-base;
+  overflow: hidden;
+  
+  &:hover {
+    box-shadow: $box-shadow;
+  }
+  
+  &.card-elevated {
+    border: none;
+    box-shadow: $box-shadow;
+    
+    &:hover {
+      box-shadow: $box-shadow-lg;
+    }
+  }
+
+  .card-header {
+    background-color: $white;
+    border-bottom: 1px solid $gray-300;
+    padding: $spacer;
+  }
+  
+  .card-title {
+    margin-bottom: $spacer * 0.5;
+    font-weight: $font-weight-semibold;
+  }
+  
+  .card-subtitle {
+    margin-top: -($spacer * 0.25);
+    margin-bottom: $spacer * 0.5;
+    color: $gray-600;
+  }
+  
+  .card-body {
+    padding: $spacer;
+  }
+  
+  .card-footer {
+    background-color: $white;
+    border-top: 1px solid $gray-300;
+    padding: $spacer;
+  }
+  
+  // Different card styles
+  &.card-primary {
+    border-top: 3px solid $primary-ccsync;
+  }
+  
+  &.card-danger {
+    border-top: 3px solid $danger;
+  }
+  
+  &.card-success {
+    border-top: 3px solid $success;
+  }
+}
+
+// Button enhancements
+.btn {
+  font-weight: $font-weight-medium;
+  padding: 0.5rem 1rem;
+  border-radius: $border-radius;
+  transition: all 0.2s ease-in-out;
+  
+  &.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: $font-size-sm;
+  }
+  
+  &.btn-lg {
+    padding: 0.75rem 1.5rem;
+    font-size: $font-size-lg;
+  }
+  
+  // Primary button with CCSync brand color
+  &.btn-primary-ccsync {
+    background-color: $primary-ccsync;
+    border-color: $primary-ccsync;
+    color: $white;
+    
+    &:hover, &:focus {
+      background-color: $primary-ccsync-dark;
+      border-color: $primary-ccsync-dark;
+    }
+    
+    &:disabled {
+      background-color: $primary-ccsync-light;
+      border-color: $primary-ccsync-light;
+    }
+  }
+  
+  // Outline version
+  &.btn-outline-primary-ccsync {
+    color: $primary-ccsync;
+    border-color: $primary-ccsync;
+    
+    &:hover, &:focus {
+      background-color: $primary-ccsync;
+      border-color: $primary-ccsync;
+      color: $white;
+    }
+  }
+  
+  &.btn-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    
+    i, .bi {
+      margin-right: 0.25rem;
+    }
+    
+    &.btn-icon-only {
+      width: 2.5rem;
+      height: 2.5rem;
+      padding: 0;
+      
+      i, .bi {
+        margin-right: 0;
+      }
+      
+      &.btn-sm {
+        width: 2rem;
+        height: 2rem;
+      }
+      
+      &.btn-lg {
+        width: 3.5rem;
+        height: 3.5rem;
+      }
+    }
+  }
+}
+
+// Form components
+.form-control {
+  padding: 0.5rem 0.75rem;
+  border-radius: $border-radius;
+  border: 1px solid $gray-400;
+  transition: $transition-base;
+  
+  &:focus {
+    border-color: $primary-ccsync;
+    box-shadow: 0 0 0 0.2rem rgba($primary-ccsync, 0.25);
+  }
+  
+  &.is-invalid {
+    border-color: $danger;
+    
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba($danger, 0.25);
+    }
+  }
+}
+
+.form-label {
+  font-weight: $font-weight-medium;
+  margin-bottom: 0.5rem;
+}
+
+.input-group {
+  .input-group-text {
+    background-color: $gray-100;
+    border-color: $gray-400;
+  }
+}
+
+// Badge component
+.badge {
+  font-weight: $font-weight-semibold;
+  padding: 0.35em 0.65em;
+  font-size: 0.75em;
+  
+  &.badge-primary-ccsync {
+    background-color: $primary-ccsync;
+    color: $white;
+  }
+  
+  &.badge-outline-primary-ccsync {
+    background-color: transparent;
+    color: $primary-ccsync;
+    border: 1px solid $primary-ccsync;
+  }
+}
+
+// Alert component
+.alert {
+  border-radius: $border-radius;
+  padding: $spacer;
+  
+  &.alert-primary-ccsync {
+    background-color: lighten($primary-ccsync, 40%);
+    border-color: lighten($primary-ccsync, 30%);
+    color: $primary-ccsync-dark;
+  }
+}
+
+// Tables
+.table-ccsync {
+  width: 100%;
+  margin-bottom: $spacer;
+  color: $gray-900;
+  border-collapse: collapse;
+  
+  th, td {
+    padding: $spacer * 0.75;
+    border-bottom: 1px solid $gray-300;
+  }
+  
+  thead th {
+    border-bottom: 2px solid $gray-400;
+    font-weight: $font-weight-semibold;
+    text-align: left;
+  }
+  
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+  
+  &.table-hover {
+    tbody tr:hover {
+      background-color: $gray-100;
+    }
+  }
+  
+  &.table-striped {
+    tbody tr:nth-of-type(odd) {
+      background-color: rgba($gray-100, 0.5);
+    }
+  }
+}

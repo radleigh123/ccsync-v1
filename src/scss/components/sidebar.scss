@@ -2,16 +2,17 @@
     min-height: 100vh;
     border-right: 1px solid #dee2e6;
     transition: all 0.3s ease;
-    width: 250px;
+    width: 280px;
     overflow-x: hidden;
     position: relative;
     z-index: 1030; // Higher z-index for overlay on mobile
+    background-color: #ffffff;
+    box-shadow: 0 0.125rem 0.25rem rgba(33, 37, 41, 0.075);
 }
 
 .sidebar.collapsed {
     width: 70px;
 }
-
 
 .sidebar.collapsed .sidebar-logo,
 .sidebar.collapsed .sidebar-title,
@@ -94,12 +95,12 @@
         top: 0;
         height: 100%;
         transform: translateX(0);
-        box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 0.5rem 1rem rgba(33, 37, 41, 0.15);
+        width: 280px;
     }
 
     .sidebar.collapsed {
         transform: translateX(-100%);
-        width: 250px;
         /* Keep full width but off-screen */
     }
 
@@ -121,12 +122,38 @@
     .sidebar:not(.collapsed)~.col.container {
         margin-left: 250px;
     }
+    
+    /* Main content adjustment */
+    .main-content {
+        width: 100%;
+        padding-left: 0;
+    }
+    
+    /* Mobile sidebar toggle button */
+    .mobile-sidebar-toggle {
+        display: block;
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background-color: #0D6EFD;
+        color: #ffffff;
+        text-align: center;
+        line-height: 50px;
+        box-shadow: 0 0.5rem 1rem rgba(33, 37, 41, 0.15);
+        z-index: 1025;
+    }
 }
 
 @media (min-width: 992px) {
-
     /* Standard desktop behavior */
     .sidebar-overlay {
+        display: none !important;
+    }
+    
+    .mobile-sidebar-toggle {
         display: none !important;
     }
 }

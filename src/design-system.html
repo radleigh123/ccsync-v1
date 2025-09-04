@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>CCSync Design System</title>
+		<script type="module">
+			import "/js/utils/core.js";
+
+			document.addEventListener("DOMContentLoaded", function () {
+				// Initialize all tooltips
+				const tooltipTriggerList = document.querySelectorAll(
+					'[data-bs-toggle="tooltip"]'
+				);
+				const tooltipList = [...tooltipTriggerList].map(
+					(tooltipTriggerEl) =>
+						new bootstrap.Tooltip(tooltipTriggerEl)
+				);
+
+				// Initialize all popovers
+				const popoverTriggerList = document.querySelectorAll(
+					'[data-bs-toggle="popover"]'
+				);
+				const popoverList = [...popoverTriggerList].map(
+					(popoverTriggerEl) =>
+						new bootstrap.Popover(popoverTriggerEl)
+				);
+			});
+		</script>
+		<style>
+			.component-section {
+				padding: 2rem 0;
+				border-bottom: 1px solid #dee2e6;
+			}
+
+			.color-swatch {
+				width: 100%;
+				height: 80px;
+				border-radius: 4px;
+				margin-bottom: 0.5rem;
+			}
+
+			.code-example {
+				background: #f8f9fa;
+				padding: 1rem;
+				border-radius: 4px;
+				margin: 1rem 0;
+			}
+		</style>
+	</head>
+	<body>
+		<header class="bg-primary-ccsync text-white py-5">
+			<div class="container">
+				<h1>CCSync Design System</h1>
+				<p class="lead">
+					Component library and style guide for CCSync project
+				</p>
+			</div>
+		</header>
+
+		<nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+			<div class="container">
+				<button
+					class="navbar-toggler"
+					type="button"
+					data-bs-toggle="collapse"
+					data-bs-target="#designNavbar">
+					<span class="navbar-toggler-icon"></span>
+				</button>
+				<div class="collapse navbar-collapse" id="designNavbar">
+					<ul class="navbar-nav">
+						<li class="nav-item">
+							<a class="nav-link" href="#colors">Colors</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#typography">
+								Typography
+							</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#spacing">Spacing</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#buttons">Buttons</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#forms">Forms</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="#cards">Cards</a>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		<main class="container py-5">
+			<!-- Colors -->
+			<section id="colors" class="component-section">
+				<h2>Colors</h2>
+				<p>
+					The CCSync color system includes primary brand colors and
+					supporting colors.
+				</p>
+
+				<div class="row g-4 mt-3">
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-primary-ccsync"></div>
+						<div>
+							<strong>Primary</strong>
+							<br />
+							<code>$primary-ccsync</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div
+							class="color-swatch"
+							style="background-color: #0b5ed7"></div>
+						<div>
+							<strong>Primary Dark</strong>
+							<br />
+							<code>$primary-ccsync-dark</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div
+							class="color-swatch"
+							style="background-color: #9ec5fe"></div>
+						<div>
+							<strong>Primary Light</strong>
+							<br />
+							<code>$primary-ccsync-light</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-dark"></div>
+						<div>
+							<strong>Dark</strong>
+							<br />
+							<code>$dark</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-success"></div>
+						<div>
+							<strong>Success</strong>
+							<br />
+							<code>$success</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-danger"></div>
+						<div>
+							<strong>Danger</strong>
+							<br />
+							<code>$danger</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-warning"></div>
+						<div>
+							<strong>Warning</strong>
+							<br />
+							<code>$warning</code>
+						</div>
+					</div>
+					<div class="col-6 col-md-3">
+						<div class="color-swatch bg-info"></div>
+						<div>
+							<strong>Info</strong>
+							<br />
+							<code>$info</code>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Typography -->
+			<section id="typography" class="component-section">
+				<h2>Typography</h2>
+				<p>
+					CCSync uses a consistent typography system based on the
+					Inter font family.
+				</p>
+
+				<div class="mt-4">
+					<h1>Heading 1</h1>
+					<h2>Heading 2</h2>
+					<h3>Heading 3</h3>
+					<h4>Heading 4</h4>
+					<h5>Heading 5</h5>
+					<h6>Heading 6</h6>
+				</div>
+
+				<div class="mt-4">
+					<p>
+						This is a standard paragraph. Lorem ipsum dolor sit
+						amet, consectetur adipiscing elit. Nullam eget felis
+						eget urna mollis pretium.
+					</p>
+					<p class="lead">
+						This is a lead paragraph, used for introductory text or
+						important messages.
+					</p>
+					<p class="small">
+						This is small text, used for captions or less important
+						information.
+					</p>
+				</div>
+
+				<div class="mt-4">
+					<p class="text-primary-ccsync">Primary text color</p>
+					<p class="text-muted">Muted text color</p>
+					<p class="fw-bold">Bold text</p>
+					<p class="fw-semibold">Semibold text</p>
+					<p class="fw-medium">Medium weight text</p>
+					<p class="fw-normal">Normal weight text</p>
+				</div>
+			</section>
+
+			<!-- Spacing -->
+			<section id="spacing" class="component-section">
+				<h2>Spacing</h2>
+				<p>
+					CCSync uses a consistent spacing system with increments
+					based on a 1rem (16px) base.
+				</p>
+
+				<div class="mt-4">
+					<div class="bg-light p-2 mb-3">
+						<div class="bg-primary-ccsync text-white p-1">
+							Spacing 1 (0.25rem / 4px)
+						</div>
+					</div>
+					<div class="bg-light p-2 mb-3">
+						<div class="bg-primary-ccsync text-white p-2">
+							Spacing 2 (0.5rem / 8px)
+						</div>
+					</div>
+					<div class="bg-light p-2 mb-3">
+						<div class="bg-primary-ccsync text-white p-3">
+							Spacing 3 (1rem / 16px)
+						</div>
+					</div>
+					<div class="bg-light p-2 mb-3">
+						<div class="bg-primary-ccsync text-white p-4">
+							Spacing 4 (1.5rem / 24px)
+						</div>
+					</div>
+					<div class="bg-light p-2 mb-3">
+						<div class="bg-primary-ccsync text-white p-5">
+							Spacing 5 (3rem / 48px)
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Buttons -->
+			<section id="buttons" class="component-section">
+				<h2>Buttons</h2>
+				<p>
+					CCSync provides various button styles for different
+					purposes.
+				</p>
+
+				<div class="mt-4">
+					<h5>Button Variants</h5>
+					<div class="mb-3">
+						<button class="btn btn-primary-ccsync me-2">
+							Primary Button
+						</button>
+						<button class="btn btn-outline-primary-ccsync me-2">
+							Outline Button
+						</button>
+						<button class="btn btn-secondary me-2">
+							Secondary Button
+						</button>
+						<button class="btn btn-success me-2">
+							Success Button
+						</button>
+						<button class="btn btn-danger me-2">
+							Danger Button
+						</button>
+					</div>
+
+					<h5 class="mt-4">Button Sizes</h5>
+					<div class="mb-3">
+						<button class="btn btn-primary-ccsync btn-lg me-2">
+							Large Button
+						</button>
+						<button class="btn btn-primary-ccsync me-2">
+							Regular Button
+						</button>
+						<button class="btn btn-primary-ccsync btn-sm me-2">
+							Small Button
+						</button>
+					</div>
+
+					<h5 class="mt-4">Icon Buttons</h5>
+					<div class="mb-3">
+						<button class="btn btn-primary-ccsync btn-icon me-2">
+							<i class="bi bi-check"></i>
+							With Icon
+						</button>
+						<button
+							class="btn btn-outline-primary-ccsync btn-icon me-2">
+							<i class="bi bi-gear"></i>
+							Settings
+						</button>
+						<button
+							class="btn btn-primary-ccsync btn-icon btn-icon-only me-2"
+							aria-label="Settings">
+							<i class="bi bi-gear"></i>
+						</button>
+					</div>
+				</div>
+			</section>
+
+			<!-- Forms -->
+			<section id="forms" class="component-section">
+				<h2>Forms</h2>
+				<p>Consistent form styling for user input.</p>
+
+				<form class="mt-4">
+					<div class="mb-3">
+						<label for="exampleInput1" class="form-label">
+							Text Input
+						</label>
+						<input
+							type="text"
+							class="form-control"
+							id="exampleInput1"
+							placeholder="Enter text" />
+					</div>
+
+					<div class="mb-3">
+						<label for="exampleSelect" class="form-label">
+							Select
+						</label>
+						<select class="form-select" id="exampleSelect">
+							<option selected>Choose an option</option>
+							<option value="1">Option 1</option>
+							<option value="2">Option 2</option>
+							<option value="3">Option 3</option>
+						</select>
+					</div>
+
+					<div class="mb-3">
+						<div class="form-check">
+							<input
+								class="form-check-input"
+								type="checkbox"
+								id="exampleCheck1" />
+							<label class="form-check-label" for="exampleCheck1">
+								Checkbox example
+							</label>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="inlineRadio"
+								id="inlineRadio1"
+								value="option1" />
+							<label class="form-check-label" for="inlineRadio1">
+								Option 1
+							</label>
+						</div>
+						<div class="form-check form-check-inline">
+							<input
+								class="form-check-input"
+								type="radio"
+								name="inlineRadio"
+								id="inlineRadio2"
+								value="option2" />
+							<label class="form-check-label" for="inlineRadio2">
+								Option 2
+							</label>
+						</div>
+					</div>
+
+					<div class="mb-3">
+						<label for="exampleTextarea" class="form-label">
+							Textarea
+						</label>
+						<textarea
+							class="form-control"
+							id="exampleTextarea"
+							rows="3"></textarea>
+					</div>
+
+					<div class="mb-3">
+						<label for="inputWithIcon" class="form-label">
+							Input with Icon
+						</label>
+						<div class="input-group">
+							<span class="input-group-text">
+								<i class="bi bi-person"></i>
+							</span>
+							<input
+								type="text"
+								class="form-control"
+								id="inputWithIcon"
+								placeholder="Username" />
+						</div>
+					</div>
+				</form>
+			</section>
+
+			<!-- Cards -->
+			<section id="cards" class="component-section">
+				<h2>Cards</h2>
+				<p>Card components for displaying content in containers.</p>
+
+				<div class="row g-4 mt-3">
+					<div class="col-md-4">
+						<div class="card">
+							<div class="card-header">Standard Card</div>
+							<div class="card-body">
+								<h5 class="card-title">Card Title</h5>
+								<p class="card-text">
+									Some quick example text to build on the card
+									title and make up the bulk of the card's
+									content.
+								</p>
+								<a href="#" class="btn btn-primary-ccsync">
+									Go somewhere
+								</a>
+							</div>
+							<div class="card-footer text-muted">
+								Last updated 3 mins ago
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="card card-elevated">
+							<div class="card-body">
+								<h5 class="card-title">Elevated Card</h5>
+								<p class="card-text">
+									This card has enhanced elevation with a
+									stronger shadow effect.
+								</p>
+								<a
+									href="#"
+									class="btn btn-outline-primary-ccsync">
+									Learn more
+								</a>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="card card-primary">
+							<div class="card-body">
+								<h5 class="card-title">Primary Card</h5>
+								<p class="card-text">
+									This card has a primary color accent on the
+									top border.
+								</p>
+								<a href="#" class="btn btn-primary-ccsync">
+									Explore
+								</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+			<!-- Responsive Layout -->
+			<section id="responsive" class="component-section">
+				<h2>Responsive Layout</h2>
+				<p>Examples of responsive design patterns.</p>
+
+				<h5 class="mt-4">Responsive Grid</h5>
+				<div class="row g-4 mt-2">
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="bg-light p-3 text-center">Column 1</div>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="bg-light p-3 text-center">Column 2</div>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="bg-light p-3 text-center">Column 3</div>
+					</div>
+					<div class="col-12 col-sm-6 col-md-4 col-lg-3">
+						<div class="bg-light p-3 text-center">Column 4</div>
+					</div>
+				</div>
+
+				<h5 class="mt-4">Responsive Visibility</h5>
+				<div class="mt-2">
+					<div class="bg-info text-white p-3 d-block d-md-none">
+						Visible only on mobile (xs, sm)
+					</div>
+					<div
+						class="bg-warning text-dark p-3 d-none d-md-block d-lg-none">
+						Visible only on medium screens (md)
+					</div>
+					<div class="bg-success text-white p-3 d-none d-lg-block">
+						Visible only on large screens (lg and up)
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="bg-light py-4 mt-5">
+			<div class="container">
+				<p class="text-center mb-0">CCSync Design System © 2025</p>
+			</div>
+		</footer>
+	</body>
+</html>
