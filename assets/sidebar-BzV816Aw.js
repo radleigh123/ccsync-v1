@@ -1,1 +1,0 @@
-function a(){const s=document.getElementById("sidebar-toggle"),e=document.getElementById("sidebar");localStorage.getItem("sidebar-collapsed")==="true"&&e.classList.add("collapsed"),s.addEventListener("click",function(){e.classList.toggle("collapsed"),localStorage.setItem("sidebar-collapsed",e.classList.contains("collapsed"))})}export{a as s};

@@ -1,1 +1,0 @@
-import"./styles-BPnv8btu.js";import{s as e,a as o}from"./floating_button-BWFGP_24.js";import{a}from"./navigation-Bx_hFs0L.js";function n(){const t=localStorage.getItem("user");if(!t){window.location.href="/ccsync-v1/pages/auth/login.html";return}JSON.parse(t)}document.addEventListener("DOMContentLoaded",()=>{n(),a(),e(),o()});
