@@ -2,9 +2,19 @@
 
 require_once __DIR__ . '/../config/database.php';
 
+$allowedOrigins = [
+    "http://localhost:5137",
+    "https://radleigh123.github.io"
+];
+
+$origin = $_SERVER['HTTP_ORIGIN'] ?? '';
+
+if (in_array($origin, $allowedOrigins)) {
+    header("Access-Control-Allow-Origin: $origin");
+    header('Access-Control-Allow-Credentials: true');
+}
+
 header("Content-Type: application/json");
-header("Access-Control-Allow-Origin: http://localhost:5137"); // for dev, allow requests from Vite
-header("Access-Control-Allow-Credentials: true");
 header("Access-Control-Allow-Methods: POST");
 header("Access-Control-Allow-Headers: Content-Type");
 
