@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/settings/settings.scss';
 import { setSidebar } from "/js/utils/components/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import { setupFloatingNav } from '../../utils/components/floating_button';
 
 export function initSettings() {
     const user = localStorage.getItem("user");
@@ -12,6 +13,9 @@ export function initSettings() {
     const userData = JSON.parse(user);
 }
 
-document.addEventListener("DOMContentLoaded", setSidebar);
-document.addEventListener("DOMContentLoaded", setupLogout);
-document.addEventListener("DOMContentLoaded", initSettings);
+document.addEventListener("DOMContentLoaded", () => {
+    initSettings();
+    setupLogout();
+    setSidebar();
+    setupFloatingNav();
+})

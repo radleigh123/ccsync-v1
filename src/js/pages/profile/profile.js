@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
 import { setSidebar } from "/js/utils/components/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import { setupFloatingNav } from '../../utils/components/floating_button';
 
 export function initProfile() {
     const user = localStorage.getItem("user");
@@ -33,11 +34,12 @@ export function initProfile() {
     }
 }
 
-document.addEventListener("DOMContentLoaded", setSidebar);
-document.addEventListener("DOMContentLoaded", setupLogout);
-document.addEventListener("DOMContentLoaded", initProfile);
 document.addEventListener("DOMContentLoaded", () => {
+    initProfile();
+    setupLogout();
+    setSidebar();
+    setupFloatingNav();
     document.getElementById("edit-profile-btn").onclick = function () {
         location.href = "/ccsync-v1/pages/settings/settings.html";
-    }
+    };
 });

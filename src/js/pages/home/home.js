@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
 import { setSidebar } from '/js/utils/components/sidebar.js';
 import { setupLogout } from "/js/utils/navigation.js";
+import { setupFloatingNav } from "/js/utils/components/floating_button.js";
 
 export function initHome() {
     const user = localStorage.getItem("user");
@@ -11,7 +12,6 @@ export function initHome() {
     }
     const userData = JSON.parse(user);
 
-    // Set user name in welcome message
     const welcomeEl = document.querySelector("h1");
     if (welcomeEl) {
         welcomeEl.textContent = `Welcome back, ${userData.name_first || "User"}!`;
@@ -22,6 +22,9 @@ export function initHome() {
     // You can add more selectors and assignments as needed
 }
 
-document.addEventListener("DOMContentLoaded", initHome);
-document.addEventListener("DOMContentLoaded", setupLogout);
-document.addEventListener("DOMContentLoaded", setSidebar, setupLogout);
+document.addEventListener("DOMContentLoaded", () => {
+    initHome();
+    setupLogout();
+    setSidebar();
+    setupFloatingNav();
+});
