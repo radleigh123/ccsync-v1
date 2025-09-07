@@ -1,4 +1,4 @@
-import '/scss/components/floating_button.scss';
+import '/components/scss/floating_button.scss';
 
 export function setupFloatingNav() {
     const floatingBtn = document.createElement('button');

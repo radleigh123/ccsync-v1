@@ -44,6 +44,16 @@
     }
 }
 
+.card-no-hover {
+    transition: none !important;
+
+    &:hover {
+        transform: none !important;
+        box-shadow: inherit !important;
+        cursor: default !important;
+    }
+}
+
 // Form elements
 .form-label {
     font-weight: 500;
@@ -67,4 +77,8 @@
     h3 {
         font-size: 1.5rem;
     }
+}
+
+.iti {
+    width: 100%;
 }

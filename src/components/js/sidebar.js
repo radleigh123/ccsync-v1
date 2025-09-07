@@ -1,4 +1,4 @@
-import '/scss/components/sidebar.scss';
+import '/components/scss/sidebar.scss';
 
 export function setSidebar() {
     const sidebarToggle = document.getElementById('sidebar-toggle');

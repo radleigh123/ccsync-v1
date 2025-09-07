@@ -1,8 +1,8 @@
 import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
-import { setSidebar } from "/js/utils/components/sidebar.js";
+import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
-import { setupFloatingNav } from '../../utils/components/floating_button';
+import { setupFloatingNav } from '/components/js/floating_button.js';
 
 export function initProfile() {
     const user = localStorage.getItem("user");
@@ -12,13 +12,17 @@ export function initProfile() {
     } else {
         // TODO: API please
         const userData = JSON.parse(user);
-        const nameEl = document.querySelector("#user-name-full");
-        const emailEl = document.querySelector("#user-email");
+        const elements = {
+            name: document.querySelector("#user-name-full"),
+            email: document.querySelector("#user-email"),
+            bio: document.querySelector("#user-bio"),
+            image: document.querySelector("#img-profile")
+        };
+
+        populateUserData(userData, elements);
+
+        // TODO: delete if multer is added
         const imgEl = document.querySelector("#img-profile");
-
-        if (nameEl) nameEl.textContent = userData.name_first + " " + userData.name_last;
-        if (emailEl) emailEl.textContent = userData.email;
-
         if (userData.role == "ADMIN" && imgEl) {
             imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
         }
@@ -32,6 +36,46 @@ export function initProfile() {
             window.location.href = "/";
         });
     }
+}
+
+function populateUserData(userData, elements) {
+    // Display name
+    if (elements.name) {
+        elements.name.textContent = userData.display_name ||
+            `${userData.name_first || "SERVER ERROR: no first name"} ${userData.name_last || "SERVER ERROR: no last name"}`.trim() ||
+            "User";
+    }
+
+    // Email
+    if (elements.email) {
+        elements.email.textContent = userData.email || "SERVER ERROR: no email found";
+    }
+
+    // Bio
+    if (elements.bio) {
+        elements.bio.textContent = userData.bio || "This user hasn't set a bio yet.";
+    }
+
+    // Profile Image
+    // TODO: if multer is added
+    /* if (elements.image) {
+        if (userData.profile_image) {
+            elements.image.src = userData.profile_image;
+            elements.image.alt = `${userData.display_name || 'User'}'s profile picture`;
+        } else if (userData.role === "ADMIN") {
+            elements.image.src = "/assets/images/admin-default.png";
+            elements.image.alt = "Admin profile picture";
+        } else {
+            elements.image.src = "/assets/images/default-profile.png";
+            elements.image.alt = "Default profile picture";
+        }
+        
+        // Add error handler for image loading failures
+        elements.image.onerror = function() {
+            console.warn("Failed to load profile image, using fallback");
+            this.src = "/assets/images/default-profile.png";
+        };
+    } */
 }
 
 document.addEventListener("DOMContentLoaded", () => {
