@@ -6,11 +6,11 @@ CCSync is a comprehensive student and semestral management platform designed to 
 
 ## 🔗 Live Demo
 
-- [CCSync Application](https://radleigh123.github.io/ccsync-v1/)
+- [CCSync Application](https://radleigh123.github.io/ccsync-v1/) BROKEN!!!
 - [Design System](https://radleigh123.github.io/ccsync-v1/design-system.html)
 
-**NOTE**: Backend functionality requires a local PHP server. 
-[See backend setup instructions](https://github.com/radleigh123/ccsync-v1/tree/master/temp).
+**NOTE**: ~~Backend functionality requires a local PHP server. 
+[See backend setup instructions](https://github.com/radleigh123/ccsync-v1/tree/master/temp).~~
 
 ## 📖 Overview
 

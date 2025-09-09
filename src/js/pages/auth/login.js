@@ -1,5 +1,7 @@
 import '/js/utils/core.js';
 import '/scss/pages/auth/login.scss';
+import { auth } from "/js/utils/firebaseAuth.js";
+import { signInWithEmailAndPassword } from "firebase/auth";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector("#login-form");
@@ -8,10 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
     form.addEventListener("submit", async (e) => {
         e.preventDefault();
 
-        const idNumber = document.querySelector("#idNumberInput").value;
+        const email = document.querySelector("#emailInput").value;
         const password = document.querySelector("#passwordInput").value;
 
-        try {
+        /* try {
             console.log(JSON.stringify({ idNumber, password }));
             // TODO: API endpoint
             const response = await fetch("http://localhost:8080/demo/ccsync/auth/login.php", {
@@ -34,7 +36,22 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         } catch (error) {
             errorMsg.textContent = "Error connecting to server";
-        }
+        } */
+        signInWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
+                console.log('SUCESSFUL LOGIN');
+
+                const user = userCredentials.user;
+                console.log(user);
+                // TODO: For now store user in Local Storage
+                localStorage.setItem("user", JSON.stringify(user));
+
+                window.location.href = "/ccsync-v1/pages/home/home.html";
+            })
+            .catch(e => {
+                const errorCode = e.code;
+                errorMsg.textContent = e.message;
+            });
     });
 });
 

@@ -32,7 +32,7 @@
                   </div>
 
                   <form id="login-form" class="needs-validation" novalidate>
-                    <div>
+                    <!-- <div>
                       <label
                         for="idNumberInput"
                         class="fw-bold col-sm col-form-label col-form-label-sm"
@@ -55,6 +55,31 @@
                         <div class="valid-feedback fs-6"></div>
                         <div class="invalid-feedback fs-6">
                           Please enter a valid 8-digit ID number.
+                        </div>
+                      </div>
+                    </div> -->
+                    <div>
+                      <label
+                        for="emailInput"
+                        class="fw-bold col-sm col-form-label col-form-label-sm"
+                      >
+                        Email Address
+                      </label>
+                      <div class="input-group">
+                        <span class="input-group-text" id="email">
+                          <i class="bi bi-envelope-fill text-black"></i>
+                        </span>
+                        <input
+                          type="email"
+                          placeholder="Enter your email address"
+                          id="emailInput"
+                          class="form-control"
+                          aria-describedby="email"
+                          required
+                        />
+                        <div class="valid-feedback fs-6"></div>
+                        <div class="invalid-feedback fs-6">
+                          Please enter a valid email address.
                         </div>
                       </div>
                     </div>
