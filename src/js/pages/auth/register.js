@@ -1,6 +1,8 @@
 import '/js/utils/core.js';
 import '/scss/pages/auth/register.scss';
 import { Popover } from 'bootstrap';
+import { auth } from "/js/utils/firebaseAuth.js";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 document.addEventListener("DOMContentLoaded", () => {
     const form = document.querySelector(".needs-validation");
@@ -14,7 +16,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.querySelector("#emailinput").value;
         const password = document.querySelector("#passwordInput").value;
 
-        try {
+        /* try {
             const response = await fetch("http://localhost:8080/demo/ccsync/auth/register.php", {
                 method: "POST",
                 headers: {
@@ -54,7 +56,28 @@ document.addEventListener("DOMContentLoaded", () => {
                 form.appendChild(errorContainer);
             }
             errorContainer.textContent = "Error connecting to server";
-        }
+        } */
+        createUserWithEmailAndPassword(auth, email, password)
+            .then(userCredentials => {
+                console.log('CREATE USER SUCCESS');
+
+                const user = userCredentials.user;
+                window.location.href = "/ccsync-v1/pages/auth/login.html";
+            })
+            .catch(e => {
+                const errorCode = e.code;
+                const errorMessage = e.message;
+
+                console.error("Registration error:", errorCode);
+                let errorContainer = document.querySelector("#error-msg");
+                if (!errorContainer) {
+                    errorContainer = document.createElement("div");
+                    errorContainer.id = "error-msg";
+                    errorContainer.classList.add("alert", "alert-danger", "mt-3");
+                    form.appendChild(errorContainer);
+                }
+                errorContainer.textContent = errorMessage;
+            });
     });
 });
 
