@@ -6,10 +6,10 @@ import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupLogout } from "/js/utils/navigation.js";
 import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/build/css/intlTelInput.css';
-import { accountForm } from './forms/account';
-import { passwordForm } from './forms/password';
-import { profileForm } from "./forms/profile";
-import { profileImgForm } from "./forms/profileImg";
+import { accountForm } from '/js/pages/settings/forms/account.js';
+import { passwordForm } from '/js/pages/settings/forms/password.js';
+import { profileForm } from "/js/pages/settings/forms/profile.js";
+import { profileImgForm } from "/js/pages/settings/forms/profileImg.js";
 
 export function initSettings() {
     const user = localStorage.getItem("user");
