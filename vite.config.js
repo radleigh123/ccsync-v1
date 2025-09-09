@@ -5,11 +5,12 @@ export default defineConfig({
     base: '/ccsync-v1/',
     root: resolve(__dirname, 'src'),
     build: {
-        outDir: '../dist',
+        outDir: resolve(__dirname, 'dist'),
+        emptyOutDir: true,
         rollupOptions: {
             input: {
                 main: resolve(__dirname, 'src', 'index.html'),
-                login: resolve(__dirname, 'src', 'pages', 'auth', 'login.html'),
+                login: resolve(__dirname, 'src/pages/auth/login.html'),
                 register: resolve(__dirname, 'src', 'pages', 'auth', 'register.html'),
                 forgotPassword: resolve(__dirname, 'src', 'pages', 'auth', 'forgot-password.html'),
                 profile: resolve(__dirname, 'src', 'pages', 'profile', 'profile.html'),
