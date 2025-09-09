@@ -1,10 +1,11 @@
 import '/js/utils/core.js';
+import 'intl-tel-input/build/css/intlTelInput.css';
+import intlTelInput from 'intl-tel-input/intlTelInputWithUtils';
 import '/scss/pages/settings/settings.scss';
 import { Tab } from "bootstrap";
 import { setSidebar } from "/components/js/sidebar.js";
 import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupLogout } from "/js/utils/navigation.js";
-import 'https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/intlTelInput.min.js';
 
 export function initSettings() {
     const user = localStorage.getItem("user");
@@ -18,7 +19,7 @@ export function initSettings() {
         email: document.getElementById('email'),
         displayName: document.getElementById('display-name'),
         bio: document.getElementById('bio'),
-        phone: document.getElementById('phone'),
+        phone: document.querySelector('#phone'),
         gender: document.getElementById('gender')
     };
 
@@ -84,50 +85,46 @@ function populateUserData(userData, elements) {
 function setupFormHandlers() {
     // Initialize intl-tel-input for phone number field
     const phoneInput = document.querySelector('#phone');
-    let iti;
-
-    if (phoneInput) {
-        iti = window.intlTelInput(phoneInput, {
-            utilsScript: () => import("https://cdn.jsdelivr.net/npm/intl-tel-input@25.10.5/build/js/utils.js"),
-            separateDialCode: true,
-            formatOnDisplay: true,
-            initialCountry: "auto",
-            preferredCountries: ["ph", "us", "gb", "au"],
-            geoIpLookup: function (callback) {
-                callback("ph");
-            }
-        });
-
-        const userData = JSON.parse(localStorage.getItem("user") || '{}');
-        if (userData.phone) {
-            setTimeout(() => {
-                try {
-                    iti.setNumber(userData.phone);
-
-                    if (!userData.phone.startsWith('+')) {
-                        iti.setNumber(`+${userData.phone}`);
-                    }
-                } catch (e) {
-                    console.warn('Error setting phone number in iti:', e);
-                    phoneInput.value = userData.phone;
-                }
-            }, 100);
+    const iti = intlTelInput(phoneInput, {
+        loadUtils: () => import("intl-tel-input/utils"),
+        separateDialCode: true,
+        formatOnDisplay: true,
+        initialCountry: "auto",
+        preferredCountries: ["ph", "us", "gb", "au"],
+        geoIpLookup: function (callback) {
+            callback("ph");
         }
+    });
 
-        phoneInput.addEventListener('blur', function () {
-            if (phoneInput.value.trim()) {
-                if (iti.isValidNumber()) {
-                    phoneInput.classList.remove('is-invalid');
-                    phoneInput.classList.add('is-valid');
-                } else {
-                    phoneInput.classList.remove('is-valid');
-                    phoneInput.classList.add('is-invalid');
+    const userData = JSON.parse(localStorage.getItem("user") || '{}');
+    if (userData.phone) {
+        setTimeout(() => {
+            try {
+                iti.setNumber(userData.phone);
+
+                if (!userData.phone.startsWith('+')) {
+                    iti.setNumber(`+${userData.phone}`);
                 }
-            } else {
-                phoneInput.classList.remove('is-valid', 'is-invalid');
+            } catch (e) {
+                console.warn('Error setting phone number in iti:', e);
+                phoneInput.value = userData.phone;
             }
-        });
+        }, 100);
     }
+
+    phoneInput.addEventListener('blur', function () {
+        if (phoneInput.value.trim()) {
+            if (iti.isValidNumber()) {
+                phoneInput.classList.remove('is-invalid');
+                phoneInput.classList.add('is-valid');
+            } else {
+                phoneInput.classList.remove('is-valid');
+                phoneInput.classList.add('is-invalid');
+            }
+        } else {
+            phoneInput.classList.remove('is-valid', 'is-invalid');
+        }
+    });
 
     const accountInfoForm = document.getElementById('account-info-form');
     if (accountInfoForm) {
@@ -135,7 +132,7 @@ function setupFormHandlers() {
             e.preventDefault();
 
             const email = document.getElementById('email').value;
-            const phoneNumber = '';
+            let phoneNumber = '';
 
             if (iti) {
                 try {

@@ -41,7 +41,8 @@ export default {
     /* resolve: {
         alias: {
             '~bootstrap': 'node_modules/bootstrap',
-            '~aos': 'node_modules/aos'
+            '~aos': 'node_modules/aos',
+            '~intl-tel-input': 'node_modules/intl-tel-input'
         }
     } */
 }

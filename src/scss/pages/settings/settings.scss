@@ -1,5 +1,13 @@
 @import "/scss/variables";
 
+.iti {
+    width: 100%;
+    --iti-path-flags-1x: url("intl-tel-input/build/img/flags.webp");
+    --iti-path-flags-2x: url("intl-tel-input/build/img/flags@2x.webp");
+    --iti-path-globe-1x: url("intl-tel-input/build/img/globe.webp");
+    --iti-path-globe-2x: url("intl-tel-input/build/img/globe@2x.webp");
+}
+
 // Settings page specific styles
 .tab-content {
     min-height: 400px;
@@ -77,8 +85,4 @@
     h3 {
         font-size: 1.5rem;
     }
-}
-
-.iti {
-    width: 100%;
 }
