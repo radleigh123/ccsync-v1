@@ -1,11 +1,15 @@
 import '/js/utils/core.js';
-import 'intl-tel-input/build/css/intlTelInput.css';
-import intlTelInput from 'intl-tel-input/intlTelInputWithUtils';
 import '/scss/pages/settings/settings.scss';
 import { Tab } from "bootstrap";
 import { setSidebar } from "/components/js/sidebar.js";
 import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import intlTelInput from 'intl-tel-input';
+import 'intl-tel-input/build/css/intlTelInput.css';
+import { accountForm } from './forms/account';
+import { passwordForm } from './forms/password';
+import { profileForm } from "./forms/profile";
+import { profileImgForm } from "./forms/profileImg";
 
 export function initSettings() {
     const user = localStorage.getItem("user");
@@ -13,17 +17,6 @@ export function initSettings() {
         window.location.href = "/ccsync-v1/pages/auth/login.html";
         return;
     }
-
-    const userData = JSON.parse(user);
-    const elements = {
-        email: document.getElementById('email'),
-        displayName: document.getElementById('display-name'),
-        bio: document.getElementById('bio'),
-        phone: document.querySelector('#phone'),
-        gender: document.getElementById('gender')
-    };
-
-    populateUserData(userData, elements);
 
     // Handle tab switching via URL parameters
     const urlParams = new URLSearchParams(window.location.search);
@@ -37,6 +30,15 @@ export function initSettings() {
         }
     }
 
+    populateUserData(
+        JSON.parse(user),
+        {
+            email: document.getElementById('email'),
+            displayName: document.getElementById('display-name'),
+            bio: document.getElementById('bio'),
+            phone: document.querySelector('#phone'),
+            gender: document.getElementById('gender')
+        });
     setupFormHandlers();
 }
 
@@ -83,8 +85,44 @@ function populateUserData(userData, elements) {
 }
 
 function setupFormHandlers() {
+    const userData = JSON.parse(localStorage.getItem("user") || '{}');
+
     // Initialize intl-tel-input for phone number field
     const phoneInput = document.querySelector('#phone');
+    const iti = setupTelInput(userData, phoneInput);
+
+    accountForm(userData, document.getElementById('account-info-form'), iti);
+
+    const updatePasswordBtn = document.getElementById('update-password-btn');
+    const currentPassword = document.getElementById('current-password');
+    const newPassword = document.getElementById('new-password');
+    const confirmPassword = document.getElementById('confirm-password');
+    passwordForm(
+        userData,
+        document.getElementById('current-password')?.closest('.card'),
+        updatePasswordBtn,
+        {
+            currentPassword,
+            newPassword,
+            confirmPassword
+        });
+
+    profileForm(userData, document.getElementById('profile-form'));
+    profileImgForm(userData, document.getElementById('profile-image-form'));
+
+    // For tab changes to update URL
+    const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
+    tabEls.forEach(tabEl => {
+        tabEl.addEventListener('shown.bs.tab', event => {
+            const id = event.target.id.replace('-tab', '');
+            const url = new URL(window.location);
+            url.searchParams.set('tab', id);
+            window.history.replaceState({}, '', url);
+        });
+    });
+}
+
+function setupTelInput(userData, phoneInput) {
     const iti = intlTelInput(phoneInput, {
         loadUtils: () => import("intl-tel-input/utils"),
         separateDialCode: true,
@@ -96,7 +134,6 @@ function setupFormHandlers() {
         }
     });
 
-    const userData = JSON.parse(localStorage.getItem("user") || '{}');
     if (userData.phone) {
         setTimeout(() => {
             try {
@@ -126,127 +163,7 @@ function setupFormHandlers() {
         }
     });
 
-    const accountInfoForm = document.getElementById('account-info-form');
-    if (accountInfoForm) {
-        accountInfoForm.addEventListener('submit', function (e) {
-            e.preventDefault();
-
-            const email = document.getElementById('email').value;
-            let phoneNumber = '';
-
-            if (iti) {
-                try {
-                    phoneNumber = iti.isValidNumber() ? iti.getNumber() : '';
-                } catch (e) {
-                    console.warn('Error getting phone number from iti:', e);
-                    phoneNumber = phoneInput.value; // Fallback to raw input
-                }
-            }
-
-            const gender = document.getElementById('gender').value;
-
-            if (!email) {
-                alert('Please provide an email address');
-                return;
-            }
-
-            // NOTE: API to update
-            alert('Account information update functionality will be implemented in the future');
-            console.log(JSON.stringify({ email, phoneNumber, gender }));
-
-            // Update local storage example
-            // const user = JSON.parse(localStorage.getItem('user') || '{}');
-            // user.email = email;
-            // user.phone = phone;
-            // user.gender = gender;
-            // localStorage.setItem('user', JSON.stringify(user));
-        });
-    }
-
-    // Password update form handler
-    const passwordForm = document.getElementById('current-password')?.closest('.card');
-    if (passwordForm) {
-        const updatePasswordBtn = passwordForm.querySelector('.btn-primary');
-        updatePasswordBtn?.addEventListener('click', function (e) {
-            e.preventDefault();
-
-            const currentPassword = document.getElementById('current-password').value;
-            const newPassword = document.getElementById('new-password').value;
-            const confirmPassword = document.getElementById('confirm-password').value;
-
-            if (!currentPassword || !newPassword || !confirmPassword) {
-                alert('Please fill in all password fields');
-                return;
-            }
-
-            if (newPassword !== confirmPassword) {
-                alert('New passwords do not match');
-                return;
-            }
-
-            // NOTE: call API to update
-            alert('Password update functionality will be implemented in the future');
-            console.log(JSON.stringify({ currentPassword, newPassword }));
-        });
-    }
-
-    // Profile update form handler
-    const profileForm = document.getElementById('profile-form');
-    profileForm?.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const displayName = document.getElementById('display-name').value;
-        const bio = document.getElementById('bio').value;
-
-        if (!displayName) {
-            alert('Please provide a display name');
-            return;
-        }
-
-        // NOTE: call API to update
-        alert('Profile update functionality will be implemented in the future');
-        console.log(JSON.stringify({ displayName, bio }));
-
-        // Update local storage example
-        // const user = JSON.parse(localStorage.getItem('user') || '{}');
-        // user.displayName = displayName;
-        // user.bio = bio;
-        // localStorage.setItem('user', JSON.stringify(user));
-    });
-
-    // Profile image upload handler
-    const profileImageForm = document.getElementById('profile-image-form');
-    profileImageForm?.addEventListener('submit', function (e) {
-        e.preventDefault();
-
-        const fileInput = document.getElementById('profile-image');
-        if (fileInput.files.length === 0) {
-            alert('Please select an image to upload');
-            return;
-        }
-
-        const file = fileInput.files[0];
-
-        // Check if the file is an image
-        if (!file.type.startsWith('image/')) {
-            alert('Please select a valid image file');
-            return;
-        }
-
-        // NOTE: call API to update, maybe multer
-        alert('Profile image upload functionality will be implemented in the future');
-    });
-
-    // For tab changes to update URL
-    const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');
-    tabEls.forEach(tabEl => {
-        tabEl.addEventListener('shown.bs.tab', event => {
-            const id = event.target.id.replace('-tab', '');
-            const url = new URL(window.location);
-            url.searchParams.set('tab', id);
-            window.history.replaceState({}, '', url);
-        });
-    });
+    return iti;
 }
 
 document.addEventListener("DOMContentLoaded", () => {
