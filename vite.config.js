@@ -1,7 +1,7 @@
 import { resolve } from 'path'
-import { preview } from 'vite'
+import { defineConfig } from "vite";
 
-export default {
+export default defineConfig({
     base: '/ccsync-v1/',
     root: resolve(__dirname, 'src'),
     build: {
@@ -45,4 +45,4 @@ export default {
             '~intl-tel-input': 'node_modules/intl-tel-input'
         }
     } */
-}
+})
