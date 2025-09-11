@@ -19,28 +19,30 @@ $fName = $data['firstName'] ?? "";
 $lName = $data['lastName'] ?? "";
 $idNumber = $data['idNumber'] ?? "";
 $email = $data['email'] ?? "";
-// FIXME: Needs encryption, maybe BycryptJS
-$password = $data['password'] ?? "";
 
-if (!$fName || !$lName || !$email || !$idNumber || !$password) {
+if (!$fName || !$lName || !$email || !$idNumber) {
     http_response_code(400);
     echo json_encode(["success" => false, "message" => "Missing required fields"]);
     exit;
 }
 
-$hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+// if idNumber greater than 10 characters
+if (strlen($idNumber) > 10) {
+    http_response_code(400);
+    echo json_encode(["success" => false, "message" => "ID Number must be 10 characters or less"]);
+    exit;
+}
 
 try {
     $query = "
-        INSERT INTO users (name_first, name_last, email, id_school_number, password)
-        VALUES (:fName, :lName, :email, :idNumber, :password);
+        INSERT INTO users (name_first, name_last, email, id_school_number)
+        VALUES (:fName, :lName, :email, :idNumber);
     ";
     $stmt = $conn->prepare($query);
     $stmt->bindParam(":fName", $fName);
     $stmt->bindParam(":lName", $lName);
     $stmt->bindParam(":email", $email);
     $stmt->bindParam(":idNumber", $idNumber);
-    $stmt->bindParam(":password", $hashedPassword);
     $stmt->execute();
 
     http_response_code(200);
