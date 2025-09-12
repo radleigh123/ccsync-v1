@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const password = document.querySelector("#passwordInput").value;
 
         try {
-            const response = await fetch("http://localhost:8080/demo/ccsync/auth/register.php", {
+            const response = await fetch("https://localhost:443/demo/CCSync/auth/register.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
