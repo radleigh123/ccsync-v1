@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             console.log(JSON.stringify({ idNumber, password }));
             // TODO: API endpoint
-            const response = await fetch("http://localhost:8080/demo/ccsync/auth/login.php", {
+            const response = await fetch("http://localhost:80/demo/ccsync/auth/login.php", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"

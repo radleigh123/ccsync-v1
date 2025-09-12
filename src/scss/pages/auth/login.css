@@ -1,0 +1,39 @@
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+
+@media (max-width: 1000px) {
+  .bg-col {
+    display: none !important;
+  }
+  .col-md-5 {
+    -webkit-box-flex: 0;
+        -ms-flex: 0 0 100%;
+            flex: 0 0 100%;
+    max-width: 100%;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+  }
+  .card {
+    margin: 0 auto;
+  }
+  .card .text-center h1 {
+    font-size: 2rem;
+  }
+  .card .text-center p {
+    font-size: 1rem;
+  }
+}
+/*# sourceMappingURL=login.css.map */
