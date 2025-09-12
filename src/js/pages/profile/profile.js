@@ -5,29 +5,67 @@ import { setupLogout } from "/js/utils/navigation.js";
 import { setupFloatingNav } from '/components/js/floating_button.js';
 
 export function initProfile() {
+    // Check for logged in user
     const user = localStorage.getItem("user");
     if (!user) {
         window.location.href = "/ccsync-v1/pages/auth/login.html";
         return;
+    }
+
+    // Check if we're viewing a selected user from the card
+    const selectedUser = localStorage.getItem("selected_user");
+    
+    // Determine which user data to display
+    let userData;
+    let isCurrentUser = true;
+    
+    if (selectedUser) {
+        userData = JSON.parse(selectedUser);
+        const loggedInUser = JSON.parse(user);
+        isCurrentUser = (userData.id === loggedInUser.id);
+        
+        // Clear selected_user to avoid persisting between navigations
+        localStorage.removeItem("selected_user");
     } else {
-        // TODO: API please
-        const userData = JSON.parse(user);
-        const elements = {
-            name: document.querySelector("#user-name-full"),
-            email: document.querySelector("#user-email"),
-            bio: document.querySelector("#user-bio"),
-            image: document.querySelector("#img-profile")
+        userData = JSON.parse(user);
+    }
+    
+    const elements = {
+        name: document.querySelector("#user-name-full"),
+        email: document.querySelector("#user-email"),
+        bio: document.querySelector("#user-bio"),
+        image: document.querySelector("#img-profile")
+    };
+    
+    // Only show edit button if viewing your own profile
+    const editBtn = document.getElementById("edit-profile-btn");
+    if (editBtn) {
+        editBtn.style.display = isCurrentUser ? "block" : "none";
+    }
+    
+    // Add a back button if viewing someone else's profile
+    if (!isCurrentUser) {
+        const backBtn = document.createElement("button");
+        backBtn.className = "btn btn-outline-secondary ms-2";
+        backBtn.textContent = "Back to List";
+        backBtn.onclick = function() {
+            window.location.href = "/ccsync-v1/pages/home/home.html";
         };
-
-        populateUserData(userData, elements);
-
-        // TODO: delete if multer is added
-        const imgEl = document.querySelector("#img-profile");
-        if (userData.role == "ADMIN" && imgEl) {
-            imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
+        
+        if (editBtn && editBtn.parentNode) {
+            editBtn.parentNode.appendChild(backBtn);
         }
     }
 
+    populateUserData(userData, elements);
+    
+    // Set profile image based on role
+    const imgEl = document.querySelector("#img-profile");
+    if (userData.role == "ADMIN" && imgEl) {
+        imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
+    }
+    
+    // Setup logout functionality
     const logout = document.querySelector("#logout-link");
     if (logout) {
         logout.addEventListener("click", (e) => {
