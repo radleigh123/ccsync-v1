@@ -1,8 +1,6 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
-import { setupLogout } from "/js/utils/navigation.js";
-import { setupFloatingNav } from "/components/js/floating_button.js";
-import { setupMobileSidebarToggle } from "/components/js/mobile_sidebar_toggle.js";
+import '/components/js/sidebar.js';
 import { Tooltip } from 'bootstrap';
 
 export function initHome() {
@@ -232,11 +230,7 @@ export async function printList() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
-    // setupLogout();
-    // setSidebar();
-    // setupFloatingNav();
-    // printList();
-    // setupMobileSidebarToggle();
+    printList();
 
     const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(tooltipTriggerEl => {

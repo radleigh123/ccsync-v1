@@ -4,80 +4,6 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<title>Dashboard - CCSync</title>
-
-		<style>
-			.bd-placeholder-img {
-				font-size: 1.125rem;
-				text-anchor: middle;
-				-webkit-user-select: none;
-				-moz-user-select: none;
-				user-select: none;
-			}
-			@media (min-width: 768px) {
-				.bd-placeholder-img-lg {
-					font-size: 3.5rem;
-				}
-			}
-			.b-example-divider {
-				width: 100%;
-				height: 3rem;
-				background-color: #0000001a;
-				border: solid rgba(0, 0, 0, 0.15);
-				border-width: 1px 0;
-				box-shadow: inset 0 0.5em 1.5em #0000001a,
-					inset 0 0.125em 0.5em #00000026;
-			}
-			.b-example-vr {
-				flex-shrink: 0;
-				width: 1.5rem;
-				height: 100vh;
-			}
-			.bi {
-				vertical-align: -0.125em;
-				fill: currentColor;
-			}
-			.nav-scroller {
-				position: relative;
-				z-index: 2;
-				height: 2.75rem;
-				overflow-y: hidden;
-			}
-			.nav-scroller .nav {
-				display: flex;
-				flex-wrap: nowrap;
-				padding-bottom: 1rem;
-				margin-top: -1px;
-				overflow-x: auto;
-				text-align: center;
-				white-space: nowrap;
-				-webkit-overflow-scrolling: touch;
-			}
-			.btn-bd-primary {
-				--bd-violet-bg: #712cf9;
-				--bd-violet-rgb: 112.520718, 44.062154, 249.437846;
-				--bs-btn-font-weight: 600;
-				--bs-btn-color: var(--bs-white);
-				--bs-btn-bg: var(--bd-violet-bg);
-				--bs-btn-border-color: var(--bd-violet-bg);
-				--bs-btn-hover-color: var(--bs-white);
-				--bs-btn-hover-bg: #6528e0;
-				--bs-btn-hover-border-color: #6528e0;
-				--bs-btn-focus-shadow-rgb: var(--bd-violet-rgb);
-				--bs-btn-active-color: var(--bs-btn-hover-color);
-				--bs-btn-active-bg: #5a23c8;
-				--bs-btn-active-border-color: #5a23c8;
-			}
-			.bd-mode-toggle {
-				z-index: 1500;
-			}
-			.bd-mode-toggle .bi {
-				width: 1em;
-				height: 1em;
-			}
-			.bd-mode-toggle .dropdown-menu .active .bi {
-				display: block !important;
-			}
-		</style>
 	</head>
 
 	<body>
@@ -201,12 +127,6 @@
 			<div
 				class="sidebar d-flex flex-column flex-shrink-0 bg-body-tertiary"
 				style="width: 380px">
-				<!-- <a
-					href="/"
-					class="d-flex align-items-center mb-3 mb-md-0 me-md-auto link-body-emphasis text-decoration-none">
-					<i class="bi bi-bootstrap pe-none me-2"></i>
-					<span class="fs-4">Sidebar</span>
-				</a> -->
 				<div
 					class="d-flex justify-content-center align-items-center mb-3">
 					<a class="navbar-brand d-flex" href="/">
@@ -217,7 +137,7 @@
 					</a>
 				</div>
 
-				<div class="px-5" style="opacity: 0.3;">
+				<div class="px-5" style="opacity: 0.3">
 					<hr />
 				</div>
 
@@ -377,6 +297,118 @@
 					</ul>
 				</div>
 			</div>
+
+			<!-- Main Content -->
+			<div
+				class="main-content main-content-bg col container py-4 py-xl-5">
+				<div class="row mb-5">
+					<div class="col-md-8 col-xl-6 text-center mx-auto">
+						<h2>Dashboard</h2>
+						<p>
+							Curae hendrerit donec commodo hendrerit egestas
+							tempus, turpis facilisis nostra nunc. Vestibulum dui
+							eget ultrices.
+						</p>
+					</div>
+				</div>
+				<div class="row gy-4 row-cols-1 row-cols-md-3 row-cols-xl-3">
+					<!-- Members -->
+					<div class="col">
+						<div class="card">
+							<div
+								class="card-body d-flex flex-column justify-content-between p-4">
+								<div>
+									<h6
+										class="text-uppercase text-muted text-primary-ccsync">
+										Registered Members
+									</h6>
+									<h4 class="display-3 fw-bold text-center">
+										956
+									</h4>
+									<hr />
+									<div>
+										<span>
+											Lectus ut nibh quam, felis
+											porttitor. Ante nec venenatis etiam
+											lacinia.
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Total -->
+					<div class="col">
+						<div class="card">
+							<div
+								class="card-body d-flex flex-column justify-content-between p-4">
+								<div>
+									<h6
+										class="text-uppercase text-muted text-primary-ccsync">
+										Total CSS Students
+									</h6>
+									<h4 class="display-3 fw-bold text-center">
+										1, 256
+									</h4>
+									<hr />
+									<div>
+										<span>
+											Lectus ut nibh quam, felis
+											porttitor. Ante nec venenatis etiam
+											lacinia.
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Paid -->
+					<div class="col">
+						<div class="card">
+							<div
+								class="card-body d-flex flex-column justify-content-between p-4">
+								<div>
+									<h6
+										class="text-uppercase text-muted text-primary-ccsync">
+										Paid membership
+									</h6>
+									<h4 class="display-3 fw-bold text-center">
+										324
+									</h4>
+									<hr />
+									<div>
+										<span>
+											Lectus ut nibh quam, felis
+											porttitor. Ante nec venenatis etiam
+											lacinia.
+										</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<hr class="my-5" />
+				<section class="row py-xl-5">
+					<div class="container">
+						<div class="row mb-4">
+							<div class="col-md-8 col-xl-6 text-center mx-auto">
+								<h2>This month's events</h2>
+							</div>
+						</div>
+						<!-- USERS LIST HERE -->
+						<div class="row">
+							<div class="col">
+								<div id="userList" class="container-fluid px-0">
+									<p class="display-5">Users List</p>
+									<!-- Table will be injected here -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<div id="errorMsg"></div>
+				</section>
+			</div>
 		</main>
 
 		<!-- Footer - no foot either we fly high 👟 -->
@@ -384,73 +416,6 @@
 		<script type="module" src="/js/pages/home/home.js" defer></script>
 
 		<script>
-			document.addEventListener("DOMContentLoaded", function () {
-				// Toggle sub-navigation
-				document.querySelectorAll(".toggle-nav").forEach((item) => {
-					item.addEventListener("click", function () {
-						const subNav = this.nextElementSibling;
-
-						// Toggle the open class on the parent element
-						let parent = this.parentElement;
-						parent.classList.toggle("open");
-
-						// Toggle the show class on the sub-navigation
-						subNav.classList.toggle("show");
-					});
-				});
-
-				// Handle all navigation links
-				document.querySelectorAll(".nav-link").forEach((link) => {
-					link.addEventListener("click", function (e) {
-						// Don't prevent default for toggle-nav links, they need to toggle
-						if (!this.classList.contains("toggle-nav")) {
-							e.preventDefault();
-						}
-
-						// Remove active class from all links
-						document.querySelectorAll(".nav-link").forEach((l) => {
-							l.classList.remove("active");
-						});
-
-						// Add active class to clicked link
-						this.classList.add("active");
-
-						// If this is a sub-nav item, also activate its parent menu
-						if (this.closest(".sub-nav")) {
-							const parentToggle =
-								this.closest(".sub-nav").previousElementSibling;
-
-							if (parentToggle) {
-								parentToggle.classList.add("active");
-
-								// Make sure sub-menu stays open when item is selected
-								const parentItem = this.closest(".nav-item");
-
-								if (parentItem) {
-									parentItem.classList.add("open");
-									this.closest(".sub-nav").classList.add(
-										"show"
-									);
-								}
-							}
-						}
-					});
-				});
-
-				// Initial state - check if URL hash matches any nav link and activate it
-				const hash = window.location.hash;
-
-				if (hash) {
-					const targetLink = document.querySelector(
-						`a.nav-link[href="${hash}"]`
-					);
-
-					if (targetLink) {
-						// Simulate click to set active states properly
-						targetLink.click();
-					}
-				}
-			});
 		</script>
 	</body>
 </html>
