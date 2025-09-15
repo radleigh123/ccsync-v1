@@ -4,6 +4,25 @@
     --sidebar-bg: #f8f9fa;
 }
 
+.sidebar {
+    background-color: var(--sidebar-bg);
+    min-height: 100vh;
+    min-width: 280px;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    display: flex;
+    flex-direction: column;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+}
+
+.sidebar-logo {
+    object-fit: contain;
+    max-width: 100%;
+}
+
 .sidebar-nav-wrapper {
     flex: 1;
     overflow-y: auto;
@@ -142,7 +161,7 @@
 .user-info {
     background-color: var(--primary-gold);
     color: var(--primary-dark);
-    padding: 15px 20px;
+    // padding: 15px 20px;
     margin-top: auto;
     flex-shrink: 0;
     position: sticky;
@@ -173,7 +192,15 @@
 
 .more-btn:hover {
     color: #353535;
-    transform: scale(1.1);
+    background-color: #6c757d46;
+    border-radius: 10px;
+}
+
+.more-btn:active {
+    color: #353535;
+    background-color: #6c757d46;
+    border-radius: 10px;
+    transform: scale(0.95);
 }
 
 main {
@@ -234,4 +261,31 @@ main {
 
 .scrollarea {
     overflow-y: auto;
+}
+
+@media (max-width: 1320px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+    }
+
+    .sidebar-logo {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+@media (min-width: 1321px) {
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 25%;
+        z-index: 10000;
+    }
+
+    .sidebar-logo {
+        width: 300px;
+        height: 300px;
+    }
 }
