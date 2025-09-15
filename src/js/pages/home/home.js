@@ -1,6 +1,5 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
-import { setSidebar } from '/components/js/sidebar.js';
 import { setupLogout } from "/js/utils/navigation.js";
 import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupMobileSidebarToggle } from "/components/js/mobile_sidebar_toggle.js";

@@ -199,7 +199,7 @@
 			<div class="b-example-divider b-example-vr"></div>
 			<!-- Sidebar Expand -->
 			<div
-				class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary"
+				class="d-flex flex-column flex-shrink-0 bg-body-tertiary"
 				style="width: 380px">
 				<!-- <a
 					href="/"
@@ -216,137 +216,155 @@
 							class="sidebar-logo me-2" />
 					</a>
 				</div>
-				<hr />
-				<ul class="nav flex-column mb-auto gap-3">
-					<!-- Home -->
-					<li class="nav-item">
-						<a
-							href="#"
-							class="nav-link justify-content-start text-decoration-none link-body-emphasis"
-							aria-current="page">
-							<i class="bi bi-circle-fill pe-none me-2"></i>
-							<span>Home</span>
-						</a>
-					</li>
-					<!-- Member management -->
-					<li class="nav-item">
-						<a
-							href="#"
-							class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav active">
-							<div class="me-auto">
+
+				<div class="px-5" style="opacity: 0.3;">
+					<hr />
+				</div>
+
+				<div class="sidebar-nav-wrapper">
+					<ul class="nav flex-column mb-auto gap-2 px-3">
+						<!-- Home -->
+						<li class="nav-item">
+							<a
+								href="#"
+								class="nav-link justify-content-start text-decoration-none link-body-emphasis"
+								aria-current="page">
 								<i class="bi bi-circle-fill pe-none me-2"></i>
-								<span>Member management</span>
+								<span>Home</span>
+							</a>
+						</li>
+						<!-- Member management -->
+						<li class="nav-item">
+							<a
+								href="#"
+								class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav active">
+								<div class="me-auto">
+									<i
+										class="bi bi-circle-fill pe-none me-2"></i>
+									<span>Member management</span>
+								</div>
+								<i
+									class="bi bi-chevron-right nav-caret"
+									style="opacity: 0.3"></i>
+							</a>
+							<div class="sub-nav">
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#view-members">
+										View members
+									</a>
+								</div>
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#add-member">
+										Add member
+									</a>
+								</div>
 							</div>
-							<i
-								class="bi bi-chevron-right nav-caret"
-								style="opacity: 0.3"></i>
-						</a>
-						<div class="sub-nav">
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#view-members">
-									View members
-								</a>
+						</li>
+						<!-- Event Management -->
+						<li class="nav-item">
+							<a
+								href="#"
+								class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
+								<div class="me-auto">
+									<i
+										class="bi bi-circle-fill pe-none me-2"></i>
+									<span>Event management</span>
+								</div>
+								<i
+									class="bi bi-chevron-right nav-caret"
+									style="opacity: 0.3"></i>
+							</a>
+							<div class="sub-nav">
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#view-events">
+										View events
+									</a>
+								</div>
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#add-event">
+										Add event
+									</a>
+								</div>
 							</div>
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#add-member">
-									Add member
-								</a>
+						</li>
+						<!-- Requirement Management -->
+						<li class="nav-item">
+							<a
+								href="#"
+								class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
+								<div class="me-auto">
+									<i
+										class="bi bi-circle-fill pe-none me-2"></i>
+									<span>Requirement management</span>
+								</div>
+								<i
+									class="bi bi-chevron-right nav-caret"
+									style="opacity: 0.3"></i>
+							</a>
+							<div class="sub-nav">
+								<div class="sub-nav-item">
+									<a
+										class="nav-link"
+										href="#view-requirement">
+										View requirements
+									</a>
+								</div>
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#add-requirement">
+										Add requirement
+									</a>
+								</div>
 							</div>
-						</div>
-					</li>
-					<!-- Event Management -->
-					<li class="nav-item">
-						<a
-							href="#"
-							class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
-							<div class="me-auto">
-								<i class="bi bi-circle-fill pe-none me-2"></i>
-								<span>Event management</span>
+						</li>
+						<!-- Officer Management -->
+						<li class="nav-item">
+							<a
+								href="#"
+								class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
+								<div class="me-auto">
+									<i
+										class="bi bi-circle-fill pe-none me-2"></i>
+									<span>Officer management</span>
+								</div>
+								<i
+									class="bi bi-chevron-right nav-caret"
+									style="opacity: 0.3"></i>
+							</a>
+							<div class="sub-nav">
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#view-officers">
+										View officers
+									</a>
+								</div>
+								<div class="sub-nav-item">
+									<a class="nav-link" href="#add-officer">
+										Add officer
+									</a>
+								</div>
 							</div>
-							<i
-								class="bi bi-chevron-right nav-caret"
-								style="opacity: 0.3"></i>
-						</a>
-						<div class="sub-nav">
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#view-events">
-									View events
-								</a>
-							</div>
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#add-event">
-									Add event
-								</a>
-							</div>
-						</div>
-					</li>
-					<!-- Requirement Management -->
-					<li class="nav-item">
-						<a
-							href="#"
-							class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
-							<div class="me-auto">
-								<i class="bi bi-circle-fill pe-none me-2"></i>
-								<span>Requirement management</span>
-							</div>
-							<i
-								class="bi bi-chevron-right nav-caret"
-								style="opacity: 0.3"></i>
-						</a>
-						<div class="sub-nav">
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#view-requirement">
-									View requirements
-								</a>
-							</div>
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#add-requirement">
-									Add requirement
-								</a>
-							</div>
-						</div>
-					</li>
-					<!-- Officer Management -->
-					<li class="nav-item">
-						<a
-							href="#"
-							class="nav-link d-flex justify-content-start align-items-center text-decoration-none toggle-nav link-body-emphasis">
-							<div class="me-auto">
-								<i class="bi bi-circle-fill pe-none me-2"></i>
-								<span>Officer management</span>
-							</div>
-							<i
-								class="bi bi-chevron-right nav-caret"
-								style="opacity: 0.3"></i>
-						</a>
-						<div class="sub-nav">
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#view-officers">
-									View officers
-								</a>
-							</div>
-							<div class="sub-nav-item">
-								<a class="nav-link" href="#add-officer">
-									Add officer
-								</a>
-							</div>
-						</div>
-					</li>
-				</ul>
-				<hr />
-				<div class="dropdown">
+						</li>
+					</ul>
+				</div>
+
+				<div
+					class="user-info dropdown d-flex justify-content-between align-items-center">
+					<div>
+						<strong>JOSHUA JAKOSALEM</strong>
+						<small>4th Year Representative</small>
+					</div>
 					<a
 						href="#"
-						class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
+						class="more-btn text-decoration-none"
 						data-bs-toggle="dropdown"
+						aria-haspopup="true"
 						aria-expanded="false">
-						<img
+						<i class="bi bi-box-arrow-in-left"></i>
+						<!-- <img
 							src="https://github.com/mdo.png"
 							alt=""
 							width="32"
 							height="32"
-							class="rounded-circle me-2" />
-						<strong>mdo</strong>
+							class="rounded-circle me-2" /> -->
 					</a>
 					<ul class="dropdown-menu text-small shadow">
 						<li>
