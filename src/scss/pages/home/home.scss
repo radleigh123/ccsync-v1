@@ -1,3 +1,9 @@
+:root {
+    --primary-gold: #D4AF37;
+    --primary-dark: #2C2C2C;
+    --sidebar-bg: #f8f9fa;
+}
+
 .main-content-bg {
     position: relative;
     padding: 2rem;
@@ -27,6 +33,14 @@
     }
 }
 
+.main-content {
+    padding: 40px;
+    margin-left: 280px;
+    /* Same as sidebar width */
+    width: calc(100% - 280px);
+    transition: margin-left 0.3s ease;
+}
+
 .main-content-bg p {
     font-weight: 400;
 }
@@ -38,4 +52,125 @@
 
 .main-content-bg hr {
     border-color: rgba(255, 255, 255, 0.3);
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    /* vertical center */
+    color: #6c757d;
+    padding: 12px 20px;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.nav-link:hover {
+    background-color: #e9ecef;
+    border-radius: 15px;
+    color: var(--primary-dark);
+    text-decoration: none;
+}
+
+.nav-link i:first-child {
+    margin-right: 10px;
+    /* only for the left icon */
+    width: 18px;
+    text-align: center;
+}
+
+.nav-caret {
+    margin-left: auto;
+    font-size: 12px;
+    transition: transform 0.3s ease;
+}
+
+.collapse.show+.nav-caret,
+.nav-item.open .nav-caret {
+    transform: rotate(90deg);
+}
+
+.nav-item.open .nav-caret {
+    transform: rotate(90deg);
+}
+
+.nav-item .nav-link.active {
+    border-radius: 15px;
+    color: #353535;
+}
+
+.nav-item .nav-link.active i {
+    border-radius: 15px;
+    color: #F5A302;
+}
+
+.navbar-nav .nav-link.active {
+    background-color: transparent;
+    color: var(--primary-gold) !important;
+}
+
+.sub-nav {
+    display: none;
+}
+
+.sub-nav.show {
+    display: block;
+    /* show when toggled */
+}
+
+.sub-nav.show .nav-link:hover {
+    border-radius: 15px;
+}
+
+.sub-nav-item {
+    padding: 8px 0px 8px 50px;
+    font-size: 13px;
+}
+
+.collapse-btn {
+    color: var(--primary-dark);
+    font-size: 18px;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.collapse-btn:hover {
+    color: #353535;
+    transform: scale(1.1);
+}
+
+// When a sub-nav item is active - yellow highlight
+.nav-item .sub-nav .nav-link.active {
+    background-color: rgba(245, 163, 2, 0.15);
+    color: #F5A302;
+    font-weight: 500;
+    border-radius: 15px;
+}
+
+// When a parent has an active child - only change the icon color
+.nav-item .toggle-nav.active i.bi-circle-fill {
+    color: #F5A302;
+}
+
+// Style for main navigation items when active (like Dashboard)
+.nav-item>.nav-link.active:not(.toggle-nav) {
+    background-color: rgba(245, 163, 2, 0.15);
+    color: #353535;
+    border-radius: 15px;
+}
+
+// Always show sub-navs when parent is open
+.nav-item.open .sub-nav {
+    display: block;
+}
+
+// Parent styling when it has active children
+.nav-item.open>.toggle-nav.active {
+    background-color: transparent;
+    color: #6c757d;
+}
+
+// Ensure parent text doesn't highlight when child is active
+.nav-item.open>.toggle-nav.active span {
+    color: #6c757d;
 }

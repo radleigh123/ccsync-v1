@@ -36,11 +36,6 @@ body {
     flex-direction: column;
 }
 
-/* Prevent logo from inheriting color changes */
-.navbar-brand img {
-    filter: none !important;
-}
-
 .nav-item {
     border-bottom: 1px solid #e9ecef;
 }
@@ -183,7 +178,7 @@ body {
     box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
 }
 
-.form-control::placeholder{
+.form-control::placeholder {
     color: gray;
     opacity: 1;
 }
@@ -275,6 +270,7 @@ select.form-select:not(.placeholder-gray) {
     .logo-section {
         padding: 15px;
     }
+
     .navbar-nav .nav-link {
         padding: 10px 15px;
         color: #333;

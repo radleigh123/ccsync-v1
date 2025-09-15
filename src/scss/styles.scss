@@ -117,11 +117,12 @@ input.form-control:focus {
 }
 
 .nav-link:hover {
-  color: #F5A302 !important;
+  color: #F5A302;
 }
 
 .nav-link.active {
-  color: #F5A302 !important;
+  background-color: rgba(255, 232, 166, 0.34);
+  color: #F5A302;
   font-weight: 600;
 }
 
