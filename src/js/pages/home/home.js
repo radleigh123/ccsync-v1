@@ -4,6 +4,7 @@ import { setSidebar } from '/components/js/sidebar.js';
 import { setupLogout } from "/js/utils/navigation.js";
 import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupMobileSidebarToggle } from "/components/js/mobile_sidebar_toggle.js";
+import { Tooltip } from 'bootstrap';
 
 export function initHome() {
     const user = localStorage.getItem("user");
@@ -44,7 +45,7 @@ export async function printList() {
             const addBtn = document.createElement('button');
             addBtn.className = 'btn btn-success mb-2';
             addBtn.textContent = 'Add User';
-            addBtn.onclick = function() {
+            addBtn.onclick = function () {
                 // Simple prompt-based add form (in production, use a modal)
                 const firstName = prompt('First name:');
                 const lastName = prompt('Last name:');
@@ -64,18 +65,18 @@ export async function printList() {
                             school_id: schoolId,
                         })
                     })
-                    .then(response => response.json())
-                    .then(data => {
-                        alert(data.message || data.error);
-                        if (data.message) {
-                            // Refresh the list
-                            printList();
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                        alert('Failed to add user');
-                    });
+                        .then(response => response.json())
+                        .then(data => {
+                            alert(data.message || data.error);
+                            if (data.message) {
+                                // Refresh the list
+                                printList();
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to add user');
+                        });
                 }
             };
             usersList.appendChild(addBtn);
@@ -83,39 +84,39 @@ export async function printList() {
             // Create grid container for user cards
             const gridContainer = document.createElement('div');
             gridContainer.className = 'row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4';
-            
+
             // Get all user keys for consistent display
             const keys = Object.keys(data[0]);
-            
+
             // Create user cards
             data.forEach(user => {
                 // Create column for each user
                 const colDiv = document.createElement('div');
                 colDiv.className = 'col';
-                
+
                 // Create card with cursor pointer to indicate clickable
                 const cardDiv = document.createElement('div');
                 cardDiv.className = 'card h-100';
                 cardDiv.style.cursor = 'pointer';
-                
+
                 // Make the entire card clickable
-                cardDiv.addEventListener('click', function(e) {
+                cardDiv.addEventListener('click', function (e) {
                     // Don't trigger if clicking buttons in the footer
                     if (e.target.tagName === 'BUTTON' || e.target.closest('.card-footer')) {
                         return;
                     }
-                    
+
                     // Store the selected user in localStorage
                     localStorage.setItem('selected_user', JSON.stringify(user));
-                    
+
                     // Navigate to profile page
                     window.location.href = '/ccsync-v1/pages/profile/profile.html';
                 });
-                
+
                 // Card body
                 const cardBody = document.createElement('div');
                 cardBody.className = 'card-body';
-                
+
                 // Add user information
                 keys.forEach(key => {
                     const userInfoDiv = document.createElement('p');
@@ -125,16 +126,16 @@ export async function printList() {
                     userInfoDiv.appendChild(document.createTextNode(user[key] || 'N/A'));
                     cardBody.appendChild(userInfoDiv);
                 });
-                
+
                 // Card footer for actions
                 const cardFooter = document.createElement('div');
                 cardFooter.className = 'card-footer d-flex justify-content-between';
-                
+
                 // Edit button
                 const editBtn = document.createElement('button');
                 editBtn.className = 'btn btn-primary btn-sm';
                 editBtn.textContent = 'Edit';
-                editBtn.onclick = function() {
+                editBtn.onclick = function () {
                     const userData = { ...user };
                     // Simple prompt-based edit form (in production, use a modal)
                     const idNumber = prompt('ID Number:', userData.id_number);
@@ -142,7 +143,7 @@ export async function printList() {
                     const lastName = prompt('Last name:', userData.name_last);
                     const email = prompt('Email:', userData.email);
                     const schoolId = prompt('School ID:', userData.id_school_number);
-                    
+
                     if (firstName && lastName && email) {
                         fetch('http://localhost:8080/demo/ccsync/auth/edit.php', {
                             method: 'POST',
@@ -157,26 +158,26 @@ export async function printList() {
                                 school_id: schoolId,
                             })
                         })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert(data.message || data.error);
-                            if (data.message) {
-                                // Refresh the list
-                                printList();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to update user');
-                        });
+                            .then(response => response.json())
+                            .then(data => {
+                                alert(data.message || data.error);
+                                if (data.message) {
+                                    // Refresh the list
+                                    printList();
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Failed to update user');
+                            });
                     }
                 };
-                
+
                 // Delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn btn-danger btn-sm';
                 deleteBtn.textContent = 'Delete';
-                deleteBtn.onclick = function() {
+                deleteBtn.onclick = function () {
                     if (confirm(`Are you sure you want to delete ${user.name_first} ${user.name_last}?`)) {
                         fetch('http://localhost:8080/demo/ccsync/auth/delete.php', {
                             method: 'POST',
@@ -187,34 +188,34 @@ export async function printList() {
                                 user_id: user.id
                             })
                         })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert(data.message || data.error);
-                            if (data.message) {
-                                // Refresh the list
-                                printList();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to delete user');
-                        });
+                            .then(response => response.json())
+                            .then(data => {
+                                alert(data.message || data.error);
+                                if (data.message) {
+                                    // Refresh the list
+                                    printList();
+                                }
+                            })
+                            .catch(error => {
+                                console.error('Error:', error);
+                                alert('Failed to delete user');
+                            });
                     }
                 };
-                
+
                 // Add buttons to footer
                 cardFooter.appendChild(editBtn);
                 cardFooter.appendChild(deleteBtn);
-                
+
                 // Assemble card
                 cardDiv.appendChild(cardBody);
                 cardDiv.appendChild(cardFooter);
                 colDiv.appendChild(cardDiv);
-                
+
                 // Add to grid
                 gridContainer.appendChild(colDiv);
             });
-            
+
             usersList.appendChild(gridContainer);
         } else {
             usersList.textContent = 'No users found.';
@@ -232,9 +233,14 @@ export async function printList() {
 
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
-    setupLogout();
-    setSidebar();
-    setupFloatingNav();
-    printList();
+    // setupLogout();
+    // setSidebar();
+    // setupFloatingNav();
+    // printList();
     // setupMobileSidebarToggle();
+
+    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+    tooltipTriggerList.forEach(tooltipTriggerEl => {
+        new Tooltip(tooltipTriggerEl)
+    })
 });

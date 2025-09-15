@@ -99,33 +99,6 @@ input.form-control:focus {
   color: #F5A302 !important;
 }
 
-.card {
-  transition: transform 0.2s ease-in-out;
-}
-
-.card:hover {
-  transform: translateY(-5px);
-}
-
-.navbar-brand {
-  font-size: 1.5rem;
-}
-
-.nav-link {
-  font-weight: 500;
-  transition: color 0.2s ease;
-}
-
-.nav-link:hover {
-  color: #F5A302;
-}
-
-.nav-link.active {
-  background-color: rgba(255, 232, 166, 0.34);
-  color: #F5A302;
-  font-weight: 600;
-}
-
 @media (max-width: 991.98px) {
   .hero-section {
     position: relative;

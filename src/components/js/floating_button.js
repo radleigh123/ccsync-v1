@@ -1,5 +1,6 @@
 import '/components/scss/floating_button.scss';
 
+// NOTE: Functionalities useful later
 export function setupFloatingNav() {
     const floatingBtn = document.createElement('button');
     floatingBtn.className = 'floating-action-btn';
@@ -30,11 +31,10 @@ export function setupFloatingNav() {
 
     // Fix: Stop event propagation to prevent document click handler from firing
     floatingBtn.addEventListener('click', (event) => {
-        event.stopPropagation(); // This is the key fix
+        event.stopPropagation();
         navCard.classList.toggle('visible');
     });
 
-    // Close navigation card when clicking outside
     document.addEventListener('click', (event) => {
         if (!navCard.contains(event.target) && event.target !== floatingBtn) {
             navCard.classList.remove('visible');
@@ -46,7 +46,6 @@ export function setupFloatingNav() {
         event.stopPropagation();
     });
 
-    // Add logout functionality to the floating logout button
     const floatingLogout = document.getElementById('floating-logout');
     if (floatingLogout) {
         floatingLogout.addEventListener('click', (e) => {
