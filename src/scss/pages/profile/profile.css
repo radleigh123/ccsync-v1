@@ -1,0 +1,13 @@
+.card-no-hover {
+  -webkit-transition: none !important;
+  transition: none !important;
+}
+
+.card-no-hover:hover {
+  -webkit-transform: none !important;
+          transform: none !important;
+  -webkit-box-shadow: inherit !important;
+          box-shadow: inherit !important;
+  cursor: default !important;
+}
+/*# sourceMappingURL=profile.css.map */
