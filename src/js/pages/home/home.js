@@ -1,61 +1,7 @@
+import { setSidebar } from '/components/js/sidebar';
 import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
 import 'bootstrap';
-
-function setSidebar() {
-    const toggleButton = document.getElementById('toggle-btn')
-    const sidebar = document.getElementById('sidebar')
-    const dropdownButton = document.querySelectorAll('.dropdown-btn')
-    const sidebarHeader = document.getElementById('sidebar-header')
-    function toggleSidebar() {
-        sidebar.classList.toggle('close')
-        toggleButton.classList.toggle('rotate')
-        closeAllSubMenus()
-    }
-
-    function toggleSubMenu(button) {
-
-        if (!button.nextElementSibling.classList.contains('show')) {
-            closeAllSubMenus()
-        }
-
-        button.nextElementSibling.classList.toggle('show')
-        button.classList.toggle('rotate')
-        if (sidebar.classList.contains('close')) {
-            sidebar.classList.toggle('close')
-            toggleButton.classList.toggle('rotate')
-        }
-    }
-
-    function closeAllSubMenus() {
-        Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
-            ul.classList.remove('show')
-            ul.previousElementSibling.classList.remove('rotate')
-        }
-
-        )
-    }
-
-    toggleButton.addEventListener('click', () => toggleSidebar())
-    dropdownButton.forEach(button => {
-        button.addEventListener('click', () => toggleSubMenu(button))
-    }
-
-    ) // Close sidebar when screen is resized smaller than 1320px
-
-    window.addEventListener('resize', () => {
-        if (window.innerWidth < 1320 && !sidebar.classList.contains('close')) {
-            toggleSidebar()
-        }
-
-        if (window.innerWidth < 800 && sidebar.classList.contains('close')) {
-            // sidebarHeader.style.display = 'none'
-            toggleSidebar()
-        }
-    }
-
-    )
-}
 
 export function initHome() {
     const user = localStorage.getItem("user");
