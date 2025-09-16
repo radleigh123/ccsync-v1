@@ -1,20 +1,71 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/home.scss';
-import '/components/js/sidebar.js';
-import { Tooltip } from 'bootstrap';
+import 'bootstrap';
+
+function setSidebar() {
+    const toggleButton = document.getElementById('toggle-btn')
+    const sidebar = document.getElementById('sidebar')
+    const dropdownButton = document.querySelectorAll('.dropdown-btn')
+    const sidebarHeader = document.getElementById('sidebar-header')
+    function toggleSidebar() {
+        sidebar.classList.toggle('close')
+        toggleButton.classList.toggle('rotate')
+        closeAllSubMenus()
+    }
+
+    function toggleSubMenu(button) {
+
+        if (!button.nextElementSibling.classList.contains('show')) {
+            closeAllSubMenus()
+        }
+
+        button.nextElementSibling.classList.toggle('show')
+        button.classList.toggle('rotate')
+        if (sidebar.classList.contains('close')) {
+            sidebar.classList.toggle('close')
+            toggleButton.classList.toggle('rotate')
+        }
+    }
+
+    function closeAllSubMenus() {
+        Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
+            ul.classList.remove('show')
+            ul.previousElementSibling.classList.remove('rotate')
+        }
+
+        )
+    }
+
+    toggleButton.addEventListener('click', () => toggleSidebar())
+    dropdownButton.forEach(button => {
+        button.addEventListener('click', () => toggleSubMenu(button))
+    }
+
+    ) // Close sidebar when screen is resized smaller than 1320px
+
+    window.addEventListener('resize', () => {
+        if (window.innerWidth < 1320 && !sidebar.classList.contains('close')) {
+            toggleSidebar()
+        }
+
+        if (window.innerWidth < 800 && sidebar.classList.contains('close')) {
+            // sidebarHeader.style.display = 'none'
+            toggleSidebar()
+        }
+    }
+
+    )
+}
 
 export function initHome() {
     const user = localStorage.getItem("user");
+
     if (!user) {
         window.location.href = "/ccsync-v1/pages/auth/login.html";
         return;
     }
-    const userData = JSON.parse(user);
 
-    const welcomeEl = document.querySelector("h1");
-    if (welcomeEl) {
-        welcomeEl.textContent = `Welcome back, ${userData.name_first || "User"}!`;
-    }
+    const userData = JSON.parse(user);
 
     // Optionally, populate other dashboard data here
     // Example: last sync time, stats, etc.
@@ -26,22 +77,34 @@ export async function printList() {
     const errorMsg = document.querySelector("#errorMsg");
     if (usersList) usersList.innerHTML = '';
     if (errorMsg) errorMsg.textContent = '';
+
     try {
         const response = await fetch("http://localhost:8080/demo/ccsync/auth/usersList.php");
+
         if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
+            throw new Error(`HTTP error ! Status: $ {
+                    response.status
+                }
+
+                `);
         }
+
         let data;
+
         try {
             data = await response.json();
-        } catch (jsonErr) {
+        }
+
+        catch (jsonErr) {
             throw new Error("Invalid JSON returned from server.");
         }
+
         if (Array.isArray(data) && data.length > 0) {
             // Add button above user cards
             const addBtn = document.createElement('button');
             addBtn.className = 'btn btn-success mb-2';
             addBtn.textContent = 'Add User';
+
             addBtn.onclick = function () {
                 // Simple prompt-based add form (in production, use a modal)
                 const firstName = prompt('First name:');
@@ -51,31 +114,42 @@ export async function printList() {
 
                 if (firstName && lastName && email && schoolId) {
                     fetch('http://localhost:8080/demo/ccsync/auth/add.php', {
+
                         method: 'POST',
                         headers: {
                             'Content-Type': 'application/json'
-                        },
+                        }
+
+                        ,
                         body: JSON.stringify({
                             name_first: firstName,
                             name_last: lastName,
                             email: email,
                             school_id: schoolId,
-                        })
-                    })
-                        .then(response => response.json())
-                        .then(data => {
-                            alert(data.message || data.error);
-                            if (data.message) {
-                                // Refresh the list
-                                printList();
-                            }
-                        })
-                        .catch(error => {
-                            console.error('Error:', error);
-                            alert('Failed to add user');
-                        });
+                        }
+
+                        )
+                    }
+
+                    ).then(response => response.json()).then(data => {
+                        alert(data.message || data.error);
+
+                        if (data.message) {
+                            // Refresh the list
+                            printList();
+                        }
+                    }
+
+                    ).catch(error => {
+                        console.error('Error:', error);
+                        alert('Failed to add user');
+                    }
+
+                    );
                 }
-            };
+            }
+
+                ;
             usersList.appendChild(addBtn);
 
             // Create grid container for user cards
@@ -98,6 +172,7 @@ export async function printList() {
 
                 // Make the entire card clickable
                 cardDiv.addEventListener('click', function (e) {
+
                     // Don't trigger if clicking buttons in the footer
                     if (e.target.tagName === 'BUTTON' || e.target.closest('.card-footer')) {
                         return;
@@ -108,7 +183,9 @@ export async function printList() {
 
                     // Navigate to profile page
                     window.location.href = '/ccsync-v1/pages/profile/profile.html';
-                });
+                }
+
+                );
 
                 // Card body
                 const cardBody = document.createElement('div');
@@ -118,11 +195,18 @@ export async function printList() {
                 keys.forEach(key => {
                     const userInfoDiv = document.createElement('p');
                     const label = document.createElement('strong');
-                    label.textContent = `${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: `;
+
+                    label.textContent = `$ {
+                                key.replace(/_/g, ' ').replace(/\b\w/g, l=> l.toUpperCase())
+                            }
+
+                            : `;
                     userInfoDiv.appendChild(label);
                     userInfoDiv.appendChild(document.createTextNode(user[key] || 'N/A'));
                     cardBody.appendChild(userInfoDiv);
-                });
+                }
+
+                );
 
                 // Card footer for actions
                 const cardFooter = document.createElement('div');
@@ -132,8 +216,13 @@ export async function printList() {
                 const editBtn = document.createElement('button');
                 editBtn.className = 'btn btn-primary btn-sm';
                 editBtn.textContent = 'Edit';
+
                 editBtn.onclick = function () {
-                    const userData = { ...user };
+                    const userData = {
+                        ...user
+                    }
+
+                        ;
                     // Simple prompt-based edit form (in production, use a modal)
                     const idNumber = prompt('ID Number:', userData.id_number);
                     const firstName = prompt('First name:', userData.name_first);
@@ -143,60 +232,89 @@ export async function printList() {
 
                     if (firstName && lastName && email) {
                         fetch('http://localhost:8080/demo/ccsync/auth/edit.php', {
+
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
-                            },
+                            }
+
+                            ,
                             body: JSON.stringify({
                                 user_id: idNumber,
                                 name_first: firstName,
                                 name_last: lastName,
                                 email: email,
                                 school_id: schoolId,
-                            })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert(data.message || data.error);
-                                if (data.message) {
-                                    // Refresh the list
-                                    printList();
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                alert('Failed to update user');
-                            });
+                            }
+
+                            )
+                        }
+
+                        ).then(response => response.json()).then(data => {
+                            alert(data.message || data.error);
+
+                            if (data.message) {
+                                // Refresh the list
+                                printList();
+                            }
+                        }
+
+                        ).catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to update user');
+                        }
+
+                        );
                     }
-                };
+                }
+
+                    ;
 
                 // Delete button
                 const deleteBtn = document.createElement('button');
                 deleteBtn.className = 'btn btn-danger btn-sm';
                 deleteBtn.textContent = 'Delete';
+
                 deleteBtn.onclick = function () {
-                    if (confirm(`Are you sure you want to delete ${user.name_first} ${user.name_last}?`)) {
+                    if (confirm(`Are you sure you want to delete $ {
+                                    user.name_first
+                                }
+
+                                $ {
+                                    user.name_last
+                                }
+
+                                ?`)) {
                         fetch('http://localhost:8080/demo/ccsync/auth/delete.php', {
+
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
-                            },
+                            }
+
+                            ,
                             body: JSON.stringify({
                                 user_id: user.id
-                            })
-                        })
-                            .then(response => response.json())
-                            .then(data => {
-                                alert(data.message || data.error);
-                                if (data.message) {
-                                    // Refresh the list
-                                    printList();
-                                }
-                            })
-                            .catch(error => {
-                                console.error('Error:', error);
-                                alert('Failed to delete user');
-                            });
+                            }
+
+                            )
+                        }
+
+                        ).then(response => response.json()).then(data => {
+                            alert(data.message || data.error);
+
+                            if (data.message) {
+                                // Refresh the list
+                                printList();
+                            }
+                        }
+
+                        ).catch(error => {
+                            console.error('Error:', error);
+                            alert('Failed to delete user');
+                        }
+
+                        );
                     }
                 };
 
@@ -211,29 +329,33 @@ export async function printList() {
 
                 // Add to grid
                 gridContainer.appendChild(colDiv);
-            });
+            }
+
+            );
 
             usersList.appendChild(gridContainer);
-        } else {
+        }
+
+        else {
             usersList.textContent = 'No users found.';
         }
-    } catch (error) {
+    }
+
+    catch (error) {
         if (errorMsg) {
             errorMsg.textContent = 'Error loading user list: ' + error.message;
         }
+
         if (usersList) {
             usersList.textContent = '';
         }
+
         console.error('USER LIST ERROR:', error);
     }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
-    printList();
-
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.forEach(tooltipTriggerEl => {
-        new Tooltip(tooltipTriggerEl)
-    })
+    setSidebar();
+    // printList();
 });
