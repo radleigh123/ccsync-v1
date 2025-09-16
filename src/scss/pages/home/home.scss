@@ -52,7 +52,7 @@ i {
         background-image: url('/assets/bg.png');
         background-size: cover;
         background-position: center;
-        filter: brightness(0.4) saturate(1.2); // Darken background and increase saturation slightly
+        filter: brightness(0.4) saturate(1.2);
         z-index: -1;
     }
 }
@@ -70,5 +70,13 @@ i {
     .container {
         border: none;
         padding: 0;
+    }
+
+    body {
+        padding-top: 60px;
+    }
+
+    .main-content {
+        margin-top: 0;
     }
 }

@@ -6,6 +6,7 @@ export function setSidebar() {
     const sidebar = document.getElementById('sidebar')
     const dropdownButton = document.querySelectorAll('.dropdown-btn')
     const menuItems = sidebar.querySelectorAll('li > a, .dropdown-btn')
+    const isMobile = () => window.innerWidth <= 800
 
     const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(tooltipTriggerEl => {
@@ -129,6 +130,11 @@ export function setSidebar() {
                 }
 
                 setActiveMenuItem(item)
+
+                // Close submenu automatically on mobile after clicking an item
+                if (window.innerWidth <= 800 && item.closest('.sub-menu')) {
+                    closeAllSubMenus()
+                }
             })
         }
     })
@@ -189,5 +195,18 @@ export function setSidebar() {
             toggleSidebar()
         }
     })
+
+    // Close mobile submenu when clicking outside
+    if (isMobile()) {
+        document.addEventListener('click', (e) => {
+            // If we're on mobile and clicked outside the sidebar or submenu
+            if (isMobile() &&
+                !e.target.closest('.dropdown-btn') &&
+                !e.target.closest('.sub-menu') &&
+                sidebar.querySelector('.sub-menu.show')) {
+                closeAllSubMenus()
+            }
+        })
+    }
 }
 
