@@ -172,7 +172,7 @@
     }
 
     main {
-        padding: 2em 1em 60px 1em;
+        padding: 0 0 100px 0;
     }
 
     #sidebar #sidebar-header {
@@ -281,4 +281,12 @@
 
 #sidebar.close .user-info .container {
     display: none;
+}
+
+#sidebar .dropdown-btn i.active-icon {
+    color: var(--primary-gold) !important;
+}
+
+#sidebar .dropdown-btn i {
+    transition: color 0.2s ease;
 }

@@ -1,5 +1,5 @@
-import { setSidebar } from '/components/js/sidebar';
 import '/js/utils/core.js';
+import { setSidebar } from '/components/js/sidebar';
 import '/scss/pages/home/home.scss';
 import 'bootstrap';
 
@@ -142,11 +142,7 @@ export async function printList() {
                     const userInfoDiv = document.createElement('p');
                     const label = document.createElement('strong');
 
-                    label.textContent = `$ {
-                                key.replace(/_/g, ' ').replace(/\b\w/g, l=> l.toUpperCase())
-                            }
-
-                            : `;
+                    label.textContent = `${key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}: `;
                     userInfoDiv.appendChild(label);
                     userInfoDiv.appendChild(document.createTextNode(user[key] || 'N/A'));
                     cardBody.appendChild(userInfoDiv);
@@ -200,7 +196,6 @@ export async function printList() {
                             alert(data.message || data.error);
 
                             if (data.message) {
-                                // Refresh the list
                                 printList();
                             }
                         }
@@ -212,9 +207,7 @@ export async function printList() {
 
                         );
                     }
-                }
-
-                    ;
+                };
 
                 // Delete button
                 const deleteBtn = document.createElement('button');
@@ -250,7 +243,6 @@ export async function printList() {
                             alert(data.message || data.error);
 
                             if (data.message) {
-                                // Refresh the list
                                 printList();
                             }
                         }
@@ -264,16 +256,13 @@ export async function printList() {
                     }
                 };
 
-                // Add buttons to footer
                 cardFooter.appendChild(editBtn);
                 cardFooter.appendChild(deleteBtn);
 
-                // Assemble card
                 cardDiv.appendChild(cardBody);
                 cardDiv.appendChild(cardFooter);
                 colDiv.appendChild(cardDiv);
 
-                // Add to grid
                 gridContainer.appendChild(colDiv);
             }
 
@@ -303,5 +292,5 @@ export async function printList() {
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
     setSidebar();
-    // printList();
+    printList();
 });
