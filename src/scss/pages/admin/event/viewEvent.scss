@@ -15,32 +15,8 @@ i {
     color: #3b3b3b8e;
 }
 
-.container {
-    border-radius: 1em;
-    padding: min(3em, 15%);
-}
-
-.main-content {
-    transition: margin-left 0.3s ease;
-}
-
-.main-content-bg p {
-    font-weight: 400;
-}
-
-.main-content-bg h2 {
-    font-weight: 600;
-    margin-bottom: 1rem;
-}
-
-.main-content-bg hr {
-    border-color: rgba(255, 255, 255, 0.3);
-}
-
 .main-content-bg {
-    position: relative;
     padding: 2rem;
-    color: #fff;
 
     &::before {
         content: "";
@@ -57,26 +33,40 @@ i {
     }
 }
 
-.card {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-    border: none;
+#header p {
+    color: white;
+}
 
-    .card-body {
-        color: #212529;
-    }
+#body {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.event-card {
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+.event-card:hover {
+    transform: translateY(-5px);
+}
+
+.card-body h5 {
+    font-weight: bold;
+    color: #2C2C2C;
+}
+
+.card-footer {
+    display: flex;
+    justify-content: space-between;
+    gap: .5rem;
 }
 
 @media (max-width: 800px) {
-    .container {
-        border: none;
-        padding: 0;
-    }
-
     body {
         padding-top: 60px;
-    }
-
-    .main-content {
-        margin-top: 0;
     }
 }
