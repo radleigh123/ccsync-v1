@@ -1,0 +1,148 @@
+:root {
+    --primary-gold: #D4AF37;
+    --primary-dark: #2C2C2C;
+    --sidebar-bg: #f8f9fa;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+i {
+    color: #3b3b3b8e;
+}
+
+.main-content-bg {
+    padding: 2rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/bg.png');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4) saturate(1.2);
+        z-index: -1;
+    }
+}
+
+#header p {
+    color: white;
+}
+
+.registration-card {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+}
+
+.card-header {
+    background: transparent;
+    border-bottom: none;
+    padding: 30px 30px 20px;
+}
+
+.card-title {
+    color: white;
+    font-size: 40px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.section-title {
+    color: black;
+    border-bottom: 2px solid #ccc;
+    /* you can change color */
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
+.form-label {
+    color: var(--primary-dark);
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select {
+    border: 2px solid black;
+    border-radius: 20px;
+    padding: 12px 20px;
+    transition: all 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--primary-gold);
+    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
+}
+
+.form-control::placeholder {
+    color: gray;
+    opacity: 1;
+}
+
+
+/* Default gray placeholder */
+select.form-select.placeholder-gray {
+    color: gray;
+}
+
+select.form-select option {
+    color: black;
+}
+
+/* Normal black when selected */
+select.form-select:not(.placeholder-gray) {
+    color: black;
+}
+
+
+.btn-register {
+    background: linear-gradient(to right, #FED154, #F5A302);
+    border: none;
+    border-radius: 25px;
+    padding: 12px 40px;
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-register:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    color: white;
+}
+
+
+
+@media (max-width: 767px) {
+
+    .main-content {
+        padding: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+
+    .main-content {
+        margin-left: 25%;
+    }
+}
+
+@media (min-width: 992px) {
+
+    .main-content {
+        margin-left: 16.66666667%;
+    }
+}

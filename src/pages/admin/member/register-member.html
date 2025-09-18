@@ -1,494 +1,202 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>PSITS - Member Registration</title>
-		<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css"
-			rel="stylesheet" />
-		<link
-			href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
-			rel="stylesheet" />
-		<link href="/scss/admin/register-member.scss" rel="stylesheet" />
-	</head>
-	<body>
-		<!-- Top Navbar (mobile only) -->
-		<nav class="navbar navbar-expand-md navbar-light bg-light d-md-none">
-			<div class="container-fluid">
-				<a class="navbar-brand" href="#">PSITS</a>
-				<button
-					class="navbar-toggler"
-					type="button"
-					data-bs-toggle="collapse"
-					data-bs-target="#mobileSidebar"
-					aria-controls="mobileSidebar"
-					aria-expanded="false"
-					aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
+
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<title>PSITS - Member Registration</title>
+</head>
+
+<body>
+	<!-- Sidebar -->
+	<nav id="sidebar">
+		<div id="sidebar-header" class="justify-content-center align-items-center">
+			<a class="navbar-brand d-flex p-1" href="/">
+				<img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
+			</a>
+		</div>
+		<ul class="justify-content-center mb-0">
+			<li>
+				<a href="/ccsync-v1/pages/home/home.html" class="justify-content-center" title="Dashboard"
+					data-bs-toggle="tooltip" data-bs-placement="right">
+					<i class="bi bi-house-fill" style="font-size: 16px"></i>
+					<span>Dashboard</span>
+				</a>
+			</li>
+			<li>
+				<button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
+					title="Member management">
+					<i class="bi bi-person-circle"></i>
+					<span>Member management</span>
 				</button>
-
-				<div class="collapse navbar-collapse" id="mobileSidebar">
-					<ul class="navbar-nav flex-column">
-						<li class="nav-item">
-							<a class="nav-link" href="#dashboard">
-								<i class="fas fa-tachometer-alt"></i>
-								Dashboard
+				<ul class="sub-menu">
+					<div class="me-auto" style="padding-left: 40px">
+						<li>
+							<a href="/ccsync-v1/pages/admin/member/view-member.html" class="px-2">
+								View members
 							</a>
 						</li>
-						<li class="nav-item">
-							<a
-								class="nav-link"
-								data-bs-toggle="collapse"
-								href="#memberMenu"
-								role="button"
-								aria-expanded="false"
-								aria-controls="memberMenu">
-								<i class="fas fa-users"></i>
-								Member Management
-							</a>
-							<div class="collapse ps-3" id="memberMenu">
-								<a class="nav-link" href="#view-members">
-									View members
-								</a>
-								<a class="nav-link" href="#register-member">
-									Register member
-								</a>
-							</div>
-						</li>
-						<!-- Event Management -->
-						<li class="nav-item">
-							<a
-								class="nav-link"
-								data-bs-toggle="collapse"
-								href="#eventMenu"
-								role="button"
-								aria-expanded="false"
-								aria-controls="eventMenu">
-								<i class="fas fa-calendar-alt"></i>
-								Event Management
-							</a>
-							<div class="collapse ps-3" id="eventMenu">
-								<a class="nav-link" href="#view-event">
-									View event
-								</a>
-								<a class="nav-link" href="#add-event">
-									Add event
-								</a>
-							</div>
-						</li>
-
-						<!-- Requirement Management -->
-						<li class="nav-item">
-							<a
-								class="nav-link"
-								data-bs-toggle="collapse"
-								href="#requirementMenu"
-								role="button"
-								aria-expanded="false"
-								aria-controls="requirementMenu">
-								<i class="fas fa-clipboard-list"></i>
-								Requirement Management
-							</a>
-							<div class="collapse ps-3" id="requirementMenu">
-								<a class="nav-link" href="#view-requirements">
-									View requirements
-								</a>
-								<a class="nav-link" href="#add-requirements">
-									Add requirements
-								</a>
-							</div>
-						</li>
-
-						<!-- Officer Management -->
-						<li class="nav-item">
-							<a
-								class="nav-link"
-								data-bs-toggle="collapse"
-								href="#officerMenu"
-								role="button"
-								aria-expanded="false"
-								aria-controls="officerMenu">
-								<i class="fas fa-user-tie"></i>
-								Officer Management
-							</a>
-							<div class="collapse ps-3" id="officerMenu">
-								<a class="nav-link" href="#view-officers">
-									View officers
-								</a>
-								<a class="nav-link" href="#add-officer">
-									Add officer
-								</a>
-							</div>
-						</li>
-
-						<!-- Logout -->
-						<li class="nav-item border-top mt-2">
-							<a class="nav-link text-danger" href="#logout">
-								<i class="fas fa-sign-out-alt"></i>
-								Logout
+						<li>
+							<a href="/ccsync-v1/pages/admin/member/register-member.html" class="px-2">
+								Register member
 							</a>
 						</li>
-					</ul>
+					</div>
+				</ul>
+			</li>
+			<li>
+				<button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
+					title="Event management">
+					<i class="bi bi-calendar2-week-fill"></i>
+					<span>Event management</span>
+				</button>
+				<ul class="sub-menu">
+					<div class="me-auto" style="padding-left: 40px">
+						<li>
+							<a href="/ccsync-v1/pages/admin/event/view-event.html" class="px-2">
+								View events
+							</a>
+						</li>
+						<li>
+							<a href="/ccsync-v1/pages/admin/event/add-event.html" class="px-2">
+								Add event
+							</a>
+						</li>
+					</div>
+				</ul>
+			</li>
+			<li>
+				<button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
+					title="Requirement management">
+					<i class="bi bi-file-text-fill"></i>
+					<span>Requirement management</span>
+				</button>
+				<ul class="sub-menu">
+					<div class="me-auto" style="padding-left: 40px">
+						<li>
+							<a href="#" class="px-2">View requirements</a>
+						</li>
+						<li>
+							<a href="#" class="px-2">Add requirement</a>
+						</li>
+					</div>
+				</ul>
+			</li>
+			<li>
+				<button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
+					title="Officer management">
+					<i class="bi bi-hdd-rack-fill"></i>
+					<span>Officer management</span>
+				</button>
+				<ul class="sub-menu">
+					<div class="me-auto" style="padding-left: 40px">
+						<li><a href="#" class="px-2">View officers</a></li>
+						<li><a href="#" class="px-2">Add officer</a></li>
+					</div>
+				</ul>
+			</li>
+			<li class="user-info dropdown align-items-center mb-0">
+				<div class="container p-0 m-0 border-0">
+					<strong>JOSHUA JAKOSALEM</strong>
+					<small>4th Year Representative</small>
 				</div>
-			</div>
-		</nav>
+				<a href="#" class="more-btn text-decoration-none align-items-center" data-bs-toggle="dropdown"
+					aria-haspopup="true" aria-expanded="false">
+					<i class="bi bi-gear-fill" style="line-height: 18px"></i>
+					<!-- <img
+							src="https://github.com/mdo.png"
+							alt=""
+							width="32"
+							height="32"
+							class="rounded-circle me-2" /> -->
+				</a>
+				<button id="toggle-btn" style="line-height: 18px">
+					<svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
+						fill="#e8eaed">
+						<path
+							d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+					</svg>
+				</button>
+			</li>
+		</ul>
+	</nav>
+
+	<!-- Main Content -->
+	<!-- Body -->
+	<main class="main-content-bg">
 		<div class="container-fluid">
-			<div class="row">
-				<!-- Sidebar -->
-				<div class="col-md-3 col-lg-2 sidebar p-0">
-					<div class="logo-section text-center py-3">
-						<a class="navbar-brand" href="#">
-							<img
-								src="/assets/PSITSlogo.png"
-								alt="Logo"
-								class="navbar-logo img-fluid" />
-						</a>
-					</div>
-
-					<nav class="nav flex-column">
-						<!-- Dashboard -->
-						<div class="nav-item">
-							<a
-								class="nav-link"
-								href="/ccsync-v1/pages/home/home.html">
-								<i class="fas fa-tachometer-alt"></i>
-								<span>Dashboard</span>
-							</a>
-						</div>
-
-						<!-- Member management -->
-						<div class="nav-item">
-							<a
-								class="nav-link toggle-nav d-flex justify-content-between align-items-center"
-								href="javascript:void(0)">
-								<div>
-									<i class="fas fa-users me-2"></i>
-									<span>Member management</span>
-								</div>
-								<i class="fas fa-chevron-right nav-caret"></i>
-							</a>
-							<div class="sub-nav">
-								<a class="nav-link" href="#view-members">
-									View members
-								</a>
-								<a class="nav-link" href="#register-member">
-									Register member
-								</a>
+			<div id="header" class="d-flex flex-row gap-5 align-items-center">
+				<p class="p-0 m-0 h1 fw-bold">Register a Member</p>
+			</div>
+		</div>
+	
+		<div id="body" class="container-fluid mt-4">
+			<div class="card registration-card">
+				<div class="card-body p-4">
+					<h5 class="section-title mb-4" style="color: black">
+						Member Information
+					</h5>
+					<form>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="idNumber" class="form-label">ID Number:</label>
+								<input type="text" class="form-control" id="idNumber" placeholder="e.g 20023045" />
+							</div>
+							<div class="col-md-6">
+								<label for="program" class="form-label">Program:</label>
+								<select class="form-select" id="program">
+									<option value="" selected hidden>Choose a program</option>
+									<option value="bsit">BS Information Technology</option>
+									<option value="bscs">BS Computer Science</option>
+									<option value="bsis">BS Information Systems</option>
+								</select>
 							</div>
 						</div>
-
-						<!-- Event management -->
-						<div class="nav-item">
-							<a
-								class="nav-link toggle-nav d-flex justify-content-between align-items-center"
-								href="javascript:void(0)">
-								<div>
-									<i class="fas fa-calendar-alt me-2"></i>
-									<span>Event management</span>
-								</div>
-								<i class="fas fa-chevron-right nav-caret"></i>
-							</a>
-							<div class="sub-nav">
-								<a class="nav-link" href="#view-event">
-									View event
-								</a>
-								<a class="nav-link" href="#add-event">
-									Add event
-								</a>
+	
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="firstName" class="form-label">First Name:</label>
+								<input type="text" class="form-control" id="firstName" placeholder="Juan Dela Cruz" />
+							</div>
+							<div class="col-md-6">
+								<label for="yearLevel" class="form-label">Year Level:</label>
+								<select class="form-select" id="yearLevel">
+									<option value="" selected hidden>Choose a year level</option>
+									<option value="1">1st Year</option>
+									<option value="2">2nd Year</option>
+									<option value="3">3rd Year</option>
+									<option value="4">4th Year</option>
+								</select>
 							</div>
 						</div>
-
-						<!-- Requirement management -->
-						<div class="nav-item">
-							<a
-								class="nav-link toggle-nav d-flex justify-content-between align-items-center"
-								href="javascript:void(0)">
-								<div>
-									<i class="fas fa-clipboard-list me-2"></i>
-									<span>Requirement management</span>
-								</div>
-								<i class="fas fa-chevron-right nav-caret"></i>
-							</a>
-							<div class="sub-nav">
-								<a class="nav-link" href="#view-requirements">
-									View requirements
-								</a>
-								<a class="nav-link" href="#add-requirements">
-									Add requirements
-								</a>
+	
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="lastName" class="form-label">Last Name:</label>
+								<input type="text" class="form-control" id="lastName" placeholder="Dela Cruz" />
 							</div>
+							<div class="col-md-6"></div>
 						</div>
-
-						<!-- Officer management -->
-						<div class="nav-item">
-							<a
-								class="nav-link toggle-nav d-flex justify-content-between align-items-center"
-								href="javascript:void(0)">
-								<div>
-									<i class="fas fa-user-tie me-2"></i>
-									<span>Officer management</span>
-								</div>
-								<i class="fas fa-chevron-right nav-caret"></i>
-							</a>
-							<div class="sub-nav">
-								<a class="nav-link" href="#view-officers">
-									View officers
-								</a>
-								<a class="nav-link" href="#add-officer">
-									Add officer
-								</a>
+	
+						<div class="row mb-4">
+							<div class="col-md-6">
+								<label for="suffix" class="form-label">Suffix:</label>
+								<input type="text" class="form-control" id="suffix" placeholder="Jr." />
 							</div>
+							<div class="col-md-6"></div>
 						</div>
-					</nav>
-
-					<!-- User info + logout -->
-					<div
-						class="user-info d-flex justify-content-between align-items-center">
-						<div>
-							<strong>JOSHUA JAKOSALEM</strong>
-							<small>4th Year Representative</small>
+	
+						<div class="d-grid">
+							<button type="submit" class="btn btn-register">
+								Register
+							</button>
 						</div>
-						<a href="#logout" class="logout-btn">
-							<i class="fas fa-sign-out-alt"></i>
-						</a>
-					</div>
-				</div>
-
-				<!-- Main Content -->
-				<div class="col-md-9 col-lg-10 main-content">
-					<div class="row justify-content-center">
-						<div class="col-lg-8">
-							<h2 class="card-title py-5">Register a member</h2>
-							<div class="card registration-card">
-								<!-- <div class="card-header">
-                                <h2 class="card-title">Register a member</h2>
-                            	</div> -->
-								<div class="card-body p-4">
-									<h5
-										class="section-title mb-4"
-										style="color: black">
-										Member information
-									</h5>
-									<form>
-										<div class="row mb-3">
-											<div class="col-md-6">
-												<label
-													for="idNumber"
-													class="form-label">
-													ID Number:
-												</label>
-												<input
-													type="text"
-													class="form-control"
-													id="idNumber"
-													placeholder="e.g 20023045" />
-											</div>
-											<div class="col-md-6">
-												<label
-													for="program"
-													class="form-label">
-													Program:
-												</label>
-												<select
-													class="form-select"
-													id="program">
-													<option
-														value=""
-														selected
-														hidden>
-														Choose a program
-													</option>
-													<option value="bsit">
-														BS Information
-														Technology
-													</option>
-													<option value="bscs">
-														BS Computer Science
-													</option>
-													<option value="bsis">
-														BS Information Systems
-													</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="row mb-3">
-											<div class="col-md-6">
-												<label
-													for="firstName"
-													class="form-label">
-													First Name:
-												</label>
-												<input
-													type="text"
-													class="form-control"
-													id="firstName"
-													placeholder="Juan Dela Cruz" />
-											</div>
-											<div class="col-md-6">
-												<label
-													for="yearLevel"
-													class="form-label">
-													Year level:
-												</label>
-												<select
-													class="form-select"
-													id="yearLevel">
-													<option
-														value=""
-														selected
-														hidden>
-														Choose a year level
-													</option>
-													<option value="1">
-														1st Year
-													</option>
-													<option value="2">
-														2nd Year
-													</option>
-													<option value="3">
-														3rd Year
-													</option>
-													<option value="4">
-														4th Year
-													</option>
-												</select>
-											</div>
-										</div>
-
-										<div class="row mb-3">
-											<div class="col-md-6">
-												<label
-													for="lastName"
-													class="form-label">
-													Last Name:
-												</label>
-												<input
-													type="text"
-													class="form-control"
-													id="lastName"
-													placeholder="Dela Cruz" />
-											</div>
-											<div class="col-md-6">
-												<!-- Empty space to maintain layout -->
-											</div>
-										</div>
-
-										<div class="row mb-4">
-											<div class="col-md-6">
-												<label
-													for="suffix"
-													class="form-label">
-													Suffix:
-												</label>
-												<input
-													type="text"
-													class="form-control"
-													id="suffix"
-													placeholder="Jr." />
-											</div>
-											<div class="col-md-6">
-												<!-- Empty space to maintain layout -->
-											</div>
-										</div>
-
-										<div class="d-grid">
-											<button
-												type="submit"
-												class="btn btn-register">
-												Register
-											</button>
-										</div>
-									</form>
-								</div>
-							</div>
-						</div>
-					</div>
+					</form>
 				</div>
 			</div>
 		</div>
+	</main>
+	<script type="module" src="/js/pages/admin/member/registerMember.js" defer></script>
+</body>
 
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-		<script>
-			// Simple navigation functionality
-			document.querySelectorAll(".nav-link").forEach((link) => {
-				link.addEventListener("click", function (e) {
-					e.preventDefault();
-
-					// Remove active class from all links
-					document
-						.querySelectorAll(".nav-link")
-						.forEach((l) => l.classList.remove("active"));
-
-					// Add active class to clicked link
-					this.classList.add("active");
-				});
-			});
-
-			// Form submission handler
-			document
-				.querySelector("form")
-				.addEventListener("submit", function (e) {
-					e.preventDefault();
-
-					// Get form values
-					const formData = {
-						idNumber: document.getElementById("idNumber").value,
-						program: document.getElementById("program").value,
-						firstName: document.getElementById("firstName").value,
-						yearLevel: document.getElementById("yearLevel").value,
-						lastName: document.getElementById("lastName").value,
-						suffix: document.getElementById("suffix").value,
-					};
-
-					// Simple validation
-					if (
-						!formData.idNumber ||
-						!formData.firstName ||
-						!formData.lastName
-					) {
-						alert(
-							"Please fill in all required fields (ID Number, First Name, Last Name)"
-						);
-						return;
-					}
-
-					// Simulate registration success
-					alert("Member registered successfully!");
-
-					// Reset form
-					this.reset();
-				});
-
-			// Toggle sub-navigation
-			document.querySelectorAll(".toggle-nav").forEach((item) => {
-				item.addEventListener("click", function () {
-					const subNav = this.nextElementSibling;
-
-					let parent = this.parentElement;
-					parent.classList.toggle("open");
-
-					// Toggle the clicked one
-					subNav.classList.toggle("show");
-				});
-			});
-
-			document
-				.querySelectorAll("select.form-select")
-				.forEach((select) => {
-					function updateColor() {
-						if (!select.value) {
-							select.classList.add("placeholder-gray");
-						} else {
-							select.classList.remove("placeholder-gray");
-						}
-					}
-					// Initial check
-					updateColor();
-					// Update on change
-					select.addEventListener("change", updateColor);
-				});
-		</script>
-	</body>
 </html>
