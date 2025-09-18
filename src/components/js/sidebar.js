@@ -78,19 +78,22 @@ export function setSidebar() {
             }
         })
 
+        if (isMobile()) {
+            closeAllSubMenusExcept(item.closest('.sub-menu') ? item.closest('.sub-menu').previousElementSibling : null)
+        }
+
         if (item.tagName === 'A') {
             item.classList.add('active')
             item.closest('li').classList.add('active')
 
             const parentSubmenu = item.closest('.sub-menu')
-            closeAllSubMenusExcept(parentSubmenu ? parentSubmenu.previousElementSibling : null)
-
             if (parentSubmenu) {
+                parentSubmenu.classList.add('show')
+
                 const parentButton = parentSubmenu.previousElementSibling
                 if (parentButton && parentButton.classList.contains('dropdown-btn')) {
                     parentButton.classList.add('active')
                     parentButton.classList.add('rotate')
-                    parentSubmenu.classList.add('show')
 
                     const parentIcon = parentButton.querySelector('i')
                     if (parentIcon) {
@@ -100,15 +103,10 @@ export function setSidebar() {
             }
         } else {
             item.classList.add('active')
-        }
 
-        const parentSubmenu = item.closest('.sub-menu')
-        if (parentSubmenu) {
-            const parentButton = parentSubmenu.previousElementSibling
-            if (parentButton && parentButton.classList.contains('dropdown-btn')) {
-                parentButton.classList.add('active')
-                parentButton.classList.add('rotate')
-                parentSubmenu.classList.add('show')
+            const icon = item.querySelector('i')
+            if (icon) {
+                icon.classList.add('active-icon')
             }
         }
 
@@ -131,7 +129,6 @@ export function setSidebar() {
 
                 setActiveMenuItem(item)
 
-                // Close submenu automatically on mobile after clicking an item
                 if (window.innerWidth <= 800 && item.closest('.sub-menu')) {
                     closeAllSubMenus()
                 }
@@ -146,10 +143,22 @@ export function setSidebar() {
 
         menuItems.forEach(item => {
             const href = item.getAttribute('href')
-            if (href && href !== '#' && currentPath.includes(href)) {
+            if (href && href !== '#' && currentPath === href) {
                 activeItem = item
+                return
             }
         })
+
+        if (!activeItem) {
+            menuItems.forEach(item => {
+                const href = item.getAttribute('href')
+                if (href && href !== '#' && currentPath.includes(href)) {
+                    if (!activeItem || href.length > activeItem.getAttribute('href').length) {
+                        activeItem = item
+                    }
+                }
+            })
+        }
 
         if (!activeItem && storedHref) {
             menuItems.forEach(item => {
@@ -173,7 +182,13 @@ export function setSidebar() {
 
                 const parentButton = parentSubmenu.previousElementSibling
                 if (parentButton && parentButton.classList.contains('dropdown-btn')) {
+                    parentButton.classList.add('active')
                     parentButton.classList.add('rotate')
+
+                    const parentIcon = parentButton.querySelector('i')
+                    if (parentIcon) {
+                        parentIcon.classList.add('active-icon')
+                    }
                 }
             }
         }
@@ -196,10 +211,8 @@ export function setSidebar() {
         }
     })
 
-    // Close mobile submenu when clicking outside
     if (isMobile()) {
         document.addEventListener('click', (e) => {
-            // If we're on mobile and clicked outside the sidebar or submenu
             if (isMobile() &&
                 !e.target.closest('.dropdown-btn') &&
                 !e.target.closest('.sub-menu') &&
