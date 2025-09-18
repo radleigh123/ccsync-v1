@@ -112,6 +112,8 @@ export function setSidebar() {
 
         const href = item.getAttribute('href')
         const text = item.textContent.trim()
+        console.log(`Active menu item set to: ${text} (${href})`);
+
         if (href && href !== '#') {
             localStorage.setItem('ccsync_active_sidebar_href', href)
             localStorage.setItem('ccsync_active_sidebar_text', text)

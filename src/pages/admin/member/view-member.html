@@ -7,8 +7,6 @@
 	</head>
 
 	<body>
-		<!-- Header - We go headless skrrrttt 💀 -->
-
 		<!-- Sidebar -->
 		<nav id="sidebar">
 			<div
@@ -22,7 +20,7 @@
 				</a>
 			</div>
 			<ul class="justify-content-center mb-0">
-				<li>
+				<li class="active">
 					<a
 						href="/ccsync-v1/pages/home/home.html"
 						class="justify-content-center"
@@ -41,6 +39,7 @@
 						title="Member management">
 						<i class="bi bi-person-circle"></i>
 						<span>Member management</span>
+						<!-- Right caret -->
 					</button>
 					<ul class="sub-menu">
 						<div class="me-auto" style="padding-left: 40px">
@@ -101,10 +100,18 @@
 					<ul class="sub-menu">
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
-								<a href="#" class="px-2">View requirements</a>
+								<a
+									href="/ccsync-v1/pages/admin/requirement/view-requirement.html"
+									class="px-2">
+									View requirements
+								</a>
 							</li>
 							<li>
-								<a href="#" class="px-2">Add requirement</a>
+								<a
+									href="/ccsync-v1/pages/admin/requirement/add-requirement.html"
+									class="px-2">
+									Add requirement
+								</a>
 							</li>
 						</div>
 					</ul>
@@ -120,8 +127,20 @@
 					</button>
 					<ul class="sub-menu">
 						<div class="me-auto" style="padding-left: 40px">
-							<li><a href="#" class="px-2">View officers</a></li>
-							<li><a href="#" class="px-2">Add officer</a></li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/admin/officer/view-officer.html"
+									class="px-2">
+									View officers
+								</a>
+							</li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/admin/officer/add-officer.html"
+									class="px-2">
+									Add officer
+								</a>
+							</li>
 						</div>
 					</ul>
 				</li>
@@ -157,6 +176,31 @@
 								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
 						</svg>
 					</button>
+					<ul class="dropdown-menu text-small shadow">
+						<li>
+							<a class="dropdown-item" href="#">New project...</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/ccsync-v1/pages/settings/settings.html">
+								Settings
+							</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/ccsync-v1/pages/profile/profile.html">
+								Profile
+							</a>
+						</li>
+						<li><hr class="dropdown-divider" /></li>
+						<li>
+							<a id="logout-link" class="dropdown-item" href="#">
+								Sign out
+							</a>
+						</li>
+					</ul>
 				</li>
 			</ul>
 		</nav>

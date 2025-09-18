@@ -1,5 +1,5 @@
 import '/js/utils/core.js';
-import '/scss/pages/admin/event/addEvent.scss';
+import '/scss/pages/admin/requirement/addRequirement.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { setupLogout } from "/js/utils/navigation.js";
 import 'bootstrap';

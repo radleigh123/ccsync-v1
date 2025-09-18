@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import { setSidebar } from '/components/js/sidebar';
 import '/scss/pages/home/home.scss';
 import 'bootstrap';
+import { setupLogout } from '/js/utils/navigation.js';
 
 export function initHome() {
     const user = localStorage.getItem("user");
@@ -292,5 +293,6 @@ export async function printList() {
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
     setSidebar();
+    setupLogout();
     printList();
 });
