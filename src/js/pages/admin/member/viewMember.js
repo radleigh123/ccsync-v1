@@ -1,12 +1,14 @@
 import '/js/utils/core.js';
-import { setSidebar } from '/components/js/sidebar';
 import '/scss/pages/admin/member/viewMember.scss';
+import { setSidebar } from '/components/js/sidebar';
+import { setupLogout } from "/js/utils/navigation.js";
 import 'bootstrap';
 
 document.addEventListener("DOMContentLoaded", () => {
     initHome();
     setSidebar();
     loadUsers();
+  setupLogout();
 });
 
 export function initHome() {

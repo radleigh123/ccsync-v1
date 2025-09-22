@@ -7,3 +7,18 @@
     cursor: default !important;
   }
 }
+
+@media (max-width: 800px) {
+  .container {
+    border: none;
+    padding: 0;
+  }
+
+  body {
+    padding-top: 60px;
+  }
+
+  .main-content {
+    margin-top: 0;
+  }
+}
