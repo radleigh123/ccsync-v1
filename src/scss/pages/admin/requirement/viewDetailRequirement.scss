@@ -33,6 +33,13 @@ i {
     }
 }
 
+.section-title {
+    border-bottom: 2px solid #ccc;
+    /* line */
+    padding-bottom: 8px;
+    margin-bottom: 20px;
+}
+
 #header p {
     color: white;
 }
@@ -68,9 +75,10 @@ i {
     vertical-align: middle;
 }
 
+/* Make table text smaller */
 .table th,
 .table td {
-    font-size: 18px;
+    font-size: 0.85rem;
     /* smaller than default (1rem) */
 }
 
@@ -78,9 +86,13 @@ i {
 .table th {
     font-weight: 600;
 }
+#userTableBody strong {
+    font-weight: normal;
+}
 
 @media (max-width: 800px) {
     body {
         padding-top: 60px;
     }
 }
+
