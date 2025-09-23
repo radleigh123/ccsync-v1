@@ -1,5 +1,5 @@
 import "/js/utils/core.js";
-import "/scss/pages/admin/requirement/viewDetailRequirement.scss";
+import "/scss/pages/home/requirement/viewDetailRequirement.scss";
 import { setSidebar } from "/components/js/sidebar";
 import { setupLogout } from "/js/utils/navigation.js";
 import "bootstrap";

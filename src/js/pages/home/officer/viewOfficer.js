@@ -1,5 +1,5 @@
 import '/js/utils/core.js';
-import '/scss/pages/admin/officer/viewOfficer.scss';
+import '/scss/pages/home/officer/viewOfficer.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { setupLogout } from "/js/utils/navigation.js";
 import 'bootstrap';

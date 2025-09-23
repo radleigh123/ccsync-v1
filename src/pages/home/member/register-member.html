@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>View Event</title>
+		<title>PSITS - Member Registration</title>
 	</head>
 
 	<body>
@@ -45,14 +45,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/member/view-member.html"
+									href="/ccsync-v1/pages/home/member/view-member.html"
 									class="px-2">
 									View members
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/member/register-member.html"
+									href="/ccsync-v1/pages/home/member/register-member.html"
 									class="px-2">
 									Register member
 								</a>
@@ -73,14 +73,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/event/view-event.html"
+									href="/ccsync-v1/pages/home/event/view-event.html"
 									class="px-2">
 									View events
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/event/add-event.html"
+									href="/ccsync-v1/pages/home/event/add-event.html"
 									class="px-2">
 									Add event
 								</a>
@@ -101,14 +101,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/requirement/view-requirement.html"
+									href="/ccsync-v1/pages/home/requirement/view-requirement.html"
 									class="px-2">
 									View requirements
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/requirement/add-requirement.html"
+									href="/ccsync-v1/pages/home/requirement/add-requirement.html"
 									class="px-2">
 									Add requirement
 								</a>
@@ -129,14 +129,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/officer/view-officer.html"
+									href="/ccsync-v1/pages/home/officer/view-officer.html"
 									class="px-2">
 									View officers
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/officer/add-officer.html"
+									href="/ccsync-v1/pages/home/officer/add-officer.html"
 									class="px-2">
 									Add officer
 								</a>
@@ -205,57 +205,124 @@
 			</ul>
 		</nav>
 
+		<!-- Main Content -->
 		<!-- Body -->
 		<main class="main-content-bg">
 			<div class="container-fluid">
 				<div
 					id="header"
 					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">View all events</p>
-					<div class="d-flex flex-row gap-3 align-items-center">
-						<p class="p-0 m-0">School year</p>
-						<div class="dropdown">
-							<button
-								class="btn btn-secondary dropdown-toggle px-3"
-								type="button"
-								data-bs-toggle="dropdown"
-								aria-expanded="false"
-								style="
-									border-radius: 20px;
-									background-color: white;
-									color: black;
-								">
-								Choose a school year
-							</button>
-							<ul class="dropdown-menu">
-								<li>
-									<a class="dropdown-item" href="#">2021</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">2022</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">2023</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">2024</a>
-								</li>
-								<li>
-									<a class="dropdown-item" href="#">2025</a>
-								</li>
-							</ul>
-						</div>
+					<p class="p-0 m-0 h1 fw-bold">Register a Member</p>
+				</div>
+			</div>
+
+			<div id="body" class="container-fluid mt-4">
+				<div class="card registration-card">
+					<div class="card-body p-4">
+						<h5 class="section-title mb-4" style="color: black">
+							Member Information
+						</h5>
+						<form>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="idNumber" class="form-label">
+										ID Number:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="idNumber"
+										placeholder="e.g 20023045" />
+								</div>
+								<div class="col-md-6">
+									<label for="program" class="form-label">
+										Program:
+									</label>
+									<select class="form-select" id="program">
+										<option value="" selected hidden>
+											Choose a program
+										</option>
+										<option value="bsit">
+											BS Information Technology
+										</option>
+										<option value="bscs">
+											BS Computer Science
+										</option>
+										<option value="bsis">
+											BS Information Systems
+										</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="firstName" class="form-label">
+										First Name:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="firstName"
+										placeholder="Juan Dela Cruz" />
+								</div>
+								<div class="col-md-6">
+									<label for="yearLevel" class="form-label">
+										Year Level:
+									</label>
+									<select class="form-select" id="yearLevel">
+										<option value="" selected hidden>
+											Choose a year level
+										</option>
+										<option value="1">1st Year</option>
+										<option value="2">2nd Year</option>
+										<option value="3">3rd Year</option>
+										<option value="4">4th Year</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<label for="lastName" class="form-label">
+										Last Name:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="lastName"
+										placeholder="Dela Cruz" />
+								</div>
+								<div class="col-md-6"></div>
+							</div>
+
+							<div class="row mb-4">
+								<div class="col-md-6">
+									<label for="suffix" class="form-label">
+										Suffix:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="suffix"
+										placeholder="Jr." />
+								</div>
+								<div class="col-md-6"></div>
+							</div>
+
+							<div class="d-grid">
+								<button type="submit" class="btn btn-register">
+									Register
+								</button>
+							</div>
+						</form>
 					</div>
 				</div>
 			</div>
-			<div class="row mt-4" id="eventContainer">
-				<!-- Event cards inserted here -->
-			</div>
 		</main>
-
 		<script
 			type="module"
-			src="/js/pages/admin/event/viewEvent.js"
+			src="/js/pages/home/member/registerMember.js"
 			defer></script>
 	</body>
 </html>

@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Event</title>
+		<title>Add Requirement</title>
 	</head>
 
 	<body>
@@ -45,14 +45,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/member/view-member.html"
+									href="/ccsync-v1/pages/home/member/view-member.html"
 									class="px-2">
 									View members
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/member/register-member.html"
+									href="/ccsync-v1/pages/home/member/register-member.html"
 									class="px-2">
 									Register member
 								</a>
@@ -73,14 +73,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/event/view-event.html"
+									href="/ccsync-v1/pages/home/event/view-event.html"
 									class="px-2">
 									View events
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/event/add-event.html"
+									href="/ccsync-v1/pages/home/event/add-event.html"
 									class="px-2">
 									Add event
 								</a>
@@ -101,14 +101,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/requirement/view-requirement.html"
+									href="/ccsync-v1/pages/home/requirement/view-requirement.html"
 									class="px-2">
 									View requirements
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/requirement/add-requirement.html"
+									href="/ccsync-v1/pages/home/requirement/add-requirement.html"
 									class="px-2">
 									Add requirement
 								</a>
@@ -129,14 +129,14 @@
 						<div class="me-auto" style="padding-left: 40px">
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/officer/view-officer.html"
+									href="/ccsync-v1/pages/home/officer/view-officer.html"
 									class="px-2">
 									View officers
 								</a>
 							</li>
 							<li>
 								<a
-									href="/ccsync-v1/pages/admin/officer/add-officer.html"
+									href="/ccsync-v1/pages/home/officer/add-officer.html"
 									class="px-2">
 									Add officer
 								</a>
@@ -211,83 +211,35 @@
 				<div
 					id="header"
 					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">Add a new event</p>
+					<p class="p-0 m-0 h1 fw-bold">Add a new requirement</p>
 				</div>
 			</div>
 			<div class="card registration-card">
 				<div class="card-body p-4">
 					<h5 class="section-title mb-4" style="color: black">
-						Event information
+						Requirement information
 					</h5>
 					<form>
 						<div class="row mb-3">
 							<div class="col-md-6">
 								<label for="eventName" class="form-label">
-									Event name:
+									foo
 								</label>
 								<input
 									type="text"
 									class="form-control"
 									id="eventName"
-									placeholder="Your catchy event name" />
+									placeholder="foo" />
 							</div>
 							<div class="col-md-6">
 								<label for="maxParticipants" class="form-label">
-									Max participants:
+									foo
 								</label>
 								<input
 									type="text"
 									class="form-control"
 									id="maxParticipants"
-									placeholder="Max participants" />
-							</div>
-						</div>
-
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="venue" class="form-label">
-									Venue:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="venue"
-									placeholder="Add venue" />
-							</div>
-							<div class="col-md-6">
-								<label
-									for="registrationStart"
-									class="form-label">
-									Registration start:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="registrationStart"
-									placeholder="Add registration start date" />
-							</div>
-						</div>
-
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="date" class="form-label">
-									Event Date:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="eventDate"
-									placeholder="Add event date" />
-							</div>
-							<div class="col-md-6">
-								<label for="registrationEnd" class="form-label">
-									Registration end:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="registrationEnd"
-									placeholder="Add registration end date" />
+									placeholder="foo" />
 							</div>
 						</div>
 
@@ -316,7 +268,7 @@
 
 						<div class="d-grid">
 							<button type="submit" class="btn btn-register">
-								Add event
+								Add requirement
 							</button>
 						</div>
 					</form>
@@ -326,7 +278,7 @@
 
 		<script
 			type="module"
-			src="/js/pages/admin/event/addEvent.js"
+			src="/js/pages/home/officer/addOfficer.js"
 			defer></script>
 	</body>
 </html>

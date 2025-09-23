@@ -1,6 +1,6 @@
 import "/js/utils/core.js";
 import { setSidebar } from "/components/js/sidebar";
-import "/scss/pages/admin/member/registerMember.scss";
+import "/scss/pages/home/member/registerMember.scss";
 import "bootstrap";
 
 document.addEventListener("DOMContentLoaded", () => {
