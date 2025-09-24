@@ -1,9 +1,25 @@
 import '/js/utils/core.js';
 import '/scss/pages/auth/login.scss';
 import { auth } from "/js/utils/firebaseAuth.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { browserLocalPersistence, setPersistence, signInWithEmailAndPassword } from "firebase/auth";
+import { getCurrentSession } from '/js/utils/sessionManager';
+
+setPersistence(auth, browserLocalPersistence).catch(error => {
+    console.error("Error setting persistence:", error);
+});
+
+async function initLogin() {
+    const userData = await getCurrentSession();
+
+    if (userData) {
+        window.location.href = "/ccsync-v1/pages/home/home.html";
+    }
+}
+
 
 document.addEventListener("DOMContentLoaded", () => {
+    initLogin();
+
     const form = document.querySelector("#login-form");
     const errorMsg = document.querySelector("#error-msg");
 
@@ -13,45 +29,46 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.querySelector("#emailInput").value;
         const password = document.querySelector("#passwordInput").value;
 
-        /* try {
-            console.log(JSON.stringify({ idNumber, password }));
-            // TODO: API endpoint
-            const response = await fetch("http://localhost:80/demo/ccsync/auth/login.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({ idNumber, password }),
-                credentials: "include"
-            });
+        try {
+            let idToken = null;
 
-            const data = await response.json();
-
-            if (data.success) {
-                localStorage.setItem("user", JSON.stringify(data.user));
-                // Redirect to home
-                window.location.href = "/ccsync-v1/pages/home/home.html";
-            } else {
-                errorMsg.textContent = data.message || "Login failed";
-            }
+            // TODO: Maybe let backend handle this firebase login method
+            signInWithEmailAndPassword(auth, email, password)
+                .then(async userCredentials => {
+                    idToken = await userCredentials.user.getIdToken();
+                    return idToken;
+                })
+                .then(idToken => {
+                    return fetch('http://localhost:8000/api/auth/verify-token', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Accept': 'application/json',
+                        },
+                        body: JSON.stringify({ id_token: idToken }),
+                    });
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Verified user: ', data);
+                    const userData = {
+                        ...data.user,
+                        firebase_token: idToken,
+                        last_login: new Date().toISOString()
+                    };
+                    localStorage.setItem('user', JSON.stringify(userData));
+                    window.location.href = '/ccsync-v1/pages/home/home.html';
+                })
+                .catch(error => {
+                    const errorCode = error.code;
+                    errorMsg.textContent = error.message;
+                    console.error('Error during token verification: ', error);
+                });
         } catch (error) {
-            errorMsg.textContent = "Error connecting to server";
-        } */
-        signInWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                console.log('SUCESSFUL LOGIN');
+            errorMsg.textContent = error.message;
+            console.error('Error during login: ', error);
+        }
 
-                const user = userCredentials.user;
-                console.log(user);
-                // TODO: For now store user in Local Storage
-                localStorage.setItem("user", JSON.stringify(user));
-
-                window.location.href = "/ccsync-v1/pages/home/home.html";
-            })
-            .catch(e => {
-                const errorCode = e.code;
-                errorMsg.textContent = e.message;
-            });
     });
 });
 

@@ -3,16 +3,11 @@ import { setSidebar } from '/components/js/sidebar';
 import '/scss/pages/home/home.scss';
 import 'bootstrap';
 import { setupLogout } from '/js/utils/navigation.js';
+import { getCurrentSession } from "/js/utils/sessionManager.js";
 
-export function initHome() {
-    const user = localStorage.getItem("user");
-
-    if (!user) {
-        window.location.href = "/ccsync-v1/pages/auth/login.html";
-        return;
-    }
-
-    const userData = JSON.parse(user);
+export async function initHome() {
+    const user = await getCurrentSession();
+    if (!user) window.location.href = "/ccsync-v1/pages/auth/login.html";
 
     // Optionally, populate other dashboard data here
     // Example: last sync time, stats, etc.
@@ -29,11 +24,7 @@ export async function printList() {
         const response = await fetch("http://localhost:8080/demo/ccsync/auth/usersList.php");
 
         if (!response.ok) {
-            throw new Error(`HTTP error ! Status: $ {
-                    response.status
-                }
-
-                `);
+            throw new Error(`HTTP error ! Status: ${response.status}`);
         }
 
         let data;

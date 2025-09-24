@@ -3,8 +3,19 @@ import '/scss/pages/auth/register.scss';
 import { Popover } from 'bootstrap';
 import { auth } from "/js/utils/firebaseAuth.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { getCurrentSession } from '/js/utils/sessionManager';
+
+async function initRegister() {
+    const userData = await getCurrentSession();
+
+    if (userData) {
+        window.location.href = "/ccsync-v1/pages/home/home.html";
+    }
+}
 
 document.addEventListener("DOMContentLoaded", () => {
+    initRegister();
+
     const form = document.querySelector(".needs-validation");
 
     form.addEventListener("submit", async (event) => {
@@ -15,58 +26,32 @@ document.addEventListener("DOMContentLoaded", () => {
         const idNumber = document.querySelector("#idinput").value;
         const email = document.querySelector("#emailinput").value;
         const password = document.querySelector("#passwordInput").value;
+        const password_confirmation = document.querySelector("#confirmPasswordInput").value;
 
         try {
-            const response = await fetch("http://localhost:80/demo/ccsync/auth/register.php", {
-                method: "POST",
+            const response = await fetch('http://localhost:8000/api/auth/register', {
+                method: 'POST',
                 headers: {
-                    "Content-Type": "application/json"
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
-                    firstName,
-                    lastName,
-                    idNumber,
-                    email
+                    name: `${firstName} ${lastName}`,
+                    email: email,
+                    password: password,
+                    password_confirmation: password_confirmation,
+                    id_number: idNumber
                 }),
-                credentials: "include"
             });
 
             const data = await response.json();
 
-            // TODO: Transaction needed
-            if (data.success) {
-                createUserWithEmailAndPassword(auth, email, password)
-                    .then(userCredentials => {
-                        console.log('CREATE USER SUCCESS');
-
-                        const user = userCredentials.user;
-                        window.location.href = "/ccsync-v1/pages/auth/login.html";
-                    })
-                    .catch(e => {
-                        const errorCode = e.code;
-                        const errorMessage = e.message;
-
-                        console.error("Registration error:", errorCode);
-                        let errorContainer = document.querySelector("#error-msg");
-                        if (!errorContainer) {
-                            errorContainer = document.createElement("div");
-                            errorContainer.id = "error-msg";
-                            errorContainer.classList.add("alert", "alert-danger", "mt-3");
-                            form.appendChild(errorContainer);
-                        }
-                        errorContainer.textContent = errorMessage;
-                    });
-                // window.location.href = "/ccsync-v1/pages/auth/login.html";
-            } else {
-                let errorContainer = document.querySelector("#error-msg");
-                if (!errorContainer) {
-                    errorContainer = document.createElement("div");
-                    errorContainer.id = "error-msg";
-                    errorContainer.classList.add("alert", "alert-danger", "mt-3");
-                    form.appendChild(errorContainer);
-                }
-                errorContainer.textContent = data.message || "Registration failed";
+            if (!response.ok) {
+                throw new Error(data.message || data.errors?.email?.[0] || 'Registration failed');
             }
+
+            console.log('Registration successful:', data);
+            window.location.href = '/ccsync-v1/pages/auth/login.html';
         } catch (error) {
             console.error("Registration error:", error);
             let errorContainer = document.querySelector("#error-msg");
@@ -76,7 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 errorContainer.classList.add("alert", "alert-danger", "mt-3");
                 form.appendChild(errorContainer);
             }
-            errorContainer.textContent = "Error connecting to server";
+            errorContainer.textContent = error.message || "Registration failed";
+            errorContainer.style.display = "block";
         }
     });
 });
