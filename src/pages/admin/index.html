@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Admin Panel</title>
+
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+			}
+
+			#form-add-user > div {
+				margin-bottom: 10px;
+			}
+
+			#thead-user th,
+			#tbody-user td {
+				padding-left: 5px;
+				padding-top: 4px;
+				padding-bottom: 4px;
+			}
+
+			#tbody-user button {
+				color: white;
+				border: none;
+				padding: 5px 10px;
+				cursor: pointer;
+				font-weight: bold;
+			}
+
+			#tbody-user button:first-child {
+				background-color: #4f6f99ff;
+				margin-right: 5px;
+			}
+
+			#tbody-user button:last-child {
+				background-color: rgb(153, 79, 79);
+			}
+		</style>
+	</head>
+	<body>
+		<h1>Welcome to the Admin Panel</h1>
+		<p>Manage users, events, and requirements from this panel.</p>
+
+		<!-- Add user -->
+		<div style="margin-bottom: 20px">
+			<h2>Add User</h2>
+			<form id="form-add-user">
+				<div>
+					<label for="firstName">First Name:</label>
+					<input
+						type="text"
+						id="firstName"
+						name="firstName"
+						required />
+					<label for="lastName">Last Name:</label>
+					<input type="text" id="lastName" name="lastName" required />
+					<label for="email">Email:</label>
+					<input type="email" id="email" name="email" required />
+				</div>
+
+				<div>
+					<label for="schoolId">School ID Number:</label>
+					<input type="text" id="schoolId" name="schoolId" required />
+				</div>
+
+				<div>
+					<label for="password">Password:</label>
+					<input
+						type="password"
+						id="password"
+						name="password"
+						required />
+					<label for="confirmPassword">Confirm Password:</label>
+					<input
+						type="password"
+						id="confirmPassword"
+						name="confirmPassword"
+						required />
+				</div>
+				<button type="submit">Add User</button>
+			</form>
+		</div>
+
+		<hr />
+
+		<!-- Add table -->
+		<div style="overflow-x: auto; margin-top: 20px; max-width: 100%">
+			<h2 style="border: 0; padding: 0; margin-top: 0">User List</h2>
+			<table
+				style="
+					width: 100%;
+					border-collapse: collapse;
+					min-width: 600px;
+					border: 1px solid #ddd;
+				">
+				<!-- left-aligned headers -->
+				<thead
+					id="thead-user"
+					style="background-color: #f2f2f2; text-align: left">
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th>Email Verified At</th>
+						<th>ID School Number</th>
+						<th>Role</th>
+						<th>Actions</th>
+					</tr>
+				</thead>
+				<tbody id="tbody-user">
+					<tr>
+						<td>1</td>
+						<td>John Doe</td>
+						<td>john@example.com</td>
+						<td>2023-01-01 19:29:31</td>
+						<td>20200937</td>
+						<td>Admin</td>
+						<td>
+							<button>Edit</button>
+							<button>Delete</button>
+						</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Jane Smith</td>
+						<td>jane@example.com</td>
+						<td>2023-01-02 14:15:22</td>
+						<td>20200938</td>
+						<td>User</td>
+						<td>
+							<button>Edit</button>
+							<button>Delete</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+		<script type="module" src="/js/pages/admin/index.js"></script>
+	</body>
+</html>

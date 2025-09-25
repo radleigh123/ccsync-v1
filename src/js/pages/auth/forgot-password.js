@@ -1,7 +1,5 @@
 import '/js/utils/core.js';
 import '/scss/pages/auth/forgot-password.scss';
-import { auth } from "/js/utils/firebaseAuth.js";
-import { sendPasswordResetEmail } from "firebase/auth";
 
 document.addEventListener("DOMContentLoaded", () => {
     const backLink = document.getElementById('back-link');
