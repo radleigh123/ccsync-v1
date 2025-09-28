@@ -224,38 +224,7 @@
 						</h5>
 						<form>
 							<div class="row mb-3">
-								<div class="col-md-6">
-									<label for="idNumber" class="form-label">
-										ID Number:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="idNumber"
-										placeholder="e.g 20023045" />
-								</div>
-								<div class="col-md-6">
-									<label for="program" class="form-label">
-										Program:
-									</label>
-									<select class="form-select" id="program">
-										<option value="" selected hidden>
-											Choose a program
-										</option>
-										<option value="bsit">
-											BS Information Technology
-										</option>
-										<option value="bscs">
-											BS Computer Science
-										</option>
-										<option value="bsis">
-											BS Information Systems
-										</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="row mb-3">
+								<!-- First Name -->
 								<div class="col-md-6">
 									<label for="firstName" class="form-label">
 										First Name:
@@ -266,6 +235,70 @@
 										id="firstName"
 										placeholder="Juan Dela Cruz" />
 								</div>
+								<!-- Last Name -->
+								<div class="col-md-6">
+									<label for="lastName" class="form-label">
+										Last Name:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="lastName"
+										placeholder="Dela Cruz" />
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<!-- Suffix -->
+								<div class="col-md-6">
+									<label for="suffix" class="form-label">
+										Suffix:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="suffix"
+										placeholder="Jr." />
+								</div>
+								<!-- Birth date -->
+								<div class="col-md-6">
+									<label for="birthDate" class="form-label">
+										Birth Date:
+									</label>
+									<input
+										type="date"
+										class="form-control"
+										id="birthDate" />
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<!-- ID Number -->
+								<div class="col-md-6">
+									<label for="idNumber" class="form-label">
+										ID Number:
+									</label>
+									<input
+										type="text"
+										class="form-control"
+										id="idNumber"
+										placeholder="e.g 20023045" />
+								</div>
+								<!-- Email -->
+								<div class="col-md-6">
+									<label for="email" class="form-label">
+										Email:
+									</label>
+									<input
+										type="email"
+										class="form-control"
+										id="email"
+										placeholder="e.g. juan.delacruz@example.com" />
+								</div>
+							</div>
+
+							<div class="row mb-3">
+								<!-- Year Level -->
 								<div class="col-md-6">
 									<label for="yearLevel" class="form-label">
 										Year Level:
@@ -280,34 +313,43 @@
 										<option value="4">4th Year</option>
 									</select>
 								</div>
-							</div>
-
-							<div class="row mb-3">
+								<!-- Program -->
 								<div class="col-md-6">
-									<label for="lastName" class="form-label">
-										Last Name:
+									<label for="program" class="form-label">
+										Program:
 									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="lastName"
-										placeholder="Dela Cruz" />
+									<select class="form-select" id="program">
+										<option value="" selected hidden>
+											Choose a program
+										</option>
+										<option value="BSIT">
+											BS Information Technology
+										</option>
+										<option value="BSCS">
+											BS Computer Science
+										</option>
+										<option value="BSIS">
+											BS Information Systems
+										</option>
+									</select>
 								</div>
-								<div class="col-md-6"></div>
 							</div>
 
 							<div class="row mb-4">
+								<!-- Is Paid (checkbox) -->
 								<div class="col-md-6">
-									<label for="suffix" class="form-label">
-										Suffix:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="suffix"
-										placeholder="Jr." />
+									<div class="form-check">
+										<input
+											class="form-check-input"
+											type="checkbox"
+											id="isPaid" />
+										<label
+											class="form-check-label"
+											for="isPaid">
+											Is Paid?
+										</label>
+									</div>
 								</div>
-								<div class="col-md-6"></div>
 							</div>
 
 							<div class="d-grid">

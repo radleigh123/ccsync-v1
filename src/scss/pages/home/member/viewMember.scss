@@ -56,7 +56,6 @@ i {
     width: 100%;
 }
 
-
 #body th {
     background: #EFD99C;
     font-family: Arial, Helvetica, sans-serif;
@@ -68,8 +67,65 @@ i {
     vertical-align: middle;
 }
 
+// Table row styling for member rows
+#userTableBody tr {
+    background-color: #ffffff; // Remove the conflicting #833a3a
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+
+    &:nth-child(odd) {
+        background-color: #f8f9fa; // Light gray for alternating rows
+    }
+
+    &:hover {
+        background-color: #e3f2fd !important; // Light blue on hover
+        transform: translateY(-1px);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    &:active {
+        background-color: #bbdefb !important; // Darker blue when clicked
+        transform: translateY(0);
+    }
+
+    // Special styling for summary/message rows
+    &.summary-row {
+        background-color: transparent !important;
+        cursor: default;
+
+        &:hover {
+            background-color: transparent !important;
+            transform: none;
+            box-shadow: none;
+        }
+    }
+}
+
+// Table cell styling
+#userTableBody td {
+    padding: 1rem 0.75rem;
+    border-bottom: 1px solid #dee2e6;
+    font-size: 0.9rem;
+
+    &:first-child {
+        font-weight: 500; // Bold name column
+        color: #2c3e50;
+    }
+}
+
+#userTableBody tr.member-row {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease-in-out;
+}
+
 @media (max-width: 800px) {
     body {
         padding-top: 60px;
+    }
+
+    #userTableBody td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.85rem;
     }
 }

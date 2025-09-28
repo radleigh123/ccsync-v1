@@ -1,71 +1,147 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/member/viewMember.scss';
 import { setSidebar } from '/components/js/sidebar';
-import { setupLogout } from "/js/utils/navigation.js";
-import 'bootstrap';
+import { getCurrentSession } from '/js/utils/sessionManager';
 
-document.addEventListener("DOMContentLoaded", () => {
-  initHome();
+let userData = null;
+let allMembers = []; // Store all members
+let selectedYear = null;
+
+document.addEventListener("DOMContentLoaded", async () => {
+  await initHome();
   setSidebar();
-  loadUsers();
-  setupLogout();
+  setupYearFilter();
+  loadMembers();
 });
 
-export function initHome() {
-  const user = localStorage.getItem("user");
+export async function initHome() {
+  // Get logged-in user data
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+}
 
-  if (!user) {
-    window.location.href = "/ccsync-v1/pages/auth/login.html";
+async function loadMembers() {
+  // Members mock data
+  /* const members = [
+    { name: "Alice Johnson", year_level: "3", program: "BSCS" },
+    { name: "Bob Smith", year_level: "2", program: "BSIT" },
+    { name: "Charlie Brown", year_level: "1", program: "BSSE" }
+  ]; */
+
+  try {
+    const response = await fetch("http://localhost:8000/api/member", {
+      headers: {
+        "Authorization": `Bearer ${userData.firebase_token}`,
+        "Accept": "application/json",
+      }
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    allMembers = data.members;
+
+    // Display all members default
+    displayMembers(allMembers);
+
+  } catch (error) {
+    console.error("Error fetching members:", error);
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = `
+    <tr>
+      <td colspan="3" class="text-danger text-center">
+        Failed to load members. Please try again.
+      </td>
+    </tr>
+    `;
+  }
+}
+
+function setupYearFilter() {
+  const yearDropdown = document.getElementById('yearDropdown');
+
+  yearDropdown.addEventListener('change', (e) => {
+    selectedYear = e.target.value;
+    filterMembersByYear(selectedYear);
+  });
+}
+
+function filterMembersByYear(year) {
+  if (!year) {
+    displayMembers(allMembers);
     return;
   }
 
-  const userData = JSON.parse(user);
+  // Filter members by enrollment year
+  const filteredMembers = allMembers.filter(member => {
+    const enrollmentYear = new Date(member.enrollment_date).getFullYear();
+    return enrollmentYear === parseInt(year);
+  });
+
+  displayMembers(filteredMembers);
 }
 
-async function loadUsers() {
-  try {
-    // TODO: Uncomment me
-    // const response = await fetch("fetch_users.php"); // PHP endpoint
-    // const users = await response.json();
+function displayMembers(members) {
+  const tbody = document.getElementById("userTableBody");
+  tbody.innerHTML = "";
 
-    // Users mock data
-    const users = [
-      { name: "Alice Johnson", year_level: "3", program: "Computer Science" },
-      { name: "Bob Smith", year_level: "2", program: "Information Technology" },
-      { name: "Charlie Brown", year_level: "1", program: "Software Engineering" }
-    ];
+  if (members.length > 0) {
+    members.forEach((member, index) => {
+      const fullName = `${member.first_name} ${member.last_name}${member.suffix ? ' ' + member.suffix : ''}`;
+      const programCode = member.program?.code || member.program;
 
-    const tbody = document.getElementById("userTableBody");
-    tbody.innerHTML = "";
+      const row = document.createElement('tr');
+      row.className = 'member-row';
+      row.dataset.memberId = member.id;
 
-    if (users.length > 0) {
-      users.forEach(user => {
-        const row = `
-              <tr>
-                <td class="ps-3">${user.name}</td>
-                <td class="ps-3 text-center">${user.year_level}</td>
-                <td class="ps-3 text-center">${user.program}</td>
-              </tr>
-            `;
-        tbody.innerHTML += row;
+      row.innerHTML = `
+        <td class="ps-3">${fullName}</td>
+        <td class="ps-3 text-center">${member.year}</td>
+        <td class="ps-3 text-center">${programCode}</td>
+      `;
+
+      // Click event listeners, implement action here
+      row.addEventListener('click', () => {
+        handleMemberClick(member);
       });
-      tbody.innerHTML += `
-            <tr>
-              <td colspan="3" class="text-muted text-center">
-                ---------------- Nothing follows ----------------
-              </td>
-            </tr>
-          `;
-    } else {
-      tbody.innerHTML = `
-            <tr>
-              <td colspan="3" class="text-muted">
-                ---------------- Nothing follows ----------------
-              </td>
-            </tr>
-          `;
-    }
-  } catch (error) {
-    console.error("Error fetching users:", error);
+
+      tbody.appendChild(row);
+
+      setTimeout(() => {
+        row.style.opacity = '1';
+        row.style.transform = 'translateY(0)';
+      }, index * 50);
+    });
+
+    // TODO: Maybe limit to 50 (Similar to GMAIL)
+    const summaryRow = document.createElement('tr');
+    summaryRow.className = 'summary-row';
+    summaryRow.innerHTML = `
+      <td colspan="3" class="text-muted text-center">
+        ---------------- ${members.length} member(s) found ----------------
+      </td>
+    `;
+    tbody.appendChild(summaryRow);
+  } else {
+    const message = selectedYear
+      ? `No members found for school year ${selectedYear}`
+      : "No members found";
+
+    const emptyRow = document.createElement('tr');
+    emptyRow.className = 'summary-row';
+    emptyRow.innerHTML = `
+      <td colspan="3" class="text-muted text-center">
+        ${message}
+      </td>
+    `;
+    tbody.appendChild(emptyRow);
   }
+}
+
+function handleMemberClick(member) {
+  // Add member click functionality here
+  alert(`Member clicked: ${member.first_name} ${member.last_name}`); // Placeholder action
 }

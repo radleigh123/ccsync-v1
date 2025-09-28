@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadUserDetails(userIdToEdit) {
     try {
         // Fetch user details from API using the database ID
-        const response = await fetch(`http://localhost:8000/api/users/id/${userIdToEdit}`, {
+        const response = await fetch(`http://localhost:8000/api/auth/user/${userIdToEdit}`, {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
@@ -69,7 +69,7 @@ async function handleSubmit(event) {
     const role = document.getElementById("role").value;
 
     try {
-        const response = await fetch("http://localhost:8000/api/users/edit-user/id/" + userIdToEdit, {
+        const response = await fetch("http://localhost:8000/api/auth/user/edit-user/" + userIdToEdit, {
             method: "PUT",
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
@@ -78,7 +78,7 @@ async function handleSubmit(event) {
             },
             body: JSON.stringify({
                 id_token: userData.firebase_token,
-                id: userData.id,
+                id: parseInt(userIdToEdit),
                 email: email,
                 display_name: `${firstName} ${lastName}`,
                 id_school_number: idSchoolNumber,

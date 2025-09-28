@@ -17,9 +17,8 @@ async function initHome() {
 function printEventList() {
     // Mock events for demonstration
     const events = [
-        { title: "Team Meeting", date: "2024-07-01 10:00 AM", description: "Monthly team sync-up." },
-        { title: "Project Deadline", date: "2024-07-05 11:59 PM", description: "Final submission of project deliverables." },
-        { title: "Client Presentation", date: "2024-07-10 02:00 PM", description: "Presenting the project progress to the client." }
+        { title: "CCS Acquaintance Party", date: "2024-07-01 10:00 AM", description: "A casual gathering to get to know each other." },
+        { title: "Intramurals", date: "2024-07-05 11:59 PM", description: "A friendly sports competition between teams." },
     ];
 
     const eventList = document.getElementById("eventList");
