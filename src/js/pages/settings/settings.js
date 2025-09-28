@@ -2,7 +2,6 @@ import '/js/utils/core.js';
 import '/scss/pages/settings/settings.scss';
 import { Tab } from "bootstrap";
 import { setSidebar } from "/components/js/sidebar.js";
-import { setupFloatingNav } from "/components/js/floating_button.js";
 import { setupLogout } from "/js/utils/navigation.js";
 import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/build/css/intlTelInput.css';
@@ -170,5 +169,4 @@ document.addEventListener("DOMContentLoaded", () => {
     initSettings();
     setupLogout();
     setSidebar();
-    setupFloatingNav();
 });

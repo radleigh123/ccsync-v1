@@ -2,7 +2,6 @@ import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
 import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
-import { setupFloatingNav } from '/components/js/floating_button.js';
 
 export function initProfile() {
     // Check for logged in user
@@ -120,7 +119,6 @@ document.addEventListener("DOMContentLoaded", () => {
     initProfile();
     setupLogout();
     setSidebar();
-    setupFloatingNav();
     document.getElementById("edit-profile-btn").onclick = function () {
         location.href = "/ccsync-v1/pages/settings/settings.html";
     };

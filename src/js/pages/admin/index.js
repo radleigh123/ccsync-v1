@@ -23,10 +23,10 @@ async function listUsers() {
     tbody.innerHTML = ''; // Clear existing rows
 
     // Mock user data
-    const users = [
+    /* const users = [
         { id: 1, name: 'John Doe', email: 'john@example.com', emailVerifiedAt: '2023-01-01 19:29:31', schoolId: '20200937', role: 'Admin' },
-        { id: 2, name: 'Jane Smiths', email: 'jane@example.com', emailVerifiedAt: '2023-01-02 14:15:22', schoolId: '20200938', role: 'User' },
-    ];
+    ]; */
+    const users = [];
 
     // Populate the table with user data
     users.forEach(user => {

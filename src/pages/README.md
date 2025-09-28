@@ -4,14 +4,26 @@ This guide provides detailed instructions for creating and maintaining pages in 
 
 ## Table of Contents
 
-1. [Project Structure](#project-structure)
-2. [Creating New Pages](#creating-new-pages)
-3. [JavaScript Patterns](#javascript-patterns)
-4. [CSS/SCSS Organization](#cssscss-organization)
-5. [Component Usage](#component-usage)
-6. [Best Practices](#best-practices)
-7. [Authentication Protection](#authentication-protection)
-8. [Responsive Design](#responsive-design)
+- [CCSync Page Development Guide](#ccsync-page-development-guide)
+  - [Table of Contents](#table-of-contents)
+  - [Project Structure](#project-structure)
+  - [Creating New Pages](#creating-new-pages)
+    - [1. Create HTML File](#1-create-html-file)
+    - [2. Create JavaScript File](#2-create-javascript-file)
+    - [3. Create SCSS File (if needed)](#3-create-scss-file-if-needed)
+    - [4. Register Page in Vite Config](#4-register-page-in-vite-config)
+  - [JavaScript Patterns](#javascript-patterns)
+    - [Core Imports](#core-imports)
+    - [Page-Specific Scripts](#page-specific-scripts)
+  - [CSS/SCSS Organization](#cssscss-organization)
+    - [Using Our Design System](#using-our-design-system)
+  - [Component Usage](#component-usage)
+    - [Sidebar Navigation](#sidebar-navigation)
+    - [Authentication Flow](#authentication-flow)
+  - [Best Practices](#best-practices)
+  - [Authentication Protection](#authentication-protection)
+  - [Responsive Design](#responsive-design)
+  - [Performance Considerations](#performance-considerations)
 
 ## Project Structure
 
@@ -250,12 +262,11 @@ document.addEventListener("DOMContentLoaded", () => {
 Always implement responsive design for all pages:
 
 ```js
-// Mobile-friendly navigation
-import { setupMobileSidebarToggle } from "/js/utils/components/mobile_sidebar_toggle.js";
+import { setSidebar } from "/components/js/sidebar.js";
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Initialize mobile navigation
-  setupMobileSidebarToggle();
+  // Initialize sidebar navigation
+  setSidebar();
 });
 ```
 
