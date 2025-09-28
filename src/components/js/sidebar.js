@@ -1,5 +1,6 @@
 import '/components/scss/sidebar.scss';
 import { Tooltip } from "bootstrap";
+import { setupLogout } from "/js/utils/navigation.js";
 
 export function setSidebar() {
     const toggleButton = document.getElementById('toggle-btn')
@@ -7,6 +8,8 @@ export function setSidebar() {
     const dropdownButton = document.querySelectorAll('.dropdown-btn')
     const menuItems = sidebar.querySelectorAll('li > a, .dropdown-btn')
     const isMobile = () => window.innerWidth <= 800
+
+    setupLogout(); // initialize logout functionality
 
     const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
     tooltipTriggerList.forEach(tooltipTriggerEl => {
