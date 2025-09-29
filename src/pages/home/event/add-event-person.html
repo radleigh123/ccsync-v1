@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>View Event</title>
+		<title>Add Participant</title>
 	</head>
 
 	<body>
@@ -207,92 +207,68 @@
 
 		<!-- Body -->
 		<main class="main-content-bg">
-			<div class="container-fluid">
+			<div class="container-fluid px-0">
 				<div
 					id="header"
-					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">View all events</p>
-					<div class="d-flex flex-row gap-3 align-items-center">
-						<p class="p-0 m-0">School year</p>
-						<div class="dropdown">
-							<label
-								for="yearDropdown"
-								class="form-label"
-								hidden></label>
-							<select class="form-select" id="yearDropdown">
-								<option value="" selected hidden>
-									Choose a school year
-								</option>
-								<!-- TODO: Think about scaling -->
-								<option value="">Show All</option>
-								<option value="2021-2022">2021-2022</option>
-								<option value="2022-2023">2022-2023</option>
-								<option value="2023-2024">2023-2024</option>
-								<option value="2024-2025">2024-2025</option>
-								<option value="2025-2026">2025-2026</option>
-								<option value="2026-2027">2026-2027</option>
-							</select>
-						</div>
-					</div>
+					class="d-flex flex-row gap-3 align-items-center">
+					<!-- BACK -->
+					<a
+						href="/ccsync-v1/pages/home/event/view-event.html"
+						class="text-decoration-none">
+						<i class="bi bi-caret-left-fill p-0 m-0"></i>
+					</a>
+					<p class="p-0 m-0 h3 fw-bold">Add an event participant</p>
 				</div>
 			</div>
-			<div class="row mt-4" id="eventContainer">
-				<!-- Event cards inserted here -->
-				<div
-					id="eventCardItem"
-					class="card px-0 col-md-4 col-sm-6 mb-4">
-					<div class="card-body">
-						<h5 class="card-title text-center">EVENT TITLE</h5>
-						<hr />
-						<div class="d-flex flex-row gap-2">
-							<strong>Date:</strong>
-							<p id="eventCardDate" class="my-0">
-								June 99, 9999
-							</p>
+			<div id="cardContainer" class="card px-0 mt-4">
+				<div class="card-body">
+					<h4 class="card-title" id="eventCardTitle">EVENT TITLE</h4>
+					<hr />
+					<form>
+						<div class="d-flex flex-row gap-2 mb-3">
+							<p class="my-0 py-0">ID number:</p>
+							<input
+								type="text"
+								class="form-control"
+								id="idNumber"
+								placeholder="Enter ID number" />
 						</div>
-						<div class="d-flex flex-row gap-2">
-							<strong>Attendees:</strong>
-							<p id="eventCardAttendees" class="my-0">9999</p>
-						</div>
-						<div class="d-flex flex-row gap-2">
-							<strong>Venue:</strong>
-							<p id="eventCardVenue" class="my-0">A very long venue name that might need to be truncated</p>
-						</div>
-						<!-- Action buttons (Edit, View, Register Attendee) -->
-						<div id="eventCardActions" class="d-flex flex-row justify-content-around mt-3">
-							<div id="registerButton" class="d-flex flex-column align-items-center">
-								<a
-									href="#"
-									class="text-decoration-none text-dark d-flex flex-column align-items-center">
-									<i class="bi bi-person-plus"></i>
-									<p class="my-0" hidden>Register</p>
-								</a>
-							</div>
-							<div id="editButton" class="d-flex flex-column align-items-center justify-content-center">
-								<a
-									href="/ccsync-v1/pages/home/event/edit-event.html"
-									class="text-decoration-none text-dark d-flex flex-column align-items-center">
-									<i class="bi bi-pencil-square"></i>
-									<p class="my-0" hidden>Edit</p>
-								</a>
-							</div>
-							<div id="viewButton" class="d-flex flex-column align-items-center">
-								<a
-									href="/ccsync-v1/pages/home/event/view-event.html"
-									class="text-decoration-none text-dark d-flex flex-column align-items-center">
-									<i class="bi bi-eye"></i>
-									<p class="my-0" hidden>View</p>
-								</a>
+						<div class="card-body">
+							<div id="eventCardStatus" class="card border-0">
+								<p
+									class="my-0 align-items-center p-3 py-2 fw-bold">
+									Participant information:
+								</p>
+								<div class="card-body">
+									<!-- Participant information will be displayed here -->
+									UNKNOWN STATUS
+								</div>
 							</div>
 						</div>
-					</div>
+						<div
+							class="d-flex flex-row justify-content-around gap-5 mt-3 px-3">
+							<a
+								href="/ccsync-v1/pages/home/event/view-event.html"
+								role="button"
+								id="cancelButton"
+								class="btn btn-secondary flex-fill fw-bold">
+								Cancel
+							</a>
+							<button
+								type="submit"
+								id="addButton"
+								class="btn btn-primary-ccsync flex-fill fw-bold">
+								Register
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</main>
 
 		<script
 			type="module"
-			src="/js/pages/home/event/viewEvent.js"
+			src="/js/pages/home/event/addEventPerson.js"
 			defer></script>
 	</body>
 </html>

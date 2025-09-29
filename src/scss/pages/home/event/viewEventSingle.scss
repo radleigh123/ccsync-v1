@@ -44,40 +44,41 @@ i {
     padding: 2rem;
 }
 
-#eventCardItem {
+.main-content-bg i {
+    color: white;
+    font-size: 2rem;
+}
+
+#eventContainer {
     border-radius: 15px;
-    background-color: var(--primary-gold);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
 }
 
-#eventCardItem:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+.table i {
+    color: #3b3b3b8e;
+    font-size: 1.2rem;
 }
 
-#eventCardItem .card-body {
-    margin-top: 2rem;
-    background-color: white;
+.table .dropdown {
+    position: relative;
 }
 
-#eventCardItem .card-body i {
-    font-size: 1.5rem;
-    transition: color 0.2s ease;
-}
-
-#eventCardActions i:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    color: var(--primary-dark);
-}
-
-#eventCardActions i:active {
-    transform: scale(0.95);
-    color: var(--primary-dark);
+.table .dropdown-menu {
+    position: absolute;
+    z-index: 1050;
+    min-width: 160px;
 }
 
 @media (max-width: 800px) {
     body {
         padding-top: 60px;
+    }
+
+    .table .dropdown-menu {
+        position: fixed;
+        transform: none !important;
+        left: auto !important;
+        right: 1rem !important;
     }
 }

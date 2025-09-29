@@ -44,36 +44,23 @@ i {
     padding: 2rem;
 }
 
-#eventCardItem {
-    border-radius: 15px;
-    background-color: var(--primary-gold);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
+.main-content-bg #header i {
+    color: white;
+    font-size: 2rem;
 }
 
-#eventCardItem:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+#eventCardStatus {
+    background-color: rgb(239, 217, 156);
+    border-radius: 20px;
 }
 
-#eventCardItem .card-body {
-    margin-top: 2rem;
-    background-color: white;
+#eventCardStatus .card-body {
+    background-color: #FFF7E0;
 }
 
-#eventCardItem .card-body i {
-    font-size: 1.5rem;
-    transition: color 0.2s ease;
-}
-
-#eventCardActions i:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    color: var(--primary-dark);
-}
-
-#eventCardActions i:active {
-    transform: scale(0.95);
-    color: var(--primary-dark);
+#cardContainer .card-body #cancelButton,
+#cardContainer .card-body #addButton {
+    border-radius: 20px;
 }
 
 @media (max-width: 800px) {

@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   loadMembers();
 });
 
-export async function initHome() {
+async function initHome() {
   // Get logged-in user data
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
@@ -84,6 +84,7 @@ function filterMembersByYear(year) {
   displayMembers(filteredMembers);
 }
 
+// TODO: Cache list for hot-reload, add Refresh for UX
 function displayMembers(members) {
   const tbody = document.getElementById("userTableBody");
   tbody.innerHTML = "";

@@ -31,7 +31,7 @@ function printEventList() {
         return;
     }
 
-    // TODO: image data implementation
+    // TODO: image data implementation addition
     events.forEach(event => {
         const eventItem = document.createElement("div");
         eventItem.id = "eventItem";
