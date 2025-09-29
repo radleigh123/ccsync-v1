@@ -1,23 +1,22 @@
 import "/js/utils/core.js";
-import { setSidebar } from "/components/js/sidebar";
 import "/scss/pages/home/member/registerMember.scss";
-import "bootstrap";
+import { setSidebar } from "/components/js/sidebar";
+import { getCurrentSession } from "/js/utils/sessionManager";
 
-document.addEventListener("DOMContentLoaded", () => {
+let userData = null;
+
+document.addEventListener("DOMContentLoaded", async () => {
   initHome();
   setSidebar();
-  loadUsers();
+
+  const form = document.querySelector("form");
+  form.addEventListener("submit", handleSubmit);
 });
 
-export function initHome() {
-  const user = localStorage.getItem("user");
-
-  if (!user) {
-    window.location.href = "/ccsync-v1/pages/auth/login.html";
-    return;
-  }
-
-  const userData = JSON.parse(user);
+export async function initHome() {
+  // Get logged-in user data
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
 }
 
 document.querySelectorAll("select.form-select").forEach((select) => {
@@ -34,30 +33,76 @@ document.querySelectorAll("select.form-select").forEach((select) => {
   select.addEventListener("change", updateColor);
 });
 
-document.querySelector("form").addEventListener("submit", function (e) {
+async function handleSubmit(e) {
   e.preventDefault();
 
   // Get form values
-  const formData = {
-    idNumber: document.getElementById("idNumber").value,
-    program: document.getElementById("program").value,
-    firstName: document.getElementById("firstName").value,
-    yearLevel: document.getElementById("yearLevel").value,
-    lastName: document.getElementById("lastName").value,
-    suffix: document.getElementById("suffix").value,
-  };
+  const firstName = document.getElementById("firstName").value;
+  const lastName = document.getElementById("lastName").value;
+  const suffix = document.getElementById("suffix").value;
+  const birthDate = document.getElementById("birthDate").value;
+  const idNumber = document.getElementById("idNumber").value;
+  const email = document.getElementById("email").value;
+  const yearLevel = document.getElementById("yearLevel").value;
+  const program = document.getElementById("program").value;
+  const isPaid = document.getElementById("isPaid").checked;
+
+  console.log(JSON.stringify({
+    first_name: firstName,
+    last_name: lastName,
+    suffix,
+    id_school_number: parseInt(idNumber),
+    email,
+    birth_date: birthDate,
+    program,
+    year: parseInt(yearLevel),
+    is_paid: isPaid
+  }));
+
 
   // Simple validation
-  if (!formData.idNumber || !formData.firstName || !formData.lastName) {
+  if (!firstName || !lastName || !birthDate || !idNumber || !yearLevel || !program) {
     alert(
-      "Please fill in all required fields (ID Number, First Name, Last Name)"
+      "Please fill in all required fields (First Name, Last Name, Birth Date, ID Number, Year Level, Program)."
     );
     return;
   }
 
-  // Simulate registration success
-  alert("Member registered successfully!");
+  try {
+    const response = await fetch("http://localhost:8000/api/member/", {
+      method: "POST",
+      headers: {
+        'Authorization': `Bearer ${userData.firebase_token}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json',
+      },
+      body: JSON.stringify({
+        first_name: firstName,
+        last_name: lastName,
+        suffix: suffix,
+        id_school_number: parseInt(idNumber),
+        email: email,
+        birth_date: birthDate,
+        program: program,
+        year: parseInt(yearLevel),
+        is_paid: isPaid
+      })
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      console.log(errorData);
+      throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+    }
+
+    alert("Member successfully registered!");
+    window.location.href = "/ccsync-v1/pages/home/member/view-member.html";
+  } catch (error) {
+    console.error("Error registering member:", error);
+    alert("Failed to register member. Please try again.");
+    return;
+  }
 
   // Reset form
   this.reset();
-});
+}

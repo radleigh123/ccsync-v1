@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>PSITS - Member Registration</title>
+		<title>Add Participant</title>
 	</head>
 
 	<body>
@@ -205,166 +205,151 @@
 			</ul>
 		</nav>
 
-		<!-- Main Content -->
 		<!-- Body -->
 		<main class="main-content-bg">
-			<div class="container-fluid">
+			<div class="container-fluid px-0">
 				<div
 					id="header"
-					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">Register a Member</p>
+					class="d-flex flex-row gap-3 align-items-center">
+					<!-- BACK -->
+					<a
+						href="/ccsync-v1/pages/home/event/view-event.html"
+						class="text-decoration-none">
+						<i class="bi bi-caret-left-fill p-0 m-0"></i>
+					</a>
+					<p class="p-0 m-0 h3 fw-bold">Edit event</p>
 				</div>
 			</div>
-
-			<div id="body" class="container-fluid mt-4">
-				<div class="card registration-card">
-					<div class="card-body p-4">
-						<h5 class="section-title mb-4" style="color: black">
-							Member Information
-						</h5>
-						<form>
-							<div class="row mb-3">
-								<!-- First Name -->
-								<div class="col-md-6">
-									<label for="firstName" class="form-label">
-										First Name:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="firstName"
-										placeholder="Juan Dela Cruz" />
-								</div>
-								<!-- Last Name -->
-								<div class="col-md-6">
-									<label for="lastName" class="form-label">
-										Last Name:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="lastName"
-										placeholder="Dela Cruz" />
-								</div>
+			<div class="card registration-card mt-4">
+				<div class="card-body p-4">
+					<h5 class="section-title mb-4" style="color: black">
+						Event information
+					</h5>
+					<form>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="eventName" class="form-label">
+									Event name:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventName"
+									placeholder="Your catchy event name" />
 							</div>
-
-							<div class="row mb-3">
-								<!-- Suffix -->
-								<div class="col-md-6">
-									<label for="suffix" class="form-label">
-										Suffix:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="suffix"
-										placeholder="Jr." />
-								</div>
-								<!-- Birth date -->
-								<div class="col-md-6">
-									<label for="birthDate" class="form-label">
-										Birth Date:
-									</label>
-									<input
-										type="date"
-										class="form-control"
-										id="birthDate" />
-								</div>
+							<div class="col-md-6">
+								<label for="maxParticipants" class="form-label">
+									Max participants:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="maxParticipants"
+									placeholder="Max participants" />
 							</div>
+						</div>
 
-							<div class="row mb-3">
-								<!-- ID Number -->
-								<div class="col-md-6">
-									<label for="idNumber" class="form-label">
-										ID Number:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="idNumber"
-										placeholder="e.g 20023045" />
-								</div>
-								<!-- Email -->
-								<div class="col-md-6">
-									<label for="email" class="form-label">
-										Email:
-									</label>
-									<input
-										type="email"
-										class="form-control"
-										id="email"
-										placeholder="e.g. juan.delacruz@example.com" />
-								</div>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="venue" class="form-label">
+									Venue:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="venue"
+									placeholder="Add venue" />
 							</div>
+							<div class="col-md-6">
+								<label
+									for="registrationStart"
+									class="form-label">
+									Registration start:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationStart"
+									placeholder="Add registration start date" />
+							</div>
+						</div>
 
-							<div class="row mb-3">
-								<!-- Year Level -->
-								<div class="col-md-6">
-									<label for="yearLevel" class="form-label">
-										Year Level:
-									</label>
-									<select class="form-select" id="yearLevel">
-										<option value="" selected hidden>
-											Choose a year level
-										</option>
-										<option value="1">1st Year</option>
-										<option value="2">2nd Year</option>
-										<option value="3">3rd Year</option>
-										<option value="4">4th Year</option>
-									</select>
-								</div>
-								<!-- Program -->
-								<div class="col-md-6">
-									<label for="program" class="form-label">
-										Program:
-									</label>
-									<select class="form-select" id="program">
-										<option value="" selected hidden>
-											Choose a program
-										</option>
-										<option value="BSIT">
-											BS Information Technology
-										</option>
-										<option value="BSCS">
-											BS Computer Science
-										</option>
-										<option value="BSIS">
-											BS Information Systems
-										</option>
-									</select>
-								</div>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="date" class="form-label">
+									Event Date:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventDate"
+									placeholder="Add event date" />
 							</div>
+							<div class="col-md-6">
+								<label for="registrationEnd" class="form-label">
+									Registration end:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationEnd"
+									placeholder="Add registration end date" />
+							</div>
+						</div>
 
-							<div class="row mb-4">
-								<!-- Is Paid (checkbox) -->
-								<div class="col-md-6">
-									<div class="form-check">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="isPaid" />
-										<label
-											class="form-check-label"
-											for="isPaid">
-											Is Paid?
-										</label>
-									</div>
-								</div>
+						<div class="row mb-4">
+							<div class="col-md-3 cs-form">
+								<label for="fromTime" class="form-label">
+									From:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="fromTime"
+									placeholder="10:05 AM" />
 							</div>
+							<div class="col-md-3 cs-form">
+								<label for="toTime" class="form-label">
+									To:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="toTime"
+									placeholder="12:05 PM" />
+							</div>
+						</div>
 
-							<div class="d-grid">
-								<button type="submit" class="btn btn-register">
-									Register
-								</button>
-							</div>
-						</form>
-					</div>
+						<div
+							id="editCardButtonGroup"
+							class="d-flex flex-row justify-content-around gap-4 mt-4">
+							<a
+								href="/ccsync-v1/pages/home/event/view-event.html"
+								role="button"
+								id="cancelButton"
+								class="btn btn-secondary flex-fill fw-bold">
+								Cancel
+							</a>
+							<button
+								type="submit"
+								id="addButton"
+								class="btn btn-primary-ccsync flex-fill fw-bold">
+								Register
+							</button>
+							<button
+								id="closeButton"
+								class="btn btn-danger flex-fill fw-bold">
+								Close event
+							</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</main>
+
 		<script
 			type="module"
-			src="/js/pages/home/member/registerMember.js"
+			src="/js/pages/home/event/editEvent.js"
 			defer></script>
 	</body>
 </html>

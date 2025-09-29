@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>PSITS - Member Registration</title>
+		<title>Add Participant</title>
 	</head>
 
 	<body>
@@ -205,166 +205,145 @@
 			</ul>
 		</nav>
 
-		<!-- Main Content -->
 		<!-- Body -->
 		<main class="main-content-bg">
-			<div class="container-fluid">
+			<div class="container-fluid px-0">
 				<div
 					id="header"
-					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">Register a Member</p>
+					class="d-flex flex-row gap-3 align-items-center">
+					<!-- BACK -->
+					<a
+						href="/ccsync-v1/pages/home/event/view-event.html"
+						class="text-decoration-none">
+						<i class="bi bi-caret-left-fill p-0 m-0"></i>
+					</a>
+					<p class="p-0 m-0 h3 fw-bold">View event</p>
 				</div>
 			</div>
-
-			<div id="body" class="container-fluid mt-4">
-				<div class="card registration-card">
-					<div class="card-body p-4">
-						<h5 class="section-title mb-4" style="color: black">
-							Member Information
-						</h5>
-						<form>
-							<div class="row mb-3">
-								<!-- First Name -->
-								<div class="col-md-6">
-									<label for="firstName" class="form-label">
-										First Name:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="firstName"
-										placeholder="Juan Dela Cruz" />
-								</div>
-								<!-- Last Name -->
-								<div class="col-md-6">
-									<label for="lastName" class="form-label">
-										Last Name:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="lastName"
-										placeholder="Dela Cruz" />
-								</div>
+			<div id="eventContainer" class="card mt-4">
+				<div class="card-title p-4">
+					<div
+						class="d-flex flex-row justify-content-between align-items-center">
+						<p class="h2 m-0 p-0">Event Information</p>
+						<a
+							href="/ccsync-v1/pages/home/event/edit-event.html"
+							class="btn btn-primary-ccsync">
+							Edit Event
+						</a>
+					</div>
+					<hr />
+					<div class="card-body p-0 m-0">
+						<div class="row">
+							<div class="col">
+								<p class="m-0 p-0">
+									<strong>Event Name:</strong>
+									Sample Event
+								</p>
+								<p class="m-0 p-0">
+									<strong>Venue:</strong>
+									Sample Venue
+								</p>
+								<p class="m-0 p-0">
+									<strong>Date:</strong>
+									January 1, 2023
+								</p>
 							</div>
-
-							<div class="row mb-3">
-								<!-- Suffix -->
-								<div class="col-md-6">
-									<label for="suffix" class="form-label">
-										Suffix:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="suffix"
-										placeholder="Jr." />
-								</div>
-								<!-- Birth date -->
-								<div class="col-md-6">
-									<label for="birthDate" class="form-label">
-										Birth Date:
-									</label>
-									<input
-										type="date"
-										class="form-control"
-										id="birthDate" />
-								</div>
+							<div class="col">
+								<p class="m-0 p-0">
+									<strong>Max participants:</strong>
+									100
+								</p>
+								<p class="m-0 p-0">
+									<strong>Available slots:</strong>
+									50
+								</p>
+								<p class="m-0 p-0">
+									<strong>Registration due:</strong>
+									June 26, 2024
+								</p>
 							</div>
-
-							<div class="row mb-3">
-								<!-- ID Number -->
-								<div class="col-md-6">
-									<label for="idNumber" class="form-label">
-										ID Number:
-									</label>
-									<input
-										type="text"
-										class="form-control"
-										id="idNumber"
-										placeholder="e.g 20023045" />
-								</div>
-								<!-- Email -->
-								<div class="col-md-6">
-									<label for="email" class="form-label">
-										Email:
-									</label>
-									<input
-										type="email"
-										class="form-control"
-										id="email"
-										placeholder="e.g. juan.delacruz@example.com" />
-								</div>
-							</div>
-
-							<div class="row mb-3">
-								<!-- Year Level -->
-								<div class="col-md-6">
-									<label for="yearLevel" class="form-label">
-										Year Level:
-									</label>
-									<select class="form-select" id="yearLevel">
-										<option value="" selected hidden>
-											Choose a year level
-										</option>
-										<option value="1">1st Year</option>
-										<option value="2">2nd Year</option>
-										<option value="3">3rd Year</option>
-										<option value="4">4th Year</option>
-									</select>
-								</div>
-								<!-- Program -->
-								<div class="col-md-6">
-									<label for="program" class="form-label">
-										Program:
-									</label>
-									<select class="form-select" id="program">
-										<option value="" selected hidden>
-											Choose a program
-										</option>
-										<option value="BSIT">
-											BS Information Technology
-										</option>
-										<option value="BSCS">
-											BS Computer Science
-										</option>
-										<option value="BSIS">
-											BS Information Systems
-										</option>
-									</select>
-								</div>
-							</div>
-
-							<div class="row mb-4">
-								<!-- Is Paid (checkbox) -->
-								<div class="col-md-6">
-									<div class="form-check">
-										<input
-											class="form-check-input"
-											type="checkbox"
-											id="isPaid" />
-										<label
-											class="form-check-label"
-											for="isPaid">
-											Is Paid?
-										</label>
-									</div>
-								</div>
-							</div>
-
-							<div class="d-grid">
-								<button type="submit" class="btn btn-register">
-									Register
-								</button>
-							</div>
-						</form>
+						</div>
+					</div>
+					<div class="card-body p-0 m-0 mt-5">
+						<div class="d-flex flex-row gap-3">
+							<p class="h4" hidden>Participant ID Number:</p>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Enter ID Number" />
+							<button class="btn btn-primary">Search</button>
+							<button class="btn btn-primary-ccsync">
+								Add Participant
+							</button>
+						</div>
+						<!-- Table -->
+						<div class="mt-3">
+							<table
+								class="table table-hover table-striped table-responsive">
+								<thead>
+									<tr>
+										<th scope="col">Name</th>
+										<th scope="col">Year</th>
+										<th scope="col">Program</th>
+										<th scope="col">Date Registered</th>
+										<th scope="col">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Juan Dela Cruz</td>
+										<td>3rd Year</td>
+										<td>BSIT</td>
+										<td>June 1, 2024</td>
+										<td>
+											<a
+												href="#"
+												class="text-decoration-none align-items-center"
+												data-bs-toggle="dropdown"
+												data-bs-auto-close="true"
+												data-bs-boundary="viewport"
+												aria-haspopup="true"
+												aria-expanded="false">
+												<i
+													class="bi bi-three-dots-vertical"></i>
+											</a>
+											<ul
+												class="dropdown-menu dropdown-menu-end text-small shadow">
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														View profile
+													</a>
+												</li>
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														Remove participant
+													</a>
+												</li>
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														Mark as attended
+													</a>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
 					</div>
 				</div>
 			</div>
 		</main>
+
 		<script
 			type="module"
-			src="/js/pages/home/member/registerMember.js"
+			src="/js/pages/home/event/viewEventSingle.js"
 			defer></script>
 	</body>
 </html>

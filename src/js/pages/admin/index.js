@@ -47,7 +47,7 @@ async function listUsers() {
     });
 
     try {
-        const response = await fetch("http://localhost:8000/api/users", {
+        const response = await fetch("http://localhost:8000/api/auth/user", {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
