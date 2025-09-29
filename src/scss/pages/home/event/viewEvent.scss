@@ -80,4 +80,12 @@ i {
     body {
         padding-top: 60px;
     }
+
+    #eventContainer .card .card-body .d-flex {
+        font-size: 0.9rem;
+
+        .ms-auto {
+            max-width: 100px;
+        }
+    }
 }

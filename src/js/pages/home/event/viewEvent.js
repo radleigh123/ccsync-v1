@@ -18,17 +18,29 @@ async function initHome() {
 }
 
 async function loadEvents() {
+  // Events mock data
+  /* const events = [
+    { title: "CCS Acquaintance Party", date: "2024-07-01 10:00 AM", description: "A casual gathering to get to know each other.", attendees: 9999, venue: "Room 219" },
+    { title: "Intramurals", date: "2024-07-05 11:59 PM", description: "A friendly sports competition between teams.", attendees: 150, venue: "Auditorium" },
+  ]; */
+
   try {
-    // const response = await fetch("fetch_events.php");
-    // const events = await response.json();
+    const response = await fetch("http://localhost:8000/api/events", {
+      headers: {
+        "Authorization": `Bearer ${userData.firebase_token}`,
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      }
+    });
 
-    // Events mock data
-    const events = [
-      { title: "CCS Acquaintance Party", date: "2024-07-01 10:00 AM", description: "A casual gathering to get to know each other.", attendees: 9999, venue: "Room 219" },
-      { title: "Intramurals", date: "2024-07-05 11:59 PM", description: "A friendly sports competition between teams.", attendees: 150, venue: "Auditorium" },
-    ];
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+    }
 
-    displayEvents(events);
+    const data = await response.json();
+
+    displayEvents(data.data);
 
   } catch (error) {
     console.error("Error fetching events:", error);
@@ -49,11 +61,11 @@ function displayEvents(events) {
       const cardBody = document.createElement("div");
       cardBody.className = "card-body d-flex flex-column justify-content-between";
       cardBody.innerHTML = `
-          <h5 class="card-title text-center flex-fill align-content-center">${event.title}</h5>
+          <h5 class="card-title text-center flex-fill align-content-center">${event.name}</h5>
           <hr />
           <div class="d-flex flex-row gap-2">
             <strong>Date:</strong>
-            <p id="eventCardDate" class="my-0">${event.date}</p>
+            <p id="eventCardDate" class="my-0">${event.event_date}</p>
           </div>
           <div class="d-flex flex-row gap-2">
             <strong>Attendees:</strong>
