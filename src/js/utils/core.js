@@ -4,7 +4,7 @@ import 'bootstrap/dist/js/bootstrap.esm.min.js';
 import '/scss/styles.scss';
 import { initSessionManager } from "/js/utils/sessionManager.js";
 
-// console.log('Environment Variables:', import.meta.env);
+console.log('Environment Variables:', import.meta.env);
 
 /* // Expose Bootstrap to the global scope (important for proper functioning)
 import * as bootstrap from 'bootstrap';
