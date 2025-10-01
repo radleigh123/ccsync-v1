@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/event/viewEvent.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { getEvents } from '/js/utils/mock/mockStorage';
 
 let userData = null;
 
@@ -18,29 +19,27 @@ async function initHome() {
 }
 
 async function loadEvents() {
-  // Events mock data
-  /* const events = [
-    { title: "CCS Acquaintance Party", date: "2024-07-01 10:00 AM", description: "A casual gathering to get to know each other.", attendees: 9999, venue: "Room 219" },
-    { title: "Intramurals", date: "2024-07-05 11:59 PM", description: "A friendly sports competition between teams.", attendees: 150, venue: "Auditorium" },
-  ]; */
-
   try {
-    const response = await fetch("http://localhost:8000/api/events", {
-      headers: {
-        "Authorization": `Bearer ${userData.firebase_token}`,
-        "Content-Type": "application/json",
-        "Accept": "application/json"
+    if (import.meta.env.DEV) {
+      displayEvents(getEvents().events);
+    } else {
+      const response = await fetch("http://localhost:8000/api/events", {
+        headers: {
+          "Authorization": `Bearer ${userData.firebase_token}`,
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      const data = await response.json();
+
+      displayEvents(data.data);
     }
-
-    const data = await response.json();
-
-    displayEvents(data.data);
 
   } catch (error) {
     console.error("Error fetching events:", error);

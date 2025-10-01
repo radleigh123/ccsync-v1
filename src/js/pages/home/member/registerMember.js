@@ -2,6 +2,7 @@ import "/js/utils/core.js";
 import "/scss/pages/home/member/registerMember.scss";
 import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { addMember } from "/js/utils/mock/mockStorage";
 
 let userData = null;
 
@@ -41,6 +42,8 @@ async function handleSubmit(e) {
   const lastName = document.getElementById("lastName").value;
   const suffix = document.getElementById("suffix").value;
   const birthDate = document.getElementById("birthDate").value;
+  // const enrollmentDate = document.getElementById("enrollmentDate").value; // NEED ADD TO PAGE
+  const enrollmentDate = new Date().toISOString().split('T')[0]; // Current date (TEMPORARY)
   const idNumber = document.getElementById("idNumber").value;
   const email = document.getElementById("email").value;
   const yearLevel = document.getElementById("yearLevel").value;
@@ -54,6 +57,7 @@ async function handleSubmit(e) {
     id_school_number: parseInt(idNumber),
     email,
     birth_date: birthDate,
+    enrollment_date: enrollmentDate,
     program,
     year: parseInt(yearLevel),
     is_paid: isPaid
@@ -69,30 +73,47 @@ async function handleSubmit(e) {
   }
 
   try {
-    const response = await fetch("http://localhost:8000/api/member/", {
-      method: "POST",
-      headers: {
-        'Authorization': `Bearer ${userData.firebase_token}`,
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-      },
-      body: JSON.stringify({
+    if (import.meta.env.DEV) {
+      const newMember = {
         first_name: firstName,
         last_name: lastName,
         suffix: suffix,
         id_school_number: parseInt(idNumber),
         email: email,
         birth_date: birthDate,
+        enrollment_date: new Date().toISOString().split('T')[0], // Current date
         program: program,
         year: parseInt(yearLevel),
-        is_paid: isPaid
-      })
-    });
+        isPaid: isPaid
+      };
+      addMember(newMember);
+    } else {
+      const response = await fetch("http://localhost:8000/api/member/", {
+        method: "POST",
+        headers: {
+          'Authorization': `Bearer ${userData.firebase_token}`,
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+          first_name: firstName,
+          last_name: lastName,
+          suffix: suffix,
+          id_school_number: parseInt(idNumber),
+          email: email,
+          birth_date: birthDate,
+          enrollment_date: enrollmentDate,
+          program: program,
+          year: parseInt(yearLevel),
+          is_paid: isPaid
+        })
+      });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      console.log(errorData);
-      throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.log(errorData);
+        throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
+      }
     }
 
     alert("Member successfully registered!");

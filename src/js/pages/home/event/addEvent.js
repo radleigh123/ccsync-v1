@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/event/addEvent.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { addEvent } from '/js/utils/mock/mockStorage';
 
 let userData = null;
 
@@ -32,14 +33,8 @@ async function handleSubmit(event) {
     const maxParticipants = document.getElementById("maxParticipants").value;
 
     try {
-        const response = await fetch("http://localhost:8000/api/events", {
-            method: "POST",
-            headers: {
-                "Authorization": `Bearer ${userData.firebase_token}`,
-                "Content-Type": "application/json",
-                "Accept": "application/json"
-            },
-            body: JSON.stringify({
+        if (import.meta.env.DEV) {
+            const newEvent = {
                 name: eventName,
                 venue,
                 event_date: eventDate,
@@ -48,16 +43,39 @@ async function handleSubmit(event) {
                 registration_start: registrationStart,
                 registration_end: registrationEnd,
                 max_participants: parseInt(maxParticipants)
-            })
-        });
+            };
+            addEvent(newEvent);
+        } else {
+            const response = await fetch("http://localhost:8000/api/events", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${userData.firebase_token}`,
+                    "Content-Type": "application/json",
+                    "Accept": "application/json"
+                },
+                body: JSON.stringify({
+                    name: eventName,
+                    venue,
+                    event_date: eventDate,
+                    time_from: timeFrom,
+                    time_to: timeTo,
+                    registration_start: registrationStart,
+                    registration_end: registrationEnd,
+                    max_participants: parseInt(maxParticipants)
+                })
+            });
 
-        if (!response.ok) {
-            const errorData = await response.json();
-            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+            if (!response.ok) {
+                const errorData = await response.json();
+                throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+
         }
 
-        const data = await response.json();
-        console.log("Event added successfully:", data.data);
+        window.location.href = "/ccsync-v1/pages/home/event/view-event.html";
+        this.reset();
     } catch (error) {
         console.error("Error adding event:", error);
     }
