@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/member/viewMember.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { getMembers } from '/js/utils/mock/mockStorage';
 
 let userData = null;
 let allMembers = []; // Store all members
@@ -21,28 +22,25 @@ async function initHome() {
 }
 
 async function loadMembers() {
-  // Members mock data
-  /* const members = [
-    { name: "Alice Johnson", year_level: "3", program: "BSCS" },
-    { name: "Bob Smith", year_level: "2", program: "BSIT" },
-    { name: "Charlie Brown", year_level: "1", program: "BSSE" }
-  ]; */
-
   try {
-    const response = await fetch("http://localhost:8000/api/member", {
-      headers: {
-        "Authorization": `Bearer ${userData.firebase_token}`,
-        "Accept": "application/json",
+    if (import.meta.env.DEV) {
+      allMembers = getMembers().members;
+    } else {
+      const response = await fetch("http://localhost:8000/api/member", {
+        headers: {
+          "Authorization": `Bearer ${userData.firebase_token}`,
+          "Accept": "application/json",
+        }
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
       }
-    });
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+      const data = await response.json();
+      allMembers = data.members;
     }
-
-    const data = await response.json();
-    allMembers = data.members;
 
     // Display all members default
     displayMembers(allMembers);
