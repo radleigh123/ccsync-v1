@@ -212,68 +212,68 @@
 					id="header"
 					class="d-flex flex-row gap-5 align-items-center">
 					<p class="p-0 m-0 h1 fw-bold">Add a new requirement</p>
+					<div class="dropdown">
+						<label for="yearDropdown" class="form-label" hidden></label>
+						<select class="form-select" id="yearDropdown">
+							<option value="" selected hidden>
+								Choose a school year
+							</option>
+							<!-- TODO: Think about scaling -->
+							<option value="">Show All</option>
+							<option value="2021-2022">2021-2022</option>
+							<option value="2022-2023">2022-2023</option>
+							<option value="2023-2024">2023-2024</option>
+							<option value="2024-2025">2024-2025</option>
+							<option value="2025-2026">2025-2026</option>
+							<option value="2026-2027">2026-2027</option>
+						</select>
+					</div>
 				</div>
 			</div>
-			<div class="card registration-card">
-				<div class="card-body p-4">
-					<h5 class="section-title mb-4" style="color: black">
-						Requirement information
-					</h5>
-					<form>
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="eventName" class="form-label">
-									foo
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="eventName"
-									placeholder="foo" />
-							</div>
-							<div class="col-md-6">
-								<label for="maxParticipants" class="form-label">
-									foo
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="maxParticipants"
-									placeholder="foo" />
-							</div>
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-4" id="eventContainer">
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
 						</div>
-
-						<div class="row mb-4">
-							<div class="col-md-3 cs-form">
-								<label for="fromTime" class="form-label">
-									From:
-								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="fromTime"
-									placeholder="10:05 AM" />
-							</div>
-							<div class="col-md-3 cs-form">
-								<label for="toTime" class="form-label">
-									To:
-								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="toTime"
-									placeholder="12:05 PM" />
-							</div>
+						<div class="card-body text-center">
+							<h5>President</h5>
 						</div>
-
-						<div class="d-grid">
-							<button type="submit" class="btn btn-register">
-								Add requirement
-							</button>
+					</div>
+				</div>
+			
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
 						</div>
-					</form>
+						<div class="card-body text-center">
+							<h5>Vice President</h5>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>Secretary</h5>
+						</div>
+					</div>
 				</div>
 			</div>
+
 		</main>
 
 		<script

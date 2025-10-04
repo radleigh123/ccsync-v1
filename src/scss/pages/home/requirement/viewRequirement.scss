@@ -16,6 +16,8 @@ i {
 }
 
 .main-content-bg {
+    position: relative;        /* Make it a positioning context */
+    min-height: 100%;          /* Allow it to stretch */
     padding: 2rem;
 
     &::before {
@@ -68,6 +70,7 @@ i {
     vertical-align: middle;
 }
 
+
 .table th,
 .table td {
     font-size: 18px;
@@ -82,5 +85,9 @@ i {
 @media (max-width: 800px) {
     body {
         padding-top: 60px;
+    }
+
+    .main-content-bg {
+        padding: 0rem;
     }
 }

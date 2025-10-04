@@ -211,10 +211,10 @@
 				<div
 					id="header"
 					class="d-flex flex-row gap-5 align-items-center">
-					<p class="p-0 m-0 h1 fw-bold">Add a new requirement</p>
+					<p class="p-0 m-0 h1 fw-bold">Add a new officer</p>
 				</div>
 			</div>
-			<div class="card registration-card">
+			<div class="card registration-card mx-auto mt-4 mb-5">
 				<div class="card-body p-4">
 					<h5 class="section-title mb-4" style="color: black">
 						Requirement information
@@ -223,52 +223,83 @@
 						<div class="row mb-3">
 							<div class="col-md-6">
 								<label for="eventName" class="form-label">
-									foo
+									Full Name:
 								</label>
 								<input
 									type="text"
 									class="form-control"
 									id="eventName"
-									placeholder="foo" />
+									placeholder="e.g. John Doe" />
 							</div>
 							<div class="col-md-6">
-								<label for="maxParticipants" class="form-label">
-									foo
+								<label for="yearLevel" class="form-label">
+									Position
 								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="maxParticipants"
-									placeholder="foo" />
+								<select class="form-select" id="yearLevel">
+									<option value="" selected hidden>
+										Choose a position
+									</option>
+									<option value="1">President</option>
+									<option value="2">Internal Vice President</option>
+									<option value="3">External Vice President</option>
+									<option value="4">Secretary</option>
+									<option value="5">Treasurer</option>
+									<option value="6">Auditor</option>
+									<option value="7">PIO</option>
+								</select>
 							</div>
 						</div>
 
-						<div class="row mb-4">
-							<div class="col-md-3 cs-form">
-								<label for="fromTime" class="form-label">
-									From:
+						<div class="row mb-3">
+							<!-- Program -->
+							<div class="col-md-6">
+								<label for="program" class="form-label">
+									Program:
 								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="fromTime"
-									placeholder="10:05 AM" />
+								<select class="form-select" id="program">
+									<option value="" selected hidden>
+										Choose a program
+									</option>
+									<option value="BSIT">
+										BS Information Technology
+									</option>
+									<option value="BSCS">
+										BS Computer Science
+									</option>
+									<option value="BSIS">
+										BS Information Systems
+									</option>
+								</select>
 							</div>
-							<div class="col-md-3 cs-form">
-								<label for="toTime" class="form-label">
-									To:
+							<!-- Year Level -->
+							<div class="col-md-6">
+								<label for="yearLevel" class="form-label">
+									Year Level:
 								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="toTime"
-									placeholder="12:05 PM" />
+								<select class="form-select" id="yearLevel">
+									<option value="" selected hidden>
+										Choose a year level
+									</option>
+									<option value="1">1st Year</option>
+									<option value="2">2nd Year</option>
+									<option value="3">3rd Year</option>
+									<option value="4">4th Year</option>
+								</select>
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="eventName" class="form-label">
+									Email Address:
+								</label>
+								<input type="text" class="form-control" id="eventName" placeholder="e.g. john.doe@example.com" />
 							</div>
 						</div>
 
 						<div class="d-grid">
 							<button type="submit" class="btn btn-register">
-								Add requirement
+								Add officer
 							</button>
 						</div>
 					</form>

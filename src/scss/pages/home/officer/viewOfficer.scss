@@ -16,6 +16,8 @@ i {
 }
 
 .main-content-bg {
+    position: relative;        /* Make it a positioning context */
+    min-height: 100%;          /* Allow it to stretch */
     padding: 2rem;
 
     &::before {
@@ -44,90 +46,75 @@ i {
     padding: 2rem;
 }
 
+#eventCardItem {
+    border-radius: 15px;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease;
+}
+
+#eventCardItem:hover {
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+#eventCardItem .card-body {
+    margin-top: 1rem;
+    background-color: var(--primary-gold);
+    text-align: center;
+}
+
+#eventCardItem .card-body i {
+    font-size: 1rem;
+    transition: color 0.2s ease;
+}
+
+#eventCardActions i:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+    color: var(--primary-dark);
+}
+
+#eventCardActions i:active {
+    transform: scale(0.95);
+    color: var(--primary-dark);
+}
+
+/* Make officer image smaller but keep rectangular */
+.officer-img {
+    width: 60%;
+    height: auto;
+    margin: 1rem auto;
+    display: block;
+    border-radius: 8px;
+}
+
+/* Center name and year */
+.card-info {
+    text-align: center;
+}
+
+.officer-name {
+    font-size: 1.1rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+.officer-year {
+    font-size: 0.9rem;
+    color: #666;
+    margin: 0;
+}
+
 @media (max-width: 800px) {
     body {
         padding-top: 60px;
     }
-}
 
-.registration-card {
-    background: rgba(255, 255, 255, 0.95);
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(10px);
-}
+    #eventContainer .card .card-body .d-flex {
+        font-size: 0.9rem;
 
-.card-header {
-    background: transparent;
-    border-bottom: none;
-    padding: 30px 30px 20px;
-}
-
-.card-title {
-    color: white;
-    font-size: 40px;
-    font-weight: 600;
-    margin: 0;
-}
-
-.section-title {
-    color: black;
-    border-bottom: 2px solid #ccc;
-    /* you can change color */
-    padding-bottom: 8px;
-    margin-bottom: 20px;
-}
-
-.form-label {
-    color: var(--primary-dark);
-    font-weight: 500;
-    margin-bottom: 8px;
-}
-
-.form-control,
-.form-select {
-    border: 2px solid black;
-    border-radius: 25px;
-    padding: 12px 20px;
-    transition: all 0.3s ease;
-}
-
-.form-control:focus,
-.form-select:focus {
-    border-color: var(--primary-gold);
-    box-shadow: 0 0 0 0.2rem rgba(212, 175, 55, 0.25);
-}
-
-.form-control::placeholder {
-    color: gray;
-    opacity: 1;
-}
-
-/* Default gray placeholder */
-select.form-select.placeholder-gray {
-    color: gray;
-}
-
-/* Normal black when selected */
-select.form-select:not(.placeholder-gray) {
-    color: black;
-}
-
-
-.btn-register {
-    background: linear-gradient(to right, #FED154, #F5A302);
-    border: none;
-    border-radius: 25px;
-    padding: 12px 40px;
-    font-weight: 600;
-    font-size: 16px;
-    color: white;
-    transition: all 0.3s ease;
-    width: 100%;
-}
-
-.btn-register:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
-    color: white;
+        .ms-auto {
+            max-width: 100px;
+        }
+    }
 }
