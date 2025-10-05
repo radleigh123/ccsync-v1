@@ -2,21 +2,19 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Dashboard - CCSync</title>
-		<script type="module" crossorigin src="/ccsync-v1/assets/home-lSXA7hSL.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Participant</title>
+		<script type="module" crossorigin src="/ccsync-v1/assets/homeEventSingleView-ZZF8jsMN.js"></script>
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/core-inoSP3gc.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C8zcUHWS.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-Bj4Ls0Yf.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/sidebar-DH3GmQJw.js">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/core-k6_j6p6c.css">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/sidebar-GlonV1TM.css">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/home-CFb9yyPb.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/homeEventSingleView-B8Ns4ol0.css">
 	</head>
 
 	<body>
-		<!-- Header - We go headless skrrrttt 💀 -->
-
 		<!-- Sidebar -->
 		<nav id="sidebar">
 			<div
@@ -216,128 +214,140 @@
 		</nav>
 
 		<!-- Body -->
-		<main>
-			<div class="main-content main-content-bg col container-auto">
-				<div class="row mb-5">
-					<div class="col-md-8 col-xl-6 text-center mx-auto">
-						<h2>Dashboard</h2>
-						<p>
-							Curae hendrerit donec commodo hendrerit egestas
-							tempus, turpis facilisis nostra nunc. Vestibulum dui
-							eget ultrices.
-						</p>
-					</div>
+		<main class="main-content-bg">
+			<div class="container-fluid px-0">
+				<div
+					id="header"
+					class="d-flex flex-row gap-3 align-items-center">
+					<!-- BACK -->
+					<a
+						href="/ccsync-v1/pages/home/event/view-event.html"
+						class="text-decoration-none">
+						<i class="bi bi-caret-left-fill p-0 m-0"></i>
+					</a>
+					<p class="p-0 m-0 h3 fw-bold">View event</p>
 				</div>
-				<div class="row gy-4 row-cols-1 row-cols-md-3 row-cols-xl-3">
-					<!-- Members -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Registered Members
-									</h6>
-									<h4 id="registeredMembers" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
+			</div>
+			<div id="eventContainer" class="card mt-4">
+				<div class="card-title p-4">
+					<div
+						class="d-flex flex-row justify-content-between align-items-center">
+						<p class="h2 m-0 p-0">Event Information</p>
+						<a
+							href="/ccsync-v1/pages/home/event/edit-event.html"
+							class="btn btn-primary-ccsync">
+							Edit Event
+						</a>
 					</div>
-					<!-- Total -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Total CSS Students
-									</h6>
-									<h4 id="totalCSSStudents" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Paid -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Paid membership
-									</h6>
-									<h4 id="paidMembership" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr class="my-5" />
-				<section class="row py-xl-5">
-					<div class="container">
-						<div class="row mb-4">
-							<div class="col-md-8 col-xl-6 text-center mx-auto">
-								<h2>This month's events</h2>
-							</div>
-						</div>
-						<!-- EVENTS LIST HERE -->
+					<hr />
+					<div class="card-body p-0 m-0">
 						<div class="row">
 							<div class="col">
-								<div
-									id="eventList"
-									class="container-fluid px-0 row gap-2 justify-content-center">
-									<p
-										class="display-6 text-center"
-										style="
-											font-family: 'Courier New', Courier,
-												monospace;
-										">
-										No events currently scheduled.
-									</p>
-									<!-- Table will be injected here -->
-								</div>
+								<p class="m-0 p-0">
+									<strong>Event Name:</strong>
+									Sample Event
+								</p>
+								<p class="m-0 p-0">
+									<strong>Venue:</strong>
+									Sample Venue
+								</p>
+								<p class="m-0 p-0">
+									<strong>Date:</strong>
+									January 1, 2023
+								</p>
+							</div>
+							<div class="col">
+								<p class="m-0 p-0">
+									<strong>Max participants:</strong>
+									100
+								</p>
+								<p class="m-0 p-0">
+									<strong>Available slots:</strong>
+									50
+								</p>
+								<p class="m-0 p-0">
+									<strong>Registration due:</strong>
+									June 26, 2024
+								</p>
 							</div>
 						</div>
 					</div>
-					<div id="errorMsg"></div>
-				</section>
+					<div class="card-body p-0 m-0 mt-5">
+						<div class="d-flex flex-row gap-3">
+							<p class="h4" hidden>Participant ID Number:</p>
+							<input
+								type="text"
+								class="form-control"
+								placeholder="Enter ID Number" />
+							<button class="btn btn-primary">Search</button>
+							<button class="btn btn-primary-ccsync">
+								Add Participant
+							</button>
+						</div>
+						<!-- Table -->
+						<div class="mt-3">
+							<table
+								class="table table-hover table-striped table-responsive">
+								<thead>
+									<tr>
+										<th scope="col">Name</th>
+										<th scope="col">Year</th>
+										<th scope="col">Program</th>
+										<th scope="col">Date Registered</th>
+										<th scope="col">Action</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr>
+										<td>Juan Dela Cruz</td>
+										<td>3rd Year</td>
+										<td>BSIT</td>
+										<td>June 1, 2024</td>
+										<td>
+											<a
+												href="#"
+												class="text-decoration-none align-items-center"
+												data-bs-toggle="dropdown"
+												data-bs-auto-close="true"
+												data-bs-boundary="viewport"
+												aria-haspopup="true"
+												aria-expanded="false">
+												<i
+													class="bi bi-three-dots-vertical"></i>
+											</a>
+											<ul
+												class="dropdown-menu dropdown-menu-end text-small shadow">
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														View profile
+													</a>
+												</li>
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														Remove participant
+													</a>
+												</li>
+												<li>
+													<a
+														class="dropdown-item text-decoration-none"
+														href="#">
+														Mark as attended
+													</a>
+												</li>
+											</ul>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
 			</div>
 		</main>
-
-		<!-- Footer - no foot either, we fly high 👟 -->
 
 	</body>
 </html>

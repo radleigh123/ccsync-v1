@@ -2,21 +2,21 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Dashboard - CCSync</title>
-		<script type="module" crossorigin src="/ccsync-v1/assets/home-lSXA7hSL.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Event</title>
+		<script type="module" crossorigin src="/ccsync-v1/assets/homeEventAdd-CvaBhaHi.js"></script>
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/core-inoSP3gc.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C8zcUHWS.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-Bj4Ls0Yf.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/sidebar-DH3GmQJw.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/data-CZaJBQaZ.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/mockStorage-99A_-fjr.js">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/core-k6_j6p6c.css">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/sidebar-GlonV1TM.css">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/home-CFb9yyPb.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/homeEventAdd-BbcKNmHP.css">
 	</head>
 
 	<body>
-		<!-- Header - We go headless skrrrttt 💀 -->
-
 		<!-- Sidebar -->
 		<nav id="sidebar">
 			<div
@@ -216,128 +216,123 @@
 		</nav>
 
 		<!-- Body -->
-		<main>
-			<div class="main-content main-content-bg col container-auto">
-				<div class="row mb-5">
-					<div class="col-md-8 col-xl-6 text-center mx-auto">
-						<h2>Dashboard</h2>
-						<p>
-							Curae hendrerit donec commodo hendrerit egestas
-							tempus, turpis facilisis nostra nunc. Vestibulum dui
-							eget ultrices.
-						</p>
-					</div>
+		<main class="main-content-bg">
+			<div class="container-fluid">
+				<div
+					id="header"
+					class="d-flex flex-row gap-5 align-items-center">
+					<p class="p-0 m-0 h1 fw-bold">Add a new event</p>
 				</div>
-				<div class="row gy-4 row-cols-1 row-cols-md-3 row-cols-xl-3">
-					<!-- Members -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Registered Members
-									</h6>
-									<h4 id="registeredMembers" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
+			</div>
+			<div class="card registration-card">
+				<div class="card-body p-4">
+					<h5 class="section-title mb-4" style="color: black">
+						Event information
+					</h5>
+					<form>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="eventName" class="form-label">
+									Event name:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventName"
+									placeholder="Your catchy event name" />
+							</div>
+							<div class="col-md-6">
+								<label for="maxParticipants" class="form-label">
+									Max participants:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="maxParticipants"
+									placeholder="Max participants" />
 							</div>
 						</div>
-					</div>
-					<!-- Total -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Total CSS Students
-									</h6>
-									<h4 id="totalCSSStudents" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="venue" class="form-label">
+									Venue:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="venue"
+									placeholder="Add venue" />
+							</div>
+							<div class="col-md-6">
+								<label
+									for="registrationStart"
+									class="form-label">
+									Registration start:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationStart"
+									placeholder="Add registration start date" />
 							</div>
 						</div>
-					</div>
-					<!-- Paid -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Paid membership
-									</h6>
-									<h4 id="paidMembership" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="date" class="form-label">
+									Event Date:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventDate"
+									placeholder="Add event date" />
+							</div>
+							<div class="col-md-6">
+								<label for="registrationEnd" class="form-label">
+									Registration end:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationEnd"
+									placeholder="Add registration end date" />
 							</div>
 						</div>
-					</div>
-				</div>
-				<hr class="my-5" />
-				<section class="row py-xl-5">
-					<div class="container">
+
 						<div class="row mb-4">
-							<div class="col-md-8 col-xl-6 text-center mx-auto">
-								<h2>This month's events</h2>
+							<div class="col-md-3 cs-form">
+								<label for="fromTime" class="form-label">
+									From:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="fromTime"
+									placeholder="10:05 AM" />
+							</div>
+							<div class="col-md-3 cs-form">
+								<label for="toTime" class="form-label">
+									To:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="toTime"
+									placeholder="12:05 PM" />
 							</div>
 						</div>
-						<!-- EVENTS LIST HERE -->
-						<div class="row">
-							<div class="col">
-								<div
-									id="eventList"
-									class="container-fluid px-0 row gap-2 justify-content-center">
-									<p
-										class="display-6 text-center"
-										style="
-											font-family: 'Courier New', Courier,
-												monospace;
-										">
-										No events currently scheduled.
-									</p>
-									<!-- Table will be injected here -->
-								</div>
-							</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-register">
+								Add event
+							</button>
 						</div>
-					</div>
-					<div id="errorMsg"></div>
-				</section>
+					</form>
+				</div>
 			</div>
 		</main>
-
-		<!-- Footer - no foot either, we fly high 👟 -->
 
 	</body>
 </html>

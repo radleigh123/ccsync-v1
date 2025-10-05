@@ -4,64 +4,224 @@
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Settings</title>
-		<script type="module" crossorigin src="/ccsync-v1/assets/settings-DVdCNbHK.js"></script>
-		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/styles-CZ9-VYpJ.js">
-		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C-2Lw7gd.js">
-		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/floating_button-CC17ChNn.js">
-		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-Bx_hFs0L.js">
+		<script type="module" crossorigin src="/ccsync-v1/assets/settings-YqrC3HOZ.js"></script>
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/core-inoSP3gc.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C8zcUHWS.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-Bj4Ls0Yf.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/sidebar-DH3GmQJw.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/_commonjsHelpers-CqkleIqs.js">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/styles-CGt76x6g.css">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/floating_button-Df0hXUo7.css">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/settings-0XqKMh7U.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/core-k6_j6p6c.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/sidebar-GlonV1TM.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/settings-JNtzONhp.css">
 	</head>
 	<body>
 		<div class="container-fluid">
 			<div class="row">
 				<!-- Sidebar -->
-				<div class="col-auto sidebar py-4 bg-light" id="sidebar">
+				<nav id="sidebar">
 					<div
-						class="sidebar-header d-flex align-items-center px-3 mb-4">
-						<a
-							class="navbar-brand d-flex align-items-center"
-							href="/">
+						id="sidebar-header"
+						class="justify-content-center align-items-center">
+						<a class="navbar-brand d-flex p-1" href="/">
 							<img
-								src="data:image/svg+xml,%3csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%2050%2050'%20width='50px'%20height='50px'%20baseProfile='basic'%3e%3cpolygon%20fill='%23577be6'%20points='39,35.39%2036,37.12%2036,46.36%2033,48.09%2013,36.55%2013,28.46%2016,26.73%2020,29.04%2020,32.51%2029,37.7%2029,33.08%2026,31.35%2034,26.73'/%3e%3cpolygon%20fill='%23577be6'%20points='37,13.45%2037,21.54%2034,23.27%2030,20.96%2030,17.49%2021,12.3%2021,16.92%2024,18.65%2016,23.27%2011,14.61%2014,12.88%2014,3.64%2017,1.91'/%3e%3cpolygon%20fill='%236189ff'%20points='33,35.392%2036,37.124%2031,28.464%2026,31.351%2029,33.083%2029,41.166%2017,34.238%2017,30.774%2013,28.464%2013,36.547%2033,48.094'/%3e%3cpolygon%20fill='%236189ff'%20points='14,16.34%2011,14.608%2016,23.268%2021,20.381%2018,18.649%2018,10.566%2030,17.494%2030,20.959%2034,23.268%2034,15.185%2014,3.638'/%3e%3cpolygon%20fill='%234460b3'%20points='34,15.185%2037,13.453%2037,21.536%2034,23.268'/%3e%3cpolygon%20fill='%234460b3'%20points='33,35.392%2036,37.124%2036,46.362%2033,48.094'/%3e%3cpolygon%20fill='%234460b3'%20points='18,10.566%2021,12.298%2021,16.917%2018,18.649'/%3e%3cpolygon%20fill='%234460b3'%20points='17,30.774%2020,29.041%2020,32.506%2017,34.238'/%3e%3crect%20width='3.464'%20height='10'%20x='33.268'%20y='26.928'%20fill='%234d6dcc'%20transform='rotate(-30%2034.998%2031.93)'/%3e%3c/svg%3e"
+								src="/ccsync-v1/assets/PSITSlogo-BGmur4qG.png"
 								alt="Logo"
 								class="sidebar-logo me-2" />
-							<span class="sidebar-title">CCSync</span>
-						</a>
-						<button class="btn btn-sm ms-auto" id="sidebar-toggle">
-							<i class="bi bi-chevron-left"></i>
-						</button>
-					</div>
-					<div
-						class="nav flex-column nav-pills"
-						id="v-pills-tab"
-						aria-orientation="vertical">
-						<a
-							class="nav-link mb-2"
-							href="/ccsync-v1/pages/home/home.html">
-							<i class="bi bi-house-door me-2"></i>
-							<span class="menu-text">Home</span>
-						</a>
-						<a
-							class="nav-link mb-2"
-							href="/ccsync-v1/pages/profile/profile.html">
-							<i class="bi bi-person me-2"></i>
-							<span class="menu-text">Profile</span>
-						</a>
-						<a
-							class="nav-link active mb-2"
-							href="/ccsync-v1/pages/settings/settings.html">
-							<i class="bi bi-gear me-2"></i>
-							<span class="menu-text">Settings</span>
-						</a>
-						<a id="logout-link" class="nav-link mb-2" href="#">
-							<i class="bi bi-box-arrow-in-left me-2"></i>
-							<span class="menu-text">Logout</span>
 						</a>
 					</div>
-				</div>
+					<ul class="justify-content-center mb-0">
+						<li class="active">
+							<a
+								href="/ccsync-v1/pages/home/home.html"
+								class="justify-content-center"
+								title="Dashboard"
+								data-bs-toggle="tooltip"
+								data-bs-placement="right">
+								<i
+									class="bi bi-house-fill"
+									style="font-size: 16px"></i>
+								<span>Dashboard</span>
+							</a>
+						</li>
+						<li>
+							<button
+								class="dropdown-btn justify-content-center"
+								data-bs-toggle="tooltip"
+								data-bs-placement="right"
+								title="Member management">
+								<i class="bi bi-person-circle"></i>
+								<span>Member management</span>
+								<!-- Right caret -->
+							</button>
+							<ul class="sub-menu">
+								<div class="me-auto" style="padding-left: 40px">
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/member/view-member.html"
+											class="px-2">
+											View members
+										</a>
+									</li>
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/member/register-member.html"
+											class="px-2">
+											Register member
+										</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+						<li>
+							<button
+								class="dropdown-btn justify-content-center"
+								data-bs-toggle="tooltip"
+								data-bs-placement="right"
+								title="Event management">
+								<i class="bi bi-calendar2-week-fill"></i>
+								<span>Event management</span>
+							</button>
+							<ul class="sub-menu">
+								<div class="me-auto" style="padding-left: 40px">
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/event/view-event.html"
+											class="px-2">
+											View events
+										</a>
+									</li>
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/event/add-event.html"
+											class="px-2">
+											Add event
+										</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+						<li>
+							<button
+								class="dropdown-btn justify-content-center"
+								data-bs-toggle="tooltip"
+								data-bs-placement="right"
+								title="Requirement management">
+								<i class="bi bi-file-text-fill"></i>
+								<span>Requirement management</span>
+							</button>
+							<ul class="sub-menu">
+								<div class="me-auto" style="padding-left: 40px">
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/requirement/view-requirement.html"
+											class="px-2">
+											View requirements
+										</a>
+									</li>
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/requirement/add-requirement.html"
+											class="px-2">
+											Add requirement
+										</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+						<li>
+							<button
+								class="dropdown-btn justify-content-center"
+								data-bs-toggle="tooltip"
+								data-bs-placement="right"
+								title="Officer management">
+								<i class="bi bi-hdd-rack-fill"></i>
+								<span>Officer management</span>
+							</button>
+							<ul class="sub-menu">
+								<div class="me-auto" style="padding-left: 40px">
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/officer/view-officer.html"
+											class="px-2">
+											View officers
+										</a>
+									</li>
+									<li>
+										<a
+											href="/ccsync-v1/pages/home/officer/add-officer.html"
+											class="px-2">
+											Add officer
+										</a>
+									</li>
+								</div>
+							</ul>
+						</li>
+						<li class="user-info dropdown align-items-center mb-0">
+							<div class="container p-0 m-0 border-0">
+								<strong>JOSHUA JAKOSALEM</strong>
+								<small>4th Year Representative</small>
+							</div>
+							<a
+								href="#"
+								class="more-btn text-decoration-none align-items-center"
+								data-bs-toggle="dropdown"
+								aria-haspopup="true"
+								aria-expanded="false">
+								<i
+									class="bi bi-gear-fill"
+									style="line-height: 18px"></i>
+								<!-- <img
+							src="https://github.com/mdo.png"
+							alt=""
+							width="32"
+							height="32"
+							class="rounded-circle me-2" /> -->
+							</a>
+							<button id="toggle-btn" style="line-height: 18px">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									height="20px"
+									width="20px"
+									viewBox="0 -960 960 960"
+									fill="#e8eaed">
+									<path
+										d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+								</svg>
+							</button>
+							<ul class="dropdown-menu text-small shadow">
+								<li>
+									<a class="dropdown-item" href="#">
+										New project...
+									</a>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										href="/ccsync-v1/pages/settings/settings.html">
+										Settings
+									</a>
+								</li>
+								<li>
+									<a
+										class="dropdown-item"
+										href="/ccsync-v1/pages/profile/profile.html">
+										Profile
+									</a>
+								</li>
+								<li><hr class="dropdown-divider" /></li>
+								<li>
+									<a
+										id="logout-link"
+										class="dropdown-item"
+										href="#">
+										Sign out
+									</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</nav>
+
 				<div class="col py-4">
 					<h1 class="mb-4">Settings</h1>
 					<!-- Settings Tabs Navigation -->
@@ -162,8 +322,7 @@
 														id="gender">
 														<option
 															selected
-															disabled
-															>
+															disabled>
 															Select gender
 														</option>
 														<option value="male">

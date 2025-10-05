@@ -1,0 +1,1 @@
+import{g as n}from"./core-inoSP3gc.js";import{s as a}from"./sidebar-DH3GmQJw.js";import"./bootstrap.esm-C8zcUHWS.js";import"./navigation-Bj4Ls0Yf.js";let t=null;document.addEventListener("DOMContentLoaded",async()=>{await e(),a()});async function e(){t=await n(),t||(window.location.href="/ccsync-v1/pages/auth/login.html")}

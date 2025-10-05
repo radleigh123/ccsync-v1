@@ -2,21 +2,19 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Dashboard - CCSync</title>
-		<script type="module" crossorigin src="/ccsync-v1/assets/home-lSXA7hSL.js"></script>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Requirement</title>
+		<script type="module" crossorigin src="/ccsync-v1/assets/homeOfficerView-MlOKO18T.js"></script>
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/core-inoSP3gc.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C8zcUHWS.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-Bj4Ls0Yf.js">
 		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/sidebar-DH3GmQJw.js">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/core-k6_j6p6c.css">
 		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/sidebar-GlonV1TM.css">
-		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/home-CFb9yyPb.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/homeOfficerView-DIqOjEVT.css">
 	</head>
 
 	<body>
-		<!-- Header - We go headless skrrrttt 💀 -->
-
 		<!-- Sidebar -->
 		<nav id="sidebar">
 			<div
@@ -216,128 +214,75 @@
 		</nav>
 
 		<!-- Body -->
-		<main>
-			<div class="main-content main-content-bg col container-auto">
-				<div class="row mb-5">
-					<div class="col-md-8 col-xl-6 text-center mx-auto">
-						<h2>Dashboard</h2>
-						<p>
-							Curae hendrerit donec commodo hendrerit egestas
-							tempus, turpis facilisis nostra nunc. Vestibulum dui
-							eget ultrices.
-						</p>
+		<main class="main-content-bg">
+			<div class="container-fluid">
+				<div
+					id="header"
+					class="d-flex flex-row gap-5 align-items-center">
+					<p class="p-0 m-0 h1 fw-bold">Add a new requirement</p>
+					<div class="dropdown">
+						<label for="yearDropdown" class="form-label" hidden></label>
+						<select class="form-select" id="yearDropdown">
+							<option value="" selected hidden>
+								Choose a school year
+							</option>
+							<!-- TODO: Think about scaling -->
+							<option value="">Show All</option>
+							<option value="2021-2022">2021-2022</option>
+							<option value="2022-2023">2022-2023</option>
+							<option value="2023-2024">2023-2024</option>
+							<option value="2024-2025">2024-2025</option>
+							<option value="2025-2026">2025-2026</option>
+							<option value="2026-2027">2026-2027</option>
+						</select>
 					</div>
 				</div>
-				<div class="row gy-4 row-cols-1 row-cols-md-3 row-cols-xl-3">
-					<!-- Members -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Registered Members
-									</h6>
-									<h4 id="registeredMembers" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Total -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Total CSS Students
-									</h6>
-									<h4 id="totalCSSStudents" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Paid -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Paid membership
-									</h6>
-									<h4 id="paidMembership" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr class="my-5" />
-				<section class="row py-xl-5">
-					<div class="container">
-						<div class="row mb-4">
-							<div class="col-md-8 col-xl-6 text-center mx-auto">
-								<h2>This month's events</h2>
-							</div>
-						</div>
-						<!-- EVENTS LIST HERE -->
-						<div class="row">
-							<div class="col">
-								<div
-									id="eventList"
-									class="container-fluid px-0 row gap-2 justify-content-center">
-									<p
-										class="display-6 text-center"
-										style="
-											font-family: 'Courier New', Courier,
-												monospace;
-										">
-										No events currently scheduled.
-									</p>
-									<!-- Table will be injected here -->
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="errorMsg"></div>
-				</section>
 			</div>
-		</main>
+			<div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-4" id="eventContainer">
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>President</h5>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>Vice President</h5>
+						</div>
+					</div>
+				</div>
+			
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card w-100 h-100">
+						<img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img" alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>Secretary</h5>
+						</div>
+					</div>
+				</div>
+			</div>
 
-		<!-- Footer - no foot either, we fly high 👟 -->
+		</main>
 
 	</body>
 </html>
