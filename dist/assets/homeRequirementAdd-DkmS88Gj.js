@@ -1,0 +1,1 @@
+import"./core-inoSP3gc.js";import{s as o}from"./sidebar-B6qmYeWP.js";import{a as e}from"./navigation-D4xvAI9A.js";import"./bootstrap.esm-C8zcUHWS.js";document.addEventListener("DOMContentLoaded",()=>{r(),o(),e()});function r(){const t=localStorage.getItem("user");if(!t){window.location.href="/ccsync-v1/pages/auth/login.html";return}JSON.parse(t)}

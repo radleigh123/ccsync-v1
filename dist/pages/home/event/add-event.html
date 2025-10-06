@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Event</title>
+		<script type="module" crossorigin src="/ccsync-v1/assets/homeEventAdd-DA87jBR0.js"></script>
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/core-inoSP3gc.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/bootstrap.esm-C8zcUHWS.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/navigation-D4xvAI9A.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/sidebar-B6qmYeWP.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/data-CZaJBQaZ.js">
+		<link rel="modulepreload" crossorigin href="/ccsync-v1/assets/mockStorage-99A_-fjr.js">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/core-k6_j6p6c.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/sidebar-GlonV1TM.css">
+		<link rel="stylesheet" crossorigin href="/ccsync-v1/assets/homeEventAdd-BbcKNmHP.css">
+	</head>
+
+	<body>
+		<!-- Sidebar -->
+		<nav id="sidebar">
+			<div
+				id="sidebar-header"
+				class="justify-content-center align-items-center">
+				<a class="navbar-brand d-flex p-1" href="/ccsync-v1/pages/home/home.html">
+					<img
+						src="/ccsync-v1/assets/PSITSlogo-BGmur4qG.png"
+						alt="Logo"
+						class="sidebar-logo me-2" />
+				</a>
+			</div>
+			<ul class="justify-content-center mb-0">
+				<li class="active">
+					<a
+						href="/ccsync-v1/pages/home/home.html"
+						class="justify-content-center"
+						title="Dashboard"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right">
+						<i class="bi bi-house-fill" style="font-size: 16px"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Member management">
+						<i class="bi bi-person-circle"></i>
+						<span>Member management</span>
+						<!-- Right caret -->
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/member/view-member.html"
+									class="px-2">
+									View members
+								</a>
+							</li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/member/register-member.html"
+									class="px-2">
+									Register member
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Event management">
+						<i class="bi bi-calendar2-week-fill"></i>
+						<span>Event management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/event/view-event.html"
+									class="px-2">
+									View events
+								</a>
+							</li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/event/add-event.html"
+									class="px-2">
+									Add event
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Requirement management">
+						<i class="bi bi-file-text-fill"></i>
+						<span>Requirement management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/requirement/view-requirement.html"
+									class="px-2">
+									View requirements
+								</a>
+							</li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/requirement/add-requirement.html"
+									class="px-2">
+									Add requirement
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Officer management">
+						<i class="bi bi-hdd-rack-fill"></i>
+						<span>Officer management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/officer/view-officer.html"
+									class="px-2">
+									View officers
+								</a>
+							</li>
+							<li>
+								<a
+									href="/ccsync-v1/pages/home/officer/add-officer.html"
+									class="px-2">
+									Add officer
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li class="user-info dropdown align-items-center mb-0">
+					<div class="container p-0 m-0 border-0">
+						<strong>JOSHUA JAKOSALEM</strong>
+						<small>4th Year Representative</small>
+					</div>
+					<a
+						href="#"
+						class="more-btn text-decoration-none align-items-center"
+						data-bs-toggle="dropdown"
+						aria-haspopup="true"
+						aria-expanded="false">
+						<i
+							class="bi bi-gear-fill"
+							style="line-height: 18px"></i>
+						<!-- <img
+							src="https://github.com/mdo.png"
+							alt=""
+							width="32"
+							height="32"
+							class="rounded-circle me-2" /> -->
+					</a>
+					<button id="toggle-btn" style="line-height: 18px">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							height="20px"
+							width="20px"
+							viewBox="0 -960 960 960"
+							fill="#e8eaed">
+							<path
+								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+						</svg>
+					</button>
+					<ul class="dropdown-menu text-small shadow">
+						<li>
+							<a class="dropdown-item" href="#">New project...</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/ccsync-v1/pages/settings/settings.html">
+								Settings
+							</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/ccsync-v1/pages/profile/profile.html">
+								Profile
+							</a>
+						</li>
+						<li><hr class="dropdown-divider" /></li>
+						<li>
+							<a id="logout-link" class="dropdown-item" href="#">
+								Sign out
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+		<!-- Body -->
+		<main class="main-content-bg">
+			<div class="container-fluid">
+				<div
+					id="header"
+					class="d-flex flex-row gap-5 align-items-center">
+					<p class="p-0 m-0 h1 fw-bold">Add a new event</p>
+				</div>
+			</div>
+			<div class="card registration-card">
+				<div class="card-body p-4">
+					<h5 class="section-title mb-4" style="color: black">
+						Event information
+					</h5>
+					<form>
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="eventName" class="form-label">
+									Event name:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventName"
+									placeholder="Your catchy event name" />
+							</div>
+							<div class="col-md-6">
+								<label for="maxParticipants" class="form-label">
+									Max participants:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="maxParticipants"
+									placeholder="Max participants" />
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="venue" class="form-label">
+									Venue:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="venue"
+									placeholder="Add venue" />
+							</div>
+							<div class="col-md-6">
+								<label
+									for="registrationStart"
+									class="form-label">
+									Registration start:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationStart"
+									placeholder="Add registration start date" />
+							</div>
+						</div>
+
+						<div class="row mb-3">
+							<div class="col-md-6">
+								<label for="date" class="form-label">
+									Event Date:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="eventDate"
+									placeholder="Add event date" />
+							</div>
+							<div class="col-md-6">
+								<label for="registrationEnd" class="form-label">
+									Registration end:
+								</label>
+								<input
+									type="text"
+									class="form-control"
+									id="registrationEnd"
+									placeholder="Add registration end date" />
+							</div>
+						</div>
+
+						<div class="row mb-4">
+							<div class="col-md-3 cs-form">
+								<label for="fromTime" class="form-label">
+									From:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="fromTime"
+									placeholder="10:05 AM" />
+							</div>
+							<div class="col-md-3 cs-form">
+								<label for="toTime" class="form-label">
+									To:
+								</label>
+								<input
+									type="time"
+									class="form-control"
+									id="toTime"
+									placeholder="12:05 PM" />
+							</div>
+						</div>
+
+						<div class="d-grid">
+							<button type="submit" class="btn btn-register">
+								Add event
+							</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</main>
+
+	</body>
+</html>
