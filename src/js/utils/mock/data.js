@@ -2,7 +2,7 @@ export const user = {
     message: "User retrieved successfully",
     user: {
         id: 1,
-        name: "John",
+        name: "John Doe",
         email: "john.doe@example.com",
         email_verified_at: "2023-08-01",
         firebase_uid: "firebase-uid-123",

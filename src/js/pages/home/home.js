@@ -60,7 +60,7 @@ async function printEventList() {
     const events = []; // Empty array to demonstrate "no events" case
 
     try {
-        const response = await fetch("http://localhost:8000/api/event?upcoming=true", {
+        const response = await fetch("http://localhost:8000/api/events?upcoming=true", {
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
                 "Accept": "application/json",
@@ -73,7 +73,7 @@ async function printEventList() {
         }
 
         const data = await response.json();
-        events.push(...data.events);
+        events.push(...data.data);
 
     } catch (error) {
         console.error("Error fetching event list:", error);
@@ -99,7 +99,7 @@ async function printEventList() {
         eventItem.innerHTML = `
             <img src="https://placehold.co/200x150/orange/white?text=image&font=roboto" class="card-img-top" alt="Event image placeholder" />
             <div class="card-body">
-                <p class="card-title h5 text-center">${event.title}</p>
+                <p class="card-title h5 text-center">${event.name}</p>
             </div>`;
         eventList.appendChild(eventItem);
     });

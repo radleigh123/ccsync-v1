@@ -32,7 +32,7 @@ export function initProfile() {
     const elements = {
         name: document.querySelector("#user-name-full"),
         email: document.querySelector("#user-email"),
-        bio: document.querySelector("#user-bio"),
+        bio: document.querySelector("#user-id-school-number"),
         image: document.querySelector("#img-profile")
     };
 
@@ -78,19 +78,21 @@ export function initProfile() {
 function populateUserData(userData, elements) {
     // Display name
     if (elements.name) {
+        const firstName = userData.user.name ? userData.user.name.split(" ")[0] : null;
+        const lastName = userData.user.name ? userData.user.name.split(" ").slice(1).join(" ") : null;
         elements.name.textContent = userData.display_name ||
-            `${userData.name_first || "SERVER ERROR: no first name"} ${userData.name_last || "SERVER ERROR: no last name"}`.trim() ||
+            `${firstName || "SERVER ERROR: no first name"} ${lastName || "SERVER ERROR: no last name"}`.trim() ||
             "User";
     }
 
     // Email
     if (elements.email) {
-        elements.email.textContent = userData.email || "SERVER ERROR: no email found";
+        elements.email.textContent = userData.user.email || "SERVER ERROR: no email found";
     }
 
     // Bio
     if (elements.bio) {
-        elements.bio.textContent = userData.bio || "This user hasn't set a bio yet.";
+        elements.bio.textContent = userData.user.id_school_number || "SERVER ERROR: no ID number found";
     }
 
     // Profile Image

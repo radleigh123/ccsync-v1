@@ -226,5 +226,19 @@ export function setSidebar() {
             }
         })
     }
+
+    // Set user info
+    const user = JSON.parse(localStorage.getItem("user")).user || {};
+
+    const userName = user.name || 'USER NAME';
+    const userId = user.id_school_number || 'ID NUMBER';
+    setUserInfo(userName, userId);
 }
 
+function setUserInfo(name, id) {
+    const userName = document.getElementById('user-name');
+    const userId = document.getElementById('user-id');
+
+    if (userName) userName.textContent = name;
+    if (userId) userId.textContent = id;
+}
