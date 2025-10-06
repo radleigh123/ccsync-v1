@@ -243,7 +243,7 @@ For pages that require authentication:
 function checkAuth() {
   const user = localStorage.getItem("user");
   if (!user) {
-    window.location.href = "/ccsync-v1/pages/auth/login.html";
+    window.location.href = "/pages/auth/login.html";
     return false;
   }
   return JSON.parse(user);

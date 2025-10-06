@@ -61,7 +61,7 @@ export async function getCurrentSession() {
     return null;
 }
 
-export async function isAdmin(userData, redirectUrl = "/ccsync-v1/pages/home/home.html") {
+export async function isAdmin(userData, redirectUrl = "/pages/home/home.html") {
     const userRole = userData?.role || 'user';
 
     if (userRole !== 'admin') return false;

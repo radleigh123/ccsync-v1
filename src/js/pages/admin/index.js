@@ -5,7 +5,7 @@ let userData;
 
 document.addEventListener('DOMContentLoaded', async () => {
     userData = await getCurrentSession();
-    if (!userData || !userData.firebase_token) window.location.href = "/ccsync-v1/pages/auth/login.html";
+    if (!userData || !userData.firebase_token) window.location.href = "/pages/auth/login.html";
 
     await listUsers();
 });
@@ -91,7 +91,7 @@ function populateUserTable(users) {
         const btnDelete = row.querySelector("#btn-delete");
 
         btnEdit.addEventListener("click", () => {
-            window.location.href = `/ccsync-v1/pages/admin/edit-user.html?id=${user.id}`;
+            window.location.href = `/pages/admin/edit-user.html?id=${user.id}`;
         });
 
         // BUG: Don't delete the currently logged-in user

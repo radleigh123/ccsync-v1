@@ -9,7 +9,7 @@ async function initRegister() {
     const userData = await getCurrentSession();
 
     if (userData) {
-        window.location.href = "/ccsync-v1/pages/home/home.html";
+        window.location.href = "/pages/home/home.html";
     }
 }
 
@@ -51,7 +51,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             console.log('Registration successful:', data);
-            window.location.href = '/ccsync-v1/pages/auth/login.html';
+            window.location.href = '/pages/auth/login.html';
         } catch (error) {
             console.error("Registration error:", error);
             let errorContainer = document.querySelector("#error-msg");

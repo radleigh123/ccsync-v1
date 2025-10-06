@@ -7,7 +7,7 @@ let userIdToEdit = null;
 document.addEventListener("DOMContentLoaded", async () => {
     // Get logged-in user data
     userData = await getCurrentSession();
-    if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+    if (!userData) window.location.href = "/pages/auth/login.html";
 
     // Get user ID from URL
     const urlParams = new URLSearchParams(window.location.search);
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     if (!userIdToEdit) {
         alert("No user ID provided");
-        window.location.href = "/ccsync-v1/pages/admin/index.html";
+        window.location.href = "/pages/admin/index.html";
         return;
     }
 
@@ -91,7 +91,7 @@ async function handleSubmit(event) {
         }
 
         alert("User details updated successfully!");
-        window.location.href = "/ccsync-v1/pages/admin/index.html";
+        window.location.href = "/pages/admin/index.html";
     } catch (error) {
         console.error("Error updating user details:", error);
         alert(`Failed to update user details: ${error.message}`);

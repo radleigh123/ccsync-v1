@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function initHome() {
     // Get logged-in user data
     userData = await getCurrentSession();
-    if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+    if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 async function handleSubmit(event) {
@@ -74,7 +74,7 @@ async function handleSubmit(event) {
 
         }
 
-        window.location.href = "/ccsync-v1/pages/home/event/view-event.html";
+        window.location.href = "/pages/home/event/view-event.html";
         this.reset();
     } catch (error) {
         console.error("Error adding event:", error);

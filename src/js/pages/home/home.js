@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initHome() {
     userData = await getCurrentSession();
-    if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+    if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 async function loadHero() {

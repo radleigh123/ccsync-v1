@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function initHome() {
   // Get logged-in user data
   userData = await getCurrentSession();
-  if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 async function loadEvents() {
@@ -84,7 +84,7 @@ function displayEvents(events) {
       registerButton.id = "registerButton";
       registerButton.className = "d-flex flex-column align-items-center";
       registerButton.innerHTML = `
-          <a href="/ccsync-v1/pages/home/event/add-event-person.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
+          <a href="/pages/home/event/add-event-person.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
             <i class="bi bi-person-plus"></i>
             <p class="my-0" hidden>Register</p>
           </a>
@@ -94,7 +94,7 @@ function displayEvents(events) {
       editButton.id = "editButton";
       editButton.className = "d-flex flex-column align-items-center justify-content-center";
       editButton.innerHTML = `
-          <a href="/ccsync-v1/pages/home/event/edit-event.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
+          <a href="/pages/home/event/edit-event.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
             <i class="bi bi-pencil-square"></i>
             <p class="my-0" hidden>Edit</p>
           </a>
@@ -104,7 +104,7 @@ function displayEvents(events) {
       viewButton.id = "viewButton";
       viewButton.className = "d-flex flex-column align-items-center";
       viewButton.innerHTML = `
-          <a href="/ccsync-v1/pages/home/event/view-event-single.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
+          <a href="/pages/home/event/view-event-single.html" class="text-decoration-none text-dark d-flex flex-column align-items-center">
             <i class="bi bi-eye"></i>
             <p class="my-0" hidden>View</p>
           </a>

@@ -4,7 +4,7 @@ export function setupLogout() {
         logout.addEventListener("click", (e) => {
             e.preventDefault();
             localStorage.removeItem("user"); // clear state
-            window.location.href = "/ccsync-v1/";
+            window.location.href = "/";
         });
     }
 }
@@ -20,10 +20,10 @@ export async function setupNavigation() {
     if (user) {
         nav.innerHTML = `
         <li class="nav-item">
-            <a id="home-link" class="nav-link" href="/ccsync-v1/pages/home/home.html">Home</a>
+            <a id="home-link" class="nav-link" href="/pages/home/home.html">Home</a>
         </li>
         <li class="nav-item">
-            <a id="profile-link" class="nav-link" href="/ccsync-v1/pages/profile/profile.html">Profile</a>
+            <a id="profile-link" class="nav-link" href="/pages/profile/profile.html">Profile</a>
         </li>
         <li class="nav-item">
             <a class="nav-link" href="#" id="logout-link">Logout</a>
@@ -33,10 +33,10 @@ export async function setupNavigation() {
     } else {
         nav.innerHTML = `
         <li class="nav-item">
-            <a class="nav-link" href="/ccsync-v1/pages/auth/register.html">Register</a>
+            <a class="nav-link" href="/pages/auth/register.html">Register</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link" href="/ccsync-v1/pages/auth/login.html">Login</a>
+            <a class="nav-link" href="/pages/auth/login.html">Login</a>
         </li>
         `;
     }

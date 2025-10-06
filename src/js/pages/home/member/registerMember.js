@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 export async function initHome() {
   // Get logged-in user data
   userData = await getCurrentSession();
-  if (!userData) window.location.href = "/ccsync-v1/pages/auth/login.html";
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 document.querySelectorAll("select.form-select").forEach((select) => {
@@ -117,7 +117,7 @@ async function handleSubmit(e) {
     }
 
     alert("Member successfully registered!");
-    window.location.href = "/ccsync-v1/pages/home/member/view-member.html";
+    window.location.href = "/pages/home/member/view-member.html";
   } catch (error) {
     console.error("Error registering member:", error);
     alert("Failed to register member. Please try again.");

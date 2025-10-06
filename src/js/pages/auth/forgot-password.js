@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
             .then(() => {
                 console.log("Password Reset Success");
                 alert("Password reset email sent! Please check your inbox.");
-                window.location.href = "/ccsync-v1/pages/auth/login.html";
+                window.location.href = "/pages/auth/login.html";
             })
             .catch(e => {
                 const errorCode = e.code;
@@ -48,7 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             console.log('Password reset email sent:', data);
             alert("Password reset email sent! Please check your inbox.");
-            window.location.href = '/ccsync-v1/pages/auth/login.html';
+            window.location.href = '/pages/auth/login.html';
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;

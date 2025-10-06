@@ -13,7 +13,7 @@ async function initLogin() {
     const userData = await getCurrentSession();
 
     if (userData) {
-        window.location.href = "/ccsync-v1/pages/home/home.html";
+        window.location.href = "/pages/home/home.html";
     }
 }
 
@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             last_login: new Date().toISOString()
                         };
                         localStorage.setItem('user', JSON.stringify(userData));
-                        window.location.href = '/ccsync-v1/pages/home/home.html';
+                        window.location.href = '/pages/home/home.html';
                     })
                     .catch(error => {
                         const errorCode = error.code;
@@ -80,7 +80,7 @@ document.addEventListener("DOMContentLoaded", () => {
                             last_login: new Date().toISOString()
                         };
                         localStorage.setItem('user', JSON.stringify(userData));
-                        window.location.href = '/ccsync-v1/pages/home/home.html';
+                        window.location.href = '/pages/home/home.html';
                     })
                     .catch(error => {
                         const errorCode = error.code;

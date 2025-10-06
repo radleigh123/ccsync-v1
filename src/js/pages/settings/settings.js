@@ -13,7 +13,7 @@ import { profileImgForm } from "/js/pages/settings/forms/profileImg.js";
 export function initSettings() {
     const user = localStorage.getItem("user");
     if (!user) {
-        window.location.href = "/ccsync-v1/pages/auth/login.html";
+        window.location.href = "/pages/auth/login.html";
         return;
     }
 

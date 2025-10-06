@@ -82,7 +82,7 @@ export async function logout() {
     try {
         await signOut(auth);
         localStorage.removeItem('user');
-        window.location.href = '/ccsync-v1/pages/login/login.html';
+        window.location.href = '/pages/login/login.html';
     } catch (error) {
         console.error("Error logging out:", error);
     }
