@@ -36,7 +36,7 @@ export function setupLogout() {
         logout.addEventListener("click", (e) => {
             e.preventDefault();
             localStorage.removeItem("user"); // clear state
-            window.location.href = "/";
+            window.location.href = "/ccsync-v1/";
         });
     }
 }
