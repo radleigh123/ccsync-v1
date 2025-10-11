@@ -1,0 +1,200 @@
+:root {
+    --primary-gold: #D4AF37;
+    --primary-dark: #2C2C2C;
+    --sidebar-bg: #f8f9fa;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+i {
+    color: #3b3b3b8e;
+}
+
+.main-content-bg {
+    position: relative;
+    /* Make it a positioning context */
+    min-height: 100%;
+    /* Allow it to stretch */
+    padding: 2rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/bg.png');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4) saturate(1.2);
+        z-index: -1;
+    }
+}
+
+#header p {
+    color: white;
+}
+
+#body {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+@media (max-width: 800px) {
+    body {
+        padding-top: 60px;
+    }
+}
+
+.registration-card {
+    max-width: 600px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px 40px;
+}
+
+.registration-card .card-body {
+    padding: 1.5rem 1rem 0.5rem;
+}
+
+.section-title {
+    color: black;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 28px;
+}
+
+.officer-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.officer-img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 12px;
+    background: #e8e8e8;
+    margin-bottom: 1rem;
+}
+
+.upload-btn {
+    background: var(--primary-gold);
+    color: white;
+    border: none;
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.upload-btn:hover {
+    background: #FED154;
+    transform: translateY(-2px);
+}
+
+.upload-btn i {
+    color: white;
+    margin-right: 5px;
+}
+
+#imageUpload {
+    display: none;
+}
+
+.form-section {
+    margin-bottom: 20px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-label {
+    font-weight: 600;
+    color: #333;
+    margin-bottom: 8px;
+    display: block;
+    font-size: 14px;
+}
+
+.form-control,
+.form-select {
+    width: 100%;
+    padding: 10px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.form-control:focus,
+.form-select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 30px;
+}
+
+.btn-save,
+.btn-cancel {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-save {
+    background: linear-gradient(to right, #FED154, #F5A302);
+    color: white;
+}
+
+.btn-save:hover {
+    background: #FED154;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+}
+
+.btn-cancel {
+    background: #6c757d;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background: #5a6268;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+}
+
+.back-arrow {
+    color: white;
+    text-decoration: none;
+    font-size: 2rem;
+}
+
+.back-arrow:hover {
+    opacity: 0.8;
+}

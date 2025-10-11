@@ -1,0 +1,170 @@
+:root {
+    --primary-gold: #D4AF37;
+    --primary-dark: #2C2C2C;
+    --sidebar-bg: #f8f9fa;
+}
+
+body {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: auto 1fr;
+}
+
+i {
+    color: #3b3b3b8e;
+}
+
+.main-content-bg {
+    position: relative;
+    /* Make it a positioning context */
+    min-height: 100%;
+    /* Allow it to stretch */
+    padding: 2rem;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: url('/assets/bg.png');
+        background-size: cover;
+        background-position: center;
+        filter: brightness(0.4) saturate(1.2);
+        z-index: -1;
+    }
+}
+
+#header p {
+    color: white;
+}
+
+#body {
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+@media (max-width: 800px) {
+    body {
+        padding-top: 60px;
+    }
+}
+
+.registration-card {
+    max-width: 700px;
+    background: white;
+    border-radius: 20px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    padding: 30px 40px;
+
+    .card-body {
+            padding: 1.5rem 1rem 0.5rem !important; // Reduced top/bottom padding
+        }
+}
+
+.section-title {
+    color: black;
+    border-bottom: 2px solid #ccc;
+    /* you can change color */
+    padding-bottom: 8px;
+    margin-bottom: 15px;
+}
+
+.officer-card {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+// .officer-img {
+//     width: 25%;
+//     height: auto;
+//     margin: 1rem auto;
+//     display: block;
+//     border-radius: 8px;
+// }
+
+.officer-img {
+    width: 30%;
+    height: auto;
+    object-fit: cover;
+    margin: 0.5rem auto 1rem;
+    display: block;
+    border-radius: 12px;
+    background: #e8e8e8;
+}
+
+.info-section {
+    margin-bottom: 35px;
+    padding: 0 20px;
+}
+
+.info-row {
+    display: flex;
+    margin-bottom: 18px;
+    font-size: 15px;
+    flex-direction: column;
+    margin-bottom: 5px;
+}
+
+.info-label {
+    font-weight: 600;
+    color: black;
+    min-width: 120px;
+    flex-shrink: 0;
+    min-width: 100px;
+    margin-bottom: 5px;
+    font-size: 18px;
+}
+
+.info-value {
+    color: #555;
+    flex: 1;
+    font-size: 16px;
+}
+
+.button-container {
+    display: flex;
+    gap: 15px;
+    margin-top: 10px;
+    padding: 0 20px;
+}
+
+.btn-edit,
+.btn-delete {
+    flex: 1;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-edit {
+    background: linear-gradient(to right, #FED154, #F5A302);
+    color: white;
+}
+
+.btn-edit:hover {
+    background: #FED154;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+}
+
+.btn-delete {
+    background: #ff3b3b;
+    color: white;
+}
+
+.btn-delete:hover {
+    background: #e03030;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(255, 59, 59, 0.3);
+}
+
