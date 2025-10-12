@@ -62,7 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         return idToken;
                     })
                     .then(idToken => {
-                        return fetch('http://localhost:8000/api/auth/verify-token', {
+                        // NOTE: TEMP, change URL to your backend endpoint
+                        // return fetch('http://localhost:8000/api/auth/verify-token', {
+                        return fetch('http://localhost:8080/ccsync-plain-php/auth/verifyToken.php', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

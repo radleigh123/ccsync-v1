@@ -88,7 +88,9 @@ async function handleSubmit(e) {
       };
       addMember(newMember);
     } else {
-      const response = await fetch("http://localhost:8000/api/member/", {
+      // NOTE: TEMP, CHANGE TO PRODUCTION URL WHEN DEPLOYING
+      // const response = await fetch("http://localhost:8000/api/member/", {
+      const response = await fetch("http://localhost:8080/ccsync-plain-php/member/createMember.php", {
         method: "POST",
         headers: {
           'Authorization': `Bearer ${userData.firebase_token}`,
