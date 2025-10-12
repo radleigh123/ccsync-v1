@@ -23,7 +23,9 @@ async function loadEvents() {
     if (import.meta.env.DEV) {
       displayEvents(getEvents().events);
     } else {
-      const response = await fetch("http://localhost:8000/api/events", {
+      // NOTE: TEMP, CHANGE TO PRODUCTION URL WHEN DEPLOYING
+      // const response = await fetch("http://localhost:8000/api/events", {
+      const response = await fetch("http://localhost:8080/ccsync-plain-php/event/getEvents.php", {
         headers: {
           "Authorization": `Bearer ${userData.firebase_token}`,
           "Content-Type": "application/json",
@@ -38,7 +40,7 @@ async function loadEvents() {
 
       const data = await response.json();
 
-      displayEvents(data.data);
+      displayEvents(data.events);
     }
 
   } catch (error) {
@@ -68,7 +70,7 @@ function displayEvents(events) {
           </div>
           <div class="d-flex flex-row gap-2">
             <strong>Attendees:</strong>
-            <p id="eventCardAttendees" class="my-0">${event.attendees}</p>
+            <p id="eventCardAttendees" class="my-0">${event.max_participants}</p>
           </div>
           <div class="d-flex flex-row gap-2">
             <strong>Venue:</strong>

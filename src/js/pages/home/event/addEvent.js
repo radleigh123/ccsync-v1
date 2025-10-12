@@ -46,7 +46,9 @@ async function handleSubmit(event) {
             };
             addEvent(newEvent);
         } else {
-            const response = await fetch("http://localhost:8000/api/events", {
+            // NOTE: TEMP, CHANGE TO ACTUAL API URL
+            // const response = await fetch("http://localhost:8000/api/events", {
+            const response = await fetch("http://localhost:8080/ccsync-plain-php/event/createEvent.php", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${userData.firebase_token}`,
@@ -71,7 +73,6 @@ async function handleSubmit(event) {
             }
 
             const data = await response.json();
-
         }
 
         window.location.href = "/pages/home/event/view-event.html";
