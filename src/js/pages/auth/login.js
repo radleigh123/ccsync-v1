@@ -73,8 +73,23 @@ document.addEventListener("DOMContentLoaded", () => {
                             body: JSON.stringify({ id_token: idToken }),
                         });
                     })
-                    .then(response => response.json())
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.text().then(text => {
+                                try {
+                                    return JSON.parse(text);
+                                } catch (e) {
+                                    throw new Error(text || 'Failed to verify token');
+                                }
+                            });
+                        }
+                        return response.json();
+                    })
                     .then(data => {
+                        if (!data.success) {
+                            throw new Error(data.message || 'Failed to verify token');
+                        }
+
                         console.log('Verified user: ', data);
                         const userData = {
                             ...data.user,
