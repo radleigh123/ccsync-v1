@@ -117,10 +117,10 @@ function populateUserData(userData, elements) {
     } */
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     initProfile();
     setupLogout();
-    setSidebar();
+    await setSidebar();
     document.getElementById("edit-profile-btn").onclick = function () {
         location.href = "/pages/settings/settings.html";
     };

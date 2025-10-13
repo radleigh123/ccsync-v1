@@ -10,7 +10,7 @@ let selectedYear = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  setSidebar();
+  await setSidebar();
   setupYearFilter();
   loadMembers();
 });

@@ -1,6 +1,5 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
+// Import Bootstrap JavaScript (CSS is imported via styles.scss)
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
-import 'bootstrap/dist/js/bootstrap.esm.min.js';
 import '/scss/styles.scss';
 import { initSessionManager } from "/js/utils/sessionManager.js";
 

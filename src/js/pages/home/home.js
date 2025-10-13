@@ -9,7 +9,7 @@ let allMembers = []; // Store all members
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  setSidebar();
+  await setSidebar();
   await loadHero();
   printEventList();
 });

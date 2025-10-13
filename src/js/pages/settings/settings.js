@@ -165,8 +165,8 @@ function setupTelInput(userData, phoneInput) {
     return iti;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
     initSettings();
     setupLogout();
-    setSidebar();
+    await setSidebar();
 });
