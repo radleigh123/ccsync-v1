@@ -1,336 +1,350 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<title>Dashboard - CCSync</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dashboard - CCSync</title>
+  </head>
 
-	<body>
-		<!-- Header - We go headless skrrrttt 💀 -->
+  <body>
+    <!-- Header - We go headless skrrrttt 💀 -->
 
-		<!-- Sidebar -->
-		<nav id="sidebar">
-			<div
-				id="sidebar-header"
-				class="justify-content-center align-items-center">
-				<a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
-					<img
-						src="/assets/PSITSlogo.png"
-						alt="Logo"
-						class="sidebar-logo me-2" />
-				</a>
-			</div>
-			<ul class="justify-content-center mb-0">
-				<li class="active">
-					<a
-						href="/pages/home/home.html"
-						class="justify-content-center"
-						title="Dashboard"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right">
-						<i class="bi bi-house-fill" style="font-size: 16px"></i>
-						<span>Dashboard</span>
-					</a>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Member management">
-						<i class="bi bi-person-circle"></i>
-						<span>Member management</span>
-						<!-- Right caret -->
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/member/view-member.html"
-									class="px-2">
-									View members
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/member/register-member.html"
-									class="px-2">
-									Register member
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Event management">
-						<i class="bi bi-calendar2-week-fill"></i>
-						<span>Event management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/event/view-event.html"
-									class="px-2">
-									View events
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/event/add-event.html"
-									class="px-2">
-									Add event
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Requirement management">
-						<i class="bi bi-file-text-fill"></i>
-						<span>Requirement management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/requirement/view-requirement.html"
-									class="px-2">
-									View requirements
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/requirement/add-requirement.html"
-									class="px-2">
-									Add requirement
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Officer management">
-						<i class="bi bi-hdd-rack-fill"></i>
-						<span>Officer management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/officer/view-officer.html"
-									class="px-2">
-									View officers
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/officer/add-officer.html"
-									class="px-2">
-									Add officer
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li class="user-info dropdown align-items-center mb-0">
-					<div class="container p-0 m-0 border-0">
-						<strong id="user-name">USER NAME</strong>
-						<small id="user-id">ID NUMBER</small>
-					</div>
-					<a
-						href="#"
-						class="more-btn text-decoration-none align-items-center"
-						data-bs-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false">
-						<i
-							class="bi bi-gear-fill"
-							style="line-height: 18px"></i>
-						<!-- <img
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div
+        id="sidebar-header"
+        class="justify-content-center align-items-center"
+      >
+        <a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+          <img
+            src="/assets/PSITSlogo.png"
+            alt="Logo"
+            class="sidebar-logo me-2"
+          />
+        </a>
+      </div>
+      <ul class="justify-content-center mb-0">
+        <li class="active">
+          <a
+            href="/pages/home/home.html"
+            class="justify-content-center"
+            title="Dashboard"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-house-fill" style="font-size: 16px"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Member management"
+          >
+            <i class="bi bi-person-circle"></i>
+            <span>Member management</span>
+            <!-- Right caret -->
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/member/view-member.html" class="px-2">
+                  View members
+                </a>
+              </li>
+              <li>
+                <a href="/pages/home/member/register-member.html" class="px-2">
+                  Register member
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Event management"
+          >
+            <i class="bi bi-calendar2-week-fill"></i>
+            <span>Event management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/event/view-event.html" class="px-2">
+                  View events
+                </a>
+              </li>
+              <li>
+                <a href="/pages/home/event/add-event.html" class="px-2">
+                  Add event
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Requirement management"
+          >
+            <i class="bi bi-file-text-fill"></i>
+            <span>Requirement management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a
+                  href="/pages/home/requirement/view-requirement.html"
+                  class="px-2"
+                >
+                  View requirements
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/pages/home/requirement/add-requirement.html"
+                  class="px-2"
+                >
+                  Add requirement
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Officer management"
+          >
+            <i class="bi bi-hdd-rack-fill"></i>
+            <span>Officer management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/officer/view-officer.html" class="px-2">
+                  View officers
+                </a>
+              </li>
+              <li>
+                <a href="/pages/home/officer/add-officer.html" class="px-2">
+                  Add officer
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li class="user-info dropdown align-items-center mb-0">
+          <div class="container p-0 m-0 border-0">
+            <strong id="user-name">USER NAME</strong>
+            <small id="user-id">ID NUMBER</small>
+          </div>
+          <a
+            href="#"
+            class="more-btn text-decoration-none align-items-center"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="bi bi-gear-fill" style="line-height: 18px"></i>
+            <!-- <img
 							src="https://github.com/mdo.png"
 							alt=""
 							width="32"
 							height="32"
 							class="rounded-circle me-2" /> -->
-					</a>
-					<button id="toggle-btn" style="line-height: 18px">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="20px"
-							width="20px"
-							viewBox="0 -960 960 960"
-							fill="#e8eaed">
-							<path
-								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-						</svg>
-					</button>
-					<ul class="dropdown-menu text-small shadow">
-						<li>
-							<a class="dropdown-item" href="#">New project...</a>
-						</li>
-						<li>
-							<a
-								class="dropdown-item"
-								href="/pages/settings/settings.html">
-								Settings
-							</a>
-						</li>
-						<li>
-							<a
-								class="dropdown-item"
-								href="/pages/profile/profile.html">
-								Profile
-							</a>
-						</li>
-						<li><hr class="dropdown-divider" /></li>
-						<li>
-							<a id="logout-link" class="dropdown-item" href="#">
-								Sign out
-							</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+          </a>
+          <button id="toggle-btn" style="line-height: 18px">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              width="20px"
+              viewBox="http://www.w3.org/2000/svg"
+              fill="#e8eaed"
+            >
+              <path
+                d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"
+              />
+            </svg>
+          </button>
+          <ul class="dropdown-menu text-small shadow">
+            <li>
+              <a class="dropdown-item" href="#">New project...</a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/pages/settings/settings.html">
+                Settings
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/pages/profile/profile.html">
+                Profile
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a id="logout-link" class="dropdown-item" href="#"> Sign out </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
 
-		<!-- Body -->
-		<main>
-			<div class="main-content main-content-bg col container-auto">
-				<div class="row mb-5">
-					<div class="col-md-8 col-xl-6 text-center mx-auto">
-						<h2>Dashboard</h2>
-						<p>
-							Curae hendrerit donec commodo hendrerit egestas
-							tempus, turpis facilisis nostra nunc. Vestibulum dui
-							eget ultrices.
-						</p>
-					</div>
-				</div>
-				<div class="row gy-4 row-cols-1 row-cols-md-3 row-cols-xl-3">
-					<!-- Members -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Registered Members
-									</h6>
-									<h4 id="registeredMembers" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Total -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Total CSS Students
-									</h6>
-									<h4 id="totalCSSStudents" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-					<!-- Paid -->
-					<div class="col">
-						<div class="card">
-							<div
-								class="card-body d-flex flex-column justify-content-between p-4">
-								<div>
-									<h6
-										class="text-uppercase text-muted text-primary-ccsync">
-										Paid membership
-									</h6>
-									<h4 id="paidMembership" class="display-3 fw-bold text-center">
-										9999
-									</h4>
-									<hr />
-									<div>
-										<span>
-											Lectus ut nibh quam, felis
-											porttitor. Ante nec venenatis etiam
-											lacinia.
-										</span>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<hr class="my-5" />
-				<section class="row py-xl-5">
-					<div class="container">
-						<div class="row mb-4">
-							<div class="col-md-8 col-xl-6 text-center mx-auto">
-								<h2>This month's events</h2>
-							</div>
-						</div>
-						<!-- EVENTS LIST HERE -->
-						<div class="row">
-							<div class="col">
-								<div
-									id="eventList"
-									class="container-fluid px-0 row gap-2 justify-content-center">
-									<p
-										class="display-6 text-center"
-										style="
-											font-family: 'Courier New', Courier,
-												monospace;
-										">
-										No events currently scheduled.
-									</p>
-									<!-- Table will be injected here -->
-								</div>
-							</div>
-						</div>
-					</div>
-					<div id="errorMsg"></div>
-				</section>
-			</div>
-		</main>
+    <!-- Body -->
+    <main>
+      <div class="main-content main-content-bg col container-fluid">
+        <!-- Header Section -->
+        <div class="row mb-5">
+          <div class="col-12 text-center">
+            <h1 class="display-4 fw-bold mb-3 text-dark">Dashboard</h1>
+            <p class="lead text-muted mb-0">
+              Welcome to your comprehensive management dashboard
+            </p>
+          </div>
+        </div>
 
-		<!-- Footer - no foot either, we fly high 👟 -->
+        <!-- Stats Cards -->
+        <div class="container-fluid mb-5">
+          <div class="row g-4">
+            <!-- Members -->
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon-box bg-primary bg-opacity-10 rounded-3 p-3 me-3"
+                    >
+                      <i class="bi bi-people-fill text-primary fs-4"></i>
+                    </div>
+                    <div>
+                      <h6
+                        class="text-uppercase text-muted mb-1 small fw-semibold"
+                      >
+                        Registered Members
+                      </h6>
+                      <h3
+                        id="registeredMembers"
+                        class="fw-bold mb-0 text-primary"
+                      >
+                        9999
+                      </h3>
+                    </div>
+                  </div>
+                  <p class="text-muted small mb-0">
+                    Active members in the organization
+                  </p>
+                </div>
+              </div>
+            </div>
 
-		<script type="module" src="/js/pages/home/home.js" defer></script>
-	</body>
+            <!-- Total Students -->
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon-box bg-success bg-opacity-10 rounded-3 p-3 me-3"
+                    >
+                      <i class="bi bi-mortarboard-fill text-success fs-4"></i>
+                    </div>
+                    <div>
+                      <h6
+                        class="text-uppercase text-muted mb-1 small fw-semibold"
+                      >
+                        Total CSS Students
+                      </h6>
+                      <h3
+                        id="totalCSSStudents"
+                        class="fw-bold mb-0 text-success"
+                      >
+                        9999
+                      </h3>
+                    </div>
+                  </div>
+                  <p class="text-muted small mb-0">
+                    Computer Science students enrolled
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Paid Membership -->
+            <div class="col-12 col-md-6 col-xl-4">
+              <div class="card h-100 border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div class="d-flex align-items-center mb-3">
+                    <div
+                      class="icon-box bg-warning bg-opacity-10 rounded-3 p-3 me-3"
+                    >
+                      <i class="bi bi-credit-card-fill text-warning fs-4"></i>
+                    </div>
+                    <div>
+                      <h6
+                        class="text-uppercase text-muted mb-1 small fw-semibold"
+                      >
+                        Paid Membership
+                      </h6>
+                      <h3 id="paidMembership" class="fw-bold mb-0 text-warning">
+                        9999
+                      </h3>
+                    </div>
+                  </div>
+                  <p class="text-muted small mb-0">
+                    Members with active payments
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Events Section -->
+        <section class="container-fluid">
+          <div class="row mb-4">
+            <div class="col-12">
+              <div class="d-flex justify-content-between align-items-center">
+                <div>
+                  <h2 class="fw-bold mb-1 text-dark">This Month's Events</h2>
+                  <p class="text-muted mb-0">
+                    Upcoming activities and meetings
+                  </p>
+                </div>
+                <a
+                  href="/pages/home/event/view-event.html"
+                  class="btn btn-primary text-decoration-none"
+                >
+                  View All Events
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Events List -->
+          <div class="row">
+            <div class="col-12">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body p-4">
+                  <div id="eventList" class="row g-4">
+                    <!-- Events will be loaded here by JavaScript -->
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div id="errorMsg"></div>
+        </section>
+      </div>
+    </main>
+
+    <script type="module" src="/js/pages/home/home.js" defer></script>
+  </body>
 </html>
