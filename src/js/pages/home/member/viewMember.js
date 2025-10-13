@@ -26,7 +26,9 @@ async function loadMembers() {
     if (import.meta.env.DEV) {
       allMembers = getMembers().members;
     } else {
-      const response = await fetch("http://localhost:8000/api/member", {
+      // NOTE: TEMP, change to actual API endpoint
+      // const response = await fetch("http://localhost:8000/api/member", {
+      const response = await fetch("http://localhost:8080/ccsync-plain-php/member/getMembers.php", {
         headers: {
           "Authorization": `Bearer ${userData.firebase_token}`,
           "Accept": "application/json",
