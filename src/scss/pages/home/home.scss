@@ -41,6 +41,9 @@ i {
     position: relative;
     padding: 2rem;
     color: #fff;
+    min-height: 100vh; 
+    min-height: 100dvh; 
+    z-index: 1; /* Add this to ensure content is above the overlay */
 
     &::before {
         content: "";
@@ -49,12 +52,17 @@ i {
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: url('/assets/bg.png');
+        background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
         background-size: cover;
         background-position: center;
-        filter: brightness(0.4) saturate(1.2);
-        z-index: -1;
+        z-index: -1; /* This ensures the overlay is behind the content */
     }
+}
+
+/* Ensure all content within main-content-bg is above the overlay */
+.main-content-bg > * {
+    position: relative;
+    z-index: 2;
 }
 
 .card {
@@ -79,4 +87,9 @@ i {
     .main-content {
         margin-top: 0;
     }
+}
+
+#sidebar {
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* Ensure sidebar is above other content */
 }
