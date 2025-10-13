@@ -48,7 +48,7 @@ async function handleSubmit(event) {
         } else {
             // NOTE: TEMP, CHANGE TO ACTUAL API URL
             // const response = await fetch("http://localhost:8000/api/events", {
-            const response = await fetch("http://localhost:8080/ccsync-plain-php/event/createEvent.php", {
+            const response = await fetch("https://ccsync-api-plain-dc043.wasmer.app/event/createEvent.php", {
                 method: "POST",
                 headers: {
                     "Authorization": `Bearer ${userData.firebase_token}`,

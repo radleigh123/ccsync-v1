@@ -25,7 +25,7 @@ async function loadEvents() {
     } else {
       // NOTE: TEMP, CHANGE TO PRODUCTION URL WHEN DEPLOYING
       // const response = await fetch("http://localhost:8000/api/events", {
-      const response = await fetch("http://localhost:8080/ccsync-plain-php/event/getEvents.php", {
+      const response = await fetch("https://ccsync-api-plain-dc043.wasmer.app/event/getEvents.php", {
         headers: {
           "Authorization": `Bearer ${userData.firebase_token}`,
           "Content-Type": "application/json",
