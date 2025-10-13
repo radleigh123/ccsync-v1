@@ -233,6 +233,20 @@ export function setSidebar() {
     const userName = user.name || 'USER NAME';
     const userId = user.id_school_number || 'ID NUMBER';
     setUserInfo(userName, userId);
+
+    // Configure sidebar based on role
+    const userRole = user.role || 'user';
+    if (userRole === 'user') { // Student role
+        // Hide all dropdown menus and sub-menus for students
+        const dropdowns = sidebar.querySelectorAll('.dropdown-btn');
+        dropdowns.forEach(btn => {
+            btn.style.display = 'none';
+            const ul = btn.nextElementSibling;
+            if (ul && ul.classList.contains('sub-menu')) {
+                ul.style.display = 'none';
+            }
+        });
+    }
 }
 
 function setUserInfo(name, id) {

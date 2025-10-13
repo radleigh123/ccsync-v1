@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Student Dashboard</title>
+
+		<style>
+			body {
+				font-family: Arial, sans-serif;
+				margin: 20px;
+				padding-left: 0.5%;
+			}
+		</style>
+	</head>
+	<body>
+		<!-- Sidebar -->
+		<nav id="sidebar">
+			<div
+				id="sidebar-header"
+				class="justify-content-center align-items-center">
+				<a class="navbar-brand d-flex p-1" href="/pages/student/index.html">
+					<img
+						src="/assets/PSITSlogo.png"
+						alt="Logo"
+						class="sidebar-logo me-2" />
+				</a>
+			</div>
+			<ul class="justify-content-center mb-0">
+				<li class="active">
+					<a
+						href="/pages/student/index.html"
+						class="justify-content-center"
+						title="Student Dashboard"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right">
+						<i class="bi bi-house-fill" style="font-size: 16px"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Member management">
+						<i class="bi bi-person-circle"></i>
+						<span>Member management</span>
+						<!-- Right caret -->
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/member/view-member.html"
+									class="px-2">
+									View members
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/member/register-member.html"
+									class="px-2">
+									Register member
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Event management">
+						<i class="bi bi-calendar2-week-fill"></i>
+						<span>Event management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/event/view-event.html"
+									class="px-2">
+									View events
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/event/add-event.html"
+									class="px-2">
+									Add event
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Requirement management">
+						<i class="bi
