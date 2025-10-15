@@ -1,234 +1,320 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Add Requirement</title>
-</head>
+    <title>Edit Officer</title>
+  </head>
 
-<body>
+  <body>
     <!-- Sidebar -->
     <nav id="sidebar">
-        <div id="sidebar-header" class="justify-content-center align-items-center">
-            <a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
-                <img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
-            </a>
-        </div>
-        <ul class="justify-content-center mb-0">
-            <li class="active">
-                <a href="/pages/home/home.html" class="justify-content-center" title="Dashboard"
-                    data-bs-toggle="tooltip" data-bs-placement="right">
-                    <i class="bi bi-house-fill" style="font-size: 16px"></i>
-                    <span>Dashboard</span>
+      <div
+        id="sidebar-header"
+        class="justify-content-center align-items-center"
+      >
+        <a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+          <img
+            src="/assets/PSITSlogo.png"
+            alt="Logo"
+            class="sidebar-logo me-2"
+          />
+        </a>
+      </div>
+      <ul class="justify-content-center mb-0">
+        <li class="active">
+          <a
+            href="/pages/home/home.html"
+            class="justify-content-center"
+            title="Dashboard"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-house-fill" style="font-size: 16px"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Member management"
+          >
+            <i class="bi bi-person-circle"></i>
+            <span>Member management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/member/view-member.html" class="px-2">
+                  View members
                 </a>
-            </li>
-            <li>
-                <button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                    title="Member management">
-                    <i class="bi bi-person-circle"></i>
-                    <span>Member management</span>
-                    <!-- Right caret -->
-                </button>
-                <ul class="sub-menu">
-                    <div class="me-auto" style="padding-left: 40px">
-                        <li>
-                            <a href="/pages/home/member/view-member.html" class="px-2">
-                                View members
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pages/home/member/register-member.html" class="px-2">
-                                Register member
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </li>
-            <li>
-                <button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                    title="Event management">
-                    <i class="bi bi-calendar2-week-fill"></i>
-                    <span>Event management</span>
-                </button>
-                <ul class="sub-menu">
-                    <div class="me-auto" style="padding-left: 40px">
-                        <li>
-                            <a href="/pages/home/event/view-event.html" class="px-2">
-                                View events
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pages/home/event/add-event.html" class="px-2">
-                                Add event
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </li>
-            <li>
-                <button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                    title="Requirement management">
-                    <i class="bi bi-file-text-fill"></i>
-                    <span>Requirement management</span>
-                </button>
-                <ul class="sub-menu">
-                    <div class="me-auto" style="padding-left: 40px">
-                        <li>
-                            <a href="/pages/home/requirement/view-requirement.html" class="px-2">
-                                View requirements
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pages/home/requirement/add-requirement.html" class="px-2">
-                                Add requirement
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </li>
-            <li>
-                <button class="dropdown-btn justify-content-center" data-bs-toggle="tooltip" data-bs-placement="right"
-                    title="Officer management">
-                    <i class="bi bi-hdd-rack-fill"></i>
-                    <span>Officer management</span>
-                </button>
-                <ul class="sub-menu">
-                    <div class="me-auto" style="padding-left: 40px">
-                        <li>
-                            <a href="/pages/home/officer/view-officer.html" class="px-2">
-                                View officers
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/pages/home/officer/add-officer.html" class="px-2">
-                                Add officer
-                            </a>
-                        </li>
-                    </div>
-                </ul>
-            </li>
-            <li class="user-info dropdown align-items-center mb-0">
-                <div class="container p-0 m-0 border-0">
-                    <strong id="user-name">USER NAME</strong>
-                    <small id="user-id">ID NUMBER</small>
-                </div>
-                <a href="#" class="more-btn text-decoration-none align-items-center" data-bs-toggle="dropdown"
-                    aria-haspopup="true" aria-expanded="false">
-                    <i class="bi bi-gear-fill" style="line-height: 18px"></i>
-                    <!-- <img
-							src="https://github.com/mdo.png"
-							alt=""
-							width="32"
-							height="32"
-							class="rounded-circle me-2" /> -->
+              </li>
+              <li>
+                <a href="/pages/home/member/register-member.html" class="px-2">
+                  Register member
                 </a>
-                <button id="toggle-btn" style="line-height: 18px">
-                    <svg xmlns="http://www.w3.org/2000/svg" height="20px" width="20px" viewBox="0 -960 960 960"
-                        fill="#e8eaed">
-                        <path
-                            d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-                    </svg>
-                </button>
-                <ul class="dropdown-menu text-small shadow">
-                    <li>
-                        <a class="dropdown-item" href="#">New project...</a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/pages/settings/settings.html">
-                            Settings
-                        </a>
-                    </li>
-                    <li>
-                        <a class="dropdown-item" href="/pages/profile/profile.html">
-                            Profile
-                        </a>
-                    </li>
-                    <li>
-                        <hr class="dropdown-divider" />
-                    </li>
-                    <li>
-                        <a id="logout-link" class="dropdown-item" href="#">
-                            Sign out
-                        </a>
-                    </li>
-                </ul>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Event management"
+          >
+            <i class="bi bi-calendar2-week-fill"></i>
+            <span>Event management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/event/view-event.html" class="px-2">
+                  View events
+                </a>
+              </li>
+              <li>
+                <a href="/pages/home/event/add-event.html" class="px-2">
+                  Add event
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Requirement management"
+          >
+            <i class="bi bi-file-text-fill"></i>
+            <span>Requirement management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a
+                  href="/pages/home/requirement/view-requirement.html"
+                  class="px-2"
+                >
+                  View requirements
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/pages/home/requirement/add-requirement.html"
+                  class="px-2"
+                >
+                  Add requirement
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li>
+          <button
+            class="dropdown-btn justify-content-center"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+            title="Officer management"
+          >
+            <i class="bi bi-hdd-rack-fill"></i>
+            <span>Officer management</span>
+          </button>
+          <ul class="sub-menu">
+            <div class="me-auto" style="padding-left: 40px">
+              <li>
+                <a href="/pages/home/officer/view-officer.html" class="px-2">
+                  View officers
+                </a>
+              </li>
+              <li>
+                <a href="/pages/home/officer/add-officer.html" class="px-2">
+                  Add officer
+                </a>
+              </li>
+            </div>
+          </ul>
+        </li>
+        <li class="user-info dropdown align-items-center mb-0">
+          <div class="container p-0 m-0 border-0">
+            <strong id="user-name">USER NAME</strong>
+            <small id="user-id">ID NUMBER</small>
+          </div>
+          <a
+            href="#"
+            class="more-btn text-decoration-none align-items-center"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="bi bi-gear-fill" style="line-height: 18px"></i>
+          </a>
+          <button id="toggle-btn" style="line-height: 18px">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              height="20px"
+              width="20px"
+              viewBox="http://www.w3.org/2000/svg"
+              fill="#e8eaed"
+            >
+              <path
+                d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z"
+              />
+            </svg>
+          </button>
+          <ul class="dropdown-menu text-small shadow">
+            <li>
+              <a class="dropdown-item" href="#">New project...</a>
             </li>
-        </ul>
+            <li>
+              <a class="dropdown-item" href="/pages/settings/settings.html">
+                Settings
+              </a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="/pages/profile/profile.html">
+                Profile
+              </a>
+            </li>
+            <li><hr class="dropdown-divider" /></li>
+            <li>
+              <a id="logout-link" class="dropdown-item" href="#"> Sign out </a>
+            </li>
+          </ul>
+        </li>
+      </ul>
     </nav>
 
-    <!-- Body -->
+    <!-- Main Content -->
     <main class="main-content-bg">
-        <div class="container-fluid">
-            <div id="header" class="d-flex flex-row gap-3 align-items-center">
-                <!-- Back arrow -->
-                <!-- <a href="/pages/home/officer/view-officer.html" class="text-decoration-none">
-                    <i class="bi bi-caret-left-fill p-0 m-0 text-white"></i>
-                </a> -->
-
-                <a href="/pages/home/officer/view-officer-details.html" class="text-decoration-none">
-                    <i class="bi bi-chevron-left text-white fs-2 me-2"></i>
-                </a>
-
-                <p class="p-0 m-0 h1 fw-bold">Add a new officer</p>
-            </div>
+      <div class="container-fluid">
+        <div id="header" class="d-flex flex-row gap-3 align-items-center">
+          <a
+            href="/pages/home/officer/view-officer-details.html"
+            class="text-decoration-none"
+          >
+            <i class="bi bi-chevron-left text-dark fs-2 me-2"></i>
+          </a>
+          <div>
+            <p class="p-0 m-0 h1 fw-bold text-dark">Edit Officer</p>
+            <p class="text-muted mb-0">Update officer information</p>
+          </div>
         </div>
-        <div class="card registration-card mx-auto mt-4 mb-5">
-            <div class="card-body p-4">
-                <h5 class="section-title mb-4 align-items-center text-center" style="color: black; font-size: 28px;">
-                    President
-                </h5>
-            </div>
-            <!-- <div class="officer-card w-100 h-100">
-                <img src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-                    class="card-img-top officer-img" alt="Officer Image" />
-            </div> -->
-            <div class="officer-card">
-                <img id="previewImage" src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-                    class="officer-img" alt="Officer Image" />
+      </div>
+
+      <div id="body" class="container-fluid mt-4">
+        <div class="card registration-card">
+          <div class="card-body p-4">
+            <h5 class="section-title mb-4" style="color: black">
+              Officer Information
+            </h5>
+
+            <div class="officer-image-section text-center mb-4">
+              <div class="image-container">
+                <img
+                  id="previewImage"
+                  src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+                  class="officer-img"
+                  alt="Officer Image"
+                />
                 <label for="imageUpload" class="upload-btn">
-                    <i class="bi bi-camera-fill"></i>
-                    Change Photo
+                  <i class="bi bi-camera-fill"></i>
+                  Change Photo
                 </label>
-                <input type="file" id="imageUpload" accept="image/*">
+                <input type="file" id="imageUpload" accept="image/*" />
+              </div>
             </div>
-            
-            <form id="editOfficerForm" class="form-section">
-                <div class="form-group">
-                    <label for="fullName" class="form-label">Full Name</label>
-                    <input type="text" class="form-control" id="fullName" value="Juan Dela Cruz" required>
+
+            <form id="editOfficerForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="fullName" class="form-label"> Full Name: </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="fullName"
+                    value="Juan Dela Cruz"
+                    required
+                  />
                 </div>
-            
-                <div class="form-group">
-                    <label for="course" class="form-label">Course</label>
-                    <input type="text" class="form-control" id="course" value="BSIT" required>
+                <div class="col-md-6">
+                  <label for="position" class="form-label"> Position: </label>
+                  <select class="form-select" id="position" required>
+                    <option value="president" selected>President</option>
+                    <option value="internal-vp">Internal Vice President</option>
+                    <option value="external-vp">External Vice President</option>
+                    <option value="secretary">Secretary</option>
+                    <option value="treasurer">Treasurer</option>
+                    <option value="auditor">Auditor</option>
+                    <option value="pio">PIO</option>
+                  </select>
                 </div>
-            
-                <div class="form-group">
-                    <label for="year" class="form-label">Year</label>
-                    <select class="form-select" id="year" required>
-                        <option value="">Select Year</option>
-                        <option value="1">1</option>
-                        <option value="2">2</option>
-                        <option value="3">3</option>
-                        <option value="4" selected>4</option>
-                    </select>
+              </div>
+
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <label for="program" class="form-label"> Program: </label>
+                  <select class="form-select" id="program" required>
+                    <option value="BSIT" selected>
+                      BS Information Technology
+                    </option>
+                    <option value="BSCS">BS Computer Science</option>
+                    <option value="BSIS">BS Information Systems</option>
+                  </select>
                 </div>
-            
-                <div class="form-group">
-                    <label for="email" class="form-label">Email</label>
-                    <input type="email" class="form-control" id="email" value="juandelacruz@gmail.com" required>
+                <div class="col-md-6">
+                  <label for="yearLevel" class="form-label">
+                    Year Level:
+                  </label>
+                  <select class="form-select" id="yearLevel" required>
+                    <option value="1">1st Year</option>
+                    <option value="2">2nd Year</option>
+                    <option value="3">3rd Year</option>
+                    <option value="4" selected>4th Year</option>
+                  </select>
                 </div>
-            
-                <div class="button-container">
-                    <button type="submit" class="btn-save">Save Changes</button>
-                    <button type="button" class="btn-cancel" onclick="window.location.href='/pages/home/officer/view-officer-details.html'">Cancel</button>
+              </div>
+
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <label for="email" class="form-label"> Email Address: </label>
+                  <input
+                    type="email"
+                    class="form-control"
+                    id="email"
+                    value="juandelacruz@gmail.com"
+                    required
+                  />
                 </div>
+              </div>
+
+              <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-update">
+                  Update Officer
+                </button>
+                <button
+                  type="button"
+                  class="btn btn-cancel"
+                  onclick="window.location.href='/pages/home/officer/view-officer-details.html'"
+                >
+                  Cancel
+                </button>
+              </div>
             </form>
+          </div>
         </div>
+      </div>
     </main>
 
-    <script type="module" src="/js/pages/home/officer/editOfficer.js" defer></script>
-</body>
-
+    <script
+      type="module"
+      src="/js/pages/home/officer/editOfficer.js"
+      defer
+    ></script>
+  </body>
 </html>

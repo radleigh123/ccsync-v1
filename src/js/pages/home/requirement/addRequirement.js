@@ -4,9 +4,9 @@ import { setSidebar } from '/components/js/sidebar';
 import { setupLogout } from "/js/utils/navigation.js";
 import 'bootstrap';
 
-document.addEventListener("DOMContentLoaded", async () => {
+document.addEventListener("DOMContentLoaded", () => {
     initHome();
-    await setSidebar();
+    setSidebar();
     setupLogout();
 });
 
