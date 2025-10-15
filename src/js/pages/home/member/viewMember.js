@@ -28,7 +28,7 @@ async function loadMembers() {
     } else {
       // NOTE: TEMP, change to actual API endpoint
       // const response = await fetch("http://localhost:8000/api/member", {
-      const response = await fetch("http://localhost:8080/ccsync-plain-php/member/getMembers.php", {
+      const response = await fetch("https://ccsync-api-plain-dc043.wasmer.app/member/getMembers.php", {
         headers: {
           "Authorization": `Bearer ${userData.firebase_token}`,
           "Accept": "application/json",
