@@ -1,8 +1,8 @@
-import '/js/utils/core.js';
-import '/scss/pages/home/member/viewMember.scss';
-import { setSidebar } from '/components/js/sidebar';
-import { getCurrentSession } from '/js/utils/sessionManager';
-import { getMembers } from '/js/utils/mock/mockStorage';
+import "/js/utils/core.js";
+import "/scss/pages/home/member/viewMember.scss";
+import { setSidebar } from "/components/js/sidebar";
+import { getCurrentSession } from "/js/utils/sessionManager";
+import { getMembers } from "/js/utils/mock/mockStorage";
 
 let userData = null;
 let allMembers = []; // Store all members
@@ -28,16 +28,21 @@ async function loadMembers() {
     } else {
       // NOTE: TEMP, change to actual API endpoint
       // const response = await fetch("http://localhost:8000/api/member", {
-      const response = await fetch("http://localhost:8080/ccsync-plain-php/member/getMembers.php", {
-        headers: {
-          "Authorization": `Bearer ${userData.firebase_token}`,
-          "Accept": "application/json",
+      const response = await fetch(
+        "http://localhost:8080/ccsync-plain-php/member/getMembers.php",
+        {
+          headers: {
+            Authorization: `Bearer ${userData.firebase_token}`,
+            Accept: "application/json",
+          },
         }
-      });
+      );
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        throw new Error(
+          errorData.message || `HTTP error! status: ${response.status}`
+        );
       }
 
       const data = await response.json();
@@ -46,7 +51,6 @@ async function loadMembers() {
 
     // Display all members default
     displayMembers(allMembers);
-
   } catch (error) {
     console.error("Error fetching members:", error);
     const tbody = document.getElementById("userTableBody");
@@ -61,9 +65,9 @@ async function loadMembers() {
 }
 
 function setupYearFilter() {
-  const yearDropdown = document.getElementById('yearDropdown');
+  const yearDropdown = document.getElementById("yearDropdown");
 
-  yearDropdown.addEventListener('change', (e) => {
+  yearDropdown.addEventListener("change", (e) => {
     selectedYear = e.target.value;
     filterMembersByYear(selectedYear);
   });
@@ -76,7 +80,7 @@ function filterMembersByYear(year) {
   }
 
   // Filter members by enrollment year
-  const filteredMembers = allMembers.filter(member => {
+  const filteredMembers = allMembers.filter((member) => {
     const enrollmentYear = new Date(member.enrollment_date).getFullYear();
     return enrollmentYear === parseInt(year);
   });
@@ -87,15 +91,24 @@ function filterMembersByYear(year) {
 // TODO: Cache list for hot-reload, add Refresh for UX
 function displayMembers(members) {
   const tbody = document.getElementById("userTableBody");
+  const memberCountElement = document.getElementById("memberCount");
+
   tbody.innerHTML = "";
+
+  // Update the member count above the table
+  if (memberCountElement) {
+    memberCountElement.textContent = members.length;
+  }
 
   if (members.length > 0) {
     members.forEach((member, index) => {
-      const fullName = `${member.first_name} ${member.last_name}${member.suffix ? ' ' + member.suffix : ''}`;
+      const fullName = `${member.first_name} ${member.last_name}${
+        member.suffix ? " " + member.suffix : ""
+      }`;
       const programCode = member.program?.code || member.program;
 
-      const row = document.createElement('tr');
-      row.className = 'member-row';
+      const row = document.createElement("tr");
+      row.className = "member-row";
       row.dataset.memberId = member.id;
 
       row.innerHTML = `
@@ -105,34 +118,26 @@ function displayMembers(members) {
       `;
 
       // Click event listeners, implement action here
-      row.addEventListener('click', () => {
+      row.addEventListener("click", () => {
         handleMemberClick(member);
       });
 
       tbody.appendChild(row);
 
       setTimeout(() => {
-        row.style.opacity = '1';
-        row.style.transform = 'translateY(0)';
+        row.style.opacity = "1";
+        row.style.transform = "translateY(0)";
       }, index * 50);
     });
 
-    // TODO: Maybe limit to 50 (Similar to GMAIL)
-    const summaryRow = document.createElement('tr');
-    summaryRow.className = 'summary-row';
-    summaryRow.innerHTML = `
-      <td colspan="3" class="text-muted text-center">
-        ---------------- ${members.length} member(s) found ----------------
-      </td>
-    `;
-    tbody.appendChild(summaryRow);
+    // Remove the summary row from the table - count is now above the table
   } else {
     const message = selectedYear
       ? `No members found for school year ${selectedYear}`
       : "No members found";
 
-    const emptyRow = document.createElement('tr');
-    emptyRow.className = 'summary-row';
+    const emptyRow = document.createElement("tr");
+    emptyRow.className = "summary-row";
     emptyRow.innerHTML = `
       <td colspan="3" class="text-muted text-center">
         ${message}

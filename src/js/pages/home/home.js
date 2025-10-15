@@ -89,9 +89,13 @@ async function printEventList() {
             <i class="bi bi-calendar-x display-1 text-muted mb-3"></i>
             <h4 class="text-muted">No events currently scheduled</h4>
             <p class="text-muted mb-4">Check back later for upcoming events</p>
-            <a href="/pages/home/event/add-event.html" class="btn btn-success text-light">
-                Add New Event
-            </a>
+                  <a
+                    href="/pages/home/event/add-event.html"
+                    class="btn btn-primary-custom text-decoration-none"
+                  >
+                    <i class="bi bi-plus-circle-fill me-2"></i>
+                    Add New Event
+                  </a>
         </div>
     `;
     return;

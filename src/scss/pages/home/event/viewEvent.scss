@@ -2,6 +2,8 @@
     --primary-gold: #D4AF37;
     --primary-dark: #2C2C2C;
     --sidebar-bg: #f8f9fa;
+    --card-orange: #FF9500;
+    --card-shadow: rgba(0, 0, 0, 0.1);
 }
 
 body {
@@ -16,9 +18,12 @@ i {
 }
 
 .main-content-bg {
-    position: relative;        /* Make it a positioning context */
-    min-height: 100%;          /* Allow it to stretch */
-    padding: 2rem;
+    position: relative;
+    padding: 2rem 2rem 1rem 2rem;
+    color: #fff;
+    min-height: 100vh; 
+    min-height: 100dvh; 
+    z-index: 1;
 
     &::before {
         content: "";
@@ -27,10 +32,9 @@ i {
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: url('/assets/bg.png');
+        background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
         background-size: cover;
         background-position: center;
-        filter: brightness(0.4) saturate(1.2);
         z-index: -1;
     }
 }
@@ -44,38 +48,171 @@ i {
     border-radius: 20px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     padding: 2rem;
+    margin-top: 1rem;
+}
+
+#eventContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 0rem 1rem 1rem 1rem; 
+    justify-items: center;
 }
 
 #eventCardItem {
-    border-radius: 15px;
-    background-color: var(--primary-gold);
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    transition: transform 0.2s ease;
-}
-
-#eventCardItem:hover {
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-}
-
-#eventCardItem .card-body {
-    margin-top: 2rem;
+    border-radius: 20px;
     background-color: white;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    transition: all 0.3s ease;
+    border: none;
+    overflow: hidden;
+    position: relative;
+    margin-bottom: 0;
+    width: 100%;
+    max-width: 280px;
+
+    &:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+    }
+
+    .card-body {
+        padding: 0;
+        background-color: white;
+        margin-top: 0;
+        position: relative;
+
+        .card-title {
+            background: linear-gradient(135deg, #F4B301 0%, #FF8C00 100%);
+            color: #2C2C2C;
+            font-weight: 600;
+            font-size: 1rem;
+            margin: 0;
+            padding: 18px;
+            text-align: center;
+            border-radius: 20px 20px 0 0;
+        }
+
+        hr {
+            display: none;
+        }
+
+        .event-details {
+            padding: 20px 16px 16px 16px;
+            background: white;
+
+            .d-flex {
+                margin-bottom: 14px;
+                align-items: center;
+
+                &:last-of-type {
+                    margin-bottom: 20px;
+                }
+
+                i {
+                    color: #FF9500 !important;
+                    font-size: 14px;
+                    margin-right: 10px;
+                    min-width: 18px;
+                    font-family: 'bootstrap-icons' !important;
+                }
+
+                .event-label {
+                    color: #333;
+                    font-size: 13px;
+                    font-weight: 400;
+                    margin-right: 4px;
+                }
+
+                .event-value {
+                    color: #333;
+                    font-size: 13px;
+                    margin: 0;
+                    line-height: 1.4;
+                }
+            }
+        }
+
+        #eventCardActions {
+            padding: 16px;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 0;
+
+            .d-flex {
+                margin-bottom: 0;
+                justify-content: space-around;
+                gap: 0;
+            }
+
+            .action-item {
+                display: flex;
+                justify-content: center;
+            }
+
+            a {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                text-decoration: none;
+                color: #666;
+                transition: all 0.2s ease;
+                padding: 10px;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+
+                &:hover {
+                    color: #FF9500;
+                    background-color: rgba(255, 149, 0, 0.1);
+                    transform: translateY(-2px);
+                }
+
+                i {
+                    font-size: 16px;
+                    color: inherit;
+                }
+
+                span {
+                    display: none;
+                }
+            }
+        }
+    }
 }
 
-#eventCardItem .card-body i {
-    font-size: 1.5rem;
-    transition: color 0.2s ease;
+.event-details i,
+#eventCardActions i {
+    font-family: 'bootstrap-icons' !important;
+    font-style: normal !important;
+    font-weight: normal !important;
+    text-transform: none !important;
+    display: inline-block !important;
 }
 
-#eventCardActions i:hover {
-    cursor: pointer;
-    transform: scale(1.1);
-    color: var(--primary-dark);
+.event-details .d-flex i {
+    color: #FF9500 !important;
 }
 
-#eventCardActions i:active {
-    transform: scale(0.95);
-    color: var(--primary-dark);
+@media (max-width: 1400px) {
+    #eventContainer {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+    }
+    
+    #eventCardItem {
+        max-width: 300px;
+    }
+}
+
+@media (max-width: 1200px) {
+    #eventContainer {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.5rem;
+    }
+    
+    #eventCardItem {
+        max-width: 320px;
+    }
 }
 
 @media (max-width: 800px) {
@@ -83,11 +220,59 @@ i {
         padding-top: 60px;
     }
 
-    #eventContainer .card .card-body .d-flex {
-        font-size: 0.9rem;
+    #eventContainer {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+        padding: 1rem;
+    }
 
-        .ms-auto {
-            max-width: 100px;
+    #eventCardItem {
+        max-width: 100%;
+
+        .card-body {
+            .card-title {
+                font-size: 1rem;
+                padding: 16px;
+            }
+
+            .event-details {
+                padding: 20px 16px 16px 16px;
+
+                .d-flex {
+                    margin-bottom: 12px;
+
+                    i {
+                        font-size: 14px;
+                    }
+
+                    .event-label, .event-value {
+                        font-size: 13px;
+                    }
+                }
+            }
+
+            #eventCardActions {
+                padding: 16px;
+
+                a {
+                    width: 40px;
+                    height: 40px;
+                    padding: 10px;
+
+                    i {
+                        font-size: 16px;
+                    }
+                }
+            }
         }
+    }
+}
+
+@media (min-width: 1401px) {
+    #eventContainer {
+        grid-template-columns: repeat(4, 1fr);
+        gap: 2rem;
+        max-width: 1400px;
+        margin: 0 auto;
     }
 }
