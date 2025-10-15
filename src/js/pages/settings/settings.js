@@ -10,13 +10,24 @@ import { passwordForm } from '/js/pages/settings/forms/password.js';
 import { profileForm } from "/js/pages/settings/forms/profile.js";
 import { profileImgForm } from "/js/pages/settings/forms/profileImg.js";
 
-export function initSettings() {
+/**
+ * Initializes the settings page by checking user authentication and setting up the settings interface.
+ * @async
+ * @function initSettings
+ * @returns {Promise<void>}
+ */
+export async function initSettings() {
     const user = localStorage.getItem("user");
     if (!user) {
         window.location.href = "/pages/auth/login.html";
         return;
     }
 
+    // Continue with existing settings logic
+    setupSettings();
+}
+
+function setupSettings() {
     // Handle tab switching via URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const activeTab = urlParams.get('tab');
@@ -165,8 +176,5 @@ function setupTelInput(userData, phoneInput) {
     return iti;
 }
 
-document.addEventListener("DOMContentLoaded", async () => {
-    initSettings();
-    setupLogout();
-    await setSidebar();
-});
+// Initialize settings
+initSettings();

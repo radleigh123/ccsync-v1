@@ -96,6 +96,12 @@ function generateMenuHTML(menuItems) {
     }).join('');
 }
 
+/**
+ * Loads the sidebar template, generates role-based menu, and sets up functionality.
+ * @async
+ * @function setSidebar
+ * @returns {Promise<void>}
+ */
 export async function setSidebar() {
     const sidebar = document.getElementById('sidebar');
     if (!sidebar) return;
