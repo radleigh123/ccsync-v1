@@ -30,7 +30,11 @@
     <?php
     // Dynamic include based on current page
     $page = $_GET['page'] ?? 'home';
-    $contentFile = "../pages/{$page}/layout-content.php";
+    if (strpos($page, '/') !== false) {
+      $contentFile = "../pages/{$page}.php";
+    } else {
+      $contentFile = "../pages/{$page}/layout-content.php";
+    }
     if (file_exists($contentFile)) {
       include $contentFile;
     } else {
@@ -41,7 +45,11 @@
 
   <!-- Include page-specific scripts if needed -->
   <?php
-  $scriptFile = "js/pages/{$page}/{$page}.js";
+  if (strpos($page, '/') !== false) {
+    $scriptFile = "js/pages/{$page}.js";
+  } else {
+    $scriptFile = "js/pages/{$page}/{$page}.js";
+  }
   if (file_exists($scriptFile)) {
     echo "<script type='module' src='/$scriptFile'></script>";
   }

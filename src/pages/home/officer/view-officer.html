@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Requirement</title>
+	</head>
+
+	<body>
+		<!-- Sidebar -->
+		<nav id="sidebar">
+			<div
+				id="sidebar-header"
+				class="justify-content-center align-items-center">
+				<a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+					<img
+						src="/assets/PSITSlogo.png"
+						alt="Logo"
+						class="sidebar-logo me-2" />
+				</a>
+			</div>
+			<ul class="justify-content-center mb-0">
+				<li class="active">
+					<a
+						href="/pages/home/home.html"
+						class="justify-content-center"
+						title="Dashboard"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right">
+						<i class="bi bi-house-fill" style="font-size: 16px"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Member management">
+						<i class="bi bi-person-circle"></i>
+						<span>Member management</span>
+						<!-- Right caret -->
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/member/view-member.html"
+									class="px-2">
+									View members
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/member/register-member.html"
+									class="px-2">
+									Register member
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Event management">
+						<i class="bi bi-calendar2-week-fill"></i>
+						<span>Event management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/event/view-event.html"
+									class="px-2">
+									View events
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/event/add-event.html"
+									class="px-2">
+									Add event
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Requirement management">
+						<i class="bi bi-file-text-fill"></i>
+						<span>Requirement management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/requirement/view-requirement.html"
+									class="px-2">
+									View requirements
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/requirement/add-requirement.html"
+									class="px-2">
+									Add requirement
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li>
+					<button
+						class="dropdown-btn justify-content-center"
+						data-bs-toggle="tooltip"
+						data-bs-placement="right"
+						title="Officer management">
+						<i class="bi bi-hdd-rack-fill"></i>
+						<span>Officer management</span>
+					</button>
+					<ul class="sub-menu">
+						<div class="me-auto" style="padding-left: 40px">
+							<li>
+								<a
+									href="/pages/home/officer/view-officer.html"
+									class="px-2">
+									View officers
+								</a>
+							</li>
+							<li>
+								<a
+									href="/pages/home/officer/add-officer.html"
+									class="px-2">
+									Add officer
+								</a>
+							</li>
+						</div>
+					</ul>
+				</li>
+				<li class="user-info dropdown align-items-center mb-0">
+					<div class="container p-0 m-0 border-0">
+						<strong id="user-name">USER NAME</strong>
+						<small id="user-id">ID NUMBER</small>
+					</div>
+					<a
+						href="#"
+						class="more-btn text-decoration-none align-items-center"
+						data-bs-toggle="dropdown"
+						aria-haspopup="true"
+						aria-expanded="false">
+						<i
+							class="bi bi-gear-fill"
+							style="line-height: 18px"></i>
+						<!-- <img
+							src="https://github.com/mdo.png"
+							alt=""
+							width="32"
+							height="32"
+							class="rounded-circle me-2" /> -->
+					</a>
+					<button id="toggle-btn" style="line-height: 18px">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							height="20px"
+							width="20px"
+							viewBox="0 -960 960 960"
+							fill="#e8eaed">
+							<path
+								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+						</svg>
+					</button>
+					<ul class="dropdown-menu text-small shadow">
+						<li>
+							<a class="dropdown-item" href="#">New project...</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/pages/settings/settings.html">
+								Settings
+							</a>
+						</li>
+						<li>
+							<a
+								class="dropdown-item"
+								href="/pages/profile/profile.html">
+								Profile
+							</a>
+						</li>
+						<li><hr class="dropdown-divider" /></li>
+						<li>
+							<a id="logout-link" class="dropdown-item" href="#">
+								Sign out
+							</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</nav>
+
+		<!-- Body -->
+		<main class="main-content-bg">
+			<div class="container-fluid">
+				<div
+					id="header"
+					class="d-flex flex-row gap-5 align-items-center">
+					<p class="p-0 m-0 h1 fw-bold">Add a new requirement</p>
+					<div class="dropdown">
+						<label
+							for="yearDropdown"
+							class="form-label"
+							hidden></label>
+						<select class="form-select" id="yearDropdown">
+							<option value="" selected hidden>
+								Choose a school year
+							</option>
+							<!-- TODO: Think about scaling -->
+							<option value="">Show All</option>
+							<option value="2021-2022">2021-2022</option>
+							<option value="2022-2023">2022-2023</option>
+							<option value="2023-2024">2023-2024</option>
+							<option value="2024-2025">2024-2025</option>
+							<option value="2025-2026">2025-2026</option>
+							<option value="2026-2027">2026-2027</option>
+						</select>
+					</div>
+				</div>
+			</div>
+			<div
+				class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-3 mt-4"
+				id="eventContainer">
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card officer-card w-100 h-100" data-id="1">
+						<img
+							src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img"
+							alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>President</h5>
+						</div>
+					</div>
+				</div>
+
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card officer-card w-100 h-100" data-id="2">
+						<img
+							src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img"
+							alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>Vice President</h5>
+						</div>
+					</div>
+				</div>
+
+				<div class="col d-flex">
+					<div id="eventCardItem" class="card officer-card w-100 h-100" data-id="3">
+						<img
+							src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
+							class="card-img-top officer-img"
+							alt="Officer Image" />
+						<div class="card-info text-center p-3">
+							<h5 class="officer-name">Juan Dela Cruz</h5>
+							<p class="officer-year">BSIT - 4th Year</p>
+						</div>
+						<div class="card-body text-center">
+							<h5>Secretary</h5>
+						</div>
+					</div>
+				</div>
+			</div>
+		</main>
+
+		<script
+			type="module"
+			src="/js/pages/home/officer/viewOfficer.js"
+			defer></script>
+	</body>
+</html>

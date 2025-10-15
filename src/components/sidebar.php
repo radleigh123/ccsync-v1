@@ -27,8 +27,8 @@ $menuConfig = [
             'icon' => 'bi bi-person-circle',
             'text' => 'Member management',
             'submenu' => [
-                ['href' => '/pages/home/member/view-member.php', 'text' => 'View members'],
-                ['href' => '/pages/home/member/register-member.php', 'text' => 'Register member']
+                ['href' => '?page=member/view-member', 'text' => 'View members'],
+                ['href' => '?page=member/register-member', 'text' => 'Register member']
             ]
         ],
         [
