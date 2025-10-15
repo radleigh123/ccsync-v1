@@ -15,7 +15,7 @@ $menuConfig = [
     'admin' => [
         [
             'type' => 'link',
-            'href' => '?page=home',
+            'href' => '/pages/home/home.php',
             'title' => 'Dashboard',
             'icon' => 'bi bi-house-fill',
             'text' => 'Dashboard',
@@ -27,8 +27,8 @@ $menuConfig = [
             'icon' => 'bi bi-person-circle',
             'text' => 'Member management',
             'submenu' => [
-                ['href' => '?page=member/view-member', 'text' => 'View members'],
-                ['href' => '?page=member/register-member', 'text' => 'Register member']
+                ['href' => '/pages/home/member/view-member.php', 'text' => 'View members'],
+                ['href' => '/pages/home/member/register-member.php', 'text' => 'Register member']
             ]
         ],
         [
@@ -37,8 +37,8 @@ $menuConfig = [
             'icon' => 'bi bi-calendar2-week-fill',
             'text' => 'Event management',
             'submenu' => [
-                ['href' => '?page=event/view-event', 'text' => 'View events'],
-                ['href' => '?page=event/add-event', 'text' => 'Add event']
+                ['href' => '/pages/home/event/view-event.php', 'text' => 'View events'],
+                ['href' => '/pages/home/event/add-event.php', 'text' => 'Add event']
             ]
         ],
         [
@@ -47,8 +47,8 @@ $menuConfig = [
             'icon' => 'bi bi-file-text-fill',
             'text' => 'Requirement management',
             'submenu' => [
-                ['href' => '?page=requirement/view-requirement', 'text' => 'View requirements'],
-                ['href' => '?page=requirement/add-requirement', 'text' => 'Add requirement']
+                ['href' => '/pages/home/requirement/view-requirement.php', 'text' => 'View requirements'],
+                ['href' => '/pages/home/requirement/add-requirement.php', 'text' => 'Add requirement']
             ]
         ],
         [
@@ -57,15 +57,15 @@ $menuConfig = [
             'icon' => 'bi bi-hdd-rack-fill',
             'text' => 'Officer management',
             'submenu' => [
-                ['href' => '?page=officer/view-officer', 'text' => 'View officers'],
-                ['href' => '?page=officer/add-officer', 'text' => 'Add officer']
+                ['href' => '/pages/home/officer/view-officer.php', 'text' => 'View officers'],
+                ['href' => '/pages/home/officer/add-officer.php', 'text' => 'Add officer']
             ]
         ]
     ],
     'user' => [
         [
             'type' => 'link',
-            'href' => '?page=home',
+            'href' => '/pages/home/home.php',
             'title' => 'Dashboard',
             'icon' => 'bi bi-house-fill',
             'text' => 'Dashboard',
@@ -75,7 +75,7 @@ $menuConfig = [
 ];
 
 // Get user role (assume from session or similar)
-$userRole = 'admin'; // $_SESSION['user']['role'] ?? 'user';
+$userRole = $_SESSION['user']['role'] ?? 'user';
 $menuItems = $menuConfig[$userRole] ?? $menuConfig['user'];
 
 /**
@@ -128,7 +128,7 @@ $userId = $_SESSION['user']['id_school_number'] ?? 'ID NUMBER';
 <!-- Sidebar -->
 <nav id="sidebar">
   <div id="sidebar-header" class="justify-content-center align-items-center">
-    <a class="navbar-brand d-flex p-1" href="?page=home">
+    <a class="navbar-brand d-flex p-1" href="/pages/home/home.php">
       <img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
     </a>
   </div>

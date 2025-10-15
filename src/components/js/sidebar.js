@@ -57,7 +57,7 @@ const menuConfig = {
     user: [
         {
             type: 'link',
-            href: '/pages/home/home.html',
+            href: '/index.php?page=home',
             title: 'Dashboard',
             icon: 'bi bi-house-fill',
             text: 'Dashboard',

@@ -44,5 +44,3 @@
         <a href="?page=member/view-member" class="btn btn-secondary">Back to View Members</a>
     </div>
 </div>
-
-<script type="module" src="/js/pages/member/register-member.js"></script>

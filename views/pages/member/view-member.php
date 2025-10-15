@@ -72,5 +72,3 @@ try {
         </table>
     </div>
 </div>
-
-<script type="module" src="/js/pages/member/view-member.js"></script>
