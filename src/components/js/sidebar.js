@@ -67,6 +67,12 @@ const menuConfig = {
 };
 
 // Function to generate menu HTML
+/**
+ * Generates HTML string for sidebar menu items based on the provided configuration.
+ * @function generateMenuHTML
+ * @param {Array} menuItems - Array of menu item objects with type, href, title, etc.
+ * @returns {string} The generated HTML string for the menu.
+ */
 function generateMenuHTML(menuItems) {
     return menuItems.map(item => {
         if (item.type === 'link') {
@@ -122,7 +128,10 @@ export async function setSidebar() {
     const userRole = user.role || 'user';
 
     // Generate and insert menu items
-    const menuHTML = generateMenuHTML(menuConfig[userRole] || menuConfig.user);
+    const menuItems = menuConfig[userRole] || menuConfig.user;
+    console.log('Sidebar menu items for role:', userRole, menuItems);
+    const menuHTML = generateMenuHTML(menuItems);
+    console.log('Generated sidebar HTML:', menuHTML);
     const menuContainer = document.getElementById('sidebar-menu');
     if (menuContainer) {
         menuContainer.innerHTML = menuHTML;
@@ -137,6 +146,10 @@ export async function setSidebar() {
     setupSidebarFunctionality();
 }
 
+/**
+ * Sets up event listeners and functionality for the sidebar, including toggle, dropdowns, and tooltips.
+ * @function setupSidebarFunctionality
+ */
 function setupSidebarFunctionality() {
     const toggleButton = document.getElementById('toggle-btn')
     const sidebar = document.getElementById('sidebar')
@@ -154,6 +167,10 @@ function setupSidebarFunctionality() {
     const sidebarListItems = sidebar.querySelectorAll('li');
 
     // Helper to dispose all tooltips
+    /**
+     * Disposes of all active Bootstrap tooltips to prevent memory leaks.
+     * @function disposeAllTooltips
+     */
     function disposeAllTooltips() {
         tooltipTriggerList.forEach(tooltipTriggerEl => {
             const tooltipInstance = Tooltip.getInstance(tooltipTriggerEl);
@@ -169,12 +186,21 @@ function setupSidebarFunctionality() {
     });
 
 
+    /**
+     * Toggles the sidebar open/close state and closes all submenus.
+     * @function toggleSidebar
+     */
     function toggleSidebar() {
         sidebar.classList.toggle('close')
         toggleButton.classList.toggle('rotate')
         closeAllSubMenus()
     }
 
+    /**
+     * Toggles the visibility of a submenu for a dropdown button.
+     * @function toggleSubMenu
+     * @param {HTMLElement} button - The dropdown button element.
+     */
     function toggleSubMenu(button) {
         closeAllSubMenusExcept(button)
 
@@ -186,6 +212,10 @@ function setupSidebarFunctionality() {
         }
     }
 
+    /**
+     * Closes all open submenus in the sidebar.
+     * @function closeAllSubMenus
+     */
     function closeAllSubMenus() {
         Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
             ul.classList.remove('show')
@@ -193,6 +223,11 @@ function setupSidebarFunctionality() {
         })
     }
 
+    /**
+     * Closes all open submenus except the one associated with the specified button.
+     * @function closeAllSubMenusExcept
+     * @param {HTMLElement} exceptButton - The button whose submenu should remain open.
+     */
     function closeAllSubMenusExcept(exceptButton) {
         Array.from(sidebar.getElementsByClassName('show')).forEach(ul => {
             if (ul.previousElementSibling !== exceptButton) {
@@ -202,6 +237,11 @@ function setupSidebarFunctionality() {
         })
     }
 
+    /**
+     * Sets the active state for a menu item and removes active state from others.
+     * @function setActiveMenuItem
+     * @param {HTMLElement} item - The menu item element to set as active.
+     */
     function setActiveMenuItem(item) {
         menuItems.forEach(menuItem => {
             if (menuItem.tagName === 'A') {
@@ -276,6 +316,10 @@ function setupSidebarFunctionality() {
         }
     })
 
+    /**
+     * Sets the active menu item based on the current URL or stored href in localStorage.
+     * @function setActiveFromCurrentUrl
+     */
     function setActiveFromCurrentUrl() {
         const currentPath = window.location.pathname
         const storedHref = localStorage.getItem('ccsync_active_sidebar_href')
@@ -363,6 +407,12 @@ function setupSidebarFunctionality() {
     }
 }
 
+/**
+ * Sets the user name and ID in the sidebar user info section.
+ * @function setUserInfo
+ * @param {string} name - The user's name.
+ * @param {string} id - The user's ID.
+ */
 function setUserInfo(name, id) {
     const userName = document.getElementById('user-name');
     const userId = document.getElementById('user-id');

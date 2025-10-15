@@ -9,8 +9,20 @@
 body {
     min-height: 100vh;
     min-height: 100dvh;
-    display: grid;
-    grid-template-columns: auto 1fr;
+}
+
+#sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+}
+
+#main-content {
+    padding-left: 300px;
+}
+
+#sidebar ul {
+    justify-content: flex-start;
 }
 
 i {
