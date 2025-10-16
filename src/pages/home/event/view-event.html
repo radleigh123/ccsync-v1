@@ -1,50 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Event</title>
 
-    <!-- Add Bootstrap Icons CSS -->
-    <main class="main-content-bg">
-      <div class="container-fluid">
-        <div id="header" class="d-flex flex-row gap-5 align-items-center">
-          <div>
-            <p class="p-0 m-0 h1 fw-bold text-dark">View Events</p>
-            <p class="text-muted mb-0">Manage and view all school events</p>
-          </div>
-          <div class="ms-auto d-flex flex-row gap-3 align-items-center">
-            <p class="p-0 m-0 text-dark">School year:</p>
-            <div class="dropdown">
-              <label for="yearDropdown" class="form-label" hidden></label>
-              <select
-                class="form-select bg-white border-0 px-3 py-2"
-                id="yearDropdown"
-                style="min-width: 180px"
-              >
-                <option value="" selected hidden>2024-2025</option>
-                <!-- TODO: Think about scaling -->
-                <option value="">Show All</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2024-2025">2024-2025</option>
-                <option value="2025-2026">2025-2026</option>
-                <option value="2026-2027">2026-2027</option>
-              </select>
-            </div>
-          </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Event</title>
+</head>
+
+<body> <!-- Add Bootstrap Icons CSS -->
+  <nav id="sidebar"></nav>
+  
+  <main class="main-content-bg">
+    <div class="container-fluid">
+      <div id="header" class="d-flex flex-row gap-5 align-items-center">
+        <div>
+          <p class="p-0 m-0 h1 fw-bold text-dark">View Events</p>
+          <p class="text-muted mb-0">Manage and view all school events</p>
+        </div>
+        <div class="ms-auto d-flex flex-row gap-3 align-items-center">
+          <p class="p-0 m-0 text-dark">School year:</p>
+          <div class="dropdown"> <label for="yearDropdown" class="form-label" hidden></label> <select
+              class="form-select bg-white border-0 px-3 py-2" id="yearDropdown" style="min-width: 180px">
+              <option value="" selected hidden>2024-2025</option> <!-- TODO: Think about scaling -->
+              <option value="">Show All</option>
+              <option value="2021-2022">2021-2022</option>
+              <option value="2022-2023">2022-2023</option>
+              <option value="2023-2024">2023-2024</option>
+              <option value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+              <option value="2026-2027">2026-2027</option>
+            </select> </div>
         </div>
       </div>
-      <div class="row g-4 mt-4" id="eventContainer">
-        <!-- Event cards inserted here -->
-      </div>
-    </main>
+    </div>
+    <div class="row g-4 mt-4" id="eventContainer"> <!-- Event cards inserted here --> </div>
+  </main>
+  <script type="module" src="/js/pages/home/event/viewEvent.js" defer></script>
+</body>
 
-    <script
-      type="module"
-      src="/js/pages/home/event/viewEvent.js"
-      defer
-    ></script>
-  </body>
 </html>
