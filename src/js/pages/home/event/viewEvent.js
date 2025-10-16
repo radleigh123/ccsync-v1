@@ -1,6 +1,6 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/event/viewEvent.scss";
-import { setSidebar } from "/components/js/sidebar";
+import { setSidebar } from "/components/js/sidebar.js";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { getEvents } from "/js/utils/mock/mockStorage";
 
@@ -8,7 +8,7 @@ let userData = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  setSidebar();
+  await setSidebar();
   loadEvents();
 });
 
