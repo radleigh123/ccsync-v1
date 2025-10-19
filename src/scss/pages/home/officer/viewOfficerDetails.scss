@@ -17,10 +17,11 @@ i {
 
 .main-content-bg {
     position: relative;
-    /* Make it a positioning context */
-    min-height: 100%;
-    /* Allow it to stretch */
     padding: 2rem;
+    color: #fff;
+    min-height: 100vh;
+    min-height: 100dvh;
+    z-index: 1;
 
     &::before {
         content: "";
@@ -29,10 +30,9 @@ i {
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: url('/assets/bg.png');
+        background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
         background-size: cover;
         background-position: center;
-        filter: brightness(0.4) saturate(1.2);
         z-index: -1;
     }
 }
@@ -48,123 +48,174 @@ i {
     padding: 2rem;
 }
 
-@media (max-width: 800px) {
-    body {
-        padding-top: 60px;
-    }
-}
-
 .registration-card {
-    max-width: 700px;
-    background: white;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    padding: 30px 40px;
-
-    .card-body {
-            padding: 1.5rem 1rem 0.5rem !important; // Reduced top/bottom padding
-        }
+    background: transparent;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    backdrop-filter: none;
+    max-width: 800px;
+    margin: 0 auto;
 }
 
 .section-title {
     color: black;
     border-bottom: 2px solid #ccc;
-    /* you can change color */
     padding-bottom: 8px;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    font-size: 1.5rem;
+    font-weight: 600;
 }
 
-.officer-card {
+.officer-header {
+    text-align: center;
+}
+
+.officer-image-container {
     display: flex;
     justify-content: center;
-    align-items: center;
+    margin-bottom: 2rem;
 }
-
-// .officer-img {
-//     width: 25%;
-//     height: auto;
-//     margin: 1rem auto;
-//     display: block;
-//     border-radius: 8px;
-// }
 
 .officer-img {
-    width: 30%;
-    height: auto;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
-    margin: 0.5rem auto 1rem;
-    display: block;
-    border-radius: 12px;
-    background: #e8e8e8;
+    border-radius: 50%;
+    border: 4px solid #FFE8A6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
-.info-section {
-    margin-bottom: 35px;
-    padding: 0 20px;
+.officer-details {
+    max-width: 600px;
+    margin: 0 auto;
 }
 
-.info-row {
-    display: flex;
-    margin-bottom: 18px;
-    font-size: 15px;
-    flex-direction: column;
-    margin-bottom: 5px;
+.info-item {
+    margin-bottom: 1rem;
 }
 
 .info-label {
+    color: #666;
     font-weight: 600;
-    color: black;
-    min-width: 120px;
-    flex-shrink: 0;
-    min-width: 100px;
-    margin-bottom: 5px;
-    font-size: 18px;
+    font-size: 14px;
+    margin-bottom: 4px;
+    display: block;
 }
 
 .info-value {
-    color: #555;
-    flex: 1;
+    color: #333;
     font-size: 16px;
-}
-
-.button-container {
-    display: flex;
-    gap: 15px;
-    margin-top: 10px;
-    padding: 0 20px;
+    margin: 0;
+    padding: 8px 12px;
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    border: 1px solid #e5e5e5;
 }
 
 .btn-edit,
 .btn-delete {
-    flex: 1;
-    padding: 12px 20px;
     border: none;
-    border-radius: 25px;
-    font-size: 16px;
+    border-radius: 4px;
+    padding: 8px 20px;
     font-weight: 600;
-    cursor: pointer;
+    font-size: 14px;
     transition: all 0.3s ease;
+    height: 38px;
+    white-space: nowrap;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 140px;
 }
 
 .btn-edit {
     background: linear-gradient(to right, #FED154, #F5A302);
-    color: white;
+    color: #2C2C2C;
 }
 
 .btn-edit:hover {
-    background: #FED154;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 165, 0, 0.3);
+    background: linear-gradient(to right, #F4B301, #F5A302);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: #2C2C2C;
 }
 
 .btn-delete {
-    background: #ff3b3b;
+    background: #dc3545;
     color: white;
 }
 
 .btn-delete:hover {
-    background: #e03030;
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 59, 59, 0.3);
+    background: #c82333;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    color: white;
+}
+
+.btn-edit:active,
+.btn-delete:active {
+    transform: translateY(0);
+}
+
+.row.mb-3 {
+    margin-bottom: 1.5rem !important;
+}
+
+.row.mb-4 {
+    margin-bottom: 2rem !important;
+}
+
+@media (max-width: 800px) {
+    body {
+        padding-top: 60px;
+    }
+
+    .officer-img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .info-label {
+        font-size: 13px;
+    }
+
+    .info-value {
+        font-size: 14px;
+        padding: 6px 10px;
+    }
+
+    .d-flex {
+        flex-direction: column;
+        gap: 1rem !important;
+
+        .btn-edit,
+        .btn-delete {
+            width: 100%;
+        }
+    }
+
+    .officer-details {
+        padding: 0 1rem;
+    }
+}
+
+@media (max-width: 767px) {
+    .main-content {
+        padding: 15px;
+    }
+}
+
+@media (min-width: 768px) {
+    .main-content {
+        margin-left: 25%;
+    }
+}
+
+@media (min-width: 992px) {
+    .main-content {
+        margin-left: 16.66666667%;
+    }
 }
 

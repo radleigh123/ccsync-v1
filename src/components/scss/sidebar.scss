@@ -8,7 +8,7 @@
     box-sizing: border-box;
     height: 100vh;
     width: 300px;
-    padding: 5px 1em;
+    padding: 2px 0.5em;
     background-color: var(--sidebar-bg);
 
     position: sticky;
@@ -92,7 +92,7 @@
 #sidebar .dropdown-btn,
 #sidebar .logo {
     border-radius: .5em;
-    padding: .85em;
+    padding: .5em;
     text-decoration: none;
     color: var(--primary-dark);
     display: flex;
@@ -117,6 +117,9 @@
 #sidebar a span,
 #sidebar .dropdown-btn span {
     flex-grow: 1;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 #sidebar a:hover,

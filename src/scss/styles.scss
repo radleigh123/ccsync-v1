@@ -3,22 +3,139 @@
  * Main entry point for all design system components
  */
 
-// Import design system components in order
+// Import Bootstrap first with our custom variables
 @import "variables";
+@import "bootstrap/scss/bootstrap";
+
+// Bootstrap Icons
+$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
+@import "bootstrap-icons/font/bootstrap-icons";
+
+// Then import design system components that extend/override Bootstrap
 @import "utilities";
 @import "typography";
 @import "components";
 @import "responsive";
 @import "icon-list";
 
-// Bootstrap Icons
-$bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
-@import "bootstrap-icons/font/bootstrap-icons";
+// Import Poppins font
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
 
-// Import Bootstrap with our custom variables
-@import "bootstrap/scss/bootstrap";
+// Set global font to Poppins
+body {
+  font-family: 'Poppins', sans-serif;
+}
 
-// Override
+// Poppins font classes
+.poppins-thin {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.poppins-extralight {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: normal;
+}
+
+.poppins-light {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.poppins-regular {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.poppins-medium {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.poppins-semibold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+}
+
+.poppins-bold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.poppins-extrabold {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: normal;
+}
+
+.poppins-black {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.poppins-thin-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.poppins-extralight-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 200;
+  font-style: italic;
+}
+
+.poppins-light-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.poppins-regular-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.poppins-medium-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.poppins-semibold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.poppins-bold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.poppins-extrabold-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 800;
+  font-style: italic;
+}
+
+.poppins-black-italic {
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+// Override Bootstrap styles
 .btn-primary-ccsync {
   background: linear-gradient(90deg, #FED154 0%, #F5A302 100%);
   color: white;
@@ -48,14 +165,13 @@ $bootstrap-icons-font-dir: "bootstrap-icons/font/fonts";
 
 input::placeholder {
   color: #b3b3b3 !important;
-  opacity: 1; // Override default opacity
+  opacity: 1;
 }
 
 input.form-control:focus {
   box-shadow: 0 0 0 0.2rem rgba(245, 163, 2, 0.25);
   border-color: #CFB964;
 }
-
 
 .btn-custom {
   background: linear-gradient(to right, #FED154, #F5A302);
@@ -111,7 +227,7 @@ input.form-control:focus {
     content: "";
     position: absolute;
     inset: 0;
-    background: rgba(255, 255, 255, 0.8); // Adjust alpha for desired transparency
+    background: rgba(255, 255, 255, 0.8);
     z-index: 2;
     pointer-events: none;
   }

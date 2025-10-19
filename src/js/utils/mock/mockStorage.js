@@ -164,6 +164,17 @@ export function deleteEvent(id) {
 }
 
 /**
+ * Get current user
+ */
+export function getUser() {
+    console.log("[MOCK] getUser called, returning user:", mockStorage.user);
+    return {
+        message: "User retrieved successfully",
+        user: mockStorage.user
+    };
+}
+
+/**
  * Reset mock data
  */
 export function resetMockData() {

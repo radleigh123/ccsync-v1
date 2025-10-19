@@ -1,463 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Requirement</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Requirement Details</title>
+  </head>
 
-	<body>
-		<!-- Sidebar -->
-		<nav id="sidebar">
-			<div
-				id="sidebar-header"
-				class="justify-content-center align-items-center">
-				<a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
-					<img
-						src="/assets/PSITSlogo.png"
-						alt="Logo"
-						class="sidebar-logo me-2" />
-				</a>
-			</div>
-			<ul class="justify-content-center mb-0">
-				<li class="active">
-					<a
-						href="/pages/home/home.html"
-						class="justify-content-center"
-						title="Dashboard"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right">
-						<i class="bi bi-house-fill" style="font-size: 16px"></i>
-						<span>Dashboard</span>
-					</a>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Member management">
-						<i class="bi bi-person-circle"></i>
-						<span>Member management</span>
-						<!-- Right caret -->
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/member/view-member.html"
-									class="px-2">
-									View members
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/member/register-member.html"
-									class="px-2">
-									Register member
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Event management">
-						<i class="bi bi-calendar2-week-fill"></i>
-						<span>Event management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/event/view-event.html"
-									class="px-2">
-									View events
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/event/add-event.html"
-									class="px-2">
-									Add event
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Requirement management">
-						<i class="bi bi-file-text-fill"></i>
-						<span>Requirement management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/requirement/view-requirement.html"
-									class="px-2">
-									View requirements
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/requirement/add-requirement.html"
-									class="px-2">
-									Add requirement
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li>
-					<button
-						class="dropdown-btn justify-content-center"
-						data-bs-toggle="tooltip"
-						data-bs-placement="right"
-						title="Officer management">
-						<i class="bi bi-hdd-rack-fill"></i>
-						<span>Officer management</span>
-					</button>
-					<ul class="sub-menu">
-						<div class="me-auto" style="padding-left: 40px">
-							<li>
-								<a
-									href="/pages/home/officer/view-officer.html"
-									class="px-2">
-									View officers
-								</a>
-							</li>
-							<li>
-								<a
-									href="/pages/home/officer/add-officer.html"
-									class="px-2">
-									Add officer
-								</a>
-							</li>
-						</div>
-					</ul>
-				</li>
-				<li class="user-info dropdown align-items-center mb-0">
-					<div class="container p-0 m-0 border-0">
-						<strong id="user-name">USER NAME</strong>
-						<small id="user-id">ID NUMBER</small>
-					</div>
-					<a
-						href="#"
-						class="more-btn text-decoration-none align-items-center"
-						data-bs-toggle="dropdown"
-						aria-haspopup="true"
-						aria-expanded="false">
-						<i
-							class="bi bi-gear-fill"
-							style="line-height: 18px"></i>
-						<!-- <img
-							src="https://github.com/mdo.png"
-							alt=""
-							width="32"
-							height="32"
-							class="rounded-circle me-2" /> -->
-					</a>
-					<button id="toggle-btn" style="line-height: 18px">
-						<svg
-							xmlns="http://www.w3.org/2000/svg"
-							height="20px"
-							width="20px"
-							viewBox="0 -960 960 960"
-							fill="#e8eaed">
-							<path
-								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-						</svg>
-					</button>
-					<ul class="dropdown-menu text-small shadow">
-						<li>
-							<a class="dropdown-item" href="#">New project...</a>
-						</li>
-						<li>
-							<a
-								class="dropdown-item"
-								href="/pages/settings/settings.html">
-								Settings
-							</a>
-						</li>
-						<li>
-							<a
-								class="dropdown-item"
-								href="/pages/profile/profile.html">
-								Profile
-							</a>
-						</li>
-						<li><hr class="dropdown-divider" /></li>
-						<li>
-							<a id="logout-link" class="dropdown-item" href="#">
-								Sign out
-							</a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</nav>
+  <body>
+    <nav id="sidebar"></nav>
+    <!-- Main Content -->
+    <main class="main-content-bg">
+      <div class="container-fluid">
+        <div id="header" class="d-flex flex-row gap-3 align-items-center">
+          <a
+            href="/pages/home/requirement/view-requirement.html"
+            class="text-decoration-none"
+          >
+            <i class="bi bi-chevron-left text-dark fs-2 me-2"></i>
+          </a>
+          <div>
+            <p class="p-0 m-0 h1 fw-bold text-dark">Requirement Details</p>
+            <p class="text-muted mb-0">
+              View detailed requirement information and compliance status
+            </p>
+          </div>
+        </div>
+      </div>
 
-		<!-- Body -->
-		<main class="main-content-bg">
-			<div class="container-fluid">
-				<div
-					id="header"
-					class="d-flex flex-row gap-3 align-items-center">
-					<!-- Back arrow -->
-					<a
-						href="/pages/home/requirement/view-requirement.html"
-						class="text-decoration-none">
-						<i class="bi bi-chevron-left text-white fs-2 me-2"></i>
-					</a>
+      <div id="body" class="container-fluid mt-4">
+        <!-- Requirement Information Card -->
+        <div class="requirement-info-card mb-4">
+          <div
+            class="card-header d-flex justify-content-between align-items-center"
+          >
+            <h5 class="section-title mb-0">Requirement Information</h5>
+            <button class="btn btn-edit">
+              <i class="bi bi-pencil-fill me-2"></i>
+              Edit Information
+            </button>
+          </div>
+          <div class="card-body">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="info-item mb-3">
+                  <label class="info-label">Event Name:</label>
+                  <p class="info-value">CCS Acquaintance Party 2025</p>
+                </div>
+                <div class="info-item mb-3">
+                  <label class="info-label">Status:</label>
+                  <span class="badge bg-success">Open</span>
+                </div>
+                <div class="info-item mb-3">
+                  <label class="info-label">Date:</label>
+                  <p class="info-value">Dec 26, 2025 – Dec 27, 2025</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-item mb-3">
+                  <label class="info-label">Complied:</label>
+                  <p class="info-value text-success fw-bold">480 students</p>
+                </div>
+                <div class="info-item mb-3">
+                  <label class="info-label">Lacking:</label>
+                  <p class="info-value text-danger fw-bold">250 students</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-					<!-- Title -->
-					<p class="p-0 m-0 h1 fw-bold text-white">
-						View requirement details
-					</p>
-				</div>
-			</div>
-			<div class="card registration-card mx-auto mt-4 mb-5">
-				<div class="card-body p-3">
-					<div
-						class="d-flex justify-content-between align-items-center section-title">
-						<h5 class="px-4 py-2 m-0" style="color: black">
-							Requirement information
-						</h5>
-						<button class="btn btn-outline-warning py-2 px-3 me-3">
-							Edit Information
-						</button>
-					</div>
-				</div>
-				<div class="card-body px-4 pb-4">
-					<div class="row px-4">
-						<!-- Left side -->
-						<div class="col-md-6">
-							<div class="row mb-1">
-								<div class="col-3 fw-bold">Event name:</div>
-								<div class="col-9" id="eventName">
-									CCS Acquaintance Party 2025
-								</div>
-							</div>
-							<div class="row mb-1">
-								<div class="col-3 fw-bold">Status:</div>
-								<div class="col-9" id="eventStatus">Open</div>
-							</div>
-							<div class="row mb-1">
-								<div class="col-3 fw-bold">Date:</div>
-								<div class="col-9" id="eventDate">
-									Dec 26, 2025 – Dec 27, 2025
-								</div>
-							</div>
-						</div>
+        <!-- Students Compliance Table -->
+        <div class="compliance-section">
+          <div class="search-filter-section mb-3">
+            <div class="d-flex gap-3 align-items-center">
+              <!-- Search Bar with fixed width to match view-member -->
+              <div class="position-relative" style="width: 500px">
+                <i class="bi bi-search position-absolute"></i>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="searchInput"
+                  placeholder="Search students..."
+                />
+              </div>
 
-						<!-- Right side -->
-						<div class="col-md-6">
-							<div class="row mb-1">
-								<div class="col-3 fw-bold">Complied:</div>
-								<div class="col-9" id="eventComplied">480</div>
-							</div>
-							<div class="row mb-1">
-								<div class="col-3 fw-bold">Lacking:</div>
-								<div class="col-9" id="eventLacking">250</div>
-							</div>
-						</div>
-					</div>
-				</div>
+              <!-- Filter Dropdown -->
+              <div class="dropdown">
+                <button
+                  class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2"
+                  type="button"
+                  data-bs-toggle="dropdown"
+                >
+                  <i class="bi bi-funnel"></i>
+                  <span>Filter by</span>
+                </button>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#">Name</a></li>
+                  <li><a class="dropdown-item" href="#">Year Level</a></li>
+                  <li><a class="dropdown-item" href="#">Program</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
 
-				<div id="body" class="container-fluid mt-1 h4">
-					<p class="px-3">Search students who complied:</p>
-					<div class="input-group mb-3 px-3">
-						<div class="input-group-btn search-panel dropdown">
-							<button
-								class="btn btn-default dropdown-toggle"
-								type="button"
-								data-bs-toggle="dropdown">
-								<span id="search_concept">Filter by</span>
-								<span class="caret"></span>
-							</button>
-							<ul
-								id="dropdownMenu"
-								class="dropdown-menu"
-								role="menu">
-								<li>
-									<a
-										class="dropdown-item text-decoration-none"
-										href="#">
-										Name
-									</a>
-								</li>
-								<li>
-									<a
-										class="dropdown-item text-decoration-none"
-										href="#">
-										Year Level
-									</a>
-								</li>
-								<li>
-									<a
-										class="dropdown-item text-decoration-none"
-										href="#">
-										Program
-									</a>
-								</li>
-							</ul>
-						</div>
-						<input
-							type="hidden"
-							name="search_param"
-							value="all"
-							id="search_param" />
-						<input
-							type="text"
-							class="form-control"
-							name="x"
-							placeholder="Search term..." />
-						<span class="input-group-btn">
-							<button class="btn btn-default" type="button">
-								<span class="bi bi-search"></span>
-							</button>
-						</span>
-					</div>
-					<p class="px-3">Results:</p>
-					<div class="table-container">
-						<div class="table-responsive">
-							<table
-								class="table table-striped table-hover mb-0 align-middle text-center">
-								<thead>
-									<tr>
-										<th>Name</th>
-										<th>Year</th>
-										<th>Program</th>
-										<th>Date Complied</th>
-										<th>Action</th>
-									</tr>
-								</thead>
-								<tbody id="userTableBody">
-									<!-- Rows populated dynamically -->
-									<tr>
-										<td>
-											<strong id="user-name">USER NAME</strong>
-										</td>
-										<td><strong>4</strong></td>
-										<td><strong>BSIT</strong></td>
-										<td><strong>06/25/2025</strong></td>
-										<td>
-											<button
-												class="action-btn"
-												onclick="viewStudent(this)"
-												title="View Details"
-												style="
-													border: none;
-													background: none;
-												">
-												<i
-													class="bi bi-three-dots-vertical"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong id="user-name">USER NAME</strong>
-										</td>
-										<td><strong>4</strong></td>
-										<td><strong>BSIT</strong></td>
-										<td><strong>06/25/2025</strong></td>
-										<td>
-											<button
-												class="action-btn"
-												onclick="viewStudent(this)"
-												title="View Details"
-												style="
-													border: none;
-													background: none;
-												">
-												<i
-													class="bi bi-three-dots-vertical"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong id="user-name">USER NAME</strong>
-										</td>
-										<td><strong>4</strong></td>
-										<td><strong>BSIT</strong></td>
-										<td><strong>06/25/2025</strong></td>
-										<td>
-											<button
-												class="action-btn"
-												onclick="viewStudent(this)"
-												title="View Details"
-												style="
-													border: none;
-													background: none;
-												">
-												<i
-													class="bi bi-three-dots-vertical"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong id="user-name">USER NAME</strong>
-										</td>
-										<td><strong>4</strong></td>
-										<td><strong>BSIT</strong></td>
-										<td><strong>06/25/2025</strong></td>
-										<td>
-											<button
-												class="action-btn"
-												onclick="viewStudent(this)"
-												title="View Details"
-												style="
-													border: none;
-													background: none;
-												">
-												<i
-													class="bi bi-three-dots-vertical"></i>
-											</button>
-										</td>
-									</tr>
-									<tr>
-										<td>
-											<strong id="user-name">USER NAME</strong>
-										</td>
-										<td><strong>4</strong></td>
-										<td><strong>BSIT</strong></td>
-										<td><strong>06/25/2025</strong></td>
-										<td>
-											<button
-												class="action-btn"
-												onclick="viewStudent(this)"
-												title="View Details"
-												style="
-													border: none;
-													background: none;
-												">
-												<i
-													class="bi bi-three-dots-vertical"></i>
-											</button>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-					</div>
-				</div>
-			</div>
-		</main>
+          <div class="compliance-count mb-3">
+            <p class="mb-0">
+              Showing <span class="count-number">5</span> students who complied
+            </p>
+          </div>
 
-		<script
-			type="module"
-			src="/js/pages/home/requirement/viewDetailRequirement.js"
-			defer></script>
-	</body>
+          <div class="table-container">
+            <div class="table-responsive">
+              <table class="table mb-0 align-middle">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Year</th>
+                    <th>Program</th>
+                    <th>Date Complied</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="userTableBody">
+                  <tr>
+                    <td>Juan Dela Cruz</td>
+                    <td>4th Year</td>
+                    <td>BSIT</td>
+                    <td>June 25, 2025</td>
+                    <td>
+                      <button
+                        class="action-btn"
+                        onclick="viewStudent(this)"
+                        title="View Details"
+                      >
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Maria Santos</td>
+                    <td>3rd Year</td>
+                    <td>BSCS</td>
+                    <td>June 24, 2025</td>
+                    <td>
+                      <button
+                        class="action-btn"
+                        onclick="viewStudent(this)"
+                        title="View Details"
+                      >
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Jose Garcia</td>
+                    <td>4th Year</td>
+                    <td>BSIS</td>
+                    <td>June 23, 2025</td>
+                    <td>
+                      <button
+                        class="action-btn"
+                        onclick="viewStudent(this)"
+                        title="View Details"
+                      >
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Ana Rodriguez</td>
+                    <td>2nd Year</td>
+                    <td>BSIT</td>
+                    <td>June 22, 2025</td>
+                    <td>
+                      <button
+                        class="action-btn"
+                        onclick="viewStudent(this)"
+                        title="View Details"
+                      >
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Carlos Lopez</td>
+                    <td>1st Year</td>
+                    <td>BSCS</td>
+                    <td>June 21, 2025</td>
+                    <td>
+                      <button
+                        class="action-btn"
+                        onclick="viewStudent(this)"
+                        title="View Details"
+                      >
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <script
+      type="module"
+      src="/js/pages/home/requirement/viewDetailRequirement.js"
+      defer
+    ></script>
+  </body>
 </html>

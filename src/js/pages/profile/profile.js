@@ -2,8 +2,15 @@ import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
 import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import { fetchUser } from "/js/utils/api.js";
 
-export function initProfile() {
+/**
+ * Initializes the profile page by checking user authentication and setting up the profile view.
+ * @async
+ * @function initProfile
+ * @returns {Promise<void>}
+ */
+export async function initProfile() {
     // Check for logged in user
     const user = localStorage.getItem("user");
     if (!user) {
@@ -11,6 +18,11 @@ export function initProfile() {
         return;
     }
 
+    // Continue with existing profile logic
+    setupProfile();
+}
+
+function setupProfile() {
     // Check if we're viewing a selected user from the card
     const selectedUser = localStorage.getItem("selected_user");
 
@@ -117,11 +129,4 @@ function populateUserData(userData, elements) {
     } */
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-    initProfile();
-    setupLogout();
-    setSidebar();
-    document.getElementById("edit-profile-btn").onclick = function () {
-        location.href = "/pages/settings/settings.html";
-    };
-});
+initProfile();
