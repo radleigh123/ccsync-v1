@@ -1,25 +1,43 @@
 export function profileForm(userData, form) {
     if (!form) return;
 
-    form?.addEventListener('submit', function (e) {
+    form?.addEventListener('submit', async function (e) {
         e.preventDefault();
 
-        const displayName = document.getElementById('display-name').value;
-        const bio = document.getElementById('bio').value;
+        const formData = {
+            display_name: document.getElementById('display-name').value,
+            bio: document.getElementById('bio').value
+        };
 
-        if (!displayName) {
+        if (!formData.display_name) {
             alert('Please provide a display name');
             return;
         }
 
-        // NOTE: call API to update
-        alert('Profile update functionality will be implemented in the future');
-        console.log(JSON.stringify({ displayName, bio }));
+        console.log(formData);
 
-        // Update local storage example
-        // const user = JSON.parse(localStorage.getItem('user') || '{}');
-        // user.displayName = displayName;
-        // user.bio = bio;
-        // localStorage.setItem('user', JSON.stringify(user));
+        try {
+            const params = new URLSearchParams();
+            const userId = JSON.parse(localStorage.getItem("user")).id;
+            params.append("id", userId);
+
+            const response = await fetch(`http://localhost:8080/ccsync-plain-php/profile/editProfile.php?${params}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                alert('Successfully edited profile details');
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('Error editing profile details', error);
+        }
     });
 }
