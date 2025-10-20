@@ -34,7 +34,7 @@ export function accountForm(userData, form, iti) {
             const userId = JSON.parse(localStorage.getItem("user")).id;
             params.append("id", userId);
 
-            const response = await fetch(`http://localhost:8080/ccsync-plain-php/profile/editAccount.php?${params}`, {
+            const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/editAccount.php?${params}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

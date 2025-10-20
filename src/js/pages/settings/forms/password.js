@@ -26,7 +26,7 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
             const userId = JSON.parse(localStorage.getItem("user")).id;
             params.append("id", userId);
 
-            const response = await fetch(`http://localhost:8080/ccsync-plain-php/profile/editPassword.php?${params}`, {
+            const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/editPassword.php?${params}`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
