@@ -3,6 +3,10 @@ import '/scss/pages/profile/profile.scss';
 import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
 import { fetchUser } from "/js/utils/api.js";
+import { getCurrentSession } from "/js/utils/sessionManager.js";
+
+let userData = null;
+let userProfile = null;
 
 /**
  * Initializes the profile page by checking user authentication and setting up the profile view.
@@ -12,99 +16,82 @@ import { fetchUser } from "/js/utils/api.js";
  */
 export async function initProfile() {
     // Check for logged in user
-    const user = localStorage.getItem("user");
-    if (!user) {
+    userData = await getCurrentSession();
+    if (!userData) {
         window.location.href = "/pages/auth/login.html";
         return;
     }
 
+    // Load layout-content
+    try {
+        const response = await fetch('/pages/profile/layout-content.html');
+        const content = await response.text();
+        document.getElementById('main-content').innerHTML = content;
+    } catch (error) {
+        console.error('Error loading profile content', error);
+    }
+
     // Continue with existing profile logic
-    setupProfile();
+    await setupProfile();
+    setupListeners();
 }
 
-function setupProfile() {
-    // Check if we're viewing a selected user from the card
-    const selectedUser = localStorage.getItem("selected_user");
+async function setupProfile() {
+    try {
+        const params = new URLSearchParams();
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        params.append("id", userId);
 
-    // Determine which user data to display
-    let userData;
-    let isCurrentUser = true;
-
-    if (selectedUser) {
-        userData = JSON.parse(selectedUser);
-        const loggedInUser = JSON.parse(user);
-        isCurrentUser = (userData.id === loggedInUser.id);
-
-        // Clear selected_user to avoid persisting between navigations
-        localStorage.removeItem("selected_user");
-    } else {
-        userData = JSON.parse(user);
-    }
-
-    const elements = {
-        name: document.querySelector("#user-name-full"),
-        email: document.querySelector("#user-email"),
-        bio: document.querySelector("#user-id-school-number"),
-        image: document.querySelector("#img-profile")
-    };
-
-    // Only show edit button if viewing your own profile
-    const editBtn = document.getElementById("edit-profile-btn");
-    if (editBtn) {
-        editBtn.style.display = isCurrentUser ? "block" : "none";
-    }
-
-    // Add a back button if viewing someone else's profile
-    if (!isCurrentUser) {
-        const backBtn = document.createElement("button");
-        backBtn.className = "btn btn-outline-secondary ms-2";
-        backBtn.textContent = "Back to List";
-        backBtn.onclick = function () {
-            window.location.href = "/pages/home/home.html";
-        };
-
-        if (editBtn && editBtn.parentNode) {
-            editBtn.parentNode.appendChild(backBtn);
-        }
-    }
-
-    populateUserData(userData, elements);
-
-    // Set profile image based on role
-    const imgEl = document.querySelector("#img-profile");
-    if (userData.role == "ADMIN" && imgEl) {
-        imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
-    }
-
-    // Setup logout functionality
-    const logout = document.querySelector("#logout-link");
-    if (logout) {
-        logout.addEventListener("click", (e) => {
-            e.preventDefault();
-            localStorage.removeItem("user"); // clear state
-            window.location.href = "/";
+        const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/getProfile.php?${params}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${userData.firebase_token}`,
+                "Accept": "application/json"
+            },
         });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        userProfile = data.userProfile;
+
+        console.log(userProfile);
+
+        const elements = {
+            name: document.querySelector("#user-name-full"),
+            email: document.querySelector("#user-email"),
+            bio: document.querySelector("#user-bio"),
+            image: document.querySelector("#img-profile")
+        };
+        populateUserData(userProfile, elements);
+
+        // Set profile image based on role
+        const imgEl = document.querySelector("#img-profile");
+        if (userData.role == "ADMIN" && imgEl) {
+            imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
+        }
+    } catch (error) {
+        console.error('Error fetching user profile', error);
     }
 }
 
 function populateUserData(userData, elements) {
     // Display name
     if (elements.name) {
-        const firstName = userData.user.name ? userData.user.name.split(" ")[0] : null;
-        const lastName = userData.user.name ? userData.user.name.split(" ").slice(1).join(" ") : null;
-        elements.name.textContent = userData.display_name ||
-            `${firstName || "SERVER ERROR: no first name"} ${lastName || "SERVER ERROR: no last name"}`.trim() ||
-            "User";
+        elements.name.textContent = userData.display_name || `${userData.first_name} ${userData.last_name}`.trim();
     }
 
     // Email
     if (elements.email) {
-        elements.email.textContent = userData.user.email || "SERVER ERROR: no email found";
+        elements.email.textContent = userData.email || "SERVER ERROR: no email found";
     }
 
     // Bio
     if (elements.bio) {
-        elements.bio.textContent = userData.user.id_school_number || "SERVER ERROR: no ID number found";
+        elements.bio.textContent = userData.bio || "SERVER ERROR: no ID number found";
     }
 
     // Profile Image
@@ -127,6 +114,12 @@ function populateUserData(userData, elements) {
             this.src = "/assets/images/default-profile.png";
         };
     } */
+}
+
+function setupListeners() {
+    document.getElementById('edit-profile-btn').addEventListener('click', (e) => {
+        window.location.href = "/pages/settings/settings.html";
+    });
 }
 
 initProfile();

@@ -9,6 +9,10 @@ import { accountForm } from '/js/pages/settings/forms/account.js';
 import { passwordForm } from '/js/pages/settings/forms/password.js';
 import { profileForm } from "/js/pages/settings/forms/profile.js";
 import { profileImgForm } from "/js/pages/settings/forms/profileImg.js";
+import { getCurrentSession } from "/js/utils/sessionManager.js";
+
+let userData = null;
+let userProfile = null;
 
 /**
  * Initializes the settings page by checking user authentication and setting up the settings interface.
@@ -17,17 +21,21 @@ import { profileImgForm } from "/js/pages/settings/forms/profileImg.js";
  * @returns {Promise<void>}
  */
 export async function initSettings() {
-    const user = localStorage.getItem("user");
-    if (!user) {
+    userData = await getCurrentSession();
+    if (!userData) {
         window.location.href = "/pages/auth/login.html";
         return;
     }
 
-    // Continue with existing settings logic
-    setupSettings();
-}
+    // Load layout-content
+    try {
+        const response = await fetch('/pages/settings/layout-content.html');
+        const content = await response.text();
+        document.getElementById('main-content').innerHTML = content;
+    } catch (error) {
+        console.error('Error loading settings content', error);
+    }
 
-function setupSettings() {
     // Handle tab switching via URL parameters
     const urlParams = new URLSearchParams(window.location.search);
     const activeTab = urlParams.get('tab');
@@ -40,16 +48,52 @@ function setupSettings() {
         }
     }
 
-    populateUserData(
-        JSON.parse(user),
-        {
+    // Continue with existing settings logic
+    await setupSettingsData();
+    setupFormHandlers();
+}
+
+/**
+ * Sets up the settings page by populating user data and initializing form handlers.
+ * @async
+ * @function setupSettingsData
+ * @returns {Promise<void>}
+ */
+async function setupSettingsData() {
+    try {
+        const params = new URLSearchParams();
+        const userId = JSON.parse(localStorage.getItem("user")).id;
+        params.append("id", userId);
+
+        const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/getProfile.php?${params}`, {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${userData.firebase_token}`,
+                "Accept": "application/json"
+            },
+        });
+
+        if (!response.ok) {
+            const errorData = await response.json();
+            throw new Error(errorData.message || `HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        userProfile = data.userProfile;
+
+        console.log(userProfile);
+
+        const elements = {
             email: document.getElementById('email'),
             displayName: document.getElementById('display-name'),
             bio: document.getElementById('bio'),
             phone: document.querySelector('#phone'),
             gender: document.getElementById('gender')
-        });
-    setupFormHandlers();
+        };
+        populateUserData(userProfile, elements);
+    } catch (error) {
+        console.error('Error fetching user profile', error);
+    }
 }
 
 function populateUserData(userData, elements) {
@@ -63,7 +107,7 @@ function populateUserData(userData, elements) {
     // Display Name
     if (elements.displayName) {
         elements.displayName.value = userData.display_name ||
-            `${userData.name_first || ''} ${userData.name_last || ''}`.trim() || '';
+            `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || '';
     }
 
     // Bio
@@ -95,13 +139,13 @@ function populateUserData(userData, elements) {
 }
 
 function setupFormHandlers() {
-    const userData = JSON.parse(localStorage.getItem("user") || '{}');
+    // const userData = JSON.parse(localStorage.getItem("user") || '{}');
 
     // Initialize intl-tel-input for phone number field
     const phoneInput = document.querySelector('#phone');
-    const iti = setupTelInput(userData, phoneInput);
+    const iti = setupTelInput(userProfile, phoneInput);
 
-    accountForm(userData, document.getElementById('account-info-form'), iti);
+    accountForm(userProfile, document.getElementById('account-info-form'), iti);
 
     const updatePasswordBtn = document.getElementById('update-password-btn');
     const currentPassword = document.getElementById('current-password');
@@ -144,17 +188,19 @@ function setupTelInput(userData, phoneInput) {
         }
     });
 
-    if (userData.phone) {
+    const phoneNumber = String(userData.phone_number)
+
+    if (phoneNumber) {
         setTimeout(() => {
             try {
-                iti.setNumber(userData.phone);
+                iti.setNumber(phoneNumber);
 
-                if (!userData.phone.startsWith('+')) {
-                    iti.setNumber(`+${userData.phone}`);
+                if (!phoneNumber.startsWith('+')) {
+                    iti.setNumber(`+${phoneNumber}`);
                 }
             } catch (e) {
                 console.warn('Error setting phone number in iti:', e);
-                phoneInput.value = userData.phone;
+                phoneInput.value = phoneNumber;
             }
         }, 100);
     }
