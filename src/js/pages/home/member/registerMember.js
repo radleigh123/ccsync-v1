@@ -1,131 +1,215 @@
-import "/js/utils/core.js";
-import "/scss/pages/home/member/registerMember.scss";
-import { setSidebar } from "/components/js/sidebar";
-import { getCurrentSession } from "/js/utils/sessionManager";
-import { addMember } from "/js/utils/mock/mockStorage";
+/**
+ * Register Member Page Handler
+ *
+ * Manages the member registration workflow:
+ * 1. Search for a user by ID number (API call to getUserByIdNumber.php)
+ * 2. Auto-fill readonly fields (firstName, lastName, email)
+ * 3. Enable editable fields (birthDate, yearLevel, program, isPaid)
+ * 4. Submit member registration to createMember.php
+ *
+ * @author CCSync Development Team
+ * @version 1.0
+ */
 
-let userData = null;
+document.addEventListener('DOMContentLoaded', function () {
+    // Form elements
+    const searchBtn = document.getElementById('searchBtn');
+    const idNumberInput = document.getElementById('idNumber');
+    const searchMessage = document.getElementById('searchMessage');
+    const memberForm = document.getElementById('memberForm');
+    const registerBtn = document.getElementById('registerBtn');
 
-document.addEventListener("DOMContentLoaded", async () => {
-  initHome();
-  setSidebar();
+    // Readonly fields (auto-filled from user lookup)
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
+    const emailInput = document.getElementById('email');
 
-  const form = document.querySelector("form");
-  form.addEventListener("submit", handleSubmit);
-});
+    // Editable fields (user can fill after lookup)
+    const suffixInput = document.getElementById('suffix');
+    const birthDateInput = document.getElementById('birthDate');
+    const yearLevelInput = document.getElementById('yearLevel');
+    const programInput = document.getElementById('program');
+    const isPaidInput = document.getElementById('isPaid');
 
-export async function initHome() {
-  // Get logged-in user data
-  userData = await getCurrentSession();
-  if (!userData) window.location.href = "/pages/auth/login.html";
-}
+    let foundUser = null;
 
-document.querySelectorAll("select.form-select").forEach((select) => {
-  function updateColor() {
-    if (!select.value) {
-      select.classList.add("placeholder-gray");
-    } else {
-      select.classList.remove("placeholder-gray");
-    }
-  }
-  // Initial check
-  updateColor();
-  // Update on change
-  select.addEventListener("change", updateColor);
-});
+    /**
+     * Search for a user by ID number
+     * Fetches user data from the backend API
+     */
+    searchBtn.addEventListener('click', async function () {
+        const idNumber = idNumberInput.value.trim();
 
-async function handleSubmit(e) {
-  e.preventDefault();
+        if (!idNumber) {
+            showSearchMessage('Please enter an ID number', 'danger');
+            return;
+        }
 
-  // Get form values
-  const firstName = document.getElementById("firstName").value;
-  const lastName = document.getElementById("lastName").value;
-  const suffix = document.getElementById("suffix").value;
-  const birthDate = document.getElementById("birthDate").value;
-  // const enrollmentDate = document.getElementById("enrollmentDate").value; // NEED ADD TO PAGE
-  const enrollmentDate = new Date().toISOString().split('T')[0]; // Current date (TEMPORARY)
-  const idNumber = document.getElementById("idNumber").value;
-  const email = document.getElementById("email").value;
-  const yearLevel = document.getElementById("yearLevel").value;
-  const program = document.getElementById("program").value;
-  const isPaid = document.getElementById("isPaid").checked;
+        try {
+            searchBtn.disabled = true;
+            searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Searching...';
 
-  console.log(JSON.stringify({
-    first_name: firstName,
-    last_name: lastName,
-    suffix,
-    id_school_number: parseInt(idNumber),
-    email,
-    birth_date: birthDate,
-    enrollment_date: enrollmentDate,
-    program,
-    year: parseInt(yearLevel),
-    is_paid: isPaid
-  }));
+            const response = await fetch(`/temp/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`);
+            const result = await response.json();
 
+            if (result.success) {
+                foundUser = result.data;
+                autoFillUserFields(foundUser);
+                enableEditableFields(true);
+                showSearchMessage('User found! Please complete the registration.', 'success');
+                registerBtn.disabled = false;
+            } else {
+                showSearchMessage(result.message || 'User not found', 'danger');
+                clearForm();
+                enableEditableFields(false);
+                registerBtn.disabled = true;
+                foundUser = null;
+            }
+        } catch (error) {
+            console.error('Error searching user:', error);
+            showSearchMessage('An error occurred while searching. Please try again.', 'danger');
+            enableEditableFields(false);
+            registerBtn.disabled = true;
+            foundUser = null;
+        } finally {
+            searchBtn.disabled = false;
+            searchBtn.innerHTML = 'Search User';
+        }
+    });
 
-  // Simple validation
-  if (!firstName || !lastName || !birthDate || !idNumber || !yearLevel || !program) {
-    alert(
-      "Please fill in all required fields (First Name, Last Name, Birth Date, ID Number, Year Level, Program)."
-    );
-    return;
-  }
-
-  try {
-    if (import.meta.env.DEV) {
-      const newMember = {
-        first_name: firstName,
-        last_name: lastName,
-        suffix: suffix,
-        id_school_number: parseInt(idNumber),
-        email: email,
-        birth_date: birthDate,
-        enrollment_date: new Date().toISOString().split('T')[0], // Current date
-        program: program,
-        year: parseInt(yearLevel),
-        isPaid: isPaid
-      };
-      addMember(newMember);
-    } else {
-      // NOTE: TEMP, CHANGE TO PRODUCTION URL WHEN DEPLOYING
-      // const response = await fetch("http://localhost:8000/api/member/", {
-      const response = await fetch("http://localhost:8080/ccsync-plain-php/member/createMember.php", {
-        method: "POST",
-        headers: {
-          'Authorization': `Bearer ${userData.firebase_token}`,
-          'Content-Type': 'application/json',
-          'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-          first_name: firstName,
-          last_name: lastName,
-          suffix: suffix,
-          id_school_number: parseInt(idNumber),
-          email: email,
-          birth_date: birthDate,
-          enrollment_date: enrollmentDate,
-          program: program,
-          year: parseInt(yearLevel),
-          is_paid: isPaid
-        })
-      });
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        console.log(errorData);
-        throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
-      }
+    /**
+     * Auto-fill readonly user fields
+     * @param {Object} user User data from API
+     */
+    function autoFillUserFields(user) {
+        firstNameInput.value = user.firstName || '';
+        lastNameInput.value = user.lastName || '';
+        emailInput.value = user.email || '';
+        idNumberInput.value = user.idNumber || '';
     }
 
-    alert("Member successfully registered!");
-    window.location.href = "/pages/home/member/view-member.html";
-  } catch (error) {
-    console.error("Error registering member:", error);
-    alert("Failed to register member. Please try again.");
-    return;
-  }
+    /**
+     * Clear all form fields
+     */
+    function clearForm() {
+        firstNameInput.value = '';
+        lastNameInput.value = '';
+        emailInput.value = '';
+        suffixInput.value = '';
+        birthDateInput.value = '';
+        yearLevelInput.value = '';
+        programInput.value = '';
+        isPaidInput.checked = false;
+    }
 
-  // Reset form
-  this.reset();
-}
+    /**
+     * Enable or disable editable fields
+     * @param {boolean} enabled Whether to enable fields
+     */
+    function enableEditableFields(enabled) {
+        suffixInput.disabled = !enabled;
+        birthDateInput.disabled = !enabled;
+        yearLevelInput.disabled = !enabled;
+        programInput.disabled = !enabled;
+        isPaidInput.disabled = !enabled;
+    }
+
+    /**
+     * Display search result message
+     * @param {string} message Message to display
+     * @param {string} type Message type (success, danger, warning)
+     */
+    function showSearchMessage(message, type = 'info') {
+        searchMessage.textContent = message;
+        searchMessage.className = `alert alert-${type} mt-2`;
+        searchMessage.style.display = 'block';
+    }
+
+    /**
+     * Handle form submission
+     * Validates and sends member registration to backend
+     */
+    memberForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!foundUser) {
+            showSearchMessage('Please search for a user first', 'warning');
+            return;
+        }
+
+        // Validate required fields
+        if (!birthDateInput.value) {
+            showSearchMessage('Birth date is required', 'danger');
+            return;
+        }
+
+        if (!yearLevelInput.value) {
+            showSearchMessage('Year level is required', 'danger');
+            return;
+        }
+
+        if (!programInput.value) {
+            showSearchMessage('Program is required', 'danger');
+            return;
+        }
+
+        try {
+            registerBtn.disabled = true;
+            registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
+
+            const memberData = {
+                userId: foundUser.id,
+                idNumber: foundUser.idNumber,
+                firstName: foundUser.firstName,
+                lastName: foundUser.lastName,
+                email: foundUser.email,
+                suffix: suffixInput.value || null,
+                birthDate: birthDateInput.value,
+                yearLevel: parseInt(yearLevelInput.value),
+                program: programInput.value,
+                isPaid: isPaidInput.checked,
+                enrollmentDate: new Date().toISOString().split('T')[0]
+            };
+
+            const response = await fetch('/temp/members/createMember.php', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(memberData)
+            });
+
+            const result = await response.json();
+
+            if (result.success) {
+                showSearchMessage('Member registered successfully!', 'success');
+                clearForm();
+                enableEditableFields(false);
+                idNumberInput.value = '';
+                searchMessage.style.display = 'none';
+                foundUser = null;
+
+                // Optionally redirect or show success
+                setTimeout(() => {
+                    window.location.href = '?page=member/view-member';
+                }, 2000);
+            } else {
+                showSearchMessage(result.message || 'Error registering member', 'danger');
+            }
+        } catch (error) {
+            console.error('Error registering member:', error);
+            showSearchMessage('An error occurred while registering. Please try again.', 'danger');
+        } finally {
+            registerBtn.disabled = false;
+            registerBtn.innerHTML = 'Register Member';
+        }
+    });
+
+    // Allow Enter key to search
+    idNumberInput.addEventListener('keypress', function (e) {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            searchBtn.click();
+        }
+    });
+});

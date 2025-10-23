@@ -24,11 +24,41 @@
         <div class="card registration-card">
           <div class="card-body p-4">
             <h5 class="section-title mb-4" style="color: black">
-              Member Information
+              Member Registration
             </h5>
-            <form>
+            
+            <!-- User Lookup Section -->
+            <div class="row mb-4 pb-4 border-bottom">
+              <div class="col-md-8">
+                <label for="idNumber" class="form-label">
+                  <strong>School ID Number:</strong>
+                </label>
+                <div class="input-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="idNumber"
+                    placeholder="Enter registered user's ID (e.g., 20023045)"
+                  />
+                  <button
+                    class="btn btn-primary"
+                    type="button"
+                    id="searchBtn"
+                  >
+                    Search User
+                  </button>
+                </div>
+                <small class="text-muted d-block mt-2">
+                  Enter the ID of a user already registered in the system
+                </small>
+                <div id="searchMessage" style="display: none;" class="mt-2"></div>
+              </div>
+            </div>
+
+            <form id="memberForm">
+              <!-- Readonly Auto-filled Fields -->
               <div class="row mb-3">
-                <!-- First Name -->
+                <!-- First Name (readonly) -->
                 <div class="col-md-6">
                   <label for="firstName" class="form-label">
                     First Name:
@@ -37,71 +67,73 @@
                     type="text"
                     class="form-control"
                     id="firstName"
-                    placeholder="Juan Dela Cruz"
+                    readonly
+                    disabled
                   />
                 </div>
-                <!-- Last Name -->
+                <!-- Last Name (readonly) -->
                 <div class="col-md-6">
-                  <label for="lastName" class="form-label"> Last Name: </label>
+                  <label for="lastName" class="form-label">
+                    Last Name:
+                  </label>
                   <input
                     type="text"
                     class="form-control"
                     id="lastName"
-                    placeholder="Dela Cruz"
+                    readonly
+                    disabled
                   />
                 </div>
               </div>
 
               <div class="row mb-3">
-                <!-- Suffix -->
+                <!-- Email (readonly) -->
                 <div class="col-md-6">
-                  <label for="suffix" class="form-label"> Suffix: </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="suffix"
-                    placeholder="Jr."
-                  />
-                </div>
-                <!-- Birth date -->
-                <div class="col-md-6">
-                  <label for="birthDate" class="form-label">
-                    Birth Date:
+                  <label for="email" class="form-label">
+                    Email:
                   </label>
-                  <input type="date" class="form-control" id="birthDate" />
-                </div>
-              </div>
-
-              <div class="row mb-3">
-                <!-- ID Number -->
-                <div class="col-md-6">
-                  <label for="idNumber" class="form-label"> ID Number: </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="idNumber"
-                    placeholder="e.g 20023045"
-                  />
-                </div>
-                <!-- Email -->
-                <div class="col-md-6">
-                  <label for="email" class="form-label"> Email: </label>
                   <input
                     type="email"
                     class="form-control"
                     id="email"
-                    placeholder="e.g. juan.delacruz@example.com"
+                    readonly
+                    disabled
+                  />
+                </div>
+                <!-- Suffix (editable) -->
+                <div class="col-md-6">
+                  <label for="suffix" class="form-label">
+                    Suffix:
+                  </label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="suffix"
+                    placeholder="Jr., Sr., etc."
+                    disabled
                   />
                 </div>
               </div>
 
               <div class="row mb-3">
-                <!-- Year Level -->
+                <!-- Birth Date (editable) -->
+                <div class="col-md-6">
+                  <label for="birthDate" class="form-label">
+                    Birth Date: <span class="text-danger">*</span>
+                  </label>
+                  <input
+                    type="date"
+                    class="form-control"
+                    id="birthDate"
+                    disabled
+                  />
+                </div>
+                <!-- Year Level (editable) -->
                 <div class="col-md-6">
                   <label for="yearLevel" class="form-label">
-                    Year Level:
+                    Year Level: <span class="text-danger">*</span>
                   </label>
-                  <select class="form-select" id="yearLevel">
+                  <select class="form-select" id="yearLevel" disabled>
                     <option value="" selected hidden>
                       Choose a year level
                     </option>
@@ -111,10 +143,15 @@
                     <option value="4">4th Year</option>
                   </select>
                 </div>
-                <!-- Program -->
+              </div>
+
+              <div class="row mb-3">
+                <!-- Program (editable) -->
                 <div class="col-md-6">
-                  <label for="program" class="form-label"> Program: </label>
-                  <select class="form-select" id="program">
+                  <label for="program" class="form-label">
+                    Program: <span class="text-danger">*</span>
+                  </label>
+                  <select class="form-select" id="program" disabled>
                     <option value="" selected hidden>Choose a program</option>
                     <option value="BSIT">BS Information Technology</option>
                     <option value="BSCS">BS Computer Science</option>
@@ -131,6 +168,7 @@
                       class="form-check-input"
                       type="checkbox"
                       id="isPaid"
+                      disabled
                     />
                     <label class="form-check-label" for="isPaid">
                       Is Paid?
@@ -140,7 +178,14 @@
               </div>
 
               <div class="d-grid">
-                <button type="submit" class="btn btn-register">Register</button>
+                <button
+                  type="submit"
+                  class="btn btn-register"
+                  id="registerBtn"
+                  disabled
+                >
+                  Register Member
+                </button>
               </div>
             </form>
           </div>
