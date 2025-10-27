@@ -11,7 +11,21 @@
  * @version 1.0
  */
 
-document.addEventListener('DOMContentLoaded', function () {
+import "/js/utils/core.js";
+import "/scss/pages/home/member/registerMember.scss";
+import { setSidebar } from "/components/js/sidebar";
+import { getCurrentSession } from "/js/utils/sessionManager";
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // Initialize sidebar navigation
+    setSidebar();
+
+    // Validate user session
+    const session = await getCurrentSession();
+    if (!session) {
+        window.location.href = '/pages/auth/login.html';
+        return;
+    }
     // Form elements
     const searchBtn = document.getElementById('searchBtn');
     const idNumberInput = document.getElementById('idNumber');
@@ -35,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     /**
      * Search for a user by ID number
-     * Fetches user data from the backend API
+     * Fetches user data from the ccsync-api-plain backend API
      */
     searchBtn.addEventListener('click', async function () {
         const idNumber = idNumberInput.value.trim();
@@ -49,7 +63,11 @@ document.addEventListener('DOMContentLoaded', function () {
             searchBtn.disabled = true;
             searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Searching...';
 
-            const response = await fetch(`/temp/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`);
+            const response = await fetch(`http://localhost:8080/ccsync-plain-php/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
             const result = await response.json();
 
             if (result.success) {
@@ -157,21 +175,22 @@ document.addEventListener('DOMContentLoaded', function () {
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
 
+            // Transform data from camelCase to snake_case format for ccsync-api-plain
             const memberData = {
-                userId: foundUser.id,
-                idNumber: foundUser.idNumber,
-                firstName: foundUser.firstName,
-                lastName: foundUser.lastName,
+                user_id: foundUser.id,
+                id_school_number: foundUser.idNumber,
+                first_name: foundUser.firstName,
+                last_name: foundUser.lastName,
                 email: foundUser.email,
                 suffix: suffixInput.value || null,
-                birthDate: birthDateInput.value,
-                yearLevel: parseInt(yearLevelInput.value),
+                birth_date: birthDateInput.value,
+                year: parseInt(yearLevelInput.value),
                 program: programInput.value,
-                isPaid: isPaidInput.checked,
-                enrollmentDate: new Date().toISOString().split('T')[0]
+                is_paid: isPaidInput.checked ? 1 : 0,
+                enrollment_date: new Date().toISOString().split('T')[0]
             };
 
-            const response = await fetch('/temp/members/createMember.php', {
+            const response = await fetch('http://localhost:8080/ccsync-plain-php/member/createMember.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -41,6 +41,7 @@
       </div>
       <div id="body" class="container-fluid mt-4 h4">
         <div class="search-filter-section">
+          <!-- TIER 1: Text Search Filter -->
           <div class="d-flex gap-3 align-items-center mb-4">
             <!-- Search Bar with fixed width -->
             <div class="position-relative" style="width: 500px">
@@ -53,52 +54,6 @@
               />
             </div>
 
-            <!-- Filter Dropdown -->
-            <div class="dropdown">
-              <button
-                class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2"
-                type="button"
-                data-bs-toggle="dropdown"
-              >
-                <i class="bi bi-funnel"></i>
-                <span id="search_concept">All Years</span>
-              </button>
-              <ul id="dropdownMenu" class="dropdown-menu">
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="all"
-                    >All Years</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="name"
-                    >Name</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="year"
-                    >Year</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="program"
-                    >Program</a
-                  >
-                </li>
-              </ul>
-            </div>
-
             <!-- Add Member Button - positioned at the end -->
             <button
               class="btn btn-addMember d-flex align-items-center gap-3 text-dark ms-auto"
@@ -108,6 +63,131 @@
               <span>Add Member</span>
             </button>
           </div>
+
+          <!-- TIER 2: Category Filters -->
+          <div class="d-flex gap-3 align-items-center mb-4">
+            <!-- Year Level Filter -->
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2"
+                type="button"
+                id="yearFilterBtn"
+                data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-funnel"></i>
+                <span id="yearFilterLabel">Year Level: All</span>
+              </button>
+              <ul id="yearFilterMenu" class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-year="all"
+                  >
+                    All Years
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-year="1"
+                  >
+                    1st Year
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-year="2"
+                  >
+                    2nd Year
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-year="3"
+                  >
+                    3rd Year
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-year="4"
+                  >
+                    4th Year
+                  </a>
+                </li>
+              </ul>
+            </div>
+
+            <!-- Program Filter -->
+            <div class="dropdown">
+              <button
+                class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2"
+                type="button"
+                id="programFilterBtn"
+                data-bs-toggle="dropdown"
+              >
+                <i class="bi bi-bookmark"></i>
+                <span id="programFilterLabel">Program: All</span>
+              </button>
+              <ul id="programFilterMenu" class="dropdown-menu">
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-program="all"
+                  >
+                    All Programs
+                  </a>
+                </li>
+                <li><hr class="dropdown-divider" /></li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-program="BSCS"
+                  >
+                    Bachelor of Science in Computer Science (BSCS)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-program="BSIS"
+                  >
+                    Bachelor of Science in Information Systems (BSIS)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-program="BSIT"
+                  >
+                    Bachelor of Science in Information Technology (BSIT)
+                  </a>
+                </li>
+                <li>
+                  <a
+                    class="dropdown-item text-decoration-none"
+                    href="#"
+                    data-program="BSCE"
+                  >
+                    Bachelor of Science in Civil Engineering (BSCE)
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
         </div>
 
         <!-- Member Count Section -->
@@ -115,11 +195,29 @@
           Showing <span class="count-number" id="memberCount">0</span> members
         </div>
 
+        <!-- Pagination Controls - TOP -->
+        <div class="pagination-section mb-3">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <p class="text-muted mb-0" id="pageInfo">Page 1 of 1 (0 total members)</p>
+            </div>
+            <div class="d-flex gap-2">
+              <button class="btn btn-outline-secondary btn-sm" id="prevBtn" disabled>
+                <i class="bi bi-chevron-left"></i> Previous
+              </button>
+              <button class="btn btn-outline-secondary btn-sm" id="nextBtn" disabled>
+                Next <i class="bi bi-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
         <div class="table-container">
           <div class="table-responsive">
             <table class="table mb-0">
               <thead>
                 <tr>
+                  <th>ID Number</th>
                   <th>Member</th>
                   <th>Year Level</th>
                   <th>Program</th>

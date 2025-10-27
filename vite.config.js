@@ -32,7 +32,14 @@ export default defineConfig({
         }
     },
     server: {
-        port: 5137
+        port: 5137,
+        proxy: {
+            '/ccsync-api-plain': {
+                target: 'http://localhost:8080',
+                changeOrigin: true,
+                rewrite: (path) => path
+            }
+        }
     },
     preview: {
         port: 5137

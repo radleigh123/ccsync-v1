@@ -2,7 +2,6 @@ import "/js/utils/core.js";
 import "/scss/pages/home/event/viewEvent.scss";
 import { setSidebar } from "/components/js/sidebar.js";
 import { getCurrentSession } from "/js/utils/sessionManager";
-import { getEvents } from "/js/utils/mock/mockStorage";
 
 let userData = null;
 
@@ -20,35 +19,35 @@ async function initHome() {
 
 async function loadEvents() {
   try {
-    if (import.meta.env.DEV) {
-      displayEvents(getEvents().events);
-    } else {
-      // NOTE: TEMP, CHANGE TO PRODUCTION URL WHEN DEPLOYING
-      // const response = await fetch("http://localhost:8000/api/events", {
-      const response = await fetch(
-        "http://localhost:8080/ccsync-plain-php/event/getEvents.php",
-        {
-          headers: {
-            Authorization: `Bearer ${userData.firebase_token}`,
-            "Content-Type": "application/json",
-            Accept: "application/json",
-          },
-        }
-      );
-
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || `HTTP error! status: ${response.status}`
-        );
+    // Always call the API endpoint for real events
+    const response = await fetch(
+      "/ccsync-api-plain/event/getEvents.php",
+      {
+        headers: {
+          Authorization: `Bearer ${userData.firebase_token}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
       }
+    );
 
-      const data = await response.json();
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
 
+    const data = await response.json();
+
+    // Check if we have successful response with events
+    if (data.success && data.events && data.events.length > 0) {
       displayEvents(data.events);
+    } else {
+      // Fallback: show empty state if no events or empty response
+      displayEvents([]);
     }
   } catch (error) {
     console.error("Error fetching events:", error);
+    // Fallback: show empty state on error
+    displayEvents([]);
   }
 }
 
@@ -92,7 +91,7 @@ function displayEvents(events) {
       actions.innerHTML = `
         <div class="d-flex">
           <div class="action-item">
-            <a href="/pages/home/event/add-event-person.html" class="text-decoration-none">
+            <a href="/pages/home/event/add-event-person.html?event_id=${event.id}" class="text-decoration-none">
               <i class="bi bi-person-plus"></i>
             </a>
           </div>
