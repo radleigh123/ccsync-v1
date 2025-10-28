@@ -118,45 +118,61 @@
               <div class="row mb-3">
                 <!-- Birth Date (editable) -->
                 <div class="col-md-6">
-                  <label for="birthDate" class="form-label">
-                    Birth Date: <span class="text-danger">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="birthDate"
-                    disabled
-                  />
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="birthDate" class="form-label">
+                        Birth Date: <span class="text-danger">*</span>
+                      </label>
+                      <small id="birthDate-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="birthDate"
+                      disabled
+                      data-validate="required|date"
+                    />
+                  </div>
                 </div>
                 <!-- Year Level (editable) -->
                 <div class="col-md-6">
-                  <label for="yearLevel" class="form-label">
-                    Year Level: <span class="text-danger">*</span>
-                  </label>
-                  <select class="form-select" id="yearLevel" disabled>
-                    <option value="" selected hidden>
-                      Choose a year level
-                    </option>
-                    <option value="1">1st Year</option>
-                    <option value="2">2nd Year</option>
-                    <option value="3">3rd Year</option>
-                    <option value="4">4th Year</option>
-                  </select>
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="yearLevel" class="form-label">
+                        Year Level: <span class="text-danger">*</span>
+                      </label>
+                      <small id="yearLevel-error" class="error-message"></small>
+                    </div>
+                    <select class="form-select" id="yearLevel" disabled data-validate="required">
+                      <option value="" selected hidden>
+                        Choose a year level
+                      </option>
+                      <option value="1">1st Year</option>
+                      <option value="2">2nd Year</option>
+                      <option value="3">3rd Year</option>
+                      <option value="4">4th Year</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <!-- Program (editable) -->
                 <div class="col-md-6">
-                  <label for="program" class="form-label">
-                    Program: <span class="text-danger">*</span>
-                  </label>
-                  <select class="form-select" id="program" disabled>
-                    <option value="" selected hidden>Choose a program</option>
-                    <option value="BSIT">BS Information Technology</option>
-                    <option value="BSCS">BS Computer Science</option>
-                    <option value="BSIS">BS Information Systems</option>
-                  </select>
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="program" class="form-label">
+                        Program: <span class="text-danger">*</span>
+                      </label>
+                      <small id="program-error" class="error-message"></small>
+                    </div>
+                    <select class="form-select" id="program" disabled data-validate="required">
+                      <option value="" selected hidden>Choose a program</option>
+                      <option value="BSIT">BS Information Technology</option>
+                      <option value="BSCS">BS Computer Science</option>
+                      <option value="BSIS">BS Information Systems</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
@@ -192,6 +208,27 @@
         </div>
       </div>
     </main>
+    <!-- Confirmation Modal -->
+    <div id="confirmationBackdrop"></div>
+    <div id="confirmationModal">
+      <div class="confirmation-header">
+        <h5 id="confirmationTitle">Confirm User Data</h5>
+        <button class="close-btn" id="confirmationCloseBtn">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="confirmation-body">
+        <p class="message" id="confirmationMessage">
+          Is this the correct user? Please verify the information below before proceeding.
+        </p>
+        <div id="confirmationDetails" class="details"></div>
+      </div>
+      <div class="confirmation-footer">
+        <button type="button" class="no-btn" id="confirmationNoBtn">No</button>
+        <button type="button" class="yes-btn" id="confirmationYesBtn">Yes</button>
+      </div>
+    </div>
+
     <script
       type="module"
       src="/js/pages/home/member/registerMember.js"

@@ -76,6 +76,24 @@ i {
         box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
     }
 
+    &.carousel-item-focused {
+        /* Focused state - full size and brightness */
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    &.carousel-item-side {
+        /* Side items - scaled down and darkened */
+        transform: scale(0.75);
+        opacity: 0.5;
+        transition: all 0.4s ease;
+    }
+
+    /* Carousel row gap override */
+    .carousel-inner .row {
+        gap: 0.5rem !important;
+    }
+
     .card-body {
         padding: 0;
         background-color: white;
@@ -274,5 +292,34 @@ i {
         gap: 2rem;
         max-width: 1400px;
         margin: 0 auto;
+    }
+}
+
+/* Carousel Controls Styling */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    width: 2.5rem;
+    height: 2.5rem;
+    background-size: 100%, 100%;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+}
+
+/* Custom SVG for carousel arrows with thicker stroke */
+.carousel-control-prev-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a1a1a'%3e%3cpath d='M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z' stroke='%231a1a1a' stroke-width='0.8'/%3e%3c/svg%3e");
+}
+
+.carousel-control-next-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%231a1a1a'%3e%3cpath d='M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z' stroke='%231a1a1a' stroke-width='0.8'/%3e%3c/svg%3e");
+}
+
+.carousel-control-prev,
+.carousel-control-next {
+    z-index: 10;
+    opacity: 0.8;
+    transition: opacity 0.3s ease;
+
+    &:hover {
+        opacity: 1;
     }
 }

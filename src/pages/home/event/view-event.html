@@ -33,7 +33,42 @@
         </div>
       </div>
     </div>
-    <div class="row g-4 mt-4" id="eventContainer"> <!-- Event cards inserted here --> </div>
+
+    <!-- Incoming Events Section -->
+    <div class="container-fluid mt-5">
+      <h3 class="mb-4 fw-bold text-dark">Incoming Events</h3>
+      <div id="incomingEventsCarousel" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner" id="incomingEventsContainer">
+          <!-- Carousel items with grouped events (4 per slide) inserted here -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#incomingEventsCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#incomingEventsCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Completed Events Section -->
+    <div class="container-fluid mt-5">
+      <h3 class="mb-4 fw-bold text-dark">Completed Events</h3>
+      <div id="completedEventsCarousel" class="carousel slide" data-bs-ride="false">
+        <div class="carousel-inner" id="completedEventsContainer">
+          <!-- Carousel items with grouped events (4 per slide) inserted here -->
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#completedEventsCarousel" data-bs-slide="prev">
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#completedEventsCarousel" data-bs-slide="next">
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
   </main>
   <script type="module" src="/js/pages/home/event/viewEvent.js" defer></script>
 </body>
