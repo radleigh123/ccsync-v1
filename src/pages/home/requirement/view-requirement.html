@@ -50,52 +50,26 @@
                 type="text"
                 class="form-control"
                 id="searchInput"
-                placeholder="Search by requirement name..."
+                placeholder="Search by name or description..."
               />
             </div>
 
-            <!-- Filter Dropdown -->
-            <div class="dropdown">
-              <button
-                class="btn btn-outline-secondary dropdown-toggle d-flex align-items-center gap-2"
-                type="button"
-                data-bs-toggle="dropdown"
-              >
-                <i class="bi bi-funnel"></i>
-                <span id="search_concept">All Status</span>
-              </button>
-              <ul id="dropdownMenu" class="dropdown-menu">
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="all"
-                    >All Status</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="open"
-                    >Open</a
-                  >
-                </li>
-                <li>
-                  <a
-                    class="dropdown-item text-decoration-none"
-                    href="#"
-                    data-value="closed"
-                    >Closed</a
-                  >
-                </li>
-              </ul>
+            <!-- Status Filter Dropdown -->
+            <div class="d-flex align-items-center gap-2">
+              <label for="statusSelect" class="form-label m-0">Status:</label>
+              <select class="form-select" id="statusSelect" style="width: auto;">
+                <option value="all">All Status</option>
+                <option value="open">Open</option>
+                <option value="closed">Closed</option>
+                <option value="archived">Archived</option>
+              </select>
             </div>
 
             <!-- Add Requirement Button -->
             <button
-              class="btn btn-addRequirement d-flex align-items-center gap-3 text-dark ms-auto"
+              class="btn btn-primary d-flex align-items-center gap-2 ms-auto"
               type="button"
+              onclick="window.location.href='/pages/home/requirement/add-requirement.html'"
             >
               <i class="bi bi-file-plus"></i>
               <span>Add Requirement</span>
@@ -103,81 +77,97 @@
           </div>
         </div>
 
-        <!-- Requirement Count Section -->
-        <div class="requirement-count">
-          Showing
-          <span class="count-number" id="requirementCount">3</span> requirements
+        <!-- Page Info Section -->
+        <div class="requirement-count mb-3">
+          <span id="pageInfo">Page 1 of 0 (0 total requirements)</span>
         </div>
 
         <div class="table-container">
           <div class="table-responsive">
             <!-- Shimmer skeleton (shows during loading) -->
-            <div id="shimmerTable" class="d-flex flex-column gap-3 mb-4">
-              <div class="shimmer-card" style="height: 50px;"></div>
-              <div class="shimmer-card" style="height: 50px;"></div>
-              <div class="shimmer-card" style="height: 50px;"></div>
-              <div class="shimmer-card" style="height: 50px;"></div>
-              <div class="shimmer-card" style="height: 50px;"></div>
-            </div>
+            <table class="table mb-0 align-middle shimmer-table" id="shimmerTable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Deadline</th>
+                  <th>Status</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 120px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 200px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 140px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 180px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 130px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 220px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 150px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 190px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 110px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 210px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 125px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 200px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80px;"></div></td>
+                  <td><div class="shimmer-line" style="width: 100px;"></div></td>
+                </tr>
+              </tbody>
+            </table>
 
             <!-- Actual data table (hidden initially) -->
             <table class="table mb-0 align-middle" id="dataTable" style="display: none;">
               <thead>
                 <tr>
-                  <th>Requirement Name</th>
+                  <th>Name</th>
+                  <th>Description</th>
+                  <th>Deadline</th>
                   <th>Status</th>
-                  <th>Action</th>
+                  <th>Actions</th>
                 </tr>
               </thead>
-              <tbody id="userTableBody">
-                <tr>
-                  <td>Good Moral Certificate</td>
-                  <td>
-                    <span class="badge bg-success">Open</span>
-                  </td>
-                  <td>
-                    <button
-                      class="action-btn"
-                      onclick="window.location.href='/pages/home/requirement/view-detail-requirement.html'"
-                      title="View Details"
-                    >
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Transcript of Records</td>
-                  <td>
-                    <span class="badge bg-success">Open</span>
-                  </td>
-                  <td>
-                    <button
-                      class="action-btn"
-                      onclick="window.location.href='/pages/home/requirement/view-detail-requirement.html'"
-                      title="View Details"
-                    >
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Birth Certificate</td>
-                  <td>
-                    <span class="badge bg-danger">Closed</span>
-                  </td>
-                  <td>
-                    <button
-                      class="action-btn"
-                      onclick="window.location.href='/pages/home/requirement/view-detail-requirement.html'"
-                      title="View Details"
-                    >
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </button>
-                  </td>
-                </tr>
+              <tbody id="requirementTableBody">
+                <!-- Data will be populated here -->
               </tbody>
             </table>
           </div>
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <button id="prevBtn" class="btn btn-outline-secondary">
+            <i class="bi bi-chevron-left"></i> Previous
+          </button>
+          <span id="pageInfo" class="align-self-center"></span>
+          <button id="nextBtn" class="btn btn-outline-secondary">
+            Next <i class="bi bi-chevron-right"></i>
+          </button>
         </div>
       </div>
     </main>

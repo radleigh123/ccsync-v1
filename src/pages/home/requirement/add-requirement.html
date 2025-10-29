@@ -27,45 +27,47 @@
             <h5 class="section-title mb-4" style="color: black">
               Requirement Information
             </h5>
-            <form>
+            <form id="requirementForm">
               <div class="row mb-3">
-                <div class="col-md-6">
+                <div class="col-md-12">
                   <label for="requirementName" class="form-label">
-                    Requirement name:
+                    Requirement Name: <span class="text-danger">*</span>
                   </label>
                   <input
                     type="text"
                     class="form-control"
                     id="requirementName"
+                    name="name"
                     placeholder="e.g. Good Moral Certificate"
+                    data-validate="required|min:3|max:255"
                   />
-                </div>
-                <div class="col-md-6">
-                  <label for="status" class="form-label"> Status: </label>
-                  <select class="form-select" id="status">
-                    <option value="" selected hidden>Choose status</option>
-                    <option value="open">Open</option>
-                    <option value="closed">Closed</option>
-                  </select>
+                  <small class="text-danger" id="nameError"></small>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <label for="submissionStart" class="form-label">
-                    Submission start:
+                  <label for="requirementDate" class="form-label">
+                    Requirement Deadline: <span class="text-danger">*</span>
                   </label>
                   <input
                     type="date"
                     class="form-control"
-                    id="submissionStart"
+                    id="requirementDate"
+                    name="requirementDate"
+                    data-validate="required"
                   />
+                  <small class="text-danger" id="dateError"></small>
                 </div>
                 <div class="col-md-6">
-                  <label for="submissionEnd" class="form-label">
-                    Submission end:
+                  <label for="status" class="form-label">
+                    Status:
                   </label>
-                  <input type="date" class="form-control" id="submissionEnd" />
+                  <select class="form-select" id="status" name="status">
+                    <option value="open" selected>Open</option>
+                    <option value="closed">Closed</option>
+                    <option value="archived">Archived</option>
+                  </select>
                 </div>
               </div>
 
@@ -77,15 +79,17 @@
                   <textarea
                     class="form-control"
                     id="description"
+                    name="description"
                     rows="4"
-                    placeholder="Enter requirement description..."
+                    placeholder="Enter requirement description (optional)..."
                   ></textarea>
+                  <small class="text-danger" id="descriptionError"></small>
                 </div>
               </div>
 
               <div class="d-grid">
-                <button type="submit" class="btn btn-register">
-                  Add requirement
+                <button type="submit" class="btn btn-primary btn-lg">
+                  Create Requirement
                 </button>
               </div>
             </form>
