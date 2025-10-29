@@ -18,9 +18,9 @@ async function apiFetch(endpoint, options = {}) {
         const response = await fetch(url, {
             headers: {
                 'Content-Type': 'application/json',
-                ...options.headers
+                ...options.headers,
             },
-            ...options
+            ...options,
         });
 
         if (!response.ok) {
@@ -84,6 +84,8 @@ function getMockData(endpoint) {
  * @returns {Promise<object>} - Members data
  */
 export async function fetchMembers() {
+    // console.log('Bearer Token:', localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).firebase_token : 'No token found');
+
     return apiFetch('/ccsync-api-plain/member/getMembers.php');
 }
 
@@ -151,10 +153,25 @@ export async function fetchThisMonthEvents() {
  * @returns {Promise<object>} - Created event data with ID
  */
 export async function createEvent(eventData) {
-    return apiFetch('/ccsync-api-plain/event/createEvent.php', {
-        method: 'POST',
-        body: JSON.stringify(eventData)
-    });
+    try {
+        const token = localStorage.getItem('user') ?
+            JSON.parse(localStorage.getItem('user')).firebase_token : '';
+
+        console.log("event data:", eventData);
+
+        return await apiFetch('/ccsync-api-plain/event/createEvent.php', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventData)
+        });
+
+    } catch (error) {
+        console.error("🚨 Create event API error:", error);
+        throw error;
+    }
 }
 
 export { API_BASE_URL };

@@ -115,19 +115,25 @@ async function handleSubmit(event) {
             registration_end: registrationEnd || null
         });
 
-        // Call the API utility function
-        const response = await createEvent({
+        if (!eventName || !eventDate || !timeFrom || !timeTo || !venue) {
+            throw new Error("Required fields missing");
+        }
+
+        const payload = {
             name: eventName,
-            description: description,
+            description: description || '',
             venue: venue,
             event_date: eventDate,
             time_from: timeFrom,
             time_to: timeTo,
             registration_start: registrationStart || null,
             registration_end: registrationEnd || null,
-            max_participants: maxParticipants ? parseInt(maxParticipants) : null,
+            max_participants: maxParticipants ? parseInt(maxParticipants) : 9999,
             status: "open"
-        });
+        };
+
+        // Call the API utility function
+        const response = await createEvent(payload);
 
         if (response.success) {
             console.log("✓ Event created successfully:", response.event);

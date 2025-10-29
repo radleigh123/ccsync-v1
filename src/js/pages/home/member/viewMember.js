@@ -39,7 +39,7 @@ async function loadMembers(page = 1) {
 
     // Call API with pagination parameters
     const response = await fetch(
-      `/ccsync-api-plain/member/getMembers.php?page=${page}&limit=${currentLimit}`,
+      `http://localhost:8000/api/ccsync-api-plain/member/getMembers.php?page=${page}&limit=${currentLimit}`,
       {
         headers: {
           Authorization: `Bearer ${userData.firebase_token}`,
