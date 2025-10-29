@@ -111,7 +111,17 @@
 
         <div class="table-container">
           <div class="table-responsive">
-            <table class="table mb-0 align-middle">
+            <!-- Shimmer skeleton (shows during loading) -->
+            <div id="shimmerTable" class="d-flex flex-column gap-3 mb-4">
+              <div class="shimmer-card" style="height: 50px;"></div>
+              <div class="shimmer-card" style="height: 50px;"></div>
+              <div class="shimmer-card" style="height: 50px;"></div>
+              <div class="shimmer-card" style="height: 50px;"></div>
+              <div class="shimmer-card" style="height: 50px;"></div>
+            </div>
+
+            <!-- Actual data table (hidden initially) -->
+            <table class="table mb-0 align-middle" id="dataTable" style="display: none;">
               <thead>
                 <tr>
                   <th>Requirement Name</th>

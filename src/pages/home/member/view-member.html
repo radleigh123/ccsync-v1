@@ -17,25 +17,13 @@
             <p class="text-muted mb-0">Manage and view all school members</p>
           </div>
           <div class="ms-auto d-flex flex-row gap-3 align-items-center">
-            <p class="p-0 m-0 text-dark">School year:</p>
-            <div class="dropdown">
-              <label for="yearDropdown" class="form-label" hidden></label>
-              <select
-                class="form-select bg-white border-0 px-3 py-2"
-                id="yearDropdown"
-                style="min-width: 180px"
-              >
-                <option value="" selected hidden>2024-2025</option>
-                <!-- TODO: Think about scaling -->
-                <option value="">Show All</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2024-2025">2024-2025</option>
-                <option value="2025-2026">2025-2026</option>
-                <option value="2026-2027">2026-2027</option>
-              </select>
-            </div>
+            <button
+              class="btn btn-addMember d-flex align-items-center gap-3 text-dark"
+              type="button"
+            >
+              <i class="bi bi-person-add"></i>
+              <span>Add Member</span>
+            </button>
           </div>
         </div>
       </div>
@@ -53,15 +41,6 @@
                 placeholder="Search by name..."
               />
             </div>
-
-            <!-- Add Member Button - positioned at the end -->
-            <button
-              class="btn btn-addMember d-flex align-items-center gap-3 text-dark ms-auto"
-              type="button"
-            >
-              <i class="bi bi-person-add"></i>
-              <span>Add Member</span>
-            </button>
           </div>
 
           <!-- TIER 2: Category Filters -->
@@ -214,7 +193,58 @@
 
         <div class="table-container">
           <div class="table-responsive">
-            <table class="table mb-0">
+            <!-- Shimmer skeleton table (shows during loading) -->
+            <table class="table mb-0" id="shimmerTable">
+              <thead>
+                <tr>
+                  <th>ID Number</th>
+                  <th>Member</th>
+                  <th>Year Level</th>
+                  <th>Program</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 80%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 70%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 65%;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 75%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 80%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 70%;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 85%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 75%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 68%;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 78%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 82%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 72%;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 82%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 78%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 66%;"></div></td>
+                </tr>
+                <tr>
+                  <td><div class="shimmer-line" style="width: 80%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 76%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 60%;"></div></td>
+                  <td><div class="shimmer-line" style="width: 70%;"></div></td>
+                </tr>
+              </tbody>
+            </table>
+
+            <!-- Actual data table (hidden initially, shown when data loads) -->
+            <table class="table mb-0" id="dataTable" style="display: none;">
               <thead>
                 <tr>
                   <th>ID Number</th>

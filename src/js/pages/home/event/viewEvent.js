@@ -1,8 +1,9 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/event/viewEvent.scss";
-import { setSidebar } from "/components/js/sidebar.js";
+import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
+import { shimmerLoader } from "/js/utils/shimmerLoader";
 
 let userData = null;
 
@@ -21,7 +22,7 @@ async function initHome() {
 async function loadEvents() {
   try {
     console.log("📋 Loading all events...");
-    
+
     // Use the API utility function
     const data = await fetchEvents();
 
@@ -36,9 +37,28 @@ async function loadEvents() {
       console.log("ℹ️  No events found");
       displayEmptyState();
     }
+
+    // Hide shimmer loaders and show carousels
+    shimmerLoader.hide("#incomingShimmerContainer", 600);
+    shimmerLoader.hide("#completedShimmerContainer", 600);
+    setTimeout(() => {
+      document.getElementById("incomingShimmerContainer").style.display = "none";
+      document.getElementById("incomingEventsCarousel").style.display = "block";
+      document.getElementById("completedShimmerContainer").style.display = "none";
+      document.getElementById("completedEventsCarousel").style.display = "block";
+    }, 600);
   } catch (error) {
     console.error("❌ Error loading events:", error);
     displayEmptyState();
+    // Still hide shimmer on error
+    shimmerLoader.hide("#incomingShimmerContainer", 300);
+    shimmerLoader.hide("#completedShimmerContainer", 300);
+    setTimeout(() => {
+      document.getElementById("incomingShimmerContainer").style.display = "none";
+      document.getElementById("incomingEventsCarousel").style.display = "block";
+      document.getElementById("completedShimmerContainer").style.display = "none";
+      document.getElementById("completedEventsCarousel").style.display = "block";
+    }, 300);
   }
 }
 
@@ -90,7 +110,7 @@ function categorizeAndDisplayEvents(events) {
 }
 
 /**
- * Display events in a specific section using carousel with 4 items per slide
+ * Display events in a specific section using carousel with 3 items per slide
  * @param {Array} events - Array of events to display
  * @param {string} containerId - ID of the carousel container element
  * @param {string} sectionType - 'Incoming' or 'Completed'
@@ -135,14 +155,13 @@ function displayEventSection(events, containerId, sectionType) {
 
       const card = document.createElement('div');
       card.id = 'eventCardItem';
-      // All items at full size and brightness
       card.className = `card px-0 h-100 carousel-item-card`;
 
       const cardBody = document.createElement('div');
       cardBody.className = 'card-body d-flex flex-column';
       cardBody.innerHTML = `
         <h5 class="card-title">${event.name}</h5>
-        
+
         <div class="event-details flex-grow-1">
           <div class="d-flex">
             <i class="bi bi-calendar-event"></i>

@@ -2,6 +2,7 @@ import "/js/utils/core.js";
 import "/scss/pages/home/member/viewMember.scss";
 import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { shimmerLoader } from "/js/utils/shimmerLoader";
 
 let userData = null;
 let allMembers = []; // Store all members from API
@@ -34,7 +35,7 @@ async function loadMembers(page = 1) {
   try {
     // Show loading state
     const tbody = document.getElementById("userTableBody");
-    tbody.innerHTML = '<tr><td colspan="3" class="text-center py-4">Loading...</td></tr>';
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Loading...</td></tr>';
 
     // Call API with pagination parameters
     const response = await fetch(
@@ -55,7 +56,7 @@ async function loadMembers(page = 1) {
     }
 
     const data = await response.json();
-    
+
     // Check if members exists and has data
     if (data.success && data.members && data.members.length > 0) {
       allMembers = data.members;
@@ -69,10 +70,23 @@ async function loadMembers(page = 1) {
     // Apply all filters and display
     applyAllFilters();
     updatePaginationControls();
+
+    // Hide shimmer and show table
+    shimmerLoader.hide("#shimmerTable", 600);
+    setTimeout(() => {
+      document.getElementById("shimmerTable").style.display = "none";
+      document.getElementById("dataTable").style.display = "table";
+    }, 600);
   } catch (error) {
     console.error("Error fetching members:", error);
     allMembers = [];
     displayMembers([]);
+    // Still hide shimmer on error
+    shimmerLoader.hide("#shimmerTable", 300);
+    setTimeout(() => {
+      document.getElementById("shimmerTable").style.display = "none";
+      document.getElementById("dataTable").style.display = "table";
+    }, 300);
   }
 }
 
@@ -81,7 +95,7 @@ async function loadMembers(page = 1) {
 // ============================================
 function setupSearchFilter() {
   const searchInput = document.getElementById("searchInput");
-  
+
   if (searchInput) {
     searchInput.addEventListener("input", (e) => {
       searchText = e.target.value.toLowerCase().trim();
@@ -102,7 +116,7 @@ function setupYearFilter() {
       link.addEventListener("click", (e) => {
         e.preventDefault();
         selectedYear = link.dataset.year;
-        
+
         // Update button label
         const yearText =
           selectedYear === "all"
@@ -114,7 +128,7 @@ function setupYearFilter() {
                 : selectedYear === "3"
                   ? "3rd Year"
                   : "4th Year";
-        
+
         if (yearFilterLabel) {
           yearFilterLabel.textContent = `Year Level: ${yearText}`;
         }
@@ -137,7 +151,7 @@ function setupProgramFilter() {
       link.addEventListener("click", (e) => {
         e.preventDefault();
         selectedProgram = link.dataset.program;
-        
+
         // Update button label
         const programText =
           selectedProgram === "all"
@@ -149,7 +163,7 @@ function setupProgramFilter() {
                 : selectedProgram === "BSIT"
                   ? "BSIT"
                   : "BSCE";
-        
+
         if (programFilterLabel) {
           programFilterLabel.textContent = `Program: ${programText}`;
         }
@@ -225,7 +239,7 @@ function updatePaginationControls() {
 
     // Update page info display
     if (pageInfo) {
-      pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total members)`;
+      pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total members)`;      
     }
   }
 }
@@ -273,7 +287,7 @@ function displayMembers(members) {
     const emptyRow = document.createElement("tr");
     emptyRow.className = "summary-row";
     let message = "No members found";
-    
+
     if (searchText) {
       message = `No members found matching "${searchText}"`;
     } else if (selectedYear !== "all" || selectedProgram !== "all") {

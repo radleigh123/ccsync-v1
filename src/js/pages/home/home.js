@@ -3,6 +3,7 @@ import "/scss/pages/home/home.scss";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { renderStatsCard } from "/components/js/stats-card.js";
 import { fetchMembers, fetchUsers, fetchThisMonthEvents } from "/js/utils/api.js";
+import { shimmerLoader } from "/js/utils/shimmerLoader.js";
 
 let userData = null;
 let allMembers = []; // Store all members
@@ -85,6 +86,13 @@ async function loadHero() {
       );
       statsCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
     }
+
+    // Hide shimmer and show stats
+    shimmerLoader.hide("#statsShimmerContainer", 600);
+    setTimeout(() => {
+      document.getElementById("statsShimmerContainer").style.display = "none";
+      document.getElementById("statsCards").style.display = "";
+    }, 600);
   } catch (error) {
     console.error("Error loading hero data:", error);
     // Fallback: render with default values
@@ -126,6 +134,13 @@ async function loadHero() {
       );
       statsCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
     }
+
+    // Still hide shimmer and show stats even on error
+    shimmerLoader.hide("#statsShimmerContainer", 300);
+    setTimeout(() => {
+      document.getElementById("statsShimmerContainer").style.display = "none";
+      document.getElementById("statsCards").style.display = "";
+    }, 300);
   }
 }
 
@@ -167,6 +182,12 @@ async function printEventList() {
             </div>
         </div>
     `;
+    // Hide shimmer and show event list
+    shimmerLoader.hide("#eventShimmerList", 600);
+    setTimeout(() => {
+      document.getElementById("eventShimmerList").style.display = "none";
+      document.getElementById("eventList").style.display = "";
+    }, 600);
     return;
   }
 
@@ -212,6 +233,13 @@ async function printEventList() {
         `;
     eventList.appendChild(eventItem);
   });
+
+  // Hide shimmer and show event list
+  shimmerLoader.hide("#eventShimmerList", 600);
+  setTimeout(() => {
+    document.getElementById("eventShimmerList").style.display = "none";
+    document.getElementById("eventList").style.display = "";
+  }, 600);
 }
 
 // Initialize the home page

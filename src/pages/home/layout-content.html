@@ -8,13 +8,30 @@
                 </p>
             </div>
         </div>
-        <!-- Stats Cards -->
+        <!-- Stats Cards Shimmer -->
         <div class="container-fluid mb-5">
-            <div class="row g-4" id="statsCards">
+            <div class="row g-4" id="statsShimmerContainer">
+                <!-- Shimmer cards for stats -->
+                <div class="col-md-4">
+                    <div class="shimmer-card"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="shimmer-card"></div>
+                </div>
+                <div class="col-md-4">
+                    <div class="shimmer-card"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards (hidden initially) -->
+        <div class="container-fluid mb-5">
+            <div class="row g-4" id="statsCards" style="display: none;">
                 <!-- Cards will be loaded here -->
             </div>
         </div>
-        <!-- Events Section -->
+
+        <!-- Events Section Shimmer -->
         <section class="container-fluid">
             <div class="row mb-4">
                 <div class="col-12">
@@ -36,10 +53,27 @@
                     </div>
                 </div>
             </div>
-            <!-- Events List -->
+            <!-- Events Shimmer -->
             <div class="row">
                 <div class="col-12">
-                    <div id="eventList" class="row g-4">
+                    <div id="eventShimmerList" class="row g-4">
+                        <div class="col-md-4">
+                            <div class="shimmer-card"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="shimmer-card"></div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="shimmer-card"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Events List (hidden initially) -->
+            <div class="row">
+                <div class="col-12">
+                    <div id="eventList" class="row g-4" style="display: none;">
                         <!-- Events will be loaded here by JavaScript -->
                     </div>
                 </div>

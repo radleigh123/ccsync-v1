@@ -37,7 +37,25 @@
     <!-- Incoming Events Section -->
     <div class="container-fluid mt-5">
       <h3 class="mb-4 fw-bold text-dark">Incoming Events</h3>
-      <div id="incomingEventsCarousel" class="carousel slide" data-bs-ride="false">
+      
+      <!-- Shimmer skeleton carousel -->
+      <div id="incomingShimmerContainer" class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+      </div>
+
+      <!-- Actual carousel (hidden initially) -->
+      <div id="incomingEventsCarousel" class="carousel slide" data-bs-ride="false" style="display: none;">
         <div class="carousel-inner" id="incomingEventsContainer">
           <!-- Carousel items with grouped events (4 per slide) inserted here -->
         </div>
@@ -55,7 +73,25 @@
     <!-- Completed Events Section -->
     <div class="container-fluid mt-5">
       <h3 class="mb-4 fw-bold text-dark">Completed Events</h3>
-      <div id="completedEventsCarousel" class="carousel slide" data-bs-ride="false">
+      
+      <!-- Shimmer skeleton carousel -->
+      <div id="completedShimmerContainer" class="row g-4">
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+        <div class="col-md-6 col-lg-3">
+          <div class="shimmer-card"></div>
+        </div>
+      </div>
+
+      <!-- Actual carousel (hidden initially) -->
+      <div id="completedEventsCarousel" class="carousel slide" data-bs-ride="false" style="display: none;">
         <div class="carousel-inner" id="completedEventsContainer">
           <!-- Carousel items with grouped events (4 per slide) inserted here -->
         </div>
@@ -68,7 +104,6 @@
           <span class="visually-hidden">Next</span>
         </button>
       </div>
-    </div>
   </main>
   <script type="module" src="/js/pages/home/event/viewEvent.js" defer></script>
 </body>
