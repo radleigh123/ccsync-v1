@@ -58,7 +58,28 @@
 
 					<!-- Participant Information Display -->
 					<div id="participantInfoSection" class="mb-4" style="display: none;">
-						<div id="participantCard" class="card border-0">
+						<!-- Shimmer Skeleton (shows during loading) -->
+						<div id="participantInfoShimmer" class="card border-0" style="display: none;">
+							<div class="card-header">
+								<p class="my-0 fw-bold">Participant Information</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Registration Status</small><br><div class="shimmer-line" style="width: 60%; height: 20px;"></div></p>
+										<p class="mb-2"><small class="text-muted">Full Name</small><br><div class="shimmer-line" style="width: 70%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Email</small><br><div class="shimmer-line" style="width: 80%; height: 20px;"></div></p>
+									</div>
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Program</small><br><div class="shimmer-line" style="width: 65%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Year Level</small><br><div class="shimmer-line" style="width: 50%; height: 20px;"></div></p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Actual Data Card (shows after loading) -->
+						<div id="participantCard" class="card border-0" style="display: none;">
 							<div class="card-header">
 								<p class="my-0 fw-bold">Participant Information</p>
 							</div>

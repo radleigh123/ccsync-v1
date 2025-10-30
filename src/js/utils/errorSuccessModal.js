@@ -63,6 +63,17 @@ export class ResponseModal {
    * @param {function} callback - Optional callback
    */
   show(title, message, details = null, type = 'error', callback = null) {
+    // Re-query elements in case they weren't available at init time
+    if (!this.modal || !this.backdrop) {
+      this.modal = document.getElementById('responseModal');
+      this.backdrop = document.getElementById('modalBackdrop');
+      this.title = document.getElementById('modalTitle');
+      this.message = document.getElementById('modalMessage');
+      this.details = document.getElementById('modalDetails');
+      this.actionBtn = document.getElementById('modalActionBtn');
+      this.closeBtn = document.getElementById('modalClose');
+    }
+
     if (!this.modal || !this.backdrop) {
       console.error('Modal elements not found');
       return;

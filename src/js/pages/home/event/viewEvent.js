@@ -147,11 +147,15 @@ function displayEventSection(events, containerId, sectionType) {
 
     // Create a row for the items centered
     const row = document.createElement('div');
-    row.className = 'row g-0 px-2 justify-content-center';
+    row.className = 'row px-2 justify-content-center';
+    row.style.marginLeft = '0';
+    row.style.marginRight = '0';
 
     group.forEach((event, index) => {
       const col = document.createElement('div');
       col.className = 'col-lg-4 col-md-6 col-sm-12';
+      col.style.paddingLeft = '0';
+      col.style.paddingRight = '0';
 
       const card = document.createElement('div');
       card.id = 'eventCardItem';

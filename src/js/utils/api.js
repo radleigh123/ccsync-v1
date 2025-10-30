@@ -174,4 +174,70 @@ export async function createEvent(eventData) {
     }
 }
 
+/**
+ * Updates an existing event
+ * @async
+ * @function updateEvent
+ * @param {number} eventId - Event ID to update
+ * @param {object} eventData - Event data to update
+ * @param {string} eventData.name - Event name
+ * @param {string} eventData.description - Event description
+ * @param {string} eventData.venue - Event venue
+ * @param {string} eventData.event_date - Event date (YYYY-MM-DD)
+ * @param {string} eventData.time_from - Start time (HH:MM)
+ * @param {string} eventData.time_to - End time (HH:MM)
+ * @param {string} [eventData.registration_start] - Registration start date
+ * @param {string} [eventData.registration_end] - Registration end date
+ * @param {number} [eventData.max_participants] - Maximum participants
+ * @returns {Promise<object>} - Updated event data
+ */
+export async function updateEvent(eventId, eventData) {
+    try {
+        const token = localStorage.getItem('user') ?
+            JSON.parse(localStorage.getItem('user')).firebase_token : '';
+
+        console.log("📝 Updating event:", eventId, eventData);
+
+        return await apiFetch(`/ccsync-api-plain/event/updateEvent.php?event_id=${eventId}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(eventData)
+        });
+
+    } catch (error) {
+        console.error("🚨 Update event API error:", error);
+        throw error;
+    }
+}
+
+/**
+ * Create a new requirement
+ * @param {object} requirementData - Requirement data
+ * @returns {Promise} - API response
+ */
+export async function createRequirement(requirementData) {
+    try {
+        const token = localStorage.getItem('user') ?
+            JSON.parse(localStorage.getItem('user')).firebase_token : '';
+
+        console.log("requirement data:", requirementData);
+
+        return await apiFetch('/ccsync-api-plain/requirement/createRequirement.php', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(requirementData)
+        });
+
+    } catch (error) {
+        console.error("🚨 Create requirement API error:", error);
+        throw error;
+    }
+}
+
 export { API_BASE_URL };

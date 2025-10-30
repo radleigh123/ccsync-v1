@@ -17,6 +17,7 @@ import "/scss/pages/home/requirement/addRequirement.scss";
 import "/scss/confirmationModal.scss";
 import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { createRequirement } from "/js/utils/api.js";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
 import { FormValidator } from "/js/utils/FormValidator.js";
@@ -30,6 +31,15 @@ document.addEventListener('DOMContentLoaded', async function () {
     if (!session) {
         window.location.href = '/pages/auth/login.html';
         return;
+    }
+
+    // Setup back button
+    const backButton = document.getElementById('backButton');
+    if (backButton) {
+        backButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.location.href = '/pages/home/requirement/view-requirement.html';
+        });
     }
 
     const requirementForm = document.getElementById('requirementForm');
@@ -53,7 +63,7 @@ document.addEventListener('DOMContentLoaded', async function () {
         e.preventDefault();
 
         // Validate form with FormValidator
-        const isValid = formValidator.validate();
+        const isValid = formValidator.validateForm();
         if (!isValid) {
             responseModal.showError(
                 "Validation Error",
@@ -100,25 +110,20 @@ document.addEventListener('DOMContentLoaded', async function () {
             submitBtn.disabled = true;
             submitBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Creating...';
 
-            const response = await fetch('/ccsync-api-plain/requirement/createRequirement.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${session.firebase_token}`,
-                    'Accept': 'application/json'
-                },
-                body: JSON.stringify(requirement)
-            });
-
-            const data = await response.json();
+            const data = await createRequirement(requirement);
 
             if (data.success) {
-                // Show success modal and redirect
+                // Show success modal and redirect to single view page
+                const requirementId = data.requirement?.id;
                 responseModal.showSuccess(
-                    "Success",
+                    "Success!",
                     "Requirement created successfully!",
                     () => {
-                        window.location.href = '/pages/home/requirement/view-requirement.html';
+                        if (requirementId) {
+                            window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
+                        } else {
+                            window.location.href = '/pages/home/requirement/view-requirement.html';
+                        }
                     }
                 );
             } else {

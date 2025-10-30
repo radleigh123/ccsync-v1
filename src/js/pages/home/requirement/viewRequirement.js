@@ -171,10 +171,13 @@ function displayRequirements(requirements) {
             </span>
           </td>
           <td>
-            <button class="btn btn-sm btn-primary" onclick="editRequirement(${req.id})">
+            <button class="btn btn-sm btn-primary view-btn" data-requirement-id="${req.id}">
+              View
+            </button>
+            <button class="btn btn-sm btn-warning edit-btn" data-requirement-id="${req.id}">
               Edit
             </button>
-            <button class="btn btn-sm btn-danger" onclick="deleteRequirement(${req.id})">
+            <button class="btn btn-sm btn-danger delete-btn" data-requirement-id="${req.id}">
               Delete
             </button>
           </td>
@@ -182,6 +185,9 @@ function displayRequirements(requirements) {
       `;
     })
     .join("");
+
+  // Add event listeners to buttons
+  setupActionButtonListeners();
 }
 
 // ============================================
@@ -230,8 +236,44 @@ function updatePaginationControls() {
 }
 
 // ============================================
+// Setup Action Button Listeners
+// ============================================
+function setupActionButtonListeners() {
+  // View buttons
+  document.querySelectorAll('.view-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const requirementId = btn.dataset.requirementId;
+      window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
+    });
+  });
+
+  // Edit buttons
+  document.querySelectorAll('.edit-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const requirementId = btn.dataset.requirementId;
+      editRequirement(requirementId);
+    });
+  });
+
+  // Delete buttons
+  document.querySelectorAll('.delete-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      const requirementId = btn.dataset.requirementId;
+      deleteRequirement(requirementId);
+    });
+  });
+}
+
+// ============================================
 // Action Functions
 // ============================================
+function viewRequirement(id) {
+  window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${id}`;
+}
+
 function editRequirement(id) {
   // TODO: Implement edit functionality
   alert(`Edit requirement ${id}`);

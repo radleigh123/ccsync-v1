@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/event/addEventPerson.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { responseModal } from '/js/utils/errorSuccessModal';
 
 let userData = null;
 let selectedEvent = null;
@@ -164,6 +165,15 @@ function setupFormHandlers() {
  */
 async function loadParticipantInfo(memberId) {
     try {
+        // Show participant info section with shimmer loader
+        const participantInfoSection = document.getElementById('participantInfoSection');
+        const shimmerLoader = document.getElementById('participantInfoShimmer');
+        const participantCard = document.getElementById('participantCard');
+        
+        participantInfoSection.style.display = 'block';
+        shimmerLoader.style.display = 'block';
+        participantCard.style.display = 'none';
+        
         const response = await fetch(
             `/ccsync-api-plain/member/getMember.php?id=${memberId}`,
             {
@@ -176,6 +186,8 @@ async function loadParticipantInfo(memberId) {
         );
 
         if (!response.ok) {
+            shimmerLoader.style.display = 'none';
+            participantInfoSection.style.display = 'none';
             showParticipantError('Member not found');
             return;
         }
@@ -203,7 +215,9 @@ async function loadParticipantInfo(memberId) {
             document.getElementById('participantYear').textContent = 
                 `${member.year}${getYearSuffix(member.year)}`;
             
-            document.getElementById('participantInfoSection').style.display = 'block';
+            // Hide shimmer, show actual card
+            shimmerLoader.style.display = 'none';
+            participantCard.style.display = 'block';
             
             // Enable/disable register button based on registration status
             document.getElementById('registerButton').disabled = isAlreadyRegistered;
@@ -215,10 +229,14 @@ async function loadParticipantInfo(memberId) {
             
             console.log('Participant data loaded:', member);
         } else {
+            shimmerLoader.style.display = 'none';
+            participantInfoSection.style.display = 'none';
             showParticipantError('Member not found');
         }
     } catch (error) {
         console.error('Error loading participant info:', error);
+        document.getElementById('participantInfoSection').style.display = 'none';
+        document.getElementById('participantInfoShimmer').style.display = 'none';
         showParticipantError('Error loading member information');
     }
 }
@@ -300,11 +318,19 @@ async function registerParticipant() {
         const result = await response.json();
 
         if (result.success) {
-            alert('Participant registered successfully!');
-            // Redirect back to view events
-            window.location.href = '/pages/home/event/view-event.html';
+            responseModal.showSuccess(
+                'Participant Registered',
+                'The participant has been successfully registered for this event.',
+                () => {
+                    // Redirect back to view events after modal closes
+                    window.location.href = '/pages/home/event/view-event.html';
+                }
+            );
         } else {
-            alert(result.message || 'Failed to register participant');
+            responseModal.showError(
+                'Registration Failed',
+                result.message || 'Failed to register participant'
+            );
         }
     } catch (error) {
         console.error('Error registering participant:', error);

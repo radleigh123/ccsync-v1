@@ -73,6 +73,18 @@ export class ConfirmationModal {
      * @param {string} options.noText - No button text (default: "No")
      */
     show(titleText, messageText, options = {}) {
+        // Re-query elements in case they weren't available at init time
+        if (!this.modal || !this.backdrop) {
+            this.modal = document.getElementById('confirmationModal');
+            this.backdrop = document.getElementById('confirmationBackdrop');
+            this.title = document.getElementById('confirmationTitle');
+            this.message = document.getElementById('confirmationMessage');
+            this.details = document.getElementById('confirmationDetails');
+            this.yesBtn = document.getElementById('confirmationYesBtn');
+            this.noBtn = document.getElementById('confirmationNoBtn');
+            this.closeBtn = document.getElementById('confirmationCloseBtn');
+        }
+
         this.title.textContent = titleText;
         this.message.textContent = messageText;
 

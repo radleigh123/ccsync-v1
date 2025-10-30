@@ -11,7 +11,14 @@
     <!-- Main Content -->
     <main class="main-content-bg">
       <div class="container-fluid">
-        <div id="header" class="d-flex flex-row gap-5 align-items-center">
+        <div id="header" class="d-flex flex-row gap-3 align-items-center">
+          <!-- BACK -->
+          <a
+            href="#"
+            class="text-decoration-none"
+            id="backButton">
+            <i class="bi bi-caret-left-fill p-0 m-0"></i>
+          </a>
           <div>
             <p class="p-0 m-0 h1 fw-bold text-dark">Add Requirement</p>
             <p class="text-muted mb-0">
@@ -30,34 +37,42 @@
             <form id="requirementForm">
               <div class="row mb-3">
                 <div class="col-md-12">
-                  <label for="requirementName" class="form-label">
-                    Requirement Name: <span class="text-danger">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="requirementName"
-                    name="name"
-                    placeholder="e.g. Good Moral Certificate"
-                    data-validate="required|min:3|max:255"
-                  />
-                  <small class="text-danger" id="nameError"></small>
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="requirementName">
+                        Requirement Name: <span class="text-danger">*</span>
+                      </label>
+                      <small id="requirementName-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="requirementName"
+                      name="name"
+                      placeholder="e.g. Good Moral Certificate"
+                      data-validate="required|min:3|max:255"
+                    />
+                  </div>
                 </div>
               </div>
 
               <div class="row mb-3">
                 <div class="col-md-6">
-                  <label for="requirementDate" class="form-label">
-                    Requirement Deadline: <span class="text-danger">*</span>
-                  </label>
-                  <input
-                    type="date"
-                    class="form-control"
-                    id="requirementDate"
-                    name="requirementDate"
-                    data-validate="required"
-                  />
-                  <small class="text-danger" id="dateError"></small>
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="requirementDate">
+                        Requirement Deadline: <span class="text-danger">*</span>
+                      </label>
+                      <small id="requirementDate-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="requirementDate"
+                      name="requirementDate"
+                      data-validate="required|date-future"
+                    />
+                  </div>
                 </div>
                 <div class="col-md-6">
                   <label for="status" class="form-label">
@@ -73,17 +88,21 @@
 
               <div class="row mb-4">
                 <div class="col-md-12">
-                  <label for="description" class="form-label">
-                    Description:
-                  </label>
-                  <textarea
-                    class="form-control"
-                    id="description"
-                    name="description"
-                    rows="4"
-                    placeholder="Enter requirement description (optional)..."
-                  ></textarea>
-                  <small class="text-danger" id="descriptionError"></small>
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="description">
+                        Description:
+                      </label>
+                      <small id="description-error" class="error-message"></small>
+                    </div>
+                    <textarea
+                      class="form-control"
+                      id="description"
+                      name="description"
+                      rows="4"
+                      placeholder="Enter requirement description (optional)..."
+                    ></textarea>
+                  </div>
                 </div>
               </div>
 
@@ -97,6 +116,43 @@
         </div>
       </div>
     </main>
+
+    <!-- Error/Success Modal -->
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+    <div id="responseModal" class="response-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modalTitle" class="modal-title">Modal Title</h5>
+          <button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">Modal message here</p>
+          <small id="modalDetails" class="text-muted d-none">Details</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationBackdrop" class="modal-backdrop"></div>
+    <div id="confirmationModal" class="confirmation-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="confirmationTitle" class="modal-title">Confirmation</h5>
+          <button type="button" class="btn-close" id="confirmationCloseBtn" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="confirmationMessage">Are you sure?</p>
+          <div id="confirmationDetails" style="display: none;"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" id="confirmationNoBtn">No</button>
+          <button type="button" class="btn btn-primary" id="confirmationYesBtn">Yes</button>
+        </div>
+      </div>
+    </div>
 
     <script
       type="module"
