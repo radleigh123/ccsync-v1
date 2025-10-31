@@ -62,12 +62,9 @@ document.addEventListener("DOMContentLoaded", () => {
                         return idToken;
                     })
                     .then(async idToken => {
-                        // NOTE: TEMP, change URL to your backend endpoints
-                        // return fetch('http://localhost:8000/api/auth/verify-token', {
-                        // return fetch('https://ccsync-api-plain-dc043.wasmer.app/auth/verifyToken.php', {
-                        return fetch('http://localhost:8000/api/ccsync-api-plain/auth/verifyToken.php', {
+                        console.log(idToken);
+                        return fetch('http://localhost:8000/api/auth/verify-token', {
                             method: 'POST',
-                            credentials: 'include',
                             headers: {
                                 'Content-Type': 'application/json',
                                 'Accept': 'application/json',

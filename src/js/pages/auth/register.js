@@ -29,15 +29,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const password_confirmation = document.querySelector("#confirmPasswordInput").value;
 
         try {
-            const response = await fetch('http://localhost:8000/api/ccsync-api-plain/auth/register.php', {
+            const response = await fetch('http://localhost:8000/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Accept': 'application/json',
                 },
                 body: JSON.stringify({
-                    first_name: firstName,
-                    last_name: lastName,
+                    name: `${firstName} ${lastName}`,
                     email: email,
                     password: password,
                     password_confirmation: password_confirmation,
