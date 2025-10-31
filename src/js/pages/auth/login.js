@@ -62,8 +62,7 @@ document.addEventListener("DOMContentLoaded", () => {
                         return idToken;
                     })
                     .then(async idToken => {
-                        console.log(idToken);
-                        return fetch('http://localhost:8000/api/auth/verify-token', {
+                        return fetch('http://localhost:8000/api/auth/login', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',

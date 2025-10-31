@@ -18,18 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const email = document.getElementById('email').value;
 
-        /* await sendPasswordResetEmail(auth, email)
-            .then(() => {
-                console.log("Password Reset Success");
-                alert("Password reset email sent! Please check your inbox.");
-                window.location.href = "/pages/auth/login.html";
-            })
-            .catch(e => {
-                const errorCode = e.code;
-                const errorMessage = e.message;
-                alert("Error: " + errorMessage);
-            }); */
-
         try {
             const response = await fetch('http://localhost:8000/api/auth/send-password-reset', {
                 method: 'POST',

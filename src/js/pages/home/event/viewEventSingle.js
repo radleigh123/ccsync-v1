@@ -76,8 +76,9 @@ async function loadEventData() {
     try {
         console.log('📥 Loading event data for ID:', eventId);
         
+        // TODO: KISS method, this request is the same as on `editEvent.js`
         const response = await fetch(
-            "/ccsync-api-plain/event/getEvents.php",
+            `http://localhost:8000/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -88,27 +89,15 @@ async function loadEventData() {
         );
 
         if (!response.ok) {
-            console.error('Failed to load events');
+            console.error('Failed to load event');
             return;
         }
 
-        const apiResponse = await response.json();
+        const data = await response.json();
+        const event = data.event;
 
-        if (!apiResponse.success || !apiResponse.events) {
-            console.error('Failed to parse events');
-            return;
-        }
-
-        // Find the event by ID
-        selectedEvent = apiResponse.events.find(e => e.id == eventId);
-        
-        if (!selectedEvent) {
-            console.error('Event not found');
-            return;
-        }
-
-        populateEventInfo(selectedEvent);
-        console.log('✅ Event data loaded:', selectedEvent);
+        populateEventInfo(event);
+        console.log('✅ Event data loaded:', data);
 
     } catch (error) {
         console.error('❌ Error loading event data:', error);
@@ -125,7 +114,7 @@ async function loadParticipants(page = 1) {
         console.log('📥 Loading participants for event:', eventId, 'page:', page);
         
         const response = await fetch(
-            `/ccsync-api-plain/event/getEventParticipants.php?event_id=${eventId}&page=${page}&limit=${currentLimit}`,
+            `http://localhost:8000/api/events/${eventId}/members?page=${page}&per_page=${currentLimit}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -147,12 +136,12 @@ async function loadParticipants(page = 1) {
             return;
         }
 
-        const apiResponse = await response.json();
+        const data = await response.json();
 
-        if (apiResponse.success) {
-            allParticipants = apiResponse.participants;
-            paginationData = apiResponse.pagination;
-            currentPage = paginationData.page;
+        if (data.success) {
+            allParticipants = data.registered_members.data;
+            paginationData = data.registered_members;
+            currentPage = paginationData.current_page;
             
             displayParticipants(allParticipants);
             updatePaginationControls();
@@ -217,7 +206,7 @@ function displayParticipants(participants) {
 
     // Update the participant count
     if (countElement) {
-        countElement.textContent = participants.length;
+        countElement.textContent = participants.total;
     }
 
     if (!participants || participants.length === 0) {
@@ -231,7 +220,7 @@ function displayParticipants(participants) {
             <td>${participant.first_name} ${participant.last_name}</td>
             <td>${getYearSuffix(participant.year)}</td>
             <td>${participant.program || '-'}</td>
-            <td>${formatDate(participant.date_registered) || '-'}</td>
+            <td>${formatDate(participant.pivot.registered_at) || '-'}</td>
             <td>
                 <div class="btn-group" role="group">
                     <button class="btn btn-sm btn-outline-primary mark-attended-btn" data-participant-id="${participant.id}" title="Mark as attended">
@@ -290,7 +279,7 @@ function setupPaginationButtons() {
 
     if (prevBtn) {
         prevBtn.addEventListener("click", () => {
-            if (paginationData && paginationData.hasPrev) {
+            if (paginationData && paginationData.prev_page_url) {
                 loadParticipants(currentPage - 1);
             }
         });
@@ -298,7 +287,7 @@ function setupPaginationButtons() {
 
     if (nextBtn) {
         nextBtn.addEventListener("click", () => {
-            if (paginationData && paginationData.hasNext) {
+            if (paginationData && paginationData.next_page_url) {
                 loadParticipants(currentPage + 1);
             }
         });
@@ -315,12 +304,12 @@ function updatePaginationControls() {
 
     if (paginationData) {
         // Update button states
-        if (prevBtn) prevBtn.disabled = !paginationData.hasPrev;
-        if (nextBtn) nextBtn.disabled = !paginationData.hasNext;
+        if (prevBtn) prevBtn.disabled = !paginationData.prev_page_url;
+        if (nextBtn) nextBtn.disabled = !paginationData.next_page_url;
 
         // Update page info display
         if (pageInfo) {
-            pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total participants)`;
+            pageInfo.textContent = `Page ${paginationData.current_page} of ${paginationData.last_page} (${paginationData.total} total participants)`;
         }
     }
 }
@@ -436,6 +425,7 @@ async function removeParticipant(participantId) {
     }
 }
 
+// TODO: Transfer method to utility
 /**
  * Format date to readable format
  */

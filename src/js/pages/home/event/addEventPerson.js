@@ -36,9 +36,18 @@ async function loadEventData() {
     }
 
     try {
+        const eventId = new URLSearchParams(window.location.search).get('event_id');
+
+        if (!eventId) {
+            responseModal.showError('Error', 'No event ID provided');
+            return;
+        }
+
+        console.log('📥 Loading event data for ID:', eventId);
+
         // Fetch all events from API
         const response = await fetch(
-            "/ccsync-api-plain/event/getEvents.php",
+            `http://localhost:8000/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -53,20 +62,14 @@ async function loadEventData() {
         }
 
         const data = await response.json();
+        const event = data.event;
 
-        // Find the event with matching ID
-        if (data.success && data.events && data.events.length > 0) {
-            selectedEvent = data.events.find(event => event.id == eventId);
-            
-            if (selectedEvent) {
-                // Update event information in the form
-                document.getElementById('eventCardTitle').textContent = selectedEvent.name;
-                document.getElementById('eventSubtitle').textContent = `Register a participant for: ${selectedEvent.name}`;
-                document.getElementById('eventCardDate').textContent = `Event Date: ${selectedEvent.event_date}`;
-                console.log('Event data loaded successfully:', selectedEvent);
-            } else {
-                showError('Event not found. Please select a valid event.');
-            }
+        if (event) {
+        // Update event information in the form
+            document.getElementById('eventCardTitle').textContent = event.name;
+            document.getElementById('eventSubtitle').textContent = `Register a participant for: ${event.name}`;
+            document.getElementById('eventCardDate').textContent = `Event Date: ${event.event_date}`;
+            console.log('Event data loaded successfully:', event);
         } else {
             showError('Unable to load events. Please try again.');
         }
@@ -163,7 +166,7 @@ function setupFormHandlers() {
 /**
  * Load and display participant information
  */
-async function loadParticipantInfo(memberId) {
+async function loadParticipantInfo(memberIdSchoolNumber) {
     try {
         // Show participant info section with shimmer loader
         const participantInfoSection = document.getElementById('participantInfoSection');
@@ -175,7 +178,7 @@ async function loadParticipantInfo(memberId) {
         participantCard.style.display = 'none';
         
         const response = await fetch(
-            `/ccsync-api-plain/member/getMember.php?id=${memberId}`,
+            `http://localhost:8000/api/members?id_school_number=${memberIdSchoolNumber}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -188,20 +191,27 @@ async function loadParticipantInfo(memberId) {
         if (!response.ok) {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
-            showParticipantError('Member not found');
+            showParticipantError('Member not found0');
             return;
         }
 
         const data = await response.json();
 
-        if (data.success && data.member) {
-            const member = data.member;
-            
+        if (data.members.length <= 0) {
+            shimmerLoader.style.display = 'none';
+            participantInfoSection.style.display = 'none';
+            showParticipantError('Member not found');
+            return;
+        }
+
+        const member = data.members[0];
+
+        if (member) {
             // Store the member database ID for registration
             selectedMemberId = member.id;
             
             // Determine registration status
-            const isAlreadyRegistered = await checkIfAlreadyRegistered(member.id);
+            const isAlreadyRegistered = await checkIfAlreadyRegistered(selectedMemberId);
             const registrationStatusHTML = isAlreadyRegistered ? 
                 '<span class="badge bg-warning">Already Registered</span>' : 
                 '<span class="badge bg-success">Not Registered</span>';
@@ -211,7 +221,7 @@ async function loadParticipantInfo(memberId) {
             document.getElementById('participantName').textContent = 
                 `${member.first_name} ${member.last_name}`;
             document.getElementById('participantEmail').textContent = member.email;
-            document.getElementById('participantProgram').textContent = member.program;
+            document.getElementById('participantProgram').textContent = member.program.code;
             document.getElementById('participantYear').textContent = 
                 `${member.year}${getYearSuffix(member.year)}`;
             
@@ -231,7 +241,7 @@ async function loadParticipantInfo(memberId) {
         } else {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
-            showParticipantError('Member not found');
+            showParticipantError('Member not found2');
         }
     } catch (error) {
         console.error('Error loading participant info:', error);
@@ -247,8 +257,10 @@ async function loadParticipantInfo(memberId) {
  */
 async function checkIfAlreadyRegistered(memberId) {
     try {
+        const eventId = new URLSearchParams(window.location.search).get('event_id');
+
         const response = await fetch(
-            `/ccsync-api-plain/event/checkRegistration.php?event_id=${selectedEvent.id}&member_id=${memberId}`,
+            `http://localhost:8000/api/members/${memberId}/check?event_id=${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -264,12 +276,9 @@ async function checkIfAlreadyRegistered(memberId) {
         }
 
         const data = await response.json();
+        const event = data.event;
         
-        if (data.success) {
-            return data.is_registered;
-        }
-        
-        return false;
+        return data.registered;
     } catch (error) {
         console.error('Error checking registration status:', error);
         return false;

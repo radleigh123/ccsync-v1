@@ -84,9 +84,15 @@ function getMockData(endpoint) {
  * @returns {Promise<object>} - Members data
  */
 export async function fetchMembers() {
-    // console.log('Bearer Token:', localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')).firebase_token : 'No token found');
+    const token = getToken();
 
-    return apiFetch('/ccsync-api-plain/member/getMembers.php');
+    // return apiFetch('/member');
+    return apiFetch('/members', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
 }
 
 /**
@@ -98,7 +104,12 @@ export async function fetchMembers() {
  */
 export async function fetchEvents(upcoming = false) {
     const query = upcoming ? '?upcoming=true' : '';
-    return apiFetch(`/ccsync-api-plain/event/getEvents.php${query}`);
+    return apiFetch(`/events${query}`, {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
+    });
 }
 
 /**
@@ -118,8 +129,11 @@ export async function fetchUser() {
  * @returns {Promise<object>} - Users data with total count
  */
 export async function fetchUsers() {
-    return apiFetch('/ccsync-api-plain/user/getUsers.php', {
-        method: 'GET'
+    return apiFetch('/auth/users', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
     });
 }
 
@@ -130,8 +144,12 @@ export async function fetchUsers() {
  * @returns {Promise<object>} - This month's events
  */
 export async function fetchThisMonthEvents() {
-    return apiFetch('/ccsync-api-plain/event/getThisMonthEvents.php', {
-        method: 'GET'
+    // NOTE: remind the backend to make documentation for APIs
+    return apiFetch('/events?current=true', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${getToken()}`
+        }
     });
 }
 
@@ -220,8 +238,7 @@ export async function updateEvent(eventId, eventData) {
  */
 export async function createRequirement(requirementData) {
     try {
-        const token = localStorage.getItem('user') ?
-            JSON.parse(localStorage.getItem('user')).firebase_token : '';
+        const token = getToken();
 
         console.log("requirement data:", requirementData);
 
@@ -238,6 +255,14 @@ export async function createRequirement(requirementData) {
         console.error("🚨 Create requirement API error:", error);
         throw error;
     }
+}
+
+// TODO: temporary method, apply KISS
+function getToken() {
+    const token = localStorage.getItem('user') ?
+        JSON.parse(localStorage.getItem('user')).firebase_token : '';
+
+    return token;
 }
 
 export { API_BASE_URL };

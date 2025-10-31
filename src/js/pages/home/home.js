@@ -31,16 +31,15 @@ async function loadHero() {
   try {
     // Fetch all required data
     const membersData = await fetchMembers();
-    const usersData = await fetchUsers();
+    const usersData = await fetchUsers(); // TODO: ask Jako about this
     
     allMembers = membersData.members || [];
+    const usersLength = Object.keys(usersData.users).length;
 
     // Calculate stats from actual database data
     const registeredMembersValue = allMembers.length;
-    const totalCssStudentsValue = usersData.totalCount || 0;
-    const paidMembersCount = allMembers.filter(
-      (member) => member.is_paid === 1 || member.is_paid === true
-    ).length;
+    const totalCssStudentsValue = usersLength || 0;
+    const paidMembersCount = allMembers.filter((member) => member.is_paid === 1 || member.is_paid === true).length;
 
     console.log('✓ Dashboard stats loaded:');
     console.log('  - Registered Members:', registeredMembersValue);

@@ -63,7 +63,7 @@ async function loadEventData() {
         
         // Fetch all events from API
         const response = await fetch(
-            "/ccsync-api-plain/event/getEvents.php",
+            `http://localhost:8000/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -78,16 +78,9 @@ async function loadEventData() {
             return;
         }
 
-        const apiResponse = await response.json();
+        const data = await response.json();
+        const event = data.event
 
-        if (!apiResponse.success || !apiResponse.events) {
-            responseModal.showError('Error', 'Failed to load events');
-            return;
-        }
-
-        // Find the event by ID
-        const event = apiResponse.events.find(e => e.id == eventId);
-        
         if (!event) {
             responseModal.showError('Error', 'Event not found');
             return;
