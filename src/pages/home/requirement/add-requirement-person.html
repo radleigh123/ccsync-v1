@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Add Student Compliance</title>
+	</head>
+
+	<body>
+		<nav id="sidebar"></nav>
+		
+		<!-- Main Content -->
+		<main class="main-content-bg">
+			<div class="container-fluid">
+				<div id="header" class="d-flex flex-row gap-5 align-items-center">
+					<!-- Back Button and Title Section -->
+					<div class="d-flex flex-row gap-3 align-items-center">
+						<a
+							href="#"
+							class="text-decoration-none"
+							id="backButton">
+							<i class="bi bi-caret-left-fill p-0 m-0"></i>
+						</a>
+						<div>
+							<p class="p-0 m-0 h1 fw-bold text-dark">Add Student Compliance</p>
+							<p class="text-muted mb-0" id="requirementSubtitle">Record student compliance for this requirement</p>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<!-- Form Body Section -->
+			<div id="body" class="container-fluid mt-4">
+				<form id="complianceForm">
+					<!-- Requirement Information Card -->
+					<div class="card mb-4 border-0">
+						<div class="card-body">
+							<h5 class="card-title mb-3">Requirement Information</h5>
+							<p class="mb-2"><strong id="requirementCardTitle">REQUIREMENT TITLE</strong></p>
+							<p class="text-muted mb-0 small" id="requirementCardDate">Deadline: --</p>
+						</div>
+					</div>
+
+					<!-- Student ID Section -->
+					<div class="mb-4">
+						<label for="idNumber" class="form-label fw-bold mb-2">Student ID Number</label>
+						<div class="position-relative">
+							<i class="bi bi-search position-absolute"></i>
+							<input
+								type="text"
+								class="form-control"
+								id="idNumber"
+								placeholder="Enter student ID number..."
+							/>
+						</div>
+						<small class="text-muted">Enter the school ID number of the student</small>
+					</div>
+
+					<!-- Student Information Display -->
+					<div id="studentInfoSection" class="mb-4" style="display: none;">
+						<!-- Shimmer Skeleton (shows during loading) -->
+						<div id="studentInfoShimmer" class="card border-0" style="display: none;">
+							<div class="card-header">
+								<p class="my-0 fw-bold">Student Information</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Compliance Status</small><br><div class="shimmer-line" style="width: 60%; height: 20px;"></div></p>
+										<p class="mb-2"><small class="text-muted">Full Name</small><br><div class="shimmer-line" style="width: 70%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Email</small><br><div class="shimmer-line" style="width: 80%; height: 20px;"></div></p>
+									</div>
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Program</small><br><div class="shimmer-line" style="width: 65%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Year Level</small><br><div class="shimmer-line" style="width: 50%; height: 20px;"></div></p>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Actual Data Card (shows after loading) -->
+						<div id="studentCard" class="card border-0" style="display: none;">
+							<div class="card-header">
+								<p class="my-0 fw-bold">Student Information</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Compliance Status</small><br><strong id="studentComplianceStatus">--</strong></p>
+										<p class="mb-2"><small class="text-muted">Full Name</small><br><strong id="studentName">--</strong></p>
+										<p class="mb-0"><small class="text-muted">Email</small><br><strong id="studentEmail">--</strong></p>
+									</div>
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Program</small><br><strong id="studentProgram">--</strong></p>
+										<p class="mb-0"><small class="text-muted">Year Level</small><br><strong id="studentYear">--</strong></p>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<!-- Compliance Status Selection -->
+					<div id="complianceStatusSection" class="mb-4" style="display: none;">
+						<label for="complianceStatus" class="form-label fw-bold mb-2">Mark Compliance Status</label>
+						<select class="form-select" id="complianceStatus">
+							<option value="pending">Pending</option>
+							<option value="complied">Complied</option>
+							<option value="not_complied">Not Complied</option>
+						</select>
+						<small class="text-muted">Select the compliance status for this student</small>
+					</div>
+
+					<!-- Status Message -->
+					<div id="statusMessage" class="alert alert-info mb-4" style="display: none;">
+						<p class="mb-0" id="statusText">Status: Waiting for input</p>
+					</div>
+
+					<!-- Action Buttons -->
+					<div class="d-flex flex-row gap-3 mt-4">
+						<a
+							href="#"
+							role="button"
+							id="cancelButton"
+							class="btn btn-secondary flex-fill fw-bold">
+							Cancel
+						</a>
+						<button
+							type="submit"
+							id="submitButton"
+							class="btn btn-primary-ccsync flex-fill fw-bold"
+							disabled>
+							Record Compliance
+						</button>
+					</div>
+				</form>
+			</div>
+		</main>
+
+		<!-- Error/Success Modal -->
+		<div id="modalBackdrop" class="modal-backdrop"></div>
+		<div id="responseModal" class="response-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="modalTitle" class="modal-title">Modal Title</h5>
+					<button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modalMessage">Modal message here</p>
+					<small id="modalDetails" class="text-muted d-none">Details</small>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
+				</div>
+			</div>
+		</div>
+
+		<script
+			type="module"
+			src="/js/pages/home/requirement/addRequirementPerson.js"
+			defer></script>
+	</body>
+</html>

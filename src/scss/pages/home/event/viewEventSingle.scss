@@ -16,9 +16,12 @@ i {
 }
 
 .main-content-bg {
-    position: relative;        /* Make it a positioning context */
-    min-height: 100%;          /* Allow it to stretch */
+    position: relative;
     padding: 2rem;
+    color: #fff;
+    min-height: 100vh; 
+    min-height: 100dvh; 
+    z-index: 1;
 
     &::before {
         content: "";
@@ -27,10 +30,9 @@ i {
         left: 0;
         right: 0;
         bottom: 0;
-        background-image: url('/assets/bg.png');
+        background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
         background-size: cover;
         background-position: center;
-        filter: brightness(0.4) saturate(1.2);
         z-index: -1;
     }
 }
@@ -55,6 +57,136 @@ i {
     border-radius: 15px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     backdrop-filter: blur(10px);
+}
+
+.participant-count {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid #ccc;
+    border-radius: 0;
+    padding: 12px 0;
+    margin-bottom: 20px;
+    font-size: 14px;
+    color: #64748b;
+    
+    .count-number {
+        font-weight: 600;
+        color: #F4B301;
+    }
+}
+
+.table-container {
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+    margin: 20px 0;
+    width: 100%;
+    background: white;
+    border: 1px solid #f1f5f9;
+}
+
+.table-responsive {
+    width: 100%;
+}
+
+.table {
+    margin-bottom: 0;
+    background: white;
+    border-collapse: separate;
+    border-spacing: 0;
+    
+    thead {
+        background: #FFE8A6; 
+        border-bottom: 1px solid #F4B301;
+        
+        th {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 600; 
+            font-size: 13px;
+            color: #2c2c2c !important; 
+            text-align: left !important; 
+            padding: 16px 20px;
+            border: none;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            background: transparent;
+            
+            &:first-child {
+                padding-left: 24px;
+            }
+            
+            &:last-child {
+                padding-right: 24px;
+            }
+        }
+    }
+    
+    tbody {
+        background: white;
+        
+        tr {
+            border: none;
+            transition: all 0.15s ease;
+            background: white;
+            
+            &:not(:last-child) {
+                border-bottom: 1px solid #f1f5f9;
+            }
+            
+            &:hover {
+                background-color: #f8fafc !important;
+            }
+        }
+        
+        td {
+            padding: 16px 20px;
+            font-size: 14px;
+            color: #334155;
+            border: none;
+            vertical-align: middle;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-weight: 400;
+            text-align: left !important;
+            
+            &:first-child {
+                padding-left: 24px;
+            }
+            
+            &:last-child {
+                padding-right: 24px;
+            }
+        }
+    }
+}
+
+.pagination-section {
+    p {
+        margin-bottom: 0;
+    }
+}
+
+/* Shimmer Loader Animation */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer-line {
+    height: 12px;
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e0e0e0 50%,
+        #f0f0f0 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer 2s infinite;
+    border-radius: 4px;
+    margin: 8px 0;
 }
 
 .table i {

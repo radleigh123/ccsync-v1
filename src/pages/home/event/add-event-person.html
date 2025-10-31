@@ -9,64 +9,119 @@
 	<body>
 		<nav id="sidebar"></nav>
 		
-		<!-- Body -->
+		<!-- Main Content -->
 		<main class="main-content-bg">
-			<div class="container-fluid px-0">
-				<div
-					id="header"
-					class="d-flex flex-row gap-3 align-items-center">
-					<!-- BACK -->
-					<a
-						href="/pages/home/event/view-event.html"
-						class="text-decoration-none">
-						<i class="bi bi-caret-left-fill p-0 m-0"></i>
-					</a>
-					<p class="p-0 m-0 h3 fw-bold">Add an event participant</p>
+			<div class="container-fluid">
+				<div id="header" class="d-flex flex-row gap-5 align-items-center">
+					<!-- Back Button and Title Section -->
+					<div class="d-flex flex-row gap-3 align-items-center">
+						<a
+							href="/pages/home/event/view-event.html"
+							class="text-decoration-none"
+							id="backButton">
+							<i class="bi bi-caret-left-fill p-0 m-0"></i>
+						</a>
+						<div>
+							<p class="p-0 m-0 h1 fw-bold text-dark">Add Event Participant</p>
+							<p class="text-muted mb-0" id="eventSubtitle">Register a participant for this event</p>
+						</div>
+					</div>
 				</div>
 			</div>
-			<div id="cardContainer" class="card px-0 mt-4">
-				<div class="card-body">
-					<h4 class="card-title" id="eventCardTitle">EVENT TITLE</h4>
-					<hr />
-					<form>
-						<div class="d-flex flex-row gap-2 mb-3">
-							<p class="my-0 py-0">ID number:</p>
+
+			<!-- Form Body Section -->
+			<div id="body" class="container-fluid mt-4">
+				<form id="participantForm">
+					<!-- Event Information Card -->
+					<div class="card mb-4 border-0">
+						<div class="card-body">
+							<h5 class="card-title mb-3">Event Information</h5>
+							<p class="mb-2"><strong id="eventCardTitle">EVENT TITLE</strong></p>
+							<p class="text-muted mb-0 small" id="eventCardDate">Event Date: --</p>
+						</div>
+					</div>
+
+					<!-- Participant ID Section -->
+					<div class="mb-4">
+						<label for="idNumber" class="form-label fw-bold mb-2">Participant ID Number</label>
+						<div class="position-relative">
+							<i class="bi bi-search position-absolute"></i>
 							<input
 								type="text"
 								class="form-control"
 								id="idNumber"
-								placeholder="Enter ID number" />
+								placeholder="Enter participant ID number..."
+							/>
 						</div>
-						<div class="card-body">
-							<div id="eventCardStatus" class="card border-0">
-								<p
-									class="my-0 align-items-center p-3 py-2 fw-bold">
-									Participant information:
-								</p>
-								<div class="card-body">
-									<!-- Participant information will be displayed here -->
-									UNKNOWN STATUS
+						<small class="text-muted">Enter the school ID number of the participant</small>
+					</div>
+
+					<!-- Participant Information Display -->
+					<div id="participantInfoSection" class="mb-4" style="display: none;">
+						<!-- Shimmer Skeleton (shows during loading) -->
+						<div id="participantInfoShimmer" class="card border-0" style="display: none;">
+							<div class="card-header">
+								<p class="my-0 fw-bold">Participant Information</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Registration Status</small><br><div class="shimmer-line" style="width: 60%; height: 20px;"></div></p>
+										<p class="mb-2"><small class="text-muted">Full Name</small><br><div class="shimmer-line" style="width: 70%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Email</small><br><div class="shimmer-line" style="width: 80%; height: 20px;"></div></p>
+									</div>
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Program</small><br><div class="shimmer-line" style="width: 65%; height: 20px;"></div></p>
+										<p class="mb-0"><small class="text-muted">Year Level</small><br><div class="shimmer-line" style="width: 50%; height: 20px;"></div></p>
+									</div>
 								</div>
 							</div>
 						</div>
-						<div
-							class="d-flex flex-row justify-content-around gap-5 mt-3 px-3">
-							<a
-								href="/pages/home/event/view-event.html"
-								role="button"
-								id="cancelButton"
-								class="btn btn-secondary flex-fill fw-bold">
-								Cancel
-							</a>
-							<button
-								type="submit"
-								id="addButton"
-								class="btn btn-primary-ccsync flex-fill fw-bold">
-								Register
-							</button>
+
+						<!-- Actual Data Card (shows after loading) -->
+						<div id="participantCard" class="card border-0" style="display: none;">
+							<div class="card-header">
+								<p class="my-0 fw-bold">Participant Information</p>
+							</div>
+							<div class="card-body">
+								<div class="row">
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Registration Status</small><br><strong id="participantRegistrationStatus">--</strong></p>
+										<p class="mb-2"><small class="text-muted">Full Name</small><br><strong id="participantName">--</strong></p>
+										<p class="mb-0"><small class="text-muted">Email</small><br><strong id="participantEmail">--</strong></p>
+									</div>
+									<div class="col-md-6">
+										<p class="mb-2"><small class="text-muted">Program</small><br><strong id="participantProgram">--</strong></p>
+										<p class="mb-0"><small class="text-muted">Year Level</small><br><strong id="participantYear">--</strong></p>
+									</div>
+								</div>
+							</div>
 						</div>
-					</form>
-				</div>
+					</div>
+
+					<!-- Status Message -->
+					<div id="statusMessage" class="alert alert-info mb-4" style="display: none;">
+						<p class="mb-0" id="statusText">Status: Waiting for input</p>
+					</div>
+
+					<!-- Action Buttons -->
+					<div class="d-flex flex-row gap-3 mt-4">
+						<a
+							href="/pages/home/event/view-event.html"
+							role="button"
+							id="cancelButton"
+							class="btn btn-secondary flex-fill fw-bold">
+							Cancel
+						</a>
+						<button
+							type="submit"
+							id="registerButton"
+							class="btn btn-primary-ccsync flex-fill fw-bold"
+							disabled>
+							Register Participant
+						</button>
+					</div>
+				</form>
 			</div>
 		</main>
 

@@ -55,8 +55,12 @@ class MemberDTO {
  * Subset of MemberDTO used when registering new members
  * Contains only fields needed during registration process
  * 
+ * IMPORTANT: userId is intentionally NOT stored in members table
+ * Members are uniquely identified by idNumber (school ID), which is the canonical identifier
+ * This allows members to be tracked independently of user accounts
+ * 
  * Auto-filled fields (from user lookup):
- * - userId, firstName, lastName, email, idNumber
+ * - firstName, lastName, email, idNumber
  * 
  * User-provided fields:
  * - birthDate (required), program (required), yearLevel (required)
@@ -65,8 +69,7 @@ class MemberDTO {
  * @interface
  */
 class MemberCreateDTO {
-    public int $userId;                          // From user lookup
-    public string $idNumber;                     // From user lookup
+    public string $idNumber;                     // From user lookup (canonical identifier)
     public string $firstName;                    // From user snapshot
     public string $lastName;                     // From user snapshot
     public string $email;                        // From user snapshot

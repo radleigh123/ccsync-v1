@@ -3,7 +3,7 @@
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Participant</title>
+		<title>View Requirement</title>
 	</head>
 
 	<body>
@@ -21,24 +21,27 @@
 						id="backButton">
 						<i class="bi bi-caret-left-fill p-0 m-0"></i>
 					</a>
-					<p class="p-0 m-0 h3 fw-bold">View event</p>
+					<p class="p-0 m-0 h3 fw-bold">View requirement</p>
 				</div>
 			</div>
-			<div id="eventContainer" class="card mt-4">
+			<div id="requirementContainer" class="card mt-4">
 				<div class="card-title p-4">
 					<div
 						class="d-flex flex-row justify-content-between align-items-center">
-						<p class="h2 m-0 p-0">Event Information</p>
+						<p class="h2 m-0 p-0">Requirement Information</p>
 						<div class="d-flex gap-2">
 							<a
 								href="#"
 								class="btn btn-primary-ccsync"
-								id="editEventBtn">
-								Edit Event
+								id="addComplianceBtn">
+								Student Compliance
 							</a>
-							<button class="btn btn-primary-ccsync" id="addParticipantBtn">
-								Add Participant
-							</button>
+							<a
+								href="#"
+								class="btn btn-primary-ccsync"
+								id="editRequirementBtn">
+								Edit Requirement
+							</a>
 						</div>
 					</div>
 					<hr />
@@ -46,45 +49,49 @@
 						<div class="row">
 							<div class="col">
 								<p class="m-0 p-0">
-									<strong>Event Name:</strong>
-									<span id="eventName">-</span>
+									<strong>Requirement Name:</strong>
+									<span id="requirementName">-</span>
 								</p>
 								<p class="m-0 p-0">
-									<strong>Venue:</strong>
-									<span id="eventVenue">-</span>
+									<strong>Description:</strong>
+									<span id="requirementDescription">-</span>
 								</p>
 								<p class="m-0 p-0">
-									<strong>Date:</strong>
-									<span id="eventDate">-</span>
+									<strong>Deadline:</strong>
+									<span id="requirementDate">-</span>
 								</p>
 							</div>
 							<div class="col">
 								<p class="m-0 p-0">
-									<strong>Max participants:</strong>
-									<span id="eventMaxParticipants">-</span>
+									<strong>Status:</strong>
+									<span id="requirementStatus">-</span>
 								</p>
 								<p class="m-0 p-0">
-									<strong>Available slots:</strong>
-									<span id="eventAvailableSlots">-</span>
+									<strong>Complied:</strong>
+									<span id="complianceComplied">0</span>
 								</p>
 								<p class="m-0 p-0">
-									<strong>Registration due:</strong>
-									<span id="eventRegistrationEnd">-</span>
+									<strong>Not Complied:</strong>
+									<span id="complianceNotComplied">0</span>
+								</p>
+								<p class="m-0 p-0">
+									<strong>Pending:</strong>
+									<span id="compliancePending">0</span>
 								</p>
 							</div>
 						</div>
 					</div>
 					<div class="card-body p-0 m-0 mt-5">
-						<!-- Participant Count Section -->
-						<div class="participant-count">
-							Showing <span class="count-number" id="participantCount">0</span> participants
+						<!-- Compliance Count Section -->
+						<div class="compliance-count">
+							Showing <span class="count-number" id="complianceCount">0</span> compliance records
 						</div>
 
 						<!-- Pagination Controls - TOP -->
 						<div class="pagination-section mb-3">
 							<div class="d-flex justify-content-between align-items-center">
 								<div>
-									<p class="text-muted mb-0" id="pageInfo">Page 1 of 1 (0 total participants)</p>
+									<p class="text-muted mb-0" id="pageInfo">Page 1 of 1 (0 total records)</p>
 								</div>
 								<div class="d-flex gap-2">
 									<button class="btn btn-outline-secondary btn-sm" id="prevBtn" disabled>
@@ -104,11 +111,11 @@
 								<table class="table mb-0" id="shimmerTable">
 									<thead>
 										<tr>
-											<th scope="col">Name</th>
+											<th scope="col">Member Name</th>
 											<th scope="col">Year</th>
 											<th scope="col">Program</th>
-											<th scope="col">Date Registered</th>
-											<th scope="col">Action</th>
+											<th scope="col">Compliance Status</th>
+											<th scope="col">Date</th>
 										</tr>
 									</thead>
 									<tbody>
@@ -140,14 +147,14 @@
 								<table class="table mb-0" id="dataTable" style="display: none;">
 									<thead>
 										<tr>
-											<th scope="col">Name</th>
+											<th scope="col">Member Name</th>
 											<th scope="col">Year</th>
 											<th scope="col">Program</th>
-											<th scope="col">Date Registered</th>
-											<th scope="col">Action</th>
+											<th scope="col">Compliance Status</th>
+											<th scope="col">Date</th>
 										</tr>
 									</thead>
-									<tbody id="participantsTableBody">
+									<tbody id="complianceTableBody">
 										<!-- Dynamically populated -->
 									</tbody>
 								</table>
@@ -178,7 +185,7 @@
 
 		<script
 			type="module"
-			src="/js/pages/home/event/viewEventSingle.js"
+			src="/js/pages/home/requirement/viewRequirementSingle.js"
 			defer></script>
 	</body>
 </html>

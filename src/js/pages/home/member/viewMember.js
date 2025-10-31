@@ -2,16 +2,26 @@ import "/js/utils/core.js";
 import "/scss/pages/home/member/viewMember.scss";
 import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
-import { getMembers } from "/js/utils/mock/mockStorage";
+import { shimmerLoader } from "/js/utils/shimmerLoader";
 
 let userData = null;
-let allMembers = []; // Store all members
-let selectedYear = null;
+let allMembers = []; // Store all members from API
+let currentPage = 1;
+let currentLimit = 20; // Items per page
+let paginationData = null;
+
+// Filter state
+let searchText = ""; // Tier 1: Text search
+let selectedYear = "all"; // Tier 2: Year level filter
+let selectedProgram = "all"; // Tier 2: Program filter
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
   setSidebar();
+  setupSearchFilter();
   setupYearFilter();
+  setupProgramFilter();
+  setupPaginationButtons();
   loadMembers();
 });
 
@@ -21,81 +31,226 @@ async function initHome() {
   if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
-async function loadMembers() {
+async function loadMembers(page = 1) {
   try {
-    if (import.meta.env.DEV) {
-      allMembers = getMembers().members;
-    } else {
-      // NOTE: TEMP, change to actual API endpoint
-      // const response = await fetch("http://localhost:8000/api/member", {
-      const response = await fetch(
-        "http://localhost:8080/ccsync-plain-php/member/getMembers.php",
-        {
-          headers: {
-            Authorization: `Bearer ${userData.firebase_token}`,
-            Accept: "application/json",
-          },
-        }
-      );
+    // Show loading state
+    const tbody = document.getElementById("userTableBody");
+    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Loading...</td></tr>';
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(
-          errorData.message || `HTTP error! status: ${response.status}`
-        );
+    // Call API with pagination parameters
+    const response = await fetch(
+      `http://localhost:8000/api/ccsync-api-plain/member/getMembers.php?page=${page}&limit=${currentLimit}`,
+      {
+        headers: {
+          Authorization: `Bearer ${userData.firebase_token}`,
+          Accept: "application/json",
+        },
       }
+    );
 
-      const data = await response.json();
-      allMembers = data.members;
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(
+        errorData.message || `HTTP error! status: ${response.status}`
+      );
     }
 
-    // Display all members default
-    displayMembers(allMembers);
+    const data = await response.json();
+
+    // Check if members exists and has data
+    if (data.success && data.members && data.members.length > 0) {
+      allMembers = data.members;
+      paginationData = data.pagination;
+      currentPage = paginationData.page;
+    } else {
+      allMembers = [];
+      paginationData = null;
+    }
+
+    // Apply all filters and display
+    applyAllFilters();
+    updatePaginationControls();
+
+    // Hide shimmer and show table
+    shimmerLoader.hide("#shimmerTable", 600);
+    setTimeout(() => {
+      document.getElementById("shimmerTable").style.display = "none";
+      document.getElementById("dataTable").style.display = "table";
+    }, 600);
   } catch (error) {
     console.error("Error fetching members:", error);
-    const tbody = document.getElementById("userTableBody");
-    tbody.innerHTML = `
-    <tr>
-      <td colspan="3" class="text-danger text-center">
-        Failed to load members. Please try again.
-      </td>
-    </tr>
-    `;
+    allMembers = [];
+    displayMembers([]);
+    // Still hide shimmer on error
+    shimmerLoader.hide("#shimmerTable", 300);
+    setTimeout(() => {
+      document.getElementById("shimmerTable").style.display = "none";
+      document.getElementById("dataTable").style.display = "table";
+    }, 300);
   }
 }
 
+// ============================================
+// TIER 1: Text Search Filter Setup
+// ============================================
+function setupSearchFilter() {
+  const searchInput = document.getElementById("searchInput");
+
+  if (searchInput) {
+    searchInput.addEventListener("input", (e) => {
+      searchText = e.target.value.toLowerCase().trim();
+      applyAllFilters(); // Re-apply all filters
+    });
+  }
+}
+
+// ============================================
+// TIER 2: Year Level Filter Setup
+// ============================================
 function setupYearFilter() {
-  const yearDropdown = document.getElementById("yearDropdown");
+  const yearFilterMenu = document.getElementById("yearFilterMenu");
+  const yearFilterLabel = document.getElementById("yearFilterLabel");
 
-  yearDropdown.addEventListener("change", (e) => {
-    selectedYear = e.target.value;
-    filterMembersByYear(selectedYear);
-  });
+  if (yearFilterMenu) {
+    yearFilterMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        selectedYear = link.dataset.year;
+
+        // Update button label
+        const yearText =
+          selectedYear === "all"
+            ? "All"
+            : selectedYear === "1"
+              ? "1st Year"
+              : selectedYear === "2"
+                ? "2nd Year"
+                : selectedYear === "3"
+                  ? "3rd Year"
+                  : "4th Year";
+
+        if (yearFilterLabel) {
+          yearFilterLabel.textContent = `Year Level: ${yearText}`;
+        }
+
+        applyAllFilters(); // Re-apply all filters
+      });
+    });
+  }
 }
 
-function filterMembersByYear(year) {
-  if (!year) {
-    displayMembers(allMembers);
-    return;
+// ============================================
+// TIER 2: Program Filter Setup
+// ============================================
+function setupProgramFilter() {
+  const programFilterMenu = document.getElementById("programFilterMenu");
+  const programFilterLabel = document.getElementById("programFilterLabel");
+
+  if (programFilterMenu) {
+    programFilterMenu.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        selectedProgram = link.dataset.program;
+
+        // Update button label
+        const programText =
+          selectedProgram === "all"
+            ? "All"
+            : selectedProgram === "BSCS"
+              ? "BSCS"
+              : selectedProgram === "BSIS"
+                ? "BSIS"
+                : selectedProgram === "BSIT"
+                  ? "BSIT"
+                  : "BSCE";
+
+        if (programFilterLabel) {
+          programFilterLabel.textContent = `Program: ${programText}`;
+        }
+
+        applyAllFilters(); // Re-apply all filters
+      });
+    });
+  }
+}
+
+// ============================================
+// Combined Filtering Logic
+// ============================================
+function applyAllFilters() {
+  let filtered = [...allMembers];
+
+  // Apply Tier 1: Text Search (by name)
+  if (searchText) {
+    filtered = filtered.filter((member) => {
+      const fullName = `${member.first_name} ${member.last_name}`.toLowerCase();
+      return fullName.includes(searchText);
+    });
   }
 
-  // Filter members by enrollment year
-  const filteredMembers = allMembers.filter((member) => {
-    const enrollmentYear = new Date(member.enrollment_date).getFullYear();
-    return enrollmentYear === parseInt(year);
-  });
+  // Apply Tier 2: Year Level Filter
+  if (selectedYear !== "all") {
+    filtered = filtered.filter((member) => {
+      return member.year.toString() === selectedYear;
+    });
+  }
 
-  displayMembers(filteredMembers);
+  // Apply Tier 2: Program Filter
+  if (selectedProgram !== "all") {
+    filtered = filtered.filter((member) => {
+      return member.program === selectedProgram;
+    });
+  }
+
+  // Display the filtered results
+  displayMembers(filtered);
 }
 
-// TODO: Cache list for hot-reload, add Refresh for UX
+function setupPaginationButtons() {
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+
+  if (prevBtn) {
+    prevBtn.addEventListener("click", () => {
+      if (paginationData && paginationData.hasPrev) {
+        loadMembers(currentPage - 1);
+      }
+    });
+  }
+
+  if (nextBtn) {
+    nextBtn.addEventListener("click", () => {
+      if (paginationData && paginationData.hasNext) {
+        loadMembers(currentPage + 1);
+      }
+    });
+  }
+}
+
+function updatePaginationControls() {
+  const prevBtn = document.getElementById("prevBtn");
+  const nextBtn = document.getElementById("nextBtn");
+  const pageInfo = document.getElementById("pageInfo");
+
+  if (paginationData) {
+    // Update button states
+    if (prevBtn) prevBtn.disabled = !paginationData.hasPrev;
+    if (nextBtn) nextBtn.disabled = !paginationData.hasNext;
+
+    // Update page info display
+    if (pageInfo) {
+      pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total members)`;      
+    }
+  }
+}
+
 function displayMembers(members) {
   const tbody = document.getElementById("userTableBody");
   const memberCountElement = document.getElementById("memberCount");
 
   tbody.innerHTML = "";
 
-  // Update the member count above the table
+  // Update the member count
   if (memberCountElement) {
     memberCountElement.textContent = members.length;
   }
@@ -105,19 +260,18 @@ function displayMembers(members) {
       const fullName = `${member.first_name} ${member.last_name}${
         member.suffix ? " " + member.suffix : ""
       }`;
-      const programCode = member.program?.code || member.program;
 
       const row = document.createElement("tr");
       row.className = "member-row";
       row.dataset.memberId = member.id;
 
       row.innerHTML = `
+        <td class="ps-3 text-muted">${member.id_school_number || "N/A"}</td>
         <td class="ps-3">${fullName}</td>
         <td class="ps-3 text-center">${member.year}</td>
-        <td class="ps-3 text-center">${programCode}</td>
+        <td class="ps-3 text-center">${member.program}</td>
       `;
 
-      // Click event listeners, implement action here
       row.addEventListener("click", () => {
         handleMemberClick(member);
       });
@@ -129,17 +283,19 @@ function displayMembers(members) {
         row.style.transform = "translateY(0)";
       }, index * 50);
     });
-
-    // Remove the summary row from the table - count is now above the table
   } else {
-    const message = selectedYear
-      ? `No members found for school year ${selectedYear}`
-      : "No members found";
-
     const emptyRow = document.createElement("tr");
     emptyRow.className = "summary-row";
+    let message = "No members found";
+
+    if (searchText) {
+      message = `No members found matching "${searchText}"`;
+    } else if (selectedYear !== "all" || selectedProgram !== "all") {
+      message = "No members found with selected filters";
+    }
+
     emptyRow.innerHTML = `
-      <td colspan="3" class="text-muted text-center">
+      <td colspan="4" class="text-muted text-center py-4">
         ${message}
       </td>
     `;

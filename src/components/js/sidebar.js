@@ -159,10 +159,17 @@ function setupSidebarFunctionality() {
 
     setupLogout(); // initialize logout functionality
 
-    const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
-    tooltipTriggerList.forEach(tooltipTriggerEl => {
-        new Tooltip(tooltipTriggerEl)
-    })
+    // Initialize tooltips for desktop
+    if (!isMobile()) {
+        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        tooltipTriggerList.forEach(tooltipTriggerEl => {
+            try {
+                new Tooltip(tooltipTriggerEl)
+            } catch (error) {
+                console.warn('Tooltip initialization failed:', error);
+            }
+        })
+    }
 
     const sidebarListItems = sidebar.querySelectorAll('li');
 
@@ -172,10 +179,15 @@ function setupSidebarFunctionality() {
      * @function disposeAllTooltips
      */
     function disposeAllTooltips() {
+        const tooltipTriggerList = Array.from(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
         tooltipTriggerList.forEach(tooltipTriggerEl => {
-            const tooltipInstance = Tooltip.getInstance(tooltipTriggerEl);
-            if (tooltipInstance) {
-                tooltipInstance.dispose();
+            try {
+                const tooltipInstance = Tooltip.getInstance(tooltipTriggerEl);
+                if (tooltipInstance) {
+                    tooltipInstance.dispose();
+                }
+            } catch (error) {
+                // Silently ignore if tooltip doesn't exist
             }
         });
     }
@@ -184,6 +196,34 @@ function setupSidebarFunctionality() {
     sidebarListItems.forEach(li => {
         li.addEventListener('mouseleave', disposeAllTooltips);
     });
+
+    // Setup gear icon dropdown
+    const gearIcon = document.querySelector('.more-btn');
+    if (gearIcon) {
+        gearIcon.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            
+            const userInfo = gearIcon.closest('.user-info');
+            const dropdownMenu = userInfo?.querySelector('.dropdown-menu');
+            
+            if (dropdownMenu) {
+                dropdownMenu.classList.toggle('show');
+                console.log('✓ Dropdown menu toggled, show class:', dropdownMenu.classList.contains('show'));
+            }
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', (e) => {
+            const userInfo = gearIcon.closest('.user-info');
+            const dropdownMenu = userInfo?.querySelector('.dropdown-menu');
+            
+            if (dropdownMenu && !userInfo?.contains(e.target)) {
+                dropdownMenu.classList.remove('show');
+            }
+        });
+    }
+
 
 
     /**

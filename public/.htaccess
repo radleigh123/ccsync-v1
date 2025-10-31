@@ -1,6 +1,4 @@
-# TODO: PHP Settings
-
-=begin 
+# URL Rewrite Rules
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
@@ -9,7 +7,6 @@
   RewriteCond %{REQUEST_FILENAME} !-d
   RewriteRule . /index.html [L]
 </IfModule>
-=end
 
 # PHP settings
 # php_value upload_max_filesize 10M

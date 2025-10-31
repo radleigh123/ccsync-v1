@@ -80,10 +80,28 @@ export async function refreshToken() {
  */
 export async function logout() {
     try {
+        // Set logout flag to prevent session restoration
+        window.isLoggingOut = true;
+        
+        console.log("🔐 Starting logout process...");
+        
+        // Sign out from Firebase
         await signOut(auth);
+        console.log("✓ Signed out from Firebase");
+        
+        // Clear localStorage
         localStorage.removeItem('user');
-        window.location.href = '/pages/login/login.html';
+        localStorage.removeItem('ccsync_active_sidebar_href');
+        localStorage.removeItem('ccsync_active_sidebar_text');
+        console.log("✓ Cleared local storage");
+        
+        // Redirect to login page
+        window.location.href = '/pages/auth/login.html';
     } catch (error) {
         console.error("Error logging out:", error);
+        // Still redirect even if there's an error
+        window.isLoggingOut = true;
+        localStorage.removeItem('user');
+        window.location.href = '/pages/auth/login.html';
     }
 }

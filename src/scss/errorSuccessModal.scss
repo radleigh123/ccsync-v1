@@ -1,0 +1,250 @@
+/**
+ * Error/Success Modal Styles
+ * User-friendly modal component for API responses
+ * 
+ * Features:
+ * - Backdrop blur effect
+ * - Responsive modal design
+ * - Success and error styling
+ * - Smooth animations
+ */
+
+@import "variables";
+
+// ==================== MODAL BACKDROP ====================
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
+  z-index: 9998;
+  display: none;
+
+  &.show {
+    display: block;
+    animation: fadeIn 0.2s ease-in-out;
+  }
+}
+
+// ==================== RESPONSE MODAL ====================
+.response-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  display: none;
+  min-width: 300px;
+  max-width: 500px;
+  animation: slideUp 0.3s ease-out;
+
+  &.show {
+    display: block;
+  }
+}
+
+// ==================== MODAL CONTENT ====================
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.modal-header {
+  padding: 1.5rem;
+  border-bottom: 1px solid #e9ecef;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  .modal-title {
+    margin: 0;
+    font-size: 1.25rem;
+    font-weight: 600;
+  }
+
+  .btn-close {
+    padding: 0;
+    background: transparent;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: #6c757d;
+    transition: color 0.2s ease;
+
+    &:hover {
+      color: #000;
+    }
+  }
+}
+
+.modal-body {
+  padding: 1.5rem;
+  flex-grow: 1;
+
+  p {
+    margin: 0 0 0.5rem 0;
+    line-height: 1.5;
+    color: #212529;
+  }
+
+  .text-muted {
+    color: #6c757d;
+    font-size: 0.875rem;
+    display: block;
+    margin-top: 0.5rem;
+
+    &.d-none {
+      display: none;
+    }
+  }
+}
+
+.modal-footer {
+  padding: 1rem 1.5rem;
+  border-top: 1px solid #e9ecef;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+
+  .btn {
+    padding: 0.5rem 1.5rem;
+    font-weight: 500;
+    border-radius: 0.25rem;
+    cursor: pointer;
+    transition: all 0.2s ease;
+
+    &.btn-primary {
+      background-color: #007bff;
+      color: white;
+      border: 1px solid #007bff;
+
+      &:hover {
+        background-color: #0056b3;
+        border-color: #0056b3;
+      }
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+}
+
+// ==================== MODAL STATES ====================
+.response-modal.error {
+  .modal-header {
+    background-color: #f8d7da;
+    border-bottom-color: #f5c6cb;
+
+    .modal-title {
+      color: #721c24;
+    }
+  }
+
+  .modal-body {
+    background-color: #fff;
+
+    p {
+      color: #721c24;
+    }
+  }
+
+  .btn-primary {
+    background-color: #dc3545;
+    border-color: #dc3545;
+
+    &:hover {
+      background-color: #c82333;
+      border-color: #c82333;
+    }
+  }
+}
+
+.response-modal.success {
+  .modal-header {
+    background-color: #d4edda;
+    border-bottom-color: #c3e6cb;
+
+    .modal-title {
+      color: #155724;
+    }
+  }
+
+  .modal-body {
+    background-color: #fff;
+
+    p {
+      color: #155724;
+    }
+  }
+
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+
+    &:hover {
+      background-color: #218838;
+      border-color: #218838;
+    }
+  }
+}
+
+// ==================== ANIMATIONS ====================
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 1;
+    transform: translate(-50%, -50%);
+  }
+  to {
+    opacity: 0;
+    transform: translate(-50%, -45%);
+  }
+}
+
+// ==================== RESPONSIVE ====================
+@media (max-width: 576px) {
+  .response-modal {
+    max-width: calc(100% - 2rem);
+    margin: 0 1rem;
+  }
+
+  .modal-header {
+    padding: 1rem;
+  }
+
+  .modal-body {
+    padding: 1rem;
+  }
+
+  .modal-footer {
+    padding: 0.75rem 1rem;
+  }
+}

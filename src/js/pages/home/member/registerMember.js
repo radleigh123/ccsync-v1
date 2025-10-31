@@ -5,13 +5,37 @@
  * 1. Search for a user by ID number (API call to getUserByIdNumber.php)
  * 2. Auto-fill readonly fields (firstName, lastName, email)
  * 3. Enable editable fields (birthDate, yearLevel, program, isPaid)
- * 4. Submit member registration to createMember.php
+ * 4. User fills in member details with inline validation
+ * 5. On form submit, validate with FormValidator (shows inline errors)
+ * 6. Show confirmation modal with complete details
+ * 7. Submit member registration to createMember.php
+ *
+ * IMPORTANT: userId is intentionally NOT sent to createMember.php
+ * Members are identified by idNumber (school ID), allowing independent tracking
  *
  * @author CCSync Development Team
  * @version 1.0
  */
 
-document.addEventListener('DOMContentLoaded', function () {
+import "/js/utils/core.js";
+import "/scss/pages/home/member/registerMember.scss";
+import "/scss/confirmationModal.scss";
+import { setSidebar } from "/components/js/sidebar";
+import { getCurrentSession } from "/js/utils/sessionManager";
+import { responseModal } from "/js/utils/errorSuccessModal.js";
+import { confirmationModal } from "/js/utils/confirmationModal.js";
+import { FormValidator } from "/js/utils/FormValidator.js";
+
+document.addEventListener('DOMContentLoaded', async function () {
+    // Initialize sidebar navigation
+    setSidebar();
+
+    // Validate user session
+    const session = await getCurrentSession();
+    if (!session) {
+        window.location.href = '/pages/auth/login.html';
+        return;
+    }
     // Form elements
     const searchBtn = document.getElementById('searchBtn');
     const idNumberInput = document.getElementById('idNumber');
@@ -32,10 +56,15 @@ document.addEventListener('DOMContentLoaded', function () {
     const isPaidInput = document.getElementById('isPaid');
 
     let foundUser = null;
+    let formValidator = null;
+
+    // Initialize FormValidator for inline validation on member details
+    formValidator = new FormValidator(memberForm);
 
     /**
      * Search for a user by ID number
-     * Fetches user data from the backend API
+     * Fetches user data from the ccsync-api-plain backend API
+     * Also checks if the user is already registered as a member
      */
     searchBtn.addEventListener('click', async function () {
         const idNumber = idNumberInput.value.trim();
@@ -49,17 +78,47 @@ document.addEventListener('DOMContentLoaded', function () {
             searchBtn.disabled = true;
             searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Searching...';
 
-            const response = await fetch(`/temp/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`);
-            const result = await response.json();
+            // First, search for the user
+            const userResponse = await fetch(`/ccsync-api-plain/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            const userResult = await userResponse.json();
 
-            if (result.success) {
-                foundUser = result.data;
+            if (userResult.success) {
+                foundUser = userResult.data;
+                
+                // Check if user is already registered as a member
+                try {
+                    const memberCheckResponse = await fetch(`/ccsync-api-plain/member/checkMemberByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`, {
+                        headers: {
+                            'Accept': 'application/json'
+                        }
+                    });
+                    const memberCheckResult = await memberCheckResponse.json();
+                    
+                    if (memberCheckResult.exists) {
+                        // User already registered - show warning
+                        showSearchMessage('User is already registered', 'warning');
+                        clearForm();
+                        enableEditableFields(false);
+                        registerBtn.disabled = true;
+                        foundUser = null;
+                        return;
+                    }
+                } catch (memberCheckError) {
+                    console.error('Error checking member status:', memberCheckError);
+                    // Continue anyway - if check fails, allow user to proceed
+                }
+                
+                // User exists and is not a member - proceed
                 autoFillUserFields(foundUser);
                 enableEditableFields(true);
-                showSearchMessage('User found! Please complete the registration.', 'success');
                 registerBtn.disabled = false;
+                showSearchMessage('User found! Please complete the registration form below.', 'success');
             } else {
-                showSearchMessage(result.message || 'User not found', 'danger');
+                showSearchMessage(userResult.message || 'User not found', 'danger');
                 clearForm();
                 enableEditableFields(false);
                 registerBtn.disabled = true;
@@ -86,6 +145,90 @@ document.addEventListener('DOMContentLoaded', function () {
         lastNameInput.value = user.lastName || '';
         emailInput.value = user.email || '';
         idNumberInput.value = user.idNumber || '';
+    }
+
+    /**
+     * Show confirmation modal with user data and member details
+     * Allows user to verify ALL information before final registration submission
+     * @param {Object} user User data from API
+     * @param {Object} memberData Member form data to be submitted
+     */
+    function showConfirmationModal(user, memberData) {
+        // Format year level for display
+        const yearLevelMap = {
+            '1': '1st Year',
+            '2': '2nd Year',
+            '3': '3rd Year',
+            '4': '4th Year'
+        };
+        const yearDisplay = yearLevelMap[memberData.year] || memberData.year;
+
+        const detailsHTML = `
+            <div class="confirmation-section">
+                <h6 class="mb-3"><strong>User Information</strong></h6>
+                <div class="detail-item">
+                    <span class="detail-label">ID Number:</span>
+                    <span class="detail-value">${user.idNumber}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Name:</span>
+                    <span class="detail-value">${user.firstName} ${user.lastName}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Email:</span>
+                    <span class="detail-value">${user.email}</span>
+                </div>
+            </div>
+            <hr class="my-3">
+            <div class="confirmation-section">
+                <h6 class="mb-3"><strong>Member Details</strong></h6>
+                <div class="detail-item">
+                    <span class="detail-label">Year Level:</span>
+                    <span class="detail-value">${yearDisplay}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Program:</span>
+                    <span class="detail-value">${memberData.program}</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Birth Date:</span>
+                    <span class="detail-value">${memberData.birth_date}</span>
+                </div>
+                ${memberData.suffix ? `<div class="detail-item">
+                    <span class="detail-label">Suffix:</span>
+                    <span class="detail-value">${memberData.suffix}</span>
+                </div>` : ''}
+                <div class="detail-item">
+                    <span class="detail-label">Paid Status:</span>
+                    <span class="detail-value">${memberData.is_paid ? 'Yes, Paid' : 'Not Paid'}</span>
+                </div>
+            </div>
+        `;
+
+        confirmationModal.show(
+            'Confirm Registration Details',
+            'Please review all information below before confirming. Click "Confirm & Register" to proceed.',
+            {
+                details: detailsHTML,
+                yesText: 'Confirm & Register',
+                noText: 'Cancel',
+                onYes: () => {
+                    // User confirmed - proceed with actual registration API call
+                    submitMemberRegistration(memberData);
+                    idNumberInput.focus();
+                },
+                onNo: () => {
+                    // User declined - reset for new search
+                    foundUser = null;
+                    clearForm();
+                    enableEditableFields(false);
+                    registerBtn.disabled = true;
+                    idNumberInput.value = '';
+                    idNumberInput.focus();
+                    showSearchMessage('Search cancelled. Please enter a different ID.', 'info');
+                }
+            }
+        );
     }
 
     /**
@@ -126,52 +269,16 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     /**
-     * Handle form submission
-     * Validates and sends member registration to backend
+     * Submit member registration to API
+     * This is called AFTER user confirms in the confirmation modal
+     * @param {Object} memberData Prepared member data to submit
      */
-    memberForm.addEventListener('submit', async function (e) {
-        e.preventDefault();
-
-        if (!foundUser) {
-            showSearchMessage('Please search for a user first', 'warning');
-            return;
-        }
-
-        // Validate required fields
-        if (!birthDateInput.value) {
-            showSearchMessage('Birth date is required', 'danger');
-            return;
-        }
-
-        if (!yearLevelInput.value) {
-            showSearchMessage('Year level is required', 'danger');
-            return;
-        }
-
-        if (!programInput.value) {
-            showSearchMessage('Program is required', 'danger');
-            return;
-        }
-
+    async function submitMemberRegistration(memberData) {
         try {
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
 
-            const memberData = {
-                userId: foundUser.id,
-                idNumber: foundUser.idNumber,
-                firstName: foundUser.firstName,
-                lastName: foundUser.lastName,
-                email: foundUser.email,
-                suffix: suffixInput.value || null,
-                birthDate: birthDateInput.value,
-                yearLevel: parseInt(yearLevelInput.value),
-                program: programInput.value,
-                isPaid: isPaidInput.checked,
-                enrollmentDate: new Date().toISOString().split('T')[0]
-            };
-
-            const response = await fetch('/temp/members/createMember.php', {
+            const response = await fetch('/ccsync-api-plain/member/createMember.php', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -182,27 +289,78 @@ document.addEventListener('DOMContentLoaded', function () {
             const result = await response.json();
 
             if (result.success) {
-                showSearchMessage('Member registered successfully!', 'success');
+                responseModal.showSuccess(
+                    'Member Registered Successfully!',
+                    `${foundUser.firstName} ${foundUser.lastName} has been registered as a member.`
+                );
+                
                 clearForm();
                 enableEditableFields(false);
                 idNumberInput.value = '';
-                searchMessage.style.display = 'none';
+                registerBtn.disabled = true;
                 foundUser = null;
-
-                // Optionally redirect or show success
-                setTimeout(() => {
-                    window.location.href = '?page=member/view-member';
-                }, 2000);
             } else {
-                showSearchMessage(result.message || 'Error registering member', 'danger');
+                // Handle specific error cases
+                if (response.status === 409) {
+                    // Duplicate member - show in search message area
+                    showSearchMessage(result.message || 'This student is already registered as a member', 'danger');
+                } else {
+                    // Other errors - show in modal
+                    responseModal.showError(
+                        'Registration Failed',
+                        result.message || 'An error occurred while registering the member.'
+                    );
+                }
             }
         } catch (error) {
             console.error('Error registering member:', error);
-            showSearchMessage('An error occurred while registering. Please try again.', 'danger');
+            responseModal.showError(
+                'Registration Error',
+                'An unexpected error occurred while registering the member. Please try again.'
+            );
         } finally {
             registerBtn.disabled = false;
             registerBtn.innerHTML = 'Register Member';
         }
+    }
+
+    /**
+     * Handle form submission
+     * Validates all required fields with FormValidator (shows inline errors)
+     * Then shows confirmation modal with complete details
+     * IMPORTANT: userId is intentionally NOT sent - members identified by idNumber
+     */
+    memberForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        if (!foundUser) {
+            showSearchMessage('Please search for and confirm a user first', 'warning');
+            return;
+        }
+
+        // Validate the form using FormValidator (shows inline errors)
+        if (!formValidator.validateForm()) {
+            console.log("❌ Form validation failed - please fix the highlighted fields");
+            return;
+        }
+
+        // Prepare data from camelCase to snake_case format for ccsync-api-plain
+        // IMPORTANT: userId is intentionally excluded - members tracked by idNumber
+        const memberData = {
+            id_school_number: foundUser.idNumber,
+            first_name: foundUser.firstName,
+            last_name: foundUser.lastName,
+            email: foundUser.email,
+            suffix: suffixInput.value || null,
+            birth_date: birthDateInput.value,
+            year: parseInt(yearLevelInput.value),
+            program: programInput.value,
+            is_paid: isPaidInput.checked ? 1 : 0,
+            enrollment_date: new Date().toISOString().split('T')[0]
+        };
+
+        // Show confirmation modal with all details before submission
+        showConfirmationModal(foundUser, memberData);
     });
 
     // Allow Enter key to search

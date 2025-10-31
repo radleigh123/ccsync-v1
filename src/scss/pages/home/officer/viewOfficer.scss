@@ -89,6 +89,14 @@ i {
     justify-items: center; 
 }
 
+#shimmerContainer {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 2rem; 
+    padding: 3rem 2rem 2rem 2rem;
+    justify-items: center; 
+}
+
 .officer-card {
     border-radius: 20px;
     background-color: white;

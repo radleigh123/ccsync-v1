@@ -1,158 +1,218 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Participant</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Edit Event</title>
+  </head>
 
-	<body>
-		<nav id="sidebar"></nav>
-		<!-- Body -->
-		<main class="main-content-bg">
-			<div class="container-fluid px-0">
-				<div
-					id="header"
-					class="d-flex flex-row gap-3 align-items-center">
-					<!-- BACK -->
-					<a
-						href="/pages/home/event/view-event.html"
-						class="text-decoration-none">
-						<i class="bi bi-caret-left-fill p-0 m-0"></i>
-					</a>
-					<p class="p-0 m-0 h3 fw-bold">Edit event</p>
-				</div>
-			</div>
-			<div class="card registration-card mt-4">
-				<div class="card-body p-4">
-					<h5 class="section-title mb-4" style="color: black">
-						Event information
-					</h5>
-					<form>
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="eventName" class="form-label">
-									Event name:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="eventName"
-									placeholder="Your catchy event name" />
-							</div>
-							<div class="col-md-6">
-								<label for="maxParticipants" class="form-label">
-									Max participants:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="maxParticipants"
-									placeholder="Max participants" />
-							</div>
-						</div>
+  <body>
+    <nav id="sidebar"></nav>
+    <!-- Main Content -->
+    <!-- Body -->
+    <main class="main-content-bg">
+      <div class="container-fluid">
+        <div id="header" class="d-flex flex-row gap-5 align-items-center">
+          <!-- Back Button and Title Section -->
+          <div class="d-flex flex-row gap-3 align-items-center">
+            <a
+              href="#"
+              class="text-decoration-none"
+              id="backButton">
+              <i class="bi bi-caret-left-fill p-0 m-0"></i>
+            </a>
+            <div>
+              <p class="p-0 m-0 h1 fw-bold text-dark">Edit Event</p>
+              <p class="text-muted mb-0">
+                Update event details
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="venue" class="form-label">
-									Venue:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="venue"
-									placeholder="Add venue" />
-							</div>
-							<div class="col-md-6">
-								<label
-									for="registrationStart"
-									class="form-label">
-									Registration start:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="registrationStart"
-									placeholder="Add registration start date" />
-							</div>
-						</div>
+      <div id="body" class="container-fluid mt-4">
+        <div class="card registration-card">
+          <div class="card-body p-4">
+            <h5 class="section-title mb-4" style="color: black">
+              Event Information
+            </h5>
+            <form id="editEventForm">
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="eventName">Event name:</label>
+                      <small id="eventName-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="eventName"
+                      placeholder="Your catchy event name"
+                      data-validate="required|min:3"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="venue">Venue:</label>
+                      <small id="venue-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="venue"
+                      placeholder="Add venue"
+                      data-validate="required|min:3"
+                    />
+                  </div>
+                </div>
+              </div>
 
-						<div class="row mb-3">
-							<div class="col-md-6">
-								<label for="date" class="form-label">
-									Event Date:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="eventDate"
-									placeholder="Add event date" />
-							</div>
-							<div class="col-md-6">
-								<label for="registrationEnd" class="form-label">
-									Registration end:
-								</label>
-								<input
-									type="text"
-									class="form-control"
-									id="registrationEnd"
-									placeholder="Add registration end date" />
-							</div>
-						</div>
+              <div class="row mb-3">
+                <div class="col-md-12">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="description">Description (optional):</label>
+                      <small id="description-error" class="error-message"></small>
+                    </div>
+                    <textarea
+                      class="form-control"
+                      id="description"
+                      placeholder="Event description"
+                      rows="3"
+                      data-validate="max:500"
+                    ></textarea>
+                  </div>
+                </div>
+              </div>
 
-						<div class="row mb-4">
-							<div class="col-md-3 cs-form">
-								<label for="fromTime" class="form-label">
-									From:
-								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="fromTime"
-									placeholder="10:05 AM" />
-							</div>
-							<div class="col-md-3 cs-form">
-								<label for="toTime" class="form-label">
-									To:
-								</label>
-								<input
-									type="time"
-									class="form-control"
-									id="toTime"
-									placeholder="12:05 PM" />
-							</div>
-						</div>
+              <div class="row mb-3">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="eventDate">Event Date:</label>
+                      <small id="eventDate-error" class="error-message"></small>
+                    </div>
+                    <input 
+                      type="date" 
+                      class="form-control" 
+                      id="eventDate"
+                      data-validate="required|date"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="maxParticipants">Max participants (optional):</label>
+                      <small id="maxParticipants-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="number"
+                      class="form-control"
+                      id="maxParticipants"
+                      placeholder="Leave empty for unlimited"
+                      min="1"
+                      data-validate="numeric"
+                    />
+                  </div>
+                </div>
+              </div>
 
-						<div
-							id="editCardButtonGroup"
-							class="d-flex flex-row justify-content-around gap-4 mt-4">
-							<a
-								href="/pages/home/event/view-event.html"
-								role="button"
-								id="cancelButton"
-								class="btn btn-secondary flex-fill fw-bold">
-								Cancel
-							</a>
-							<button
-								type="submit"
-								id="addButton"
-								class="btn btn-primary-ccsync flex-fill fw-bold">
-								Register
-							</button>
-							<button
-								id="closeButton"
-								class="btn btn-danger flex-fill fw-bold">
-								Close event
-							</button>
-						</div>
-					</form>
-				</div>
-			</div>
-		</main>
+              <div class="row mb-3">
+                <div class="col-md-3 cs-form">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="fromTime">Start Time:</label>
+                      <small id="fromTime-error" class="error-message"></small>
+                    </div>
+                    <input 
+                      type="time" 
+                      class="form-control" 
+                      id="fromTime"
+                      data-validate="required"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-3 cs-form">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="toTime">End Time:</label>
+                      <small id="toTime-error" class="error-message"></small>
+                    </div>
+                    <input 
+                      type="time" 
+                      class="form-control" 
+                      id="toTime"
+                      data-validate="required|time-after:fromTime"
+                    />
+                  </div>
+                </div>
+              </div>
 
-		<script
-			type="module"
-			src="/js/pages/home/event/editEvent.js"
-			defer></script>
-	</body>
+              <div class="row mb-4">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="registrationStart">Registration start:</label>
+                      <small id="registrationStart-error" class="error-message"></small>
+                    </div>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="registrationStart"
+                      data-validate="date"
+                    />
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <div class="label-error-row">
+                      <label for="registrationEnd">Registration end (optional):</label>
+                      <small id="registrationEnd-error" class="error-message" style="display: none;"></small>
+                    </div>
+                    <input
+                      type="date"
+                      class="form-control"
+                      id="registrationEnd"
+                      data-validate="date"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-grid">
+                <button type="submit" id="submitBtn" class="btn btn-register" disabled>
+                  Save Changes
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Error/Success Modal -->
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+    <div id="responseModal" class="response-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modalTitle" class="modal-title">Modal Title</h5>
+          <button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">Modal message here</p>
+          <small id="modalDetails" class="text-muted d-none">Details</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <script type="module" src="/js/pages/home/event/editEvent.js" defer></script>
+  </body>
 </html>

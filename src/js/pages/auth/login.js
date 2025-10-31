@@ -61,10 +61,8 @@ document.addEventListener("DOMContentLoaded", () => {
                         idToken = await userCredentials.user.getIdToken();
                         return idToken;
                     })
-                    .then(idToken => {
-                        // NOTE: TEMP, change URL to your backend endpoints
-                        // return fetch('http://localhost:8000/api/auth/verify-token', {
-                        return fetch('https://ccsync-api-plain-dc043.wasmer.app/auth/verifyToken.php', {
+                    .then(async idToken => {
+                        return fetch('http://localhost:8000/api/auth/login', {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json',
@@ -76,10 +74,11 @@ document.addEventListener("DOMContentLoaded", () => {
                     .then(response => {
                         if (!response.ok) {
                             return response.text().then(text => {
+                                console.log('Raw response:', text);
                                 try {
                                     return JSON.parse(text);
                                 } catch (e) {
-                                    throw new Error(text || 'Failed to verify token');
+                                    throw new Error(`Server responded with: ${text}`);
                                 }
                             });
                         }

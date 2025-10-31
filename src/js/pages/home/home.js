@@ -2,7 +2,8 @@ import "/js/utils/core.js";
 import "/scss/pages/home/home.scss";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { renderStatsCard } from "/components/js/stats-card.js";
-import { fetchMembers, fetchEvents } from "/js/utils/api.js";
+import { fetchMembers, fetchUsers, fetchThisMonthEvents } from "/js/utils/api.js";
+import { shimmerLoader } from "/js/utils/shimmerLoader.js";
 
 let userData = null;
 let allMembers = []; // Store all members
@@ -27,17 +28,23 @@ async function initHome() {
 async function loadHero() {
   const statsCardsContainer = document.getElementById("statsCards");
 
-  // Hardcoded value for Total CSS Students
-  const totalCssStudentsValue = "1256";
-
   try {
-    const data = await fetchMembers();
-    allMembers = data.members;
+    // Fetch all required data
+    const membersData = await fetchMembers();
+    const usersData = await fetchUsers(); // TODO: ask Jako about this
+    
+    allMembers = membersData.members || [];
+    const usersLength = Object.keys(usersData.users).length;
 
+    // Calculate stats from actual database data
     const registeredMembersValue = allMembers.length;
-    const paidMembersCount = allMembers.filter(
-      (member) => member.isPaid
-    ).length;
+    const totalCssStudentsValue = usersLength || 0;
+    const paidMembersCount = allMembers.filter((member) => member.is_paid === 1 || member.is_paid === true).length;
+
+    console.log('✓ Dashboard stats loaded:');
+    console.log('  - Registered Members:', registeredMembersValue);
+    console.log('  - Total CCS Students:', totalCssStudentsValue);
+    console.log('  - Paid Members:', paidMembersCount);
 
     // Render stats cards
     const cards = [
@@ -52,7 +59,7 @@ async function loadHero() {
       {
         icon: "mortarboard-fill",
         color: "success",
-        title: "Total CSS Students",
+        title: "Total CCS Students",
         value: totalCssStudentsValue,
         description: "Computer Science students enrolled",
         id: "totalCSSStudents",
@@ -78,6 +85,13 @@ async function loadHero() {
       );
       statsCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
     }
+
+    // Hide shimmer and show stats
+    shimmerLoader.hide("#statsShimmerContainer", 600);
+    setTimeout(() => {
+      document.getElementById("statsShimmerContainer").style.display = "none";
+      document.getElementById("statsCards").style.display = "";
+    }, 600);
   } catch (error) {
     console.error("Error loading hero data:", error);
     // Fallback: render with default values
@@ -93,8 +107,8 @@ async function loadHero() {
       {
         icon: "mortarboard-fill",
         color: "success",
-        title: "Total CSS Students",
-        value: totalCssStudentsValue,
+        title: "Total CCS Students",
+        value: "0",
         description: "Computer Science students enrolled",
         id: "totalCSSStudents",
       },
@@ -119,11 +133,18 @@ async function loadHero() {
       );
       statsCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
     }
+
+    // Still hide shimmer and show stats even on error
+    shimmerLoader.hide("#statsShimmerContainer", 300);
+    setTimeout(() => {
+      document.getElementById("statsShimmerContainer").style.display = "none";
+      document.getElementById("statsCards").style.display = "";
+    }, 300);
   }
 }
 
 /**
- * Fetches and renders the list of events on the home page.
+ * Fetches and renders the list of events for the current month on the home page.
  * @async
  * @function printEventList
  * @returns {Promise<void>}
@@ -135,13 +156,11 @@ async function printEventList() {
   let events = [];
 
   try {
-    console.log("Fetching events from API...");
-    const data = await fetchEvents(true);
+    console.log("Fetching this month's events from API...");
+    const data = await fetchThisMonthEvents();
 
     events = data.events || [];
-    console.log("Fetched events data:", data);
-    console.log("Events array:", events);
-    console.log("Number of events:", events.length);
+    console.log("✓ Fetched this month's events:", events.length, "events");
   } catch (error) {
     console.error("Error fetching event list:", error);
     console.log("Falling back to no events display");
@@ -153,7 +172,7 @@ async function printEventList() {
             <div class="glassmorphic-card">
                 <div class="card-body p-5 text-center">
                     <i class="bi bi-calendar-x display-1 text-white-50 mb-3"></i>
-                    <h4 class="text-white mb-3">📅 No events currently scheduled</h4>
+                    <h4 class="text-white mb-3">📅 No events currently scheduled for this month</h4>
                     <p class="text-white-75 mb-4">Check back later for upcoming events and activities</p>
                     <a href="/pages/home/event/add-event.html" class="btn btn-light text-dark">
                         ➕ Add New Event
@@ -162,6 +181,12 @@ async function printEventList() {
             </div>
         </div>
     `;
+    // Hide shimmer and show event list
+    shimmerLoader.hide("#eventShimmerList", 600);
+    setTimeout(() => {
+      document.getElementById("eventShimmerList").style.display = "none";
+      document.getElementById("eventList").style.display = "";
+    }, 600);
     return;
   }
 
@@ -207,6 +232,13 @@ async function printEventList() {
         `;
     eventList.appendChild(eventItem);
   });
+
+  // Hide shimmer and show event list
+  shimmerLoader.hide("#eventShimmerList", 600);
+  setTimeout(() => {
+    document.getElementById("eventShimmerList").style.display = "none";
+    document.getElementById("eventList").style.display = "";
+  }, 600);
 }
 
 // Initialize the home page

@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     email: email,
                     password: password,
                     password_confirmation: password_confirmation,
-                    id_number: idNumber
+                    id_school_number: idNumber
                 }),
             });
 
