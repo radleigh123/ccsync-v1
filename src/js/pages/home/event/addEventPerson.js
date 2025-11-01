@@ -2,10 +2,10 @@ import '/js/utils/core.js';
 import '/scss/pages/home/event/addEventPerson.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
-import { responseModal } from '/js/utils/errorSuccessModal';
+import { responseModal } from '/js/utils/errorSuccessModal.js';
 
 let userData = null;
-let selectedEvent = null;
+let selectedEventId = null; // Store the database event ID
 let selectedMemberId = null; // Store the database member ID
 let searchTimeout = null; // Debounce timer for search
 
@@ -37,6 +37,7 @@ async function loadEventData() {
 
     try {
         const eventId = new URLSearchParams(window.location.search).get('event_id');
+        selectedEventId = eventId;
 
         if (!eventId) {
             responseModal.showError('Error', 'No event ID provided');
@@ -285,6 +286,7 @@ async function checkIfAlreadyRegistered(memberId) {
     }
 }
 
+// TODO: Move to utility
 /**
  * Get year suffix (st, nd, rd, th)
  */
@@ -303,22 +305,21 @@ function getYearSuffix(year) {
  * Register participant for event
  */
 async function registerParticipant() {
-    if (!selectedMemberId || !selectedEvent) {
+    if (!selectedMemberId || !selectedEventId) {
         alert('Please provide all required information');
         return;
     }
 
     try {
         const response = await fetch(
-            '/ccsync-api-plain/event/registerParticipant.php',
+            `http://localhost:8000/api/events/${selectedEventId}/add`,
             {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json',
                     Authorization: `Bearer ${userData.firebase_token}`,
+                    'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    event_id: selectedEvent.id,
                     member_id: selectedMemberId,  // Use the stored member database ID
                 }),
             }
@@ -326,16 +327,18 @@ async function registerParticipant() {
 
         const result = await response.json();
 
-        if (result.success) {
+        if (response.ok) {
+            console.log(response.ok);
             responseModal.showSuccess(
                 'Participant Registered',
                 'The participant has been successfully registered for this event.',
+                null,
                 () => {
                     // Redirect back to view events after modal closes
                     window.location.href = '/pages/home/event/view-event.html';
-                }
-            );
+                });
         } else {
+            console.log(`ERROR:`, response.ok);
             responseModal.showError(
                 'Registration Failed',
                 result.message || 'Failed to register participant'

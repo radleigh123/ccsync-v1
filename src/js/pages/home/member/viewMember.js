@@ -39,7 +39,7 @@ async function loadMembers(page = 1) {
 
     // Call API with pagination parameters
     const response = await fetch(
-      `http://localhost:8000/api/ccsync-api-plain/member/getMembers.php?page=${page}&limit=${currentLimit}`,
+      `http://localhost:8000/api/members?page=${page}&per_page=${currentLimit}`,
       {
         headers: {
           Authorization: `Bearer ${userData.firebase_token}`,
@@ -56,12 +56,14 @@ async function loadMembers(page = 1) {
     }
 
     const data = await response.json();
+    const members = data.members;
+    const membersLengthPage = Object.keys(members.data).length;
 
     // Check if members exists and has data
-    if (data.success && data.members && data.members.length > 0) {
-      allMembers = data.members;
-      paginationData = data.pagination;
-      currentPage = paginationData.page;
+    if (membersLengthPage > 0) {
+      allMembers = members.data;
+      paginationData = members;
+      currentPage = paginationData.current_page;
     } else {
       allMembers = [];
       paginationData = null;
@@ -212,7 +214,7 @@ function setupPaginationButtons() {
 
   if (prevBtn) {
     prevBtn.addEventListener("click", () => {
-      if (paginationData && paginationData.hasPrev) {
+      if (paginationData && paginationData.prev_page_url) {
         loadMembers(currentPage - 1);
       }
     });
@@ -220,7 +222,7 @@ function setupPaginationButtons() {
 
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
-      if (paginationData && paginationData.hasNext) {
+      if (paginationData && paginationData.next_page_url) {
         loadMembers(currentPage + 1);
       }
     });
@@ -234,12 +236,12 @@ function updatePaginationControls() {
 
   if (paginationData) {
     // Update button states
-    if (prevBtn) prevBtn.disabled = !paginationData.hasPrev;
-    if (nextBtn) nextBtn.disabled = !paginationData.hasNext;
+    if (prevBtn) prevBtn.disabled = !paginationData.prev_page_url;
+    if (nextBtn) nextBtn.disabled = !paginationData.next_page_url;
 
     // Update page info display
     if (pageInfo) {
-      pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total members)`;      
+      pageInfo.textContent = `Page ${paginationData.current_page} of ${paginationData.last_page} (${paginationData.total} total members)`;      
     }
   }
 }
@@ -255,6 +257,9 @@ function displayMembers(members) {
     memberCountElement.textContent = members.length;
   }
 
+  console.log(members);
+  console.log(members.length);
+
   if (members.length > 0) {
     members.forEach((member, index) => {
       const fullName = `${member.first_name} ${member.last_name}${
@@ -269,7 +274,7 @@ function displayMembers(members) {
         <td class="ps-3 text-muted">${member.id_school_number || "N/A"}</td>
         <td class="ps-3">${fullName}</td>
         <td class="ps-3 text-center">${member.year}</td>
-        <td class="ps-3 text-center">${member.program}</td>
+        <td class="ps-3 text-center">${member.program.code}</td>
       `;
 
       row.addEventListener("click", () => {

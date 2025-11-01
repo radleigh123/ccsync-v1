@@ -61,11 +61,8 @@ export async function initSettings() {
  */
 async function setupSettingsData() {
     try {
-        const params = new URLSearchParams();
         const userId = JSON.parse(localStorage.getItem("user")).id;
-        params.append("id", userId);
-
-        const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/getProfile.php?${params}`, {
+        const response = await fetch(`http://localhost:8000/api/auth/users/${userId}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
@@ -79,9 +76,7 @@ async function setupSettingsData() {
         }
 
         const data = await response.json();
-        userProfile = data.userProfile;
-
-        console.log(userProfile);
+        userProfile = data.user;
 
         const elements = {
             email: document.getElementById('email'),
@@ -106,13 +101,13 @@ function populateUserData(userData, elements) {
 
     // Display Name
     if (elements.displayName) {
-        elements.displayName.value = userData.display_name ||
-            `${userData.first_name || ''} ${userData.last_name || ''}`.trim() || '';
+        elements.displayName.value = userData.name;
     }
 
     // Bio
     if (elements.bio) {
-        elements.bio.value = userData.bio || '';
+        // TODO: temporary school number
+        elements.bio.value = userData.id_school_number || '';
     }
 
     // Gender (select dropdown)
@@ -152,7 +147,7 @@ function setupFormHandlers() {
     const newPassword = document.getElementById('new-password');
     const confirmPassword = document.getElementById('confirm-password');
     passwordForm(
-        userData,
+        userProfile,
         document.getElementById('current-password')?.closest('.card'),
         updatePasswordBtn,
         {
@@ -161,8 +156,8 @@ function setupFormHandlers() {
             confirmPassword
         });
 
-    profileForm(userData, document.getElementById('profile-form'));
-    profileImgForm(userData, document.getElementById('profile-image-form'));
+    profileForm(userProfile, document.getElementById('profile-form'));
+    profileImgForm(userProfile, document.getElementById('profile-image-form'));
 
     // For tab changes to update URL
     const tabEls = document.querySelectorAll('button[data-bs-toggle="tab"]');

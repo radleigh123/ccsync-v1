@@ -135,7 +135,9 @@ async function handleSubmit(event) {
         // Call the API utility function
         const response = await createEvent(payload);
 
-        if (response.success) {
+        // TODO: Same situation to editEvent, instead of relying on data, we'll utilize response's status code 
+        // Temporary
+        if (response.message === 'Event created successfully') {
             console.log("✓ Event created successfully:", response.event);
             responseModal.showSuccess("Success!", "Event created successfully!", null, () => {
                 window.location.href = "/pages/home/event/view-event.html";

@@ -125,6 +125,24 @@
 			</div>
 		</main>
 
+		<!-- Error/Success Modal -->
+		<div id="modalBackdrop" class="modal-backdrop"></div>
+		<div id="responseModal" class="response-modal">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 id="modalTitle" class="modal-title">Modal Title</h5>
+					<button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+					<p id="modalMessage">Modal message here</p>
+					<small id="modalDetails" class="text-muted d-none">Details</small>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
+				</div>
+			</div>
+		</div>
+
 		<script
 			type="module"
 			src="/js/pages/home/event/addEventPerson.js"

@@ -38,11 +38,8 @@ export async function initProfile() {
 
 async function setupProfile() {
     try {
-        const params = new URLSearchParams();
         const userId = JSON.parse(localStorage.getItem("user")).id;
-        params.append("id", userId);
-
-        const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/getProfile.php?${params}`, {
+        const response = await fetch(`http://localhost:8000/api/auth/users/${userId}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
@@ -56,9 +53,7 @@ async function setupProfile() {
         }
 
         const data = await response.json();
-        userProfile = data.userProfile;
-
-        console.log(userProfile);
+        userProfile = data.user;
 
         const elements = {
             name: document.querySelector("#user-name-full"),
@@ -81,7 +76,7 @@ async function setupProfile() {
 function populateUserData(userData, elements) {
     // Display name
     if (elements.name) {
-        elements.name.textContent = userData.display_name || `${userData.first_name} ${userData.last_name}`.trim();
+        elements.name.textContent = userData.name;
     }
 
     // Email
@@ -91,7 +86,7 @@ function populateUserData(userData, elements) {
 
     // Bio
     if (elements.bio) {
-        elements.bio.textContent = userData.bio || "SERVER ERROR: no ID number found";
+        elements.bio.textContent = userData.id_school_number || "SERVER ERROR: no ID number found";
     }
 
     // Profile Image

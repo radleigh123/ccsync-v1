@@ -162,8 +162,8 @@ export async function fetchThisMonthEvents() {
  * @param {string} eventData.description - Event description
  * @param {string} eventData.venue - Event venue
  * @param {string} eventData.event_date - Event date (YYYY-MM-DD)
- * @param {string} eventData.time_from - Start time (HH:MM)
- * @param {string} eventData.time_to - End time (HH:MM)
+ * @param {string} eventData.time_from - Start time (HH:MM:SS)
+ * @param {string} eventData.time_to - End time (HH:MM:SS)
  * @param {string} [eventData.registration_start] - Registration start date
  * @param {string} [eventData.registration_end] - Registration end date
  * @param {number} [eventData.max_participants] - Maximum participants
@@ -177,7 +177,7 @@ export async function createEvent(eventData) {
 
         console.log("event data:", eventData);
 
-        return await apiFetch('/ccsync-api-plain/event/createEvent.php', {
+        return await apiFetch('/events', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,
@@ -202,8 +202,8 @@ export async function createEvent(eventData) {
  * @param {string} eventData.description - Event description
  * @param {string} eventData.venue - Event venue
  * @param {string} eventData.event_date - Event date (YYYY-MM-DD)
- * @param {string} eventData.time_from - Start time (HH:MM)
- * @param {string} eventData.time_to - End time (HH:MM)
+ * @param {string} eventData.time_from - Start time (HH:MM:SS)
+ * @param {string} eventData.time_to - End time (HH:MM:SS)
  * @param {string} [eventData.registration_start] - Registration start date
  * @param {string} [eventData.registration_end] - Registration end date
  * @param {number} [eventData.max_participants] - Maximum participants
@@ -216,7 +216,7 @@ export async function updateEvent(eventId, eventData) {
 
         console.log("📝 Updating event:", eventId, eventData);
 
-        return await apiFetch(`/ccsync-api-plain/event/updateEvent.php?event_id=${eventId}`, {
+        return await apiFetch(`/events/${eventId}`, {
             method: 'PUT',
             headers: {
                 'Authorization': `Bearer ${token}`,

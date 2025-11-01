@@ -7,6 +7,7 @@ import { getCurrentSession } from '/js/utils/sessionManager';
 import { updateEvent } from '/js/utils/api.js';
 import { FormValidator } from '/js/utils/formValidator.js';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { parseTime, parseDate } from "/js/utils/date.js";
 
 let userData = null;
 let formValidator = null;
@@ -131,20 +132,14 @@ async function handleSubmit(event) {
     const registrationEnd = document.getElementById("registrationEnd").value;
     const maxParticipants = document.getElementById("maxParticipants").value.trim();
 
-    // ===== ADVANCED DATE VALIDATIONS =====
-    
     // Helper function to parse date string (YYYY-MM-DD) to local midnight Date object
-    const parseDateString = (dateStr) => {
-        const [year, month, day] = dateStr.split('-');
-        const date = new Date(year, parseInt(month) - 1, day, 0, 0, 0, 0);
-        return date;
-    };
-    
+    // TODO: parseDateString function moved to utility
+
     // Today's date at midnight for comparison (local time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    const eventDateObj = parseDateString(eventDate);
+    const eventDateObj = parseDate(eventDate);
 
     // Validation 1: Event date must be in the future (not today, not past)
     if (eventDateObj <= today) {
@@ -154,7 +149,7 @@ async function handleSubmit(event) {
 
     // Validation 2: If registration start is provided
     if (registrationStart) {
-        const regStartDateObj = parseDateString(registrationStart);
+        const regStartDateObj = parseDate(registrationStart);
 
         // Registration start cannot be before or on today
         if (regStartDateObj <= today) {
@@ -176,7 +171,7 @@ async function handleSubmit(event) {
 
         // Validation 3: If both registration start and end are provided
         if (registrationEnd) {
-            const regEndDateObj = parseDateString(registrationEnd);
+            const regEndDateObj = parseDate(registrationEnd);
 
             // Registration end must be after registration start
             if (regEndDateObj <= regStartDateObj) {
@@ -189,17 +184,6 @@ async function handleSubmit(event) {
     try {
         const eventId = new URLSearchParams(window.location.search).get('event_id');
 
-        console.log("📝 Updating event:", {
-            id: eventId,
-            name: eventName,
-            event_date: eventDate,
-            venue: venue,
-            time_from: timeFrom,
-            time_to: timeTo,
-            registration_start: registrationStart || null,
-            registration_end: registrationEnd || null
-        });
-
         if (!eventName || !eventDate || !timeFrom || !timeTo || !venue) {
             throw new Error("Required fields missing");
         }
@@ -209,18 +193,23 @@ async function handleSubmit(event) {
             description: description || '',
             venue: venue,
             event_date: eventDate,
-            time_from: timeFrom,
-            time_to: timeTo,
+            time_from: parseTime(timeFrom),
+            time_to: parseTime(timeTo),
             registration_start: registrationStart || null,
             registration_end: registrationEnd || null,
             max_participants: maxParticipants ? parseInt(maxParticipants) : 9999,
             status: selectedEvent.status
         };
 
+        // Note: this returns JSON not a Response object
         // Call the API utility function
         const response = await updateEvent(eventId, payload);
 
-        if (response.success) {
+        console.log(response);
+
+        // Note: If Response object, `response.ok` status is enough if api worked
+        // Temporary check statement, since return response is in JSON format
+        if (response.message === 'Event updated successfully') {
             console.log("✓ Event updated successfully:", response.event);
             responseModal.showSuccess("Success!", "Event updated successfully!", null, () => {
                 window.location.href = `/pages/home/event/view-event.html?event_id=${eventId}`;
@@ -229,7 +218,8 @@ async function handleSubmit(event) {
             throw new Error(response.message || "Failed to update event");
         }
     } catch (error) {
-        console.error("❌ Error updating event:", error);
-        responseModal.showError("Error Updating Event", error.message || "An unexpected error occurred");
+        const message = error.message;
+        console.error("❌ Error updating event:", message);
+        responseModal.showError("Error Updating Event", message || "An unexpected error occurred");
     }
 }
