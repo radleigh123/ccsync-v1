@@ -61,8 +61,9 @@ export async function initSettings() {
  */
 async function setupSettingsData() {
     try {
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        const response = await fetch(`http://localhost:8000/api/auth/users/${userId}`, {
+        // const userId = JSON.parse(localStorage.getItem("user")).id;
+        const idSchoolNumber = JSON.parse(localStorage.getItem("user")).id_school_number;
+        const response = await fetch(`http://localhost:8000/api/users/user?id_school_number=${idSchoolNumber}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
@@ -77,10 +78,11 @@ async function setupSettingsData() {
 
         const data = await response.json();
         userProfile = data.user;
+        console.log(userProfile);
 
         const elements = {
             email: document.getElementById('email'),
-            displayName: document.getElementById('display-name'),
+            display_name: document.getElementById('display-name'),
             bio: document.getElementById('bio'),
             phone: document.querySelector('#phone'),
             gender: document.getElementById('gender')
@@ -100,19 +102,18 @@ function populateUserData(userData, elements) {
     // Phone Number handled separately after iti initialization
 
     // Display Name
-    if (elements.displayName) {
-        elements.displayName.value = userData.name;
+    if (elements.display_name) {
+        elements.display_name.value = userData.display_name;
     }
 
     // Bio
     if (elements.bio) {
-        // TODO: temporary school number
-        elements.bio.value = userData.id_school_number || '';
+        elements.bio.value = userData?.member?.biography ?? '';
     }
 
     // Gender (select dropdown)
     if (elements.gender) {
-        const genderValue = (userData.gender || '').toLowerCase();
+        const genderValue = (userData?.member?.gender ?? 'other').toLowerCase();
 
         const options = elements.gender.options;
         let optionFound = false;
@@ -183,7 +184,7 @@ function setupTelInput(userData, phoneInput) {
         }
     });
 
-    const phoneNumber = String(userData.phone_number)
+    const phoneNumber = String(userData?.member?.phone ?? '')
 
     if (phoneNumber) {
         setTimeout(() => {

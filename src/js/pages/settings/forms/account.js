@@ -18,7 +18,7 @@ export function accountForm(userData, form, iti) {
                 formData.phone_number = parseInt(phoneNumber.substring(1));
             } catch (e) {
                 console.warn('Error getting phone number from iti:', e);
-                phoneNumber = userData.phone_number; // Fallback to raw input
+                phoneNumber = userData.member.phone; // Fallback to raw input
             }
         }
 
@@ -27,23 +27,30 @@ export function accountForm(userData, form, iti) {
             return;
         }
 
-        console.log(formData);
-
         try {
-            const params = new URLSearchParams();
-            const userId = JSON.parse(localStorage.getItem("user")).id;
-            params.append("id", userId);
+            const user = JSON.parse(localStorage.getItem("user"));
 
-            const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/editAccount.php?${params}`, {
+            console.log({
+                "email": formData.email,
+                "phone": phoneNumber,
+                "gender": formData.gender
+            });
+
+            const response = await fetch(`http://localhost:8000/api/profile/${user.id}/editPersonal`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${user.firebase_token}`,
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
                 },
-                body: JSON.stringify(formData)
+                body: JSON.stringify({
+                    "email": formData.email,
+                    "phone": phoneNumber,
+                    "gender": formData.gender
+                })
             });
 
             const result = await response.json();
+            console.log(result);
 
             if (result.success) {
                 alert('Successfully edited account details');

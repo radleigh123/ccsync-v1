@@ -179,7 +179,7 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
         participantCard.style.display = 'none';
         
         const response = await fetch(
-            `http://localhost:8000/api/members?id_school_number=${memberIdSchoolNumber}`,
+            `http://localhost:8000/api/members/member?id_school_number=${memberIdSchoolNumber}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -198,14 +198,15 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
 
         const data = await response.json();
 
-        if (data.members.length <= 0) {
+        if (data.member.length <= 0) {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
             showParticipantError('Member not found');
             return;
         }
 
-        const member = data.members[0];
+        const member = data.member[0];
+
 
         if (member) {
             // Store the member database ID for registration

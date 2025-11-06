@@ -6,7 +6,7 @@ export function profileForm(userData, form) {
 
         const formData = {
             display_name: document.getElementById('display-name').value,
-            bio: document.getElementById('bio').value
+            biography: document.getElementById('bio').value
         };
 
         if (!formData.display_name) {
@@ -18,14 +18,15 @@ export function profileForm(userData, form) {
 
         try {
             const params = new URLSearchParams();
+            const token = JSON.parse(localStorage.getItem("user")).firebase_token;
             const userId = JSON.parse(localStorage.getItem("user")).id;
             params.append("id", userId);
 
-            const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/editProfile.php?${params}`, {
+            const response = await fetch(`http://localhost:8000/api/profile/${userId}/editProfileInfo`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${token}`,
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });

@@ -129,7 +129,7 @@ export async function fetchUser() {
  * @returns {Promise<object>} - Users data with total count
  */
 export async function fetchUsers() {
-    return apiFetch('/auth/users', {
+    return apiFetch('/users', {
         method: 'GET',
         headers: {
             'Authorization': `Bearer ${getToken()}`

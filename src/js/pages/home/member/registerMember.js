@@ -44,11 +44,11 @@ document.addEventListener('DOMContentLoaded', async function () {
     const registerBtn = document.getElementById('registerBtn');
 
     // Readonly fields (auto-filled from user lookup)
-    const firstNameInput = document.getElementById('firstName');
-    const lastNameInput = document.getElementById('lastName');
     const emailInput = document.getElementById('email');
 
     // Editable fields (user can fill after lookup)
+    const firstNameInput = document.getElementById('firstName');
+    const lastNameInput = document.getElementById('lastName');
     const suffixInput = document.getElementById('suffix');
     const birthDateInput = document.getElementById('birthDate');
     const yearLevelInput = document.getElementById('yearLevel');
@@ -79,26 +79,33 @@ document.addEventListener('DOMContentLoaded', async function () {
             searchBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Searching...';
 
             // First, search for the user
-            const userResponse = await fetch(`/ccsync-api-plain/auth/getUserByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`, {
+
+            const memberIdSchoolNumber = encodeURIComponent(idNumber);
+            const userResponse = await fetch(`http://localhost:8000/api/users/user?id_school_number=${memberIdSchoolNumber}`, {
                 headers: {
-                    'Accept': 'application/json'
+                    Authorization: `Bearer ${session.firebase_token}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
                 }
             });
-            const userResult = await userResponse.json();
+            const result = await userResponse.json();
+            const user = result.user[0];
 
-            if (userResult.success) {
-                foundUser = userResult.data;
+            if (userResponse.ok) {
+                foundUser = user;
                 
                 // Check if user is already registered as a member
                 try {
-                    const memberCheckResponse = await fetch(`/ccsync-api-plain/member/checkMemberByIdNumber.php?idNumber=${encodeURIComponent(idNumber)}`, {
+                    const memberCheckResponse = await fetch(`http://localhost:8000/api/members/member?id_school_number=${memberIdSchoolNumber}`, {
                         headers: {
-                            'Accept': 'application/json'
+                            Authorization: `Bearer ${session.firebase_token}`,
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
                         }
                     });
-                    const memberCheckResult = await memberCheckResponse.json();
+                    const data = await memberCheckResponse.json();
                     
-                    if (memberCheckResult.exists) {
+                    if (data.member.length > 0) {
                         // User already registered - show warning
                         showSearchMessage('User is already registered', 'warning');
                         clearForm();
@@ -141,10 +148,9 @@ document.addEventListener('DOMContentLoaded', async function () {
      * @param {Object} user User data from API
      */
     function autoFillUserFields(user) {
-        firstNameInput.value = user.firstName || '';
-        lastNameInput.value = user.lastName || '';
+        firstNameInput.value = user.display_name || '';
         emailInput.value = user.email || '';
-        idNumberInput.value = user.idNumber || '';
+        idNumberInput.value = user.id_school_number || '';
     }
 
     /**
@@ -168,11 +174,11 @@ document.addEventListener('DOMContentLoaded', async function () {
                 <h6 class="mb-3"><strong>User Information</strong></h6>
                 <div class="detail-item">
                     <span class="detail-label">ID Number:</span>
-                    <span class="detail-value">${user.idNumber}</span>
+                    <span class="detail-value">${user.id_school_number}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">Name:</span>
-                    <span class="detail-value">${user.firstName} ${user.lastName}</span>
+                    <span class="detail-value">${memberData.first_name} ${memberData.last_name}</span>
                 </div>
                 <div class="detail-item">
                     <span class="detail-label">Email:</span>
@@ -250,6 +256,8 @@ document.addEventListener('DOMContentLoaded', async function () {
      * @param {boolean} enabled Whether to enable fields
      */
     function enableEditableFields(enabled) {
+        firstNameInput.disabled = !enabled;
+        lastNameInput.disabled = !enabled;
         suffixInput.disabled = !enabled;
         birthDateInput.disabled = !enabled;
         yearLevelInput.disabled = !enabled;
@@ -278,20 +286,22 @@ document.addEventListener('DOMContentLoaded', async function () {
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
 
-            const response = await fetch('/ccsync-api-plain/member/createMember.php', {
+            const response = await fetch('http://localhost:8000/api/members', {
                 method: 'POST',
                 headers: {
-                    'Content-Type': 'application/json'
+                    Authorization: `Bearer ${session.firebase_token}`,
+                    "Content-Type": "application/json",
+                    Accept: "application/json",
                 },
                 body: JSON.stringify(memberData)
             });
 
             const result = await response.json();
 
-            if (result.success) {
+            if (response.ok) {
                 responseModal.showSuccess(
                     'Member Registered Successfully!',
-                    `${foundUser.firstName} ${foundUser.lastName} has been registered as a member.`
+                    `${memberData.first_name} ${memberData.last_name} has been registered as a member.`
                 );
                 
                 clearForm();
@@ -347,9 +357,10 @@ document.addEventListener('DOMContentLoaded', async function () {
         // Prepare data from camelCase to snake_case format for ccsync-api-plain
         // IMPORTANT: userId is intentionally excluded - members tracked by idNumber
         const memberData = {
-            id_school_number: foundUser.idNumber,
-            first_name: foundUser.firstName,
-            last_name: foundUser.lastName,
+            user_id: foundUser.id,
+            id_school_number: foundUser.id_school_number,
+            first_name: firstNameInput.value,
+            last_name: lastNameInput.value,
             email: foundUser.email,
             suffix: suffixInput.value || null,
             birth_date: birthDateInput.value,

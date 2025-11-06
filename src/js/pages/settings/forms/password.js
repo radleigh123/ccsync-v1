@@ -5,16 +5,16 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
 
         const formData = {
             current_password: inputs.currentPassword.value,
-            new_password: inputs.newPassword.value
+            password: inputs.newPassword.value,
+            password_confirmation: inputs.confirmPassword.value
         };
-        const confirmPassword = inputs.confirmPassword.value;
 
-        if (!formData.current_password || !formData.new_password || !confirmPassword) {
+        if (!formData.current_password || !formData.password || !formData.password_confirmation) {
             alert('Please fill in all password fields');
             return;
         }
 
-        if (formData.new_password !== confirmPassword) {
+        if (formData.password !== formData.password_confirmation) {
             alert('New Password do not match');
             return;
         }
@@ -22,15 +22,13 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
         console.log(formData);
 
         try {
-            const params = new URLSearchParams();
-            const userId = JSON.parse(localStorage.getItem("user")).id;
-            params.append("id", userId);
+            const user = JSON.parse(localStorage.getItem("user"));
 
-            const response = await fetch(`https://ccsync-api-plain-dc043.wasmer.app/profile/editPassword.php?${params}`, {
+            const response = await fetch(`http://localhost:8000/api/profile/${user.id}/editPassword`, {
                 method: 'PUT',
                 headers: {
+                    'Authorization': `Bearer ${user.firebase_token}`,
                     'Content-Type': 'application/json',
-                    'Accept': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });

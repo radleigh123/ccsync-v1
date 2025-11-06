@@ -219,7 +219,7 @@ function displayParticipants(participants) {
         row.innerHTML = `
             <td>${participant.first_name} ${participant.last_name}</td>
             <td>${getYearSuffix(participant.year)}</td>
-            <td>${participant.program || '-'}</td>
+            <td>${participant.program.code || '-'}</td>
             <td>${formatDate(participant.pivot.registered_at) || '-'}</td>
             <td>
                 <div class="btn-group" role="group">

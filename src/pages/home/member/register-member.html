@@ -56,9 +56,8 @@
             </div>
 
             <form id="memberForm">
-              <!-- Readonly Auto-filled Fields -->
               <div class="row mb-3">
-                <!-- First Name (readonly) -->
+                <!-- First Name -->
                 <div class="col-md-6">
                   <label for="firstName" class="form-label">
                     First Name:
@@ -67,11 +66,10 @@
                     type="text"
                     class="form-control"
                     id="firstName"
-                    readonly
                     disabled
                   />
                 </div>
-                <!-- Last Name (readonly) -->
+                <!-- Last Name -->
                 <div class="col-md-6">
                   <label for="lastName" class="form-label">
                     Last Name:
@@ -80,12 +78,12 @@
                     type="text"
                     class="form-control"
                     id="lastName"
-                    readonly
                     disabled
                   />
                 </div>
               </div>
 
+              <!-- Readonly Auto-filled Fields -->
               <div class="row mb-3">
                 <!-- Email (readonly) -->
                 <div class="col-md-6">
@@ -226,6 +224,24 @@
       <div class="confirmation-footer">
         <button type="button" class="no-btn" id="confirmationNoBtn">No</button>
         <button type="button" class="yes-btn" id="confirmationYesBtn">Yes</button>
+      </div>
+    </div>
+
+    <!-- Error/Success Modal -->
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+    <div id="responseModal" class="response-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modalTitle" class="modal-title">Modal Title</h5>
+          <button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">Modal message here</p>
+          <small id="modalDetails" class="text-muted d-none">Details</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
+        </div>
       </div>
     </div>
 

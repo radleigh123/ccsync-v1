@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
         const firstName = document.querySelector("#firstNameInput").value;
         const lastName = document.querySelector("#lastNameInput").value;
+        const displayName = `${firstName} ${lastName}`;
         const idNumber = document.querySelector("#idinput").value;
         const email = document.querySelector("#emailinput").value;
         const password = document.querySelector("#passwordInput").value;
@@ -36,7 +37,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     'Accept': 'application/json',
                 },
                 body: JSON.stringify({
-                    name: `${firstName} ${lastName}`,
+                    display_name: displayName,
                     email: email,
                     password: password,
                     password_confirmation: password_confirmation,
