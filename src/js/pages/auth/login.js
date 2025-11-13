@@ -55,54 +55,41 @@ document.addEventListener("DOMContentLoaded", () => {
                         console.error('Error during login: ', error);
                     });
             } else {
-                // TODO: Maybe let backend handle this firebase login method
-                signInWithEmailAndPassword(auth, email, password)
-                    .then(async userCredentials => {
-                        idToken = await userCredentials.user.getIdToken();
-                        return idToken;
-                    })
-                    .then(async idToken => {
-                        return fetch('http://localhost:8000/api/auth/login', {
-                            method: 'POST',
-                            headers: {
-                                'Content-Type': 'application/json',
-                                'Accept': 'application/json',
-                            },
-                            body: JSON.stringify({ id_token: idToken }),
-                        });
-                    })
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.text().then(text => {
-                                console.log('Raw response:', text);
-                                try {
-                                    return JSON.parse(text);
-                                } catch (e) {
-                                    throw new Error(`Server responded with: ${text}`);
-                                }
-                            });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        if (!data.success) {
-                            throw new Error(data.message || 'Failed to verify token');
-                        }
+                const response = await fetch('http://localhost:8000/api/test/login', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ email, password }),
+                });
 
-                        console.log('Verified user: ', data);
-                        const userData = {
-                            ...data.user,
-                            firebase_token: idToken,
-                            last_login: new Date().toISOString()
-                        };
-                        localStorage.setItem('user', JSON.stringify(userData));
-                        window.location.href = '/pages/home/home.html';
-                    })
-                    .catch(error => {
-                        const errorCode = error.code;
-                        errorMsg.textContent = error.message;
-                        console.error('Error during token verification: ', error);
-                    });
+                const data = await response.json();
+                console.log(data);
+
+                if (response.status === 422) {
+                    throw new Error(data?.errors?.email?.[0] ?? data?.errors?.password?.[0]);
+                }
+
+                if (!response.ok) {
+                    throw new Error(data.message);
+                }
+
+                try {
+                    await signInWithEmailAndPassword(auth, email, password);
+                    idToken = await auth.currentUser.getIdToken();
+                } catch (error) {
+                    console.warn('Firebase client sign-in failed, falling back to server token', error);
+                    idToken = data?.firebase_user?.idToken;
+                }
+
+                const userData = {
+                    ...data.user,
+                    firebase_token: idToken,
+                    last_login: new Date().toISOString()
+                };
+                console.log('Verified user: ', userData);
+                localStorage.setItem('user', JSON.stringify(userData));
+                window.location.href = '/pages/home/home.html';
             }
         } catch (error) {
             errorMsg.textContent = error.message;

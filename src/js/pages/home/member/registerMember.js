@@ -81,44 +81,29 @@ document.addEventListener('DOMContentLoaded', async function () {
             // First, search for the user
 
             const memberIdSchoolNumber = encodeURIComponent(idNumber);
-            const userResponse = await fetch(`http://localhost:8000/api/users/user?id_school_number=${memberIdSchoolNumber}`, {
+            const response = await fetch(`http://localhost:8000/api/users/user?id_school_number=${memberIdSchoolNumber}`, {
                 headers: {
                     Authorization: `Bearer ${session.firebase_token}`,
                     "Content-Type": "application/json",
                     Accept: "application/json",
                 }
             });
-            const result = await userResponse.json();
-            const user = result.user[0];
 
-            if (userResponse.ok) {
+            const data = await response.json();
+            const user = data.user;
+
+            if (response.ok) {
                 foundUser = user;
                 
-                // Check if user is already registered as a member
-                try {
-                    const memberCheckResponse = await fetch(`http://localhost:8000/api/members/member?id_school_number=${memberIdSchoolNumber}`, {
-                        headers: {
-                            Authorization: `Bearer ${session.firebase_token}`,
-                            "Content-Type": "application/json",
-                            Accept: "application/json",
-                        }
-                    });
-                    const data = await memberCheckResponse.json();
-                    
-                    if (data.member.length > 0) {
-                        // User already registered - show warning
-                        showSearchMessage('User is already registered', 'warning');
-                        clearForm();
-                        enableEditableFields(false);
-                        registerBtn.disabled = true;
-                        foundUser = null;
-                        return;
-                    }
-                } catch (memberCheckError) {
-                    console.error('Error checking member status:', memberCheckError);
-                    // Continue anyway - if check fails, allow user to proceed
+                if (user?.member !== null) {
+                    showSearchMessage('User is already registered', 'warning');
+                    clearForm();
+                    enableEditableFields(false);
+                    registerBtn.disabled = true;
+                    foundUser = null;
+                    return;
                 }
-                
+
                 // User exists and is not a member - proceed
                 autoFillUserFields(foundUser);
                 enableEditableFields(true);
@@ -309,6 +294,9 @@ document.addEventListener('DOMContentLoaded', async function () {
                 idNumberInput.value = '';
                 registerBtn.disabled = true;
                 foundUser = null;
+
+                window.location.href = '/pages/home/member/view-member.html';
+                return;
             } else {
                 // Handle specific error cases
                 if (response.status === 409) {

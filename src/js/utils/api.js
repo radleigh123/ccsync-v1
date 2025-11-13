@@ -258,11 +258,6 @@ export async function createRequirement(requirementData) {
 }
 
 // TODO: temporary method, apply KISS
-function getToken() {
-    const token = localStorage.getItem('user') ?
-        JSON.parse(localStorage.getItem('user')).firebase_token : '';
-
-    return token;
-}
+const getToken = () => JSON.parse(localStorage.getItem('user')).firebase_token ?? '';
 
 export { API_BASE_URL };

@@ -39,7 +39,7 @@ async function loadMembers(page = 1) {
 
     // Call API with pagination parameters
     const response = await fetch(
-      `http://localhost:8000/api/members?page=${page}&per_page=${currentLimit}`,
+      `http://localhost:8000/api/members/list?page=${page}&per_page=${currentLimit}`,
       {
         headers: {
           Authorization: `Bearer ${userData.firebase_token}`,
