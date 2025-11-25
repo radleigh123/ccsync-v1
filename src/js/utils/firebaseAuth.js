@@ -105,3 +105,30 @@ export async function logout() {
         window.location.href = '/pages/auth/login.html';
     }
 }
+
+/**
+ * Get a valid Firebase ID token (auto-refresh if expired)
+ * @returns {Promise<string|null>} Firebase ID Token or null if unauthenticated
+ */
+export async function getFirebaseToken() {
+  try {
+    // If no user is signed in → force logout
+    if (!auth.currentUser) {
+      throw new Error("No Firebase user logged in");
+    }
+
+    // Always fetch a *fresh* token
+    const idToken = await auth.currentUser.getIdToken(true);
+
+    // Sync stored token
+    const userData = JSON.parse(localStorage.getItem("user") || "{}");
+    userData.firebase_token = idToken;
+    userData.last_login = new Date().toISOString();
+    localStorage.setItem("user", JSON.stringify(userData));
+
+    return idToken;
+  } catch (error) {
+    console.error("🔥 Failed to get Firebase token:", error);
+    throw error;
+  }
+}
