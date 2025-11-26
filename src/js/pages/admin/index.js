@@ -79,7 +79,7 @@ function populateUserTable(users) {
             <td>${user.id}</td>
             <td>${user.name}</td>
             <td>${user.email}</td>
-            <td>${user.email_verified_at != null ? user.email_verified_at : 'Not Verified'}</td>
+            <td>${user.email_verified ? user.email_verified : 'Not Verified'}</td>
             <td>${user.id_school_number}</td>
             <td>${user.role}</td>
             <td>

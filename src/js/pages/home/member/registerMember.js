@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // First, search for the user
 
             const memberIdSchoolNumber = encodeURIComponent(idNumber);
-            const response = await fetch(`http://localhost:8000/api/users/user?id_school_number=${memberIdSchoolNumber}`, {
+            const response = await fetch(`http://localhost:8000/api/user?id_school_number=${memberIdSchoolNumber}`, {
                 headers: {
                     Authorization: `Bearer ${session.firebase_token}`,
                     "Content-Type": "application/json",
@@ -89,13 +89,13 @@ document.addEventListener('DOMContentLoaded', async function () {
                 }
             });
 
-            const data = await response.json();
-            const user = data.user;
+            const user = await response.json();
+            console.log(user);
 
             if (response.ok) {
                 foundUser = user;
-                
-                if (user?.member !== null) {
+
+                if (user?.member !== undefined) {
                     showSearchMessage('User is already registered', 'warning');
                     clearForm();
                     enableEditableFields(false);
@@ -133,7 +133,12 @@ document.addEventListener('DOMContentLoaded', async function () {
      * @param {Object} user User data from API
      */
     function autoFillUserFields(user) {
-        firstNameInput.value = user.display_name || '';
+        const displayName = user?.display_name
+        const firstName = displayName.split(".")[0];
+        const lastName = displayName.split(".")[1];
+
+        firstNameInput.value = firstName || '';
+        lastNameInput.value = lastName || '';
         emailInput.value = user.email || '';
         idNumberInput.value = user.id_school_number || '';
     }
