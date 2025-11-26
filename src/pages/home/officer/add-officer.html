@@ -26,81 +26,44 @@
             <h5 class="section-title mb-4" style="color: black">
               Officer Information
             </h5>
-            <form>
+            <form id="addOfficerForm">
               <div class="row mb-3">
-                <!-- Full Name -->
-                <div class="col-md-6">
-                  <label for="fullName" class="form-label"> Full Name: </label>
-                  <input
-                    type="text"
-                    class="form-control"
-                    id="fullName"
-                    placeholder="e.g. John Doe"
-                  />
+                <div class="col-md-6 position-relative">
+                  <label for="memberSearch" class="form-label"> Search Member: </label>
+                  <input type="text" class="form-control" id="memberSearch" placeholder="Type name or school ID...">
+                
+                  <!-- search results -->
+                  <ul id="searchResults" class="list-group position-absolute w-100"
+                    style="z-index: 999; max-height: 200px; overflow-y: auto; display: none;">
+                  </ul>
+                
+                  <!-- hidden real member ID -->
+                  <input type="hidden" id="memberId">
                 </div>
-                <!-- Position -->
+
+            
                 <div class="col-md-6">
                   <label for="position" class="form-label"> Position: </label>
                   <select class="form-select" id="position">
                     <option value="" selected hidden>Choose a position</option>
                     <option value="president">President</option>
-                    <option value="internal-vp">Internal Vice President</option>
-                    <option value="external-vp">External Vice President</option>
+                    <option value="vice-president">Vice President</option>
                     <option value="secretary">Secretary</option>
                     <option value="treasurer">Treasurer</option>
                     <option value="auditor">Auditor</option>
-                    <option value="pio">PIO</option>
+                    <option value="representative">Representative</option>
+                    <option value="officer">Officer</option>
                   </select>
                 </div>
               </div>
-
-              <div class="row mb-3">
-                <!-- Program -->
-                <div class="col-md-6">
-                  <label for="program" class="form-label"> Program: </label>
-                  <select class="form-select" id="program">
-                    <option value="" selected hidden>Choose a program</option>
-                    <option value="BSIT">BS Information Technology</option>
-                    <option value="BSCS">BS Computer Science</option>
-                    <option value="BSIS">BS Information Systems</option>
-                  </select>
-                </div>
-                <!-- Year Level -->
-                <div class="col-md-6">
-                  <label for="yearLevel" class="form-label">
-                    Year Level:
-                  </label>
-                  <select class="form-select" id="yearLevel">
-                    <option value="" selected hidden>
-                      Choose a year level
-                    </option>
-                    <option value="1">1st Year</option>
-                    <option value="2">2nd Year</option>
-                    <option value="3">3rd Year</option>
-                    <option value="4">4th Year</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="row mb-4">
-                <!-- Email Address -->
-                <div class="col-md-6">
-                  <label for="email" class="form-label"> Email Address: </label>
-                  <input
-                    type="email"
-                    class="form-control"
-                    id="email"
-                    placeholder="e.g. john.doe@example.com"
-                  />
-                </div>
-              </div>
-
+            
+              <div id="message" style="display:none"></div>
+            
               <div class="d-grid">
-                <button type="submit" class="btn btn-register">
-                  Add officer
-                </button>
+                <button type="submit" class="btn btn-register">Add Officer</button>
               </div>
             </form>
+
           </div>
         </div>
       </div>

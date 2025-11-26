@@ -4,6 +4,7 @@ const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
 
 // Import mock functions for fallback
 import { getMembers, getEvents, getUser } from '/js/utils/mock/mockStorage.js';
+import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 
 /**
  * Generic API fetch with mock fallback
@@ -71,7 +72,14 @@ function getMockData(endpoint) {
         return getEvents();
     } else if (endpoint.includes('/user')) {
         return getUser();
-    } else {
+    } else if (endpoint.includes('/officers')) {
+        // Return mock officers data
+        return { officers: [
+            { member_info: { id: 1, name: "John Doe", role: "President" } },
+            { member_info: { id: 2, name: "Jane Smith", role: "Vice President" } },
+        ]};
+    }
+     else {
         throw new Error(`No mock data available for endpoint: ${endpoint}`);
     }
 }
@@ -93,6 +101,14 @@ export async function fetchMembers() {
             'Authorization': `Bearer ${token}`
         }
     });
+}
+
+export async function searchMembers(query) {
+  return apiFetch(`/members/search?query=${encodeURIComponent(query)}`);
+}
+
+export async function fetchMember(id) {
+  return apiFetch(`/members/${id}`);
 }
 
 /**
@@ -151,6 +167,39 @@ export async function fetchThisMonthEvents() {
             'Authorization': `Bearer ${getToken()}`
         }
     });
+}
+
+/**
+ * Fetches officers from API.
+ * @async
+ * @function fetchOfficers
+ * @returns {Promise<object>} - Officers data
+ */
+
+/** Fetch officers list */
+export async function fetchOfficers() {
+    const token = await getFirebaseToken();
+
+    return apiFetch('/officers', {
+        method: 'GET',
+        headers: {
+            'Authorization': `Bearer ${token}`
+        }
+    });
+}
+
+export async function promoteOfficer(memberId, role) {
+  return apiFetch(`/role/${memberId}/promote`, {
+    method: "POST",
+    body: JSON.stringify({ role }),
+  });
+}
+
+export async function demoteOfficer(memberId) {
+  return apiFetch(`/role/${memberId}/demote`, {
+    method: "POST",
+    body: JSON.stringify({ role: "student" }),
+  });
 }
 
 /**

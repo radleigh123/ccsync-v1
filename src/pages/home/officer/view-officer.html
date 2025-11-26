@@ -1,122 +1,115 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>View Officers</title>
-  </head>
 
-  <body>
-    <nav id="sidebar"></nav>
-    <!-- Body -->
-    <main class="main-content-bg">
-      <div class="container-fluid">
-        <div id="header" class="d-flex flex-row gap-5 align-items-center">
-          <div>
-            <p class="p-0 m-0 h1 fw-bold text-dark">View Officers</p>
-            <p class="text-muted mb-0">
-              Manage and view all organization officers
-            </p>
-          </div>
-          <div class="ms-auto d-flex flex-row gap-3 align-items-center">
-            <p class="p-0 m-0 text-dark">School year:</p>
-            <div class="dropdown">
-              <label for="yearDropdown" class="form-label" hidden></label>
-              <select
-                class="form-select bg-white border-0 px-3 py-2"
-                id="yearDropdown"
-                style="min-width: 180px"
-              >
-                <option value="" selected hidden>2024-2025</option>
-                <option value="">Show All</option>
-                <option value="2021-2022">2021-2022</option>
-                <option value="2022-2023">2022-2023</option>
-                <option value="2023-2024">2023-2024</option>
-                <option value="2024-2025">2024-2025</option>
-                <option value="2025-2026">2025-2026</option>
-                <option value="2026-2027">2026-2027</option>
-              </select>
-            </div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Officers</title>
+</head>
+
+<body>
+  <nav id="sidebar"></nav>
+
+  <!-- Body -->
+  <main class="main-content-bg">
+    <div class="container-fluid">
+      <div id="header" class="d-flex flex-row gap-5 align-items-center">
+        <div>
+          <p class="p-0 m-0 h1 fw-bold text-dark">View Officers</p>
+          <p class="text-muted mb-0">
+            Manage and view all organization officers
+          </p>
+        </div>
+
+        <div class="ms-auto d-flex flex-row gap-3 align-items-center">
+          <p class="p-0 m-0 text-dark">School year:</p>
+          <div class="dropdown">
+            <label for="yearDropdown" class="form-label" hidden></label>
+            <select class="form-select bg-white border-0 px-3 py-2" id="yearDropdown" style="min-width: 180px">
+              <option value="" selected hidden>2024-2025</option>
+              <option value="">Show All</option>
+              <option value="2021-2022">2021-2022</option>
+              <option value="2022-2023">2022-2023</option>
+              <option value="2023-2024">2023-2024</option>
+              <option value="2024-2025">2024-2025</option>
+              <option value="2025-2026">2025-2026</option>
+              <option value="2026-2027">2026-2027</option>
+            </select>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Shimmer skeleton cards -->
-      <div id="shimmerContainer" class="officer-cards-grid">
-        <div class="shimmer-card"></div>
-        <div class="shimmer-card"></div>
-        <div class="shimmer-card"></div>
-        <div class="shimmer-card"></div>
+    <!-- Shimmer skeleton cards -->
+    <div id="shimmerContainer" class="officer-cards-grid">
+      <div class="shimmer-card"></div>
+      <div class="shimmer-card"></div>
+      <div class="shimmer-card"></div>
+      <div class="shimmer-card"></div>
+    </div>
+
+    <!-- Empty State UI -->
+    <div id="noOfficerUI" style="display:none;" class="text-center py-5">
+      <img src="/src/assets/PSITSlogo.png" alt="No Officers" style="width:180px; opacity:0.8; margin-bottom:20px;" />
+    
+      <h4 class="text-muted">No officers found</h4>
+      <p class="text-muted mb-3">There are currently no assigned officers.</p>
+    
+      <a href="/pages/home/officer/add-officer.html" class="btn btn-primary px-4">
+        Add Officer
+      </a>
+    </div>
+
+    <!-- Officer Cards Container -->
+    <div id="officerContainer" style="display:none;" class="officer-cards-grid"></div>
+  </main>
+
+  <!-- ⭐ EDIT OFFICER MODAL -->
+  <div class="modal fade" id="editOfficerModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <h4 class="mb-3">Edit Officer</h4>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Name</label>
+          <input id="editOfficerName" class="form-control" disabled />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-bold">Position</label>
+          <select id="editOfficerPosition" class="form-select">
+            <option value="president">President</option>
+            <option value="vice president">Vice President</option>
+            <option value="secretary">Secretary</option>
+            <option value="treasurer">Treasurer</option>
+            <option value="auditor">Auditor</option>
+            <option value="representative">Representative</option>
+            <option value="officer">Officer</option>
+          </select>
+        </div>
+
+        <button id="saveOfficerChanges" class="btn btn-primary w-100">
+          Save Changes
+        </button>
       </div>
+    </div>
+  </div>
 
-      <!-- Officer Cards Container (hidden initially) -->
-      <div id="officerContainer" style="display: none;">
-        <div class="officer-card" data-id="1">
-          <img
-            src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-            class="officer-img"
-            alt="Officer Image"
-          />
-          <div class="officer-info">
-            <h5 class="officer-name">Juan Dela Cruz</h5>
-            <p class="officer-year">BSIT - 4th Year</p>
-          </div>
-          <div class="officer-position">
-            <h5>President</h5>
-          </div>
-        </div>
+  <!-- ❌ DELETE OFFICER MODAL -->
+  <div class="modal fade" id="deleteOfficerModal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content p-3">
+        <h4 class="mb-2">Remove Officer</h4>
+        <p id="deleteOfficerText"></p>
 
-        <div class="officer-card" data-id="2">
-          <img
-            src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-            class="officer-img"
-            alt="Officer Image"
-          />
-          <div class="officer-info">
-            <h5 class="officer-name">Maria Santos</h5>
-            <p class="officer-year">BSCS - 3rd Year</p>
-          </div>
-          <div class="officer-position">
-            <h5>Vice President</h5>
-          </div>
-        </div>
-
-        <div class="officer-card" data-id="3">
-          <img
-            src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-            class="officer-img"
-            alt="Officer Image"
-          />
-          <div class="officer-info">
-            <h5 class="officer-name">Jose Garcia</h5>
-            <p class="officer-year">BSIS - 4th Year</p>
-          </div>
-          <div class="officer-position">
-            <h5>Secretary</h5>
-          </div>
-        </div>
-
-        <div class="officer-card" data-id="4">
-          <img
-            src="https://i.pinimg.com/736x/d6/94/de/d694deb596d8f2e7166c2c1bcc3c9c6a.jpg"
-            class="officer-img"
-            alt="Officer Image"
-          />
-          <div class="officer-info">
-            <h5 class="officer-name">Ana Rodriguez</h5>
-            <p class="officer-year">BSIT - 2nd Year</p>
-          </div>
-          <div class="officer-position">
-            <h5>Treasurer</h5>
-          </div>
-        </div>
+        <button id="confirmDeleteOfficer" class="btn btn-danger w-100 mt-2">
+          Confirm Remove
+        </button>
       </div>
-    </main>
+    </div>
+  </div>
 
-    <script
-      type="module"
-      src="/js/pages/home/officer/viewOfficer.js"
-      defer
-    ></script>
-  </body>
+  <script type="module" src="/js/pages/home/officer/viewOfficer.js" defer></script>
+</body>
+
 </html>
