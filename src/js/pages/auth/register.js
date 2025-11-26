@@ -37,7 +37,8 @@ document.addEventListener("DOMContentLoaded", () => {
                     'Accept': 'application/json',
                 },
                 body: JSON.stringify({
-                    display_name: displayName,
+                    first_name: firstName,
+                    last_name: lastName,
                     email: email,
                     password: password,
                     password_confirmation: password_confirmation,
