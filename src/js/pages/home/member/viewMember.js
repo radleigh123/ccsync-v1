@@ -56,14 +56,15 @@ async function loadMembers(page = 1) {
     }
 
     const data = await response.json();
-    const members = data.members;
-    const membersLengthPage = Object.keys(members.data).length;
+    const members = data.data.members;
+
+    const membersLengthPage = Object.keys(members).length;
 
     // Check if members exists and has data
     if (membersLengthPage > 0) {
-      allMembers = members.data;
-      paginationData = members;
-      currentPage = paginationData.current_page;
+      allMembers = members;
+      paginationData = data;
+      currentPage = paginationData.meta.current_page;
     } else {
       allMembers = [];
       paginationData = null;
@@ -214,7 +215,7 @@ function setupPaginationButtons() {
 
   if (prevBtn) {
     prevBtn.addEventListener("click", () => {
-      if (paginationData && paginationData.prev_page_url) {
+      if (paginationData && paginationData.links.prev) {
         loadMembers(currentPage - 1);
       }
     });
@@ -222,7 +223,7 @@ function setupPaginationButtons() {
 
   if (nextBtn) {
     nextBtn.addEventListener("click", () => {
-      if (paginationData && paginationData.next_page_url) {
+      if (paginationData && paginationData.links.next) {
         loadMembers(currentPage + 1);
       }
     });
@@ -236,12 +237,12 @@ function updatePaginationControls() {
 
   if (paginationData) {
     // Update button states
-    if (prevBtn) prevBtn.disabled = !paginationData.prev_page_url;
-    if (nextBtn) nextBtn.disabled = !paginationData.next_page_url;
+    if (prevBtn) prevBtn.disabled = !paginationData.links.prev;
+    if (nextBtn) nextBtn.disabled = !paginationData.links.next;
 
     // Update page info display
     if (pageInfo) {
-      pageInfo.textContent = `Page ${paginationData.current_page} of ${paginationData.last_page} (${paginationData.total} total members)`;      
+      pageInfo.textContent = `Page ${paginationData.meta.current_page} of ${paginationData.meta.last_page} (${paginationData.meta.total} total members)`;      
     }
   }
 }
@@ -257,8 +258,8 @@ function displayMembers(members) {
     memberCountElement.textContent = members.length;
   }
 
-  console.log(members);
-  console.log(members.length);
+  // console.log(members);
+  // console.log(members.length);
 
   if (members.length > 0) {
     members.forEach((member, index) => {
@@ -274,7 +275,7 @@ function displayMembers(members) {
         <td class="ps-3 text-muted">${member.id_school_number || "N/A"}</td>
         <td class="ps-3">${fullName}</td>
         <td class="ps-3 text-center">${member.year}</td>
-        <td class="ps-3 text-center">${member.program.code}</td>
+        <td class="ps-3 text-center">${member.program}</td>
       `;
 
       row.addEventListener("click", () => {

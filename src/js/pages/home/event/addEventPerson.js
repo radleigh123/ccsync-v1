@@ -53,7 +53,6 @@ async function loadEventData() {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
                     "Content-Type": "application/json",
-                    Accept: "application/json",
                 },
             }
         );
@@ -63,7 +62,7 @@ async function loadEventData() {
         }
 
         const data = await response.json();
-        const event = data.event;
+        const event = data.data;
 
         if (event) {
         // Update event information in the form
@@ -184,7 +183,6 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
                     "Content-Type": "application/json",
-                    Accept: "application/json",
                 },
             }
         );
@@ -198,15 +196,16 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
 
         const data = await response.json();
 
-        if (data.member.length <= 0) {
+        console.log(data);
+
+        if (!data?.data) {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
             showParticipantError('Member not found');
             return;
         }
 
-        const member = data.member[0];
-
+        const member = data.data;
 
         if (member) {
             // Store the member database ID for registration
@@ -222,8 +221,8 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
             document.getElementById('participantRegistrationStatus').innerHTML = registrationStatusHTML;
             document.getElementById('participantName').textContent = 
                 `${member.first_name} ${member.last_name}`;
-            document.getElementById('participantEmail').textContent = member.email;
-            document.getElementById('participantProgram').textContent = member.program.code;
+            document.getElementById('participantEmail').textContent = member?.user.email;
+            document.getElementById('participantProgram').textContent = member.program;
             document.getElementById('participantYear').textContent = 
                 `${member.year}${getYearSuffix(member.year)}`;
             
@@ -256,6 +255,7 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
 /**
  * Check if member is already registered for this event
  * Checks: event_registrations WHERE event_id = selectedEvent.id AND member_id = memberId
+ * Return an Event object, if member is already register.
  */
 async function checkIfAlreadyRegistered(memberId) {
     try {
@@ -267,7 +267,6 @@ async function checkIfAlreadyRegistered(memberId) {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
                     "Content-Type": "application/json",
-                    Accept: "application/json",
                 },
             }
         );
@@ -278,9 +277,8 @@ async function checkIfAlreadyRegistered(memberId) {
         }
 
         const data = await response.json();
-        const event = data.event;
         
-        return data.registered;
+        return data.data.length > 0;
     } catch (error) {
         console.error('Error checking registration status:', error);
         return false;
@@ -326,7 +324,10 @@ async function registerParticipant() {
             }
         );
 
-        const result = await response.json();
+        const data = await response.json();
+
+        console.log(data);
+
 
         if (response.ok) {
             console.log(response.ok);
@@ -342,7 +343,7 @@ async function registerParticipant() {
             console.log(`ERROR:`, response.ok);
             responseModal.showError(
                 'Registration Failed',
-                result.message || 'Failed to register participant'
+                data.message || 'Failed to register participant'
             );
         }
     } catch (error) {

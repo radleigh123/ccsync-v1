@@ -38,7 +38,7 @@ async function loadRequirements(page = 1) {
     }
 
     // Build query parameters
-    let url = `/ccsync-api-plain/requirement/getRequirements.php?page=${page}&limit=${currentLimit}`;
+    let url = `http://localhost:8000/api/requirements/list?page=${page}&per_page=${currentLimit}`; // TODO: On laravel, add pagination
     if (selectedStatus !== "all") {
       url += `&status=${selectedStatus}`;
     }
@@ -47,7 +47,7 @@ async function loadRequirements(page = 1) {
     const response = await fetch(url, {
       headers: {
         Authorization: `Bearer ${userData.firebase_token}`,
-        Accept: "application/json",
+        'Content-Type': 'application/json',
       },
     });
 
@@ -58,13 +58,14 @@ async function loadRequirements(page = 1) {
       );
     }
 
-    const data = await response.json();
+    const json = await response.json();
 
     // Check if requirements exists and has data
-    if (data.success && data.requirements && data.requirements.length > 0) {
-      allRequirements = data.requirements;
-      paginationData = data.pagination;
-      currentPage = paginationData.page;
+    if (json.data && json.data.requirements.length > 0) {
+      allRequirements = json.data.requirements;
+      console.log(allRequirements);
+      paginationData = json;
+      currentPage = paginationData.meta.current_page;
     } else {
       allRequirements = [];
       paginationData = null;
@@ -159,6 +160,7 @@ function displayRequirements(requirements) {
     .map((req) => {
       const statusClass = getStatusBadgeClass(req.status);
       const formattedDate = formatDate(req.requirement_date);
+      const status = req.status ? "open" : "close";
 
       return `
         <tr>
@@ -167,7 +169,7 @@ function displayRequirements(requirements) {
           <td>${formattedDate}</td>
           <td>
             <span class="badge ${statusClass}">
-              ${capitalizeFirst(req.status)}
+              ${capitalizeFirst(status)}
             </span>
           </td>
           <td>
@@ -209,7 +211,7 @@ function setupPaginationButtons() {
     nextBtn.addEventListener("click", () => {
       if (
         paginationData &&
-        currentPage < paginationData.pages
+        currentPage < paginationData.meta.current_page
       ) {
         loadRequirements(currentPage + 1);
       }
@@ -223,7 +225,7 @@ function updatePaginationControls() {
   const nextBtn = document.getElementById("nextBtn");
 
   if (pageInfo && paginationData) {
-    pageInfo.textContent = `Page ${currentPage} of ${paginationData.pages} (${paginationData.total} total requirements)`;
+    pageInfo.textContent = `Page ${currentPage} of ${paginationData.meta.to} (${paginationData.meta.total} total requirements)`;
   }
 
   if (prevBtn) {
@@ -231,7 +233,7 @@ function updatePaginationControls() {
   }
 
   if (nextBtn) {
-    nextBtn.disabled = !paginationData || currentPage >= paginationData.pages;
+    nextBtn.disabled = !paginationData || currentPage >= paginationData.meta.current_page;
   }
 }
 

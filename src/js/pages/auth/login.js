@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error during login: ", error);
           });
       } else {
-        const response = await fetch("http://localhost:8000/api/test/login", {
+        const response = await fetch("http://localhost:8000/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

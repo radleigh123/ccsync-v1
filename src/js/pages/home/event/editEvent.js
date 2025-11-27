@@ -80,7 +80,7 @@ async function loadEventData() {
         }
 
         const data = await response.json();
-        const event = data.event
+        const event = data.data;
 
         if (!event) {
             responseModal.showError('Error', 'Event not found');
@@ -202,15 +202,23 @@ async function handleSubmit(event) {
         };
 
         // Note: this returns JSON not a Response object
-        // Call the API utility function
-        const response = await updateEvent(eventId, payload);
+        const response = await updateEvent(eventId, payload); // BROKEN
 
-        console.log(response);
+        /* const response = await fetch(`http://localhost:8000/api/events/${eventId}`, {
+            method: 'PUT',
+            headers: {
+                Authorization: `Bearer ${userData.firebase_token}`,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload),
+        });
+
+        console.log(await response.json()); */
 
         // Note: If Response object, `response.ok` status is enough if api worked
         // Temporary check statement, since return response is in JSON format
-        if (response.message === 'Event updated successfully') {
-            console.log("✓ Event updated successfully:", response.event);
+        if (response.success === true) {
+        // console.log("✓ Event updated successfully:", response.data);
             responseModal.showSuccess("Success!", "Event updated successfully!", null, () => {
                 window.location.href = `/pages/home/event/view-event.html?event_id=${eventId}`;
             });
@@ -218,7 +226,7 @@ async function handleSubmit(event) {
             throw new Error(response.message || "Failed to update event");
         }
     } catch (error) {
-        const message = error.message;
+        const message = error;
         console.error("❌ Error updating event:", message);
         responseModal.showError("Error Updating Event", message || "An unexpected error occurred");
     }

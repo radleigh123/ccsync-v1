@@ -94,7 +94,7 @@ async function loadEventData() {
         }
 
         const data = await response.json();
-        const event = data.event;
+        const event = data.data;
 
         populateEventInfo(event);
         console.log('✅ Event data loaded:', data);
@@ -124,6 +124,7 @@ async function loadParticipants(page = 1) {
             }
         );
 
+        // BUG: Much better use this condition, instead of having to check twice if data has loaded successfully
         if (!response.ok) {
             const errorData = await response.json();
             console.error('❌ Failed to load participants:', response.status, errorData);
@@ -138,11 +139,14 @@ async function loadParticipants(page = 1) {
 
         const data = await response.json();
 
-        if (data.success) {
-            allParticipants = data.registered_members.data;
-            paginationData = data.registered_members;
-            currentPage = paginationData.current_page;
-            
+        console.log(data);
+
+        // BUG: "data.data" is a temporary fix, read another comment above
+        if (data) {
+            allParticipants = data.data;
+            paginationData = data;
+            currentPage = paginationData.meta.current_page;
+
             displayParticipants(allParticipants);
             updatePaginationControls();
             
@@ -206,21 +210,21 @@ function displayParticipants(participants) {
 
     // Update the participant count
     if (countElement) {
-        countElement.textContent = participants.total;
+        countElement.textContent = participants?.meta?.count;
     }
 
-    if (!participants || participants.length === 0) {
+    if (!participants || participants?.length == 0 || participants.members.length === 0) {
         tbody.innerHTML = '<tr><td colspan="5" class="text-center text-muted">No participants registered</td></tr>';
         return;
     }
 
-    participants.forEach((participant) => {
+    participants?.members.forEach((participant) => {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${participant.first_name} ${participant.last_name}</td>
             <td>${getYearSuffix(participant.year)}</td>
-            <td>${participant.program.code || '-'}</td>
-            <td>${formatDate(participant.pivot.registered_at) || '-'}</td>
+            <td>${participant.program || '-'}</td>
+            <td>${formatDate(participant.registered_at) || '-'}</td>
             <td>
                 <div class="btn-group" role="group">
                     <button class="btn btn-sm btn-outline-primary mark-attended-btn" data-participant-id="${participant.id}" title="Mark as attended">
@@ -279,7 +283,8 @@ function setupPaginationButtons() {
 
     if (prevBtn) {
         prevBtn.addEventListener("click", () => {
-            if (paginationData && paginationData.prev_page_url) {
+            if (paginationData && paginationData.links.prev) {
+                console.log("currentPage", currentPage);
                 loadParticipants(currentPage - 1);
             }
         });
@@ -287,7 +292,8 @@ function setupPaginationButtons() {
 
     if (nextBtn) {
         nextBtn.addEventListener("click", () => {
-            if (paginationData && paginationData.next_page_url) {
+            if (paginationData && paginationData.links.next) {
+                console.log("currentPage", currentPage);
                 loadParticipants(currentPage + 1);
             }
         });
@@ -304,12 +310,12 @@ function updatePaginationControls() {
 
     if (paginationData) {
         // Update button states
-        if (prevBtn) prevBtn.disabled = !paginationData.prev_page_url;
-        if (nextBtn) nextBtn.disabled = !paginationData.next_page_url;
+        if (prevBtn) prevBtn.disabled = !paginationData.links.prev;
+        if (nextBtn) nextBtn.disabled = !paginationData.links.next;
 
         // Update page info display
         if (pageInfo) {
-            pageInfo.textContent = `Page ${paginationData.current_page} of ${paginationData.last_page} (${paginationData.total} total participants)`;
+            pageInfo.textContent = `Page ${paginationData.meta.current_page} of ${paginationData.meta.last_page} (${paginationData.meta.total} total participants)`;
         }
     }
 }

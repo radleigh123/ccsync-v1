@@ -24,15 +24,13 @@ async function loadEvents() {
     console.log("📋 Loading all events...");
 
     // Use the API utility function
-    const data = await fetchEvents();
+    const events = await fetchEvents();
 
-    if (data.success && data.events && data.events.length > 0) {
-      console.log("✓ Events loaded:", data.events.length);
-      categorizeAndDisplayEvents(data.events);
-    } else if (data.events && data.events.length > 0) {
-      // Handle case where API returns events without success flag
-      console.log("✓ Events loaded:", data.events.length);
-      categorizeAndDisplayEvents(data.events);
+    console.log(events);
+
+    if (events.data && events.data.length > 0) {
+      console.log("✓ Events loaded:", events.data.length);
+      categorizeAndDisplayEvents(events.data);
     } else {
       console.log("ℹ️  No events found");
       displayEmptyState();
