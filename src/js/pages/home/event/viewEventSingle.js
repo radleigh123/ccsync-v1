@@ -19,7 +19,7 @@ const eventId = new URLSearchParams(window.location.search).get('event_id');
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     setSidebar();
-    
+
     // Setup back button
     const backButton = document.getElementById('backButton');
     if (backButton) {
@@ -28,7 +28,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             window.location.href = '/pages/home/event/view-event.html';
         });
     }
-    
+
     // Setup edit event button
     const editBtn = document.getElementById('editEventBtn');
     if (editBtn) {
@@ -39,7 +39,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
-    
+
     // Setup add participant button
     const addParticipantBtn = document.getElementById('addParticipantBtn');
     if (addParticipantBtn) {
@@ -50,10 +50,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
-    
+
     // Setup pagination buttons
     setupPaginationButtons();
-    
+
     // Load event data
     await loadEventData();
     await loadParticipants();
@@ -75,10 +75,10 @@ async function loadEventData() {
 
     try {
         console.log('📥 Loading event data for ID:', eventId);
-        
+
         // TODO: KISS method, this request is the same as on `editEvent.js`
         const response = await fetch(
-            `http://localhost:8000/api/events/${eventId}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -112,9 +112,9 @@ async function loadParticipants(page = 1) {
 
     try {
         console.log('📥 Loading participants for event:', eventId, 'page:', page);
-        
+
         const response = await fetch(
-            `http://localhost:8000/api/events/${eventId}/members?page=${page}&per_page=${currentLimit}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}/members?page=${page}&per_page=${currentLimit}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -149,14 +149,14 @@ async function loadParticipants(page = 1) {
 
             displayParticipants(allParticipants);
             updatePaginationControls();
-            
+
             console.log('✅ Participants loaded:', allParticipants);
-            
+
             // Update available slots in event info
             if (selectedEvent) {
                 populateEventInfo(selectedEvent);
             }
-            
+
             // Hide shimmer and show table
             shimmerLoader.hide("#shimmerTable", 600);
             setTimeout(() => {
@@ -190,12 +190,12 @@ function populateEventInfo(event) {
     document.getElementById('eventVenue').textContent = event.venue || '-';
     document.getElementById('eventDate').textContent = formatDate(event.event_date) || '-';
     document.getElementById('eventMaxParticipants').textContent = event.max_participants || '-';
-    
+
     // Calculate available slots
     const registered = allParticipants.length;
     const available = Math.max(0, (event.max_participants || 0) - registered);
     document.getElementById('eventAvailableSlots').textContent = available;
-    
+
     document.getElementById('eventRegistrationEnd').textContent = formatDate(event.registration_end) || '-';
 }
 
@@ -205,7 +205,7 @@ function populateEventInfo(event) {
 function displayParticipants(participants) {
     const tbody = document.getElementById('participantsTableBody');
     const countElement = document.getElementById('participantCount');
-    
+
     tbody.innerHTML = '';
 
     // Update the participant count
@@ -354,7 +354,7 @@ function showRemoveConfirmation(participantId, participantName) {
 async function markParticipantAttended(participantId) {
     try {
         console.log('📤 Marking participant as attended:', participantId);
-        
+
         const response = await fetch(
             '/ccsync-api-plain/event/markAttended.php',
             {
@@ -397,7 +397,7 @@ async function markParticipantAttended(participantId) {
 async function removeParticipant(participantId) {
     try {
         console.log('📤 Removing participant:', participantId);
-        
+
         const response = await fetch(
             `/ccsync-api-plain/event/removeParticipant.php?event_id=${eventId}&participant_id=${participantId}`,
             {

@@ -24,7 +24,7 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
         try {
             const user = JSON.parse(localStorage.getItem("user"));
 
-            const response = await fetch(`http://localhost:8000/api/profile/${user.id}/editPassword`, {
+            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${user.id}/editPassword`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${user.firebase_token}`,

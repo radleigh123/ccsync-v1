@@ -22,7 +22,7 @@ export function profileForm(userData, form) {
             const userId = JSON.parse(localStorage.getItem("user")).id;
             params.append("id", userId);
 
-            const response = await fetch(`http://localhost:8000/api/profile/${userId}/editProfileInfo`, {
+            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${userId}/editProfileInfo`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`,

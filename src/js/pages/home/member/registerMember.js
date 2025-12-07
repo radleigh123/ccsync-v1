@@ -81,7 +81,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             // First, search for the user
 
             const memberIdSchoolNumber = encodeURIComponent(idNumber);
-            const response = await fetch(`http://localhost:8000/api/user?id_school_number=${memberIdSchoolNumber}`, {
+            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/user?id_school_number=${memberIdSchoolNumber}`, {
                 headers: {
                     Authorization: `Bearer ${session.firebase_token}`,
                     "Content-Type": "application/json",
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
 
-            const response = await fetch('http://localhost:8000/api/members', {
+            const response = await fetch('https://ccsync-api-master-ll6mte.laravel.cloud/api/members', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${session.firebase_token}`,
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', async function () {
                     'Member Registered Successfully!',
                     `${memberData.first_name} ${memberData.last_name} has been registered as a member.`
                 );
-                
+
                 clearForm();
                 enableEditableFields(false);
                 idNumberInput.value = '';

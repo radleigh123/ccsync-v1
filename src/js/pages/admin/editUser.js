@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadUserDetails(userIdToEdit) {
     try {
         // Fetch user details from API using the database ID
-        const response = await fetch(`http://localhost:8000/api/auth/user/${userIdToEdit}`, {
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/user/${userIdToEdit}`, {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
@@ -69,7 +69,7 @@ async function handleSubmit(event) {
     const role = document.getElementById("role").value;
 
     try {
-        const response = await fetch("http://localhost:8000/api/auth/user/edit-user/" + userIdToEdit, {
+        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/user/edit-user/" + userIdToEdit, {
             method: "PUT",
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,

@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", () => {
             console.error("Error during login: ", error);
           });
       } else {
-        const response = await fetch("http://localhost:8000/api/auth/login", {
+        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/login", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

@@ -39,7 +39,7 @@ export async function initProfile() {
 async function setupProfile() {
     try {
         const userId = JSON.parse(localStorage.getItem("user")).id;
-        const response = await fetch(`http://localhost:8000/api/auth/users/${userId}`, {
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/users/${userId}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,

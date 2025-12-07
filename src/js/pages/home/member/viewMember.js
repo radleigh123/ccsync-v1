@@ -39,7 +39,7 @@ async function loadMembers(page = 1) {
 
     // Call API with pagination parameters
     const response = await fetch(
-      `http://localhost:8000/api/members/list?page=${page}&per_page=${currentLimit}`,
+      `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/list?page=${page}&per_page=${currentLimit}`,
       {
         headers: {
           Authorization: `Bearer ${userData.firebase_token}`,
@@ -242,7 +242,7 @@ function updatePaginationControls() {
 
     // Update page info display
     if (pageInfo) {
-      pageInfo.textContent = `Page ${paginationData.meta.current_page} of ${paginationData.meta.last_page} (${paginationData.meta.total} total members)`;      
+      pageInfo.textContent = `Page ${paginationData.meta.current_page} of ${paginationData.meta.last_page} (${paginationData.meta.total} total members)`;
     }
   }
 }
@@ -263,9 +263,8 @@ function displayMembers(members) {
 
   if (members.length > 0) {
     members.forEach((member, index) => {
-      const fullName = `${member.first_name} ${member.last_name}${
-        member.suffix ? " " + member.suffix : ""
-      }`;
+      const fullName = `${member.first_name} ${member.last_name}${member.suffix ? " " + member.suffix : ""
+        }`;
 
       const row = document.createElement("tr");
       row.className = "member-row";

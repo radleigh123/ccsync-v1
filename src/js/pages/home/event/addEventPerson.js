@@ -48,7 +48,7 @@ async function loadEventData() {
 
         // Fetch all events from API
         const response = await fetch(
-            `http://localhost:8000/api/events/${eventId}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -65,7 +65,7 @@ async function loadEventData() {
         const event = data.data;
 
         if (event) {
-        // Update event information in the form
+            // Update event information in the form
             document.getElementById('eventCardTitle').textContent = event.name;
             document.getElementById('eventSubtitle').textContent = `Register a participant for: ${event.name}`;
             document.getElementById('eventCardDate').textContent = `Event Date: ${event.event_date}`;
@@ -91,12 +91,12 @@ function setupFormHandlers() {
     // Listen for ID number input changes with debouncing
     idNumberInput.addEventListener('input', async (e) => {
         const idNumber = e.target.value.trim();
-        
+
         // Clear previous timeout
         if (searchTimeout) {
             clearTimeout(searchTimeout);
         }
-        
+
         if (idNumber.length === 0) {
             participantInfoSection.style.display = 'none';
             registerButton.disabled = true;
@@ -131,27 +131,27 @@ function setupFormHandlers() {
         if (e.key === 'Enter') {
             e.preventDefault();
             const idNumber = idNumberInput.value.trim();
-            
+
             if (searchTimeout) {
                 clearTimeout(searchTimeout);
             }
-            
+
             if (idNumber.length === 0) {
                 alert('Please enter a valid ID number');
                 return;
             }
-            
+
             if (!/^\d+$/.test(idNumber)) {
                 alert('ID number must contain only digits');
                 return;
             }
-            
+
             // Require exactly 8 digits for school ID
             if (idNumber.length !== 8) {
                 alert('School ID number must be exactly 8 digits');
                 return;
             }
-            
+
             await loadParticipantInfo(idNumber);
         }
     });
@@ -172,13 +172,13 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
         const participantInfoSection = document.getElementById('participantInfoSection');
         const shimmerLoader = document.getElementById('participantInfoShimmer');
         const participantCard = document.getElementById('participantCard');
-        
+
         participantInfoSection.style.display = 'block';
         shimmerLoader.style.display = 'block';
         participantCard.style.display = 'none';
-        
+
         const response = await fetch(
-            `http://localhost:8000/api/members/member?id_school_number=${memberIdSchoolNumber}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/member?id_school_number=${memberIdSchoolNumber}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -210,26 +210,26 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
         if (member) {
             // Store the member database ID for registration
             selectedMemberId = member.id;
-            
+
             // Determine registration status
             const isAlreadyRegistered = await checkIfAlreadyRegistered(selectedMemberId);
-            const registrationStatusHTML = isAlreadyRegistered ? 
-                '<span class="badge bg-warning">Already Registered</span>' : 
+            const registrationStatusHTML = isAlreadyRegistered ?
+                '<span class="badge bg-warning">Already Registered</span>' :
                 '<span class="badge bg-success">Not Registered</span>';
-            
+
             // Display participant information
             document.getElementById('participantRegistrationStatus').innerHTML = registrationStatusHTML;
-            document.getElementById('participantName').textContent = 
+            document.getElementById('participantName').textContent =
                 `${member.first_name} ${member.last_name}`;
             document.getElementById('participantEmail').textContent = member?.user.email;
             document.getElementById('participantProgram').textContent = member.program;
-            document.getElementById('participantYear').textContent = 
+            document.getElementById('participantYear').textContent =
                 `${member.year}${getYearSuffix(member.year)}`;
-            
+
             // Hide shimmer, show actual card
             shimmerLoader.style.display = 'none';
             participantCard.style.display = 'block';
-            
+
             // Enable/disable register button based on registration status
             document.getElementById('registerButton').disabled = isAlreadyRegistered;
             if (isAlreadyRegistered) {
@@ -237,7 +237,7 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
             } else {
                 document.getElementById('registerButton').textContent = 'Register Participant';
             }
-            
+
             console.log('Participant data loaded:', member);
         } else {
             shimmerLoader.style.display = 'none';
@@ -262,7 +262,7 @@ async function checkIfAlreadyRegistered(memberId) {
         const eventId = new URLSearchParams(window.location.search).get('event_id');
 
         const response = await fetch(
-            `http://localhost:8000/api/members/${memberId}/check?event_id=${eventId}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/${memberId}/check?event_id=${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -277,7 +277,7 @@ async function checkIfAlreadyRegistered(memberId) {
         }
 
         const data = await response.json();
-        
+
         return data.data.length > 0;
     } catch (error) {
         console.error('Error checking registration status:', error);
@@ -311,7 +311,7 @@ async function registerParticipant() {
 
     try {
         const response = await fetch(
-            `http://localhost:8000/api/events/${selectedEventId}/add`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${selectedEventId}/add`,
             {
                 method: 'POST',
                 headers: {

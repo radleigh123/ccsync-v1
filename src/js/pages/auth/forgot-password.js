@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
         const email = document.getElementById('email').value;
 
         try {
-            const response = await fetch('http://localhost:8000/api/auth/send-password-reset', {
+            const response = await fetch('https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/send-password-reset', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

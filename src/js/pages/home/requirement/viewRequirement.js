@@ -38,7 +38,7 @@ async function loadRequirements(page = 1) {
     }
 
     // Build query parameters
-    let url = `http://localhost:8000/api/requirements/list?page=${page}&per_page=${currentLimit}`; // TODO: On laravel, add pagination
+    let url = `https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/list?page=${page}&per_page=${currentLimit}`; // TODO: On laravel, add pagination
     if (selectedStatus !== "all") {
       url += `&status=${selectedStatus}`;
     }

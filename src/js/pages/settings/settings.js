@@ -63,7 +63,7 @@ async function setupSettingsData() {
     try {
         // const userId = JSON.parse(localStorage.getItem("user")).id;
         const idSchoolNumber = JSON.parse(localStorage.getItem("user")).id_school_number;
-        const response = await fetch(`http://localhost:8000/api/users/user?id_school_number=${idSchoolNumber}`, {
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/user?id_school_number=${idSchoolNumber}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,

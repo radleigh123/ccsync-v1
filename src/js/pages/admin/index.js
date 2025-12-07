@@ -47,7 +47,7 @@ async function listUsers() {
     });
 
     try {
-        const response = await fetch("http://localhost:8000/api/auth/user", {
+        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/user", {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
@@ -98,7 +98,7 @@ function populateUserTable(users) {
         btnDelete.addEventListener("click", async () => {
             if (confirm(`Are you sure you want to delete user ${user.name}?`)) {
                 try {
-                    const response = await fetch("http://localhost:8000/api/auth/delete-account", {
+                    const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/delete-account", {
                         method: "DELETE",
                         headers: {
                             'Authorization': `Bearer ${userData.firebase_token}`,

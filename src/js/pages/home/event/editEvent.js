@@ -18,13 +18,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     setSidebar();
 
     const form = document.getElementById("editEventForm");
-    
+
     // Initialize FormValidator for inline validation
     // This automatically sets up blur/input/change listeners on all [data-validate] fields
     formValidator = new FormValidator(form);
-    
+
     console.log('✅ FormValidator initialized');
-    
+
     // Setup back button navigation
     const backButton = document.getElementById("backButton");
     if (backButton) {
@@ -38,10 +38,10 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         });
     }
-    
+
     // Load event data from API
     await loadEventData();
-    
+
     // Handle form submission
     form.addEventListener("submit", handleSubmit);
 });
@@ -54,17 +54,17 @@ async function initHome() {
 async function loadEventData() {
     try {
         const eventId = new URLSearchParams(window.location.search).get('event_id');
-        
+
         if (!eventId) {
             responseModal.showError('Error', 'No event ID provided');
             return;
         }
 
         console.log('📥 Loading event data for ID:', eventId);
-        
+
         // Fetch all events from API
         const response = await fetch(
-            `http://localhost:8000/api/events/${eventId}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -107,7 +107,7 @@ function populateForm(event) {
     document.getElementById('registrationStart').value = event.registration_start || '';
     document.getElementById('registrationEnd').value = event.registration_end || '';
     document.getElementById('maxParticipants').value = event.max_participants || '';
-    
+
     // DON'T validate here - let the blur/input listeners handle it
     // Initial values are likely valid anyway, so this just adds noise
 }
@@ -138,7 +138,7 @@ async function handleSubmit(event) {
     // Today's date at midnight for comparison (local time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);
-    
+
     const eventDateObj = parseDate(eventDate);
 
     // Validation 1: Event date must be in the future (not today, not past)
@@ -204,7 +204,7 @@ async function handleSubmit(event) {
         // Note: this returns JSON not a Response object
         const response = await updateEvent(eventId, payload); // BROKEN
 
-        /* const response = await fetch(`http://localhost:8000/api/events/${eventId}`, {
+        /* const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`, {
             method: 'PUT',
             headers: {
                 Authorization: `Bearer ${userData.firebase_token}`,
@@ -218,7 +218,7 @@ async function handleSubmit(event) {
         // Note: If Response object, `response.ok` status is enough if api worked
         // Temporary check statement, since return response is in JSON format
         if (response.success === true) {
-        // console.log("✓ Event updated successfully:", response.data);
+            // console.log("✓ Event updated successfully:", response.data);
             responseModal.showSuccess("Success!", "Event updated successfully!", null, () => {
                 window.location.href = `/pages/home/event/view-event.html?event_id=${eventId}`;
             });

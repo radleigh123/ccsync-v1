@@ -36,7 +36,7 @@ export function accountForm(userData, form, iti) {
                 "gender": formData.gender
             });
 
-            const response = await fetch(`http://localhost:8000/api/profile/${user.id}/editPersonal`, {
+            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${user.id}/editPersonal`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${user.firebase_token}`,
