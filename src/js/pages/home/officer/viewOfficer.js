@@ -44,7 +44,7 @@ async function loadOfficers() {
     const token = await getFirebaseToken();
     console.log("🟦 Firebase Token:", token);
 
-    const API = "http://localhost:8000/api"; // IMPORTANT!!!
+    const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
 
     const res = await fetch(`${API}/officers`, {
       headers: {
@@ -55,7 +55,7 @@ async function loadOfficers() {
     const text = await res.text();
     console.log("🔴 RAW RESPONSE TEXT:", text);
 
-    const data = JSON.parse(text); // must now be JSON
+    const data = JSON.parse(text);
 
     displayOfficers(data.officers);
   } catch (error) {
@@ -63,7 +63,6 @@ async function loadOfficers() {
     displayEmptyState();
   }
 }
-
 
 /* -------------------------------------------------------------------------- */
 /*                                EMPTY STATE UI                               */
@@ -90,7 +89,7 @@ function displayOfficers(officers = []) {
   officerContainer.style.display = "grid";
   if (noUI) noUI.style.display = "none";
 
-  officers.forEach((officer, index) => {
+  officers.forEach((officer) => {
     const member = officer.member_info ?? null;
     const memberId = member?.id ?? officer.id;
 
@@ -101,26 +100,28 @@ function displayOfficers(officers = []) {
       member?.profile ??
       officer?.profile ??
       officer?.avatar ??
-      "/images/default-avatar.png";
+      "/assets/no_profile.png";
 
     const card = document.createElement("div");
     card.className = "officer-card";
 
     card.innerHTML = `
-      <img src="${profilePicture}" class="officer-img" />
+      <img src="${profilePicture}" class="officer-img" alt="${escape(
+      officer.name
+    )}" />
 
       <div class="officer-info">
         <h5>${escape(officer.name)}</h5>
         <p>${escape(program)} - ${escape(year)}</p>
+        
+        <div class="officer-position">
+          <h5>${formatRole(officer.role)}</h5>
+        </div>
       </div>
 
-      <div class="officer-position">
-        <h5>${formatRole(officer.role)}</h5>
-      </div>
-
-      <div class="officer-actions d-flex gap-2 mt-2">
-        <button class="btn btn-warning btn-sm" data-id="${memberId}">Edit</button>
-        <button class="btn btn-danger btn-sm" data-id="${memberId}">Remove</button>
+      <div class="officer-actions">
+        <button class="btn btn-warning" data-id="${memberId}">Edit</button>
+        <button class="btn btn-danger" data-id="${memberId}">Remove</button>
       </div>
     `;
 
@@ -235,7 +236,7 @@ function escape(str) {
 
 function formatRole(role = "") {
   return role
-    .replace(/-/g, " ") // convert "vice-president" → "vice president"
+    .replace(/-/g, " ")
     .split(" ")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");

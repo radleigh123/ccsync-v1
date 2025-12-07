@@ -231,7 +231,7 @@ function setupSidebarFunctionality() {
      * @function toggleSidebar
      */
     function toggleSidebar() {
-        sidebar.classList.toggle('close')
+        sidebar.classList.toggle("collapsed");
         toggleButton.classList.toggle('rotate')
         closeAllSubMenus()
     }
@@ -246,9 +246,9 @@ function setupSidebarFunctionality() {
 
         button.nextElementSibling.classList.toggle('show')
         button.classList.toggle('rotate')
-        if (sidebar.classList.contains('close')) {
-            sidebar.classList.toggle('close')
-            toggleButton.classList.toggle('rotate')
+        if (sidebar.classList.contains("collapsed")) {
+          sidebar.classList.toggle("collapsed");
+          toggleButton.classList.toggle("rotate");
         }
     }
 
@@ -426,13 +426,19 @@ function setupSidebarFunctionality() {
     })
 
     window.addEventListener('resize', () => {
-        if (window.innerWidth < 1320 && !sidebar.classList.contains('close')) {
-            toggleSidebar()
-        }
+        // if (window.innerWidth < 1320 && !sidebar.classList.contains('close')) {
+        //     toggleSidebar()
+        // }
 
-        if (window.innerWidth < 800 && sidebar.classList.contains('close')) {
-            toggleSidebar()
-        }
+        // if (window.innerWidth < 800 && sidebar.classList.contains('close')) {
+        //     toggleSidebar()
+        // }
+
+         if (window.innerWidth <= 991) {
+           sidebar.classList.add("collapsed");
+         } else {
+           sidebar.classList.remove("collapsed");
+         }
     })
 
     if (isMobile()) {
