@@ -134,6 +134,7 @@
   .sidebar:not(.collapsed) ~ .col.container {
     margin-left: 250px;
   }
+  
   /* Main content adjustment */
   .main-content {
     width: 100%;
@@ -167,4 +168,6 @@
     display: none !important;
   }
 }
+
+
 /*# sourceMappingURL=sidebar.css.map */

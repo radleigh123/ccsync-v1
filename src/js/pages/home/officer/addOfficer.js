@@ -40,8 +40,9 @@ function initAddOfficerPage() {
   setupAddOfficerForm();
 }
 
-/* --------------------------- LIVE MEMBER SEARCH -------------------------- */
+const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api"; 
 
+/* --------------------------- LIVE MEMBER SEARCH -------------------------- */
 function setupLiveSearch() {
   const searchInput = document.getElementById("memberSearch");
   const searchResults = document.getElementById("searchResults");
@@ -57,10 +58,19 @@ function setupLiveSearch() {
     try {
       const token = await getFirebaseToken();
 
-      const API = "http://localhost:8000/api";
-      const response = await fetch(`${API}/members/search?query=${query}`, {
-        headers: { Authorization: `Bearer ${token}` },
+      const response = await fetch(`${API}/members/search`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ query }),
       });
+
+      if (!response.ok) {
+        console.error("Search error:", await response.text());
+        return;
+      }
 
       const members = await response.json();
       searchResults.innerHTML = "";
@@ -76,12 +86,9 @@ function setupLiveSearch() {
         li.textContent = `${member.first_name} ${member.last_name} (${member.id_school_number})`;
 
         li.addEventListener("click", () => {
-          document.getElementById(
-            "memberSearch"
-          ).value = `${member.first_name} ${member.last_name}`;
-
+          document.getElementById("memberSearch").value =
+            `${member.first_name} ${member.last_name}`;
           document.getElementById("memberId").value = member.id;
-
           searchResults.style.display = "none";
         });
 
@@ -95,14 +102,12 @@ function setupLiveSearch() {
   });
 }
 
+
 /* -------------------------- ADD OFFICER PROMOTION -------------------------- */
-
 function setupAddOfficerForm() {
-  const form = document.getElementById("addOfficerForm");
+  const button = document.getElementById("btnAddOfficer");
 
-  form.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
+  button.addEventListener("click", async function () {
     const memberId = document.getElementById("memberId").value.trim();
     const role = document.getElementById("position").value.trim();
 
@@ -114,7 +119,7 @@ function setupAddOfficerForm() {
     try {
       const token = await getFirebaseToken();
 
-      const response = await fetch(`/api/role/${memberId}/promote`, {
+      const response = await fetch(`${API}/role/${memberId}/promote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +132,7 @@ function setupAddOfficerForm() {
 
       if (response.ok) {
         showMessage(result.message, "success");
-        form.reset();
+        document.getElementById("addOfficerForm").reset();
       } else {
         showMessage(result.message || "Failed to promote member.", "danger");
       }
@@ -137,6 +142,7 @@ function setupAddOfficerForm() {
     }
   });
 }
+
 
 /* --------------------------- MESSAGE HANDLING --------------------------- */
 
