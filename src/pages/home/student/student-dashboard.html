@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Dashboard</title>
+</head>
+
+<body>
+
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo">
+                <span>CCSync</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#" class="active">Dashboard</a></li>
+                <li><a href="/pages/home/student/studentViewOfficer.html">Officers</a></li>
+                <li><a href="/pages/home/student/studentProfile.html">Profile</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <div class="main-content">
+        <div class="container">
+            <div class="header">
+                <h1>Welcome to Your Dashboard</h1>
+                <p>Manage and view all your upcoming events</p>
+            </div>
+
+            <!-- ✅ SHIMMER LOADER CONTAINER -->
+            <div id="eventsShimmerContainer">
+                <!-- Your shimmer loader will show here -->
+            </div>
+
+            <!-- ✅ EVENTS GRID (JS will inject events here) -->
+            <div id="eventsContainer" class="events-grid" style="display: none;">
+            </div>
+
+        </div>
+    </div>
+
+    <script type="module" src="/js/pages/home/student/studentDashboard.js" defer></script>
+</body>
+
+</html>
