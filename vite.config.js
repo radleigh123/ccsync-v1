@@ -28,6 +28,9 @@ export default defineConfig({
                 homeOfficerView: resolve(__dirname, 'src', 'pages', 'home', 'officer', 'view-officer.html'),
                 settings: resolve(__dirname, 'src', 'pages', 'settings', 'settings.html'),
                 designSystem: resolve(__dirname, 'src', 'design-system.html'),
+                homeEventViewStudent: resolve(__dirname, 'src', 'pages', 'home', 'student', 'student-dashboard.html'),
+                homeOfficerViewStudent: resolve(__dirname, 'src', 'pages', 'home', 'student', 'studentViewOfficer.html'),
+                homeProfileViewStudent: resolve(__dirname, 'src', 'pages', 'home', 'student', 'studentProfile.html'),
             }
         }
     },

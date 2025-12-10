@@ -72,8 +72,8 @@ export async function setupNavigation() {
     if (!nav) return;
 
     const user = localStorage.getItem("user");
-    console.log("user in navigation:", user);
-
+    // console.log("user in navigation:", user);
+    // 
     if (user) {
         nav.innerHTML = `
         <li class="nav-item">

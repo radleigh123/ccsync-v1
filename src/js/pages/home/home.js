@@ -17,6 +17,7 @@ let allMembers = []; // Store all members
 async function initHome() {
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
+  if (!userData.role_names.includes("officer")) window.location.href = "/pages/home/student/student-dashboard.html";
 }
 
 /**

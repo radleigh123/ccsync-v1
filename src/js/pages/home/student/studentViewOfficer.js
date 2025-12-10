@@ -5,6 +5,7 @@ import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 
 const officerGridSections = document.querySelectorAll(".officers-grid");
+let userData = null;
 
 /* -------------------------------------------------------------------------- */
 /*                               INIT PAGE                                    */
@@ -21,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function verifyLogin() {
   //commented out for testing purposes
-  //   const user = await getCurrentSession();
-  //   if (!user) window.location.href = "/pages/auth/login.html";
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 /* -------------------------------------------------------------------------- */
@@ -34,16 +35,19 @@ async function loadOfficers() {
     console.log("📋 Fetching officers for student view...");
 
     const token = await getFirebaseToken();
+    // TODO: Manual call, merge in one file like `utils/api.js`
     const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
+    // const API = "http://localhost:8000/api";
 
     const res = await fetch(`${API}/officers`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const text = await res.text();
-    console.log("🔴 RAW RESPONSE TEXT:", text);
+    // console.log("🔴 RAW RESPONSE TEXT:", text);
 
     const data = JSON.parse(text);
+    // console.log("🔵 JSON RESPONSE TEXT:", data);
 
     if (!data.officers || data.officers.length === 0) {
       return showEmptyState();

@@ -4,12 +4,12 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "vite build && vite preview",
-    "dev": "dotenvx run -- vite",
-    "dev-mock": "dotenvx run -- vite --mode development",
-    "build": "vite build",
-    "deploy": "npm run build && gh-pages -d dist",
-    "homepage": "https://your-username.github.io/your-repo-name",
+    "dev": "dotenvx run -f .env.development -- vite --mode development",
+    "preview": "vite preview",
+    "build": "dotenvx run -f .env.production -- vite build --mode production",
+    "preview:prod": "dotenvx run -f .env.production -- vite preview",
+    "build:prod": "dotenvx run -f .env.production -- vite build --mode production",
+    "start": "npm run build && npm run preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

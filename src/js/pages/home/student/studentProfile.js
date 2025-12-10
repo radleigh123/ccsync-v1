@@ -1,6 +1,10 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/student/studentProfile.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { getFirebaseToken } from "../../../utils/firebaseAuth";
+
+let userData = null;
+let memberData = null;
 
 /* -------------------------------------------------------------------------- */
 /*                               INIT PAGE                                     */
@@ -8,6 +12,7 @@ import { getCurrentSession } from "/js/utils/sessionManager";
 
 document.addEventListener("DOMContentLoaded", async () => {
   await verifyLogin();
+  await loadProfileData();
   attachModalEvents();
 });
 
@@ -17,8 +22,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function verifyLogin() {
     //commented out for testing purposes
-//   const user = await getCurrentSession();
-//   if (!user) window.location.href = "/pages/auth/login.html";
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 /* -------------------------------------------------------------------------- */
@@ -119,4 +124,110 @@ function attachModalEvents() {
     if (event.target === editModal) closeEditModal();
     if (event.target === passwordModal) closePasswordModal();
   });
+}
+
+async function loadProfileData() {
+  try {
+    const token = await getFirebaseToken();
+    const baseUrl = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
+    // const baseUrl = "http://localhost:8000/api";
+    const idSchoolNumber = userData.id_school_number;
+    const response = await fetch(`${baseUrl}/members/member?id_school_number=${idSchoolNumber}`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    if (response.status == 404) {
+      // TODO: redirect for now, if student isn't yet registered, need error modal
+      window.location.href = "/pages/home/student/student-dashboard.html";
+      throw new Error("User has not been registered as a member.");
+    }
+
+    const result = await response.json();
+
+    if (result.success && result.data) {
+      memberData = result.data;
+      populateUI();
+    } else {
+      console.error("❌ Invalid API response:", result);
+      showErrorState();
+    }
+  } catch (err) {
+    console.error("❌ Error loading profile:", err.message);
+  }
+}
+
+function populateUI() {
+  if (!memberData) return;
+
+  const user = memberData.user || {};
+  const fullName = `${memberData.first_name} ${memberData.middle_name || ""} ${memberData.last_name}`.trim();
+
+  // Sidebar
+  document.querySelector(".profile-name").textContent = fullName;
+  document.querySelector(".profile-role").textContent = "Student Member";
+  document.querySelector(".profile-year").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year ${memberData.program}`;
+
+  // Personal Information
+  const infoItems = document.querySelectorAll(".info-grid")[0].querySelectorAll(".info-item");
+  infoItems[0].querySelector(".info-value").textContent = fullName;
+  infoItems[1].querySelector(".info-value").textContent = memberData.id_school_number || "N/A";
+  infoItems[2].querySelector(".info-value").textContent = user.email || "N/A";
+  infoItems[3].querySelector(".info-value").textContent = memberData.phone || "N/A";
+  infoItems[4].querySelector(".info-value").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year`;
+  infoItems[5].querySelector(".info-value").textContent = memberData.program || "N/A";
+
+  // Academic Information
+  const academicItems = document.querySelectorAll(".info-grid")[1].querySelectorAll(".info-item");
+  academicItems[0].querySelector(".info-value").textContent = "College of Computer Studies";
+  academicItems[1].querySelector(".info-value").textContent = memberData.program || "N/A";
+  academicItems[2].querySelector(".info-value").textContent = memberData.is_paid ? "Regular" : "Pending";
+  academicItems[3].querySelector(".info-value").textContent = memberData.semester?.title || "N/A";
+
+  // Edit Form Modal - Pre-fill with current data
+  populateEditForm();
+}
+
+function populateEditForm() {
+  if (!memberData) return;
+
+  const form = document.getElementById("editProfileForm");
+  const inputs = form.querySelectorAll("input, select");
+
+  inputs[0].value = memberData.first_name || "";
+  inputs[1].value = memberData.last_name || "";
+  inputs[2].value = memberData.user?.email || "";
+  inputs[3].value = memberData.phone || "";
+
+  // Year Level
+  const yearSelect = form.querySelector("select[required]");
+  if (yearSelect) yearSelect.value = memberData.year || "1";
+
+  // Program
+  const programSelect = form.querySelectorAll("select")[1];
+  if (programSelect) {
+    const programValue = memberData.program?.toLowerCase().replace(" ", "") || "bsit";
+    programSelect.value = programValue;
+  }
+
+  inputs[inputs.length - 1].value = memberData.program || "";
+}
+
+function showErrorState() {
+  const mainContent = document.querySelector(".profile-main");
+  if (mainContent) {
+    mainContent.innerHTML = `
+      <div class="error-state" style="padding: 2rem; text-align: center; background: #fff3cd; border-radius: 8px; margin: 2rem 0;">
+        <p style="color: #856404; margin: 0;">⚠️ Unable to load profile data. Please refresh the page.</p>
+      </div>
+    `;
+  }
+}
+
+function getOrdinalSuffix(num) {
+  const j = num % 10;
+  const k = num % 100;
+  if (j === 1 && k !== 11) return "st";
+  if (j === 2 && k !== 12) return "nd";
+  if (j === 3 && k !== 13) return "rd";
+  return "th";
 }

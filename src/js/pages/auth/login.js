@@ -36,69 +36,49 @@ document.addEventListener("DOMContentLoaded", () => {
     try {
       let idToken = null;
 
-      if (import.meta.env.DEV) {
-        signInWithEmailAndPassword(auth, email, password)
-          .then(async (userCredentials) => {
-            idToken = await userCredentials.user.getIdToken();
-            return idToken;
-          })
-          .then((data) => {
-            console.log("Mock login in development mode. ID Token: ", idToken);
-            const userData = {
-              ...mockUser,
-              firebase_token: idToken,
-              last_login: new Date().toISOString(),
-            };
-            localStorage.setItem("user", JSON.stringify(userData));
-            window.location.href = "/pages/home/home.html";
-          })
-          .catch((error) => {
-            const errorCode = error.code;
-            errorMsg.textContent = error.message;
-            console.error("Error during login: ", error);
-          });
-      } else {
-        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ email, password }),
-        });
+      // TODO: Manual call, merge all fetches in one file 
+      // const response = await fetch("http://localhost:8000/api/auth/login", {
+      const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ email, password }),
+      });
 
-        const data = await response.json();
-        console.log(data);
+      const data = await response.json();
+      console.log(data);
 
-        if (response.status === 422) {
-          throw new Error(
-            data?.errors?.email?.[0] ?? data?.errors?.password?.[0]
-          );
-        }
-
-        if (!response.ok) {
-          throw new Error(data.message);
-        }
-
-        try {
-          await signInWithEmailAndPassword(auth, email, password);
-          idToken = await auth.currentUser.getIdToken();
-        } catch (error) {
-          console.warn(
-            "Firebase client sign-in failed, falling back to server token",
-            error
-          );
-          idToken = data?.firebase_user?.idToken;
-        }
-
-        const userData = {
-          ...data.user,
-          firebase_token: idToken,
-          last_login: new Date().toISOString(),
-        };
-        console.log("Verified user: ", userData);
-        localStorage.setItem("user", JSON.stringify(userData));
-        window.location.href = "/pages/home/home.html";
+      if (response.status === 422) {
+        throw new Error(
+          data?.errors?.email?.[0] ?? data?.errors?.password?.[0]
+        );
       }
+
+      if (!response.ok) {
+        throw new Error(data.message);
+      }
+
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        idToken = await auth.currentUser.getIdToken();
+      } catch (error) {
+        console.warn(
+          "Firebase client sign-in failed, falling back to server token",
+          error
+        );
+        idToken = data?.firebase_user?.idToken;
+      }
+
+      const userData = {
+        ...data.user,
+        firebase_token: idToken,
+        last_login: new Date().toISOString(),
+      };
+      console.log("Verified user: ", userData);
+      localStorage.setItem("user", JSON.stringify(userData));
+
+      window.location.href = "/pages/home/home.html";
     } catch (error) {
       errorMsg.textContent = error.message;
       console.error("Error during login: ", error);

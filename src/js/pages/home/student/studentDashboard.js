@@ -13,8 +13,8 @@ document.addEventListener("DOMContentLoaded", async () => {
 
 async function initDashboard() {
   //commented out for testing purposes
-  // userData = await getCurrentSession();
-  // if (!userData) window.location.href = "/pages/auth/login.html";
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 async function loadEvents() {
