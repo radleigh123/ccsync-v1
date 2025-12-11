@@ -2,6 +2,7 @@ import '/js/utils/core.js';
 import '/scss/pages/home/event/addEventPerson.scss';
 import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { getYearSuffix } from '/js/utils/date';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 
 let userData = null;
@@ -282,21 +283,6 @@ async function checkIfAlreadyRegistered(memberId) {
     } catch (error) {
         console.error('Error checking registration status:', error);
         return false;
-    }
-}
-
-// TODO: Move to utility
-/**
- * Get year suffix (st, nd, rd, th)
- */
-function getYearSuffix(year) {
-    const yearNum = parseInt(year);
-    switch (yearNum) {
-        case 1: return 'st';
-        case 2: return 'nd';
-        case 3: return 'rd';
-        case 4: return 'th';
-        default: return '';
     }
 }
 

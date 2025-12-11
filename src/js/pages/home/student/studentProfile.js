@@ -137,7 +137,8 @@ async function loadProfileData() {
     });
 
     if (response.status == 404) {
-      // TODO: redirect for now, if student isn't yet registered, need error modal
+      // TODO: Need ERROR MODAL
+      // REDIRECT for now, if student isn't yet registered
       window.location.href = "/pages/home/student/student-dashboard.html";
       throw new Error("User has not been registered as a member.");
     }

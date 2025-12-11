@@ -63,7 +63,7 @@ async function setupSettingsData() {
     try {
         // const userId = JSON.parse(localStorage.getItem("user")).id;
         const idSchoolNumber = JSON.parse(localStorage.getItem("user")).id_school_number;
-        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/user?id_school_number=${idSchoolNumber}`, {
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/members/member?id_school_number=${idSchoolNumber}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
@@ -77,8 +77,9 @@ async function setupSettingsData() {
         }
 
         const data = await response.json();
-        userProfile = data.user;
-        console.log(userProfile);
+        userProfile = data.data;
+
+        localStorage.setItem("member", JSON.stringify(userProfile));
 
         const elements = {
             email: document.getElementById('email'),
@@ -96,24 +97,24 @@ async function setupSettingsData() {
 function populateUserData(userData, elements) {
     // Email
     if (elements.email) {
-        elements.email.value = userData.email || '';
+        elements.email.value = userData.user.email || '';
     }
 
     // Phone Number handled separately after iti initialization
 
     // Display Name
     if (elements.display_name) {
-        elements.display_name.value = userData.display_name;
+        elements.display_name.value = userData.user.display_name;
     }
 
     // Bio
     if (elements.bio) {
-        elements.bio.value = userData?.member?.biography ?? '';
+        elements.bio.value = userData?.biography ?? '';
     }
 
     // Gender (select dropdown)
     if (elements.gender) {
-        const genderValue = (userData?.member?.gender ?? 'other').toLowerCase();
+        const genderValue = (userData?.gender ?? 'other').toLowerCase();
 
         const options = elements.gender.options;
         let optionFound = false;
@@ -134,14 +135,16 @@ function populateUserData(userData, elements) {
     }
 }
 
-function setupFormHandlers() {
+async function setupFormHandlers() {
     // const userData = JSON.parse(localStorage.getItem("user") || '{}');
 
     // Initialize intl-tel-input for phone number field
     const phoneInput = document.querySelector('#phone');
-    const iti = setupTelInput(userProfile, phoneInput);
+    const iti = await setupTelInput(userProfile, phoneInput);
 
+    console.log("PHONE:", iti);
     accountForm(userProfile, document.getElementById('account-info-form'), iti);
+    // BUG: CONTINUE
 
     const updatePasswordBtn = document.getElementById('update-password-btn');
     const currentPassword = document.getElementById('current-password');
@@ -172,7 +175,7 @@ function setupFormHandlers() {
     });
 }
 
-function setupTelInput(userData, phoneInput) {
+async function setupTelInput(userData, phoneInput) {
     const iti = intlTelInput(phoneInput, {
         loadUtils: () => import("intl-tel-input/utils"),
         separateDialCode: true,
@@ -184,16 +187,17 @@ function setupTelInput(userData, phoneInput) {
         }
     });
 
-    const phoneNumber = String(userData?.member?.phone ?? '')
+    const phoneNumber = String(userProfile?.phone ?? '')
 
     if (phoneNumber) {
         setTimeout(() => {
             try {
-                iti.setNumber(phoneNumber);
-
                 if (!phoneNumber.startsWith('+')) {
                     iti.setNumber(`+${phoneNumber}`);
+                    console.log("PHONE NUMBER:", phoneNumber);
+                    return;
                 }
+                iti.setNumber(phoneNumber);
             } catch (e) {
                 console.warn('Error setting phone number in iti:', e);
                 phoneInput.value = phoneNumber;

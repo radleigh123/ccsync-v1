@@ -132,9 +132,6 @@ async function handleSubmit(event) {
     const registrationEnd = document.getElementById("registrationEnd").value;
     const maxParticipants = document.getElementById("maxParticipants").value.trim();
 
-    // Helper function to parse date string (YYYY-MM-DD) to local midnight Date object
-    // TODO: parseDateString function moved to utility
-
     // Today's date at midnight for comparison (local time)
     const today = new Date();
     today.setHours(0, 0, 0, 0);

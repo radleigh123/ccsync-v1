@@ -29,6 +29,7 @@ export function accountForm(userData, form, iti) {
 
         try {
             const user = JSON.parse(localStorage.getItem("user"));
+            const member = JSON.parse(localStorage.getItem("member"));
 
             console.log({
                 "email": formData.email,
@@ -36,11 +37,12 @@ export function accountForm(userData, form, iti) {
                 "gender": formData.gender
             });
 
-            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${user.id}/editPersonal`, {
+            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${member.id}/edit`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${user.firebase_token}`,
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({
                     "email": formData.email,
@@ -54,6 +56,10 @@ export function accountForm(userData, form, iti) {
 
             if (result.success) {
                 alert('Successfully edited account details');
+                user.email = formData.email;
+                member.phone = phoneNumber;
+                member.gender = formData.gender;
+                localStorage.setItem("member", JSON.stringify(member));
                 window.location.reload();
             }
         } catch (error) {

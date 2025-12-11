@@ -38,8 +38,8 @@ export async function initProfile() {
 
 async function setupProfile() {
     try {
-        const userId = JSON.parse(localStorage.getItem("user")).id;
-        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/users/${userId}`, {
+        const idSchoolNumber = JSON.parse(localStorage.getItem("user")).id_school_number;
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/members/member?id_school_number=${idSchoolNumber}`, {
             method: "GET",
             headers: {
                 "Authorization": `Bearer ${userData.firebase_token}`,
@@ -53,7 +53,7 @@ async function setupProfile() {
         }
 
         const data = await response.json();
-        userProfile = data.user;
+        userProfile = data.data;
 
         const elements = {
             name: document.querySelector("#user-name-full"),
@@ -76,17 +76,17 @@ async function setupProfile() {
 function populateUserData(userData, elements) {
     // Display name
     if (elements.name) {
-        elements.name.textContent = userData.name;
+        elements.name.textContent = `${userData.first_name} ${userData.last_name}`;
     }
 
     // Email
     if (elements.email) {
-        elements.email.textContent = userData.email || "SERVER ERROR: no email found";
+        elements.email.textContent = userData.user.email || "SERVER ERROR: no email found";
     }
 
     // Bio
     if (elements.bio) {
-        elements.bio.textContent = userData.id_school_number || "SERVER ERROR: no ID number found";
+        elements.bio.textContent = userData.biography || "SERVER ERROR: no ID number found";
     }
 
     // Profile Image

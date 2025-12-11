@@ -32,7 +32,7 @@ async function loadHero() {
   try {
     // Fetch all required data
     const membersData = await fetchMembers();
-    const usersData = await fetchUsers(); // TODO: ask Jako about this
+    const usersData = await fetchUsers();
     
     allMembers = membersData.members || [];
     const usersLength = Object.keys(usersData.users).length;

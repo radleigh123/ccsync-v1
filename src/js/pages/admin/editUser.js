@@ -29,7 +29,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 async function loadUserDetails(userIdToEdit) {
     try {
         // Fetch user details from API using the database ID
-        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/user/${userIdToEdit}`, {
+        const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/${userIdToEdit}`, {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
@@ -41,17 +41,17 @@ async function loadUserDetails(userIdToEdit) {
         }
 
         const data = await response.json();
-        const user = data.user;
 
         // Store the id_school_number for update/delete operations
-        window.id_school_number = user.id_school_number;
+        window.id_school_number = data.id_school_number;
 
         // Populate form with user details
-        document.getElementById("firstName").value = user.name.split(' ')[0] || '';
-        document.getElementById("lastName").value = user.name.split(' ').slice(1).join(' ') || '';
-        document.getElementById("email").value = user.email || '';
-        document.getElementById("idSchoolNumber").value = user.id_school_number || '';
-        document.getElementById("role").value = user.role || 'user';
+        document.getElementById("firstName").value = data.display_name.split(' ')[0] || '';
+        document.getElementById("lastName").value = data.display_name.split(' ').slice(1).join(' ') || '';
+        document.getElementById("email").value = data.email || '';
+        document.getElementById("idSchoolNumber").value = data.id_school_number || '';
+        console.log(data.roles[data.roles.length - 1]);
+        // document.getElementById("role").value = data.roles[data.roles.length - 1] || 'user';
 
     } catch (error) {
         console.error("Error fetching user details:", error);

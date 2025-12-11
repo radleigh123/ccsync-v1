@@ -160,7 +160,7 @@ function displayRequirements(requirements) {
     .map((req) => {
       const statusClass = getStatusBadgeClass(req.status);
       const formattedDate = formatDate(req.requirement_date);
-      const status = req.status ? "open" : "close";
+      const status = req.is_active ? "open" : "close";
 
       return `
         <tr>
@@ -278,6 +278,22 @@ function viewRequirement(id) {
 
 function editRequirement(id) {
   // TODO: Implement edit functionality
+  /*
+  METHOD:
+  PUT
+
+  API:
+  https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}
+
+  BODY:
+  {
+    "name": "NAME",
+    "description": "DESC",
+    "type": "payment",
+    "is_active": True/False,
+    "semester_id": 1
+  }
+   */
   alert(`Edit requirement ${id}`);
 }
 
@@ -286,7 +302,14 @@ function deleteRequirement(id) {
     return;
   }
 
-  // TODO: Call deleteRequirement API endpoint
+  // TODO: Implement edit functionality
+  /*
+  METHOD:
+  DELETE
+
+  API:
+  https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}
+   */
   console.log("Deleting requirement", id);
 }
 

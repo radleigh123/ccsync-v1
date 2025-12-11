@@ -47,7 +47,7 @@ async function listUsers() {
     });
 
     try {
-        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/user", {
+        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/users", {
             headers: {
                 'Authorization': `Bearer ${userData.firebase_token}`,
                 'Accept': 'application/json',
@@ -74,14 +74,16 @@ function populateUserTable(users) {
 
     users.forEach(user => {
         const row = document.createElement('tr');
-        // TODO: Email verification
+
+        const role = user.roles[user.roles.length - 1] != undefined ? user.roles[user.roles.length - 1] : 'Unregistered'
+
         row.innerHTML = `
             <td>${user.id}</td>
-            <td>${user.name}</td>
+            <td>${user.display_name}</td>
             <td>${user.email}</td>
-            <td>${user.email_verified ? user.email_verified : 'Not Verified'}</td>
+            <td>${user.email_verified ? '✔' : 'X'}</td>
             <td>${user.id_school_number}</td>
-            <td>${user.role}</td>
+            <td>${role}</td>
             <td>
                 <button id="btn-edit">Edit</button>
                 <button id="btn-delete">Delete</button>
@@ -94,21 +96,21 @@ function populateUserTable(users) {
             window.location.href = `/pages/admin/edit-user.html?id=${user.id}`;
         });
 
-        // BUG: Don't delete the currently logged-in user
         btnDelete.addEventListener("click", async () => {
-            if (confirm(`Are you sure you want to delete user ${user.name}?`)) {
+            if (userData.id == user.id) {
+                alert("Cannot delete the currently signed-in user. That is you.");
+                return;
+            }
+
+            if (confirm(`Are you sure you want to delete user ${user.display_name}?`)) {
                 try {
-                    const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/delete-account", {
+                    const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/${user.id}`, {
                         method: "DELETE",
                         headers: {
                             'Authorization': `Bearer ${userData.firebase_token}`,
                             'Content-Type': 'application/json',
                             'Accept': 'application/json',
                         },
-                        body: JSON.stringify({
-                            id_token: userData.firebase_token,
-                            id_school_number: user.id_school_number
-                        })
                     });
 
                     if (!response.ok) {
@@ -116,10 +118,10 @@ function populateUserTable(users) {
                     }
 
                     await listUsers();
-                    alert(`User ${user.name} deleted successfully.`);
+                    alert(`User ${user.display_name} deleted successfully.`);
                 } catch (error) {
                     console.error("Error deleting user:", error);
-                    alert(`Failed to delete user ${user.name}.`);
+                    alert(`Failed to delete user ${user.display_name}.`);
                 }
             }
         });

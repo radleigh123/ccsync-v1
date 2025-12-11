@@ -77,7 +77,7 @@ async function loadRequirementData() {
         console.log('📥 Loading requirement data for ID:', requirementId);
         
         const response = await fetch(
-            "/ccsync-api-plain/requirement/getRequirements.php",
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -92,15 +92,14 @@ async function loadRequirementData() {
             return;
         }
 
-        const apiResponse = await response.json();
+        const data = await response.json();
 
-        if (!apiResponse.success || !apiResponse.requirements) {
+        if (!data.success || !data.data) {
             console.error('Failed to parse requirements');
             return;
         }
 
-        // Find the requirement by ID
-        selectedRequirement = apiResponse.requirements.find(r => r.id == requirementId);
+        selectedRequirement = data.data;
         
         if (!selectedRequirement) {
             console.error('Requirement not found');
@@ -125,7 +124,7 @@ async function loadCompliance(page = 1) {
         console.log('📥 Loading compliance for requirement:', requirementId, 'page:', page);
         
         const response = await fetch(
-            `/ccsync-api-plain/requirement/getRequirementCompliance.php?requirement_id=${requirementId}&page=${page}&limit=${currentLimit}`,
+            `https://ccsync-api-master-ll6mte.laravel.cloud/api/compliances`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -149,10 +148,10 @@ async function loadCompliance(page = 1) {
 
         const apiResponse = await response.json();
 
-        if (apiResponse.success) {
-            allCompliance = apiResponse.compliance;
-            paginationData = apiResponse.pagination;
-            currentPage = paginationData.page;
+        if (apiResponse) {
+            allCompliance = apiResponse;
+            paginationData = apiResponse?.pagination;
+            currentPage = paginationData?.page;
             
             displayCompliance(allCompliance);
             updatePaginationControls();
@@ -196,7 +195,7 @@ function populateRequirementInfo(requirement) {
     document.getElementById('requirementName').textContent = requirement.name || '-';
     document.getElementById('requirementDescription').textContent = requirement.description || '-';
     document.getElementById('requirementDate').textContent = formatDate(requirement.requirement_date) || '-';
-    document.getElementById('requirementStatus').textContent = capitalizeStatus(requirement.status) || '-';
+    document.getElementById('requirementStatus').textContent = requirement.is_active ? 'Open' : 'Closed';
     
     // Display compliance statistics
     const stats = requirement.complianceStats || { complied: 0, notComplied: 0, pending: 0, total: 0 };
@@ -226,11 +225,11 @@ function displayCompliance(compliance) {
 
     compliance.forEach((record) => {
         const row = document.createElement('tr');
-        const statusBadge = getStatusBadge(record.compliance_status);
+        const statusBadge = getStatusBadge(record.status);
         row.innerHTML = `
-            <td>${record.first_name} ${record.last_name}</td>
-            <td>${getYearSuffix(record.year)}</td>
-            <td>${record.program || '-'}</td>
+            <td>${record.member.first_name} ${record.member.last_name}</td>
+            <td>${getYearSuffix(record.member.year)}</td>
+            <td>${record.member.program || '-'}</td>
             <td>${statusBadge}</td>
             <td>${formatDate(record.submitted_at) || '-'}</td>
         `;
@@ -243,9 +242,9 @@ function displayCompliance(compliance) {
  */
 function getStatusBadge(status) {
     const badges = {
-        'complied': '<span class="badge bg-success">Complied</span>',
+        'Approved': '<span class="badge bg-success">Complied</span>',
         'not_complied': '<span class="badge bg-danger">Not Complied</span>',
-        'pending': '<span class="badge bg-warning">Pending</span>'
+        'Pending Progress': '<span class="badge bg-warning">Pending</span>'
     };
     return badges[status] || '<span class="badge bg-secondary">Unknown</span>';
 }

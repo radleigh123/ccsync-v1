@@ -5,6 +5,7 @@ import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
+import { getYearSuffix, formatDate } from '/js/utils/date.js';
 
 let userData = null;
 let selectedEvent = null;
@@ -76,7 +77,7 @@ async function loadEventData() {
     try {
         console.log('📥 Loading event data for ID:', eventId);
 
-        // TODO: KISS method, this request is the same as on `editEvent.js`
+        // TODO: Manual call, merge all fetches in one file
         const response = await fetch(
             `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
             {
@@ -124,7 +125,7 @@ async function loadParticipants(page = 1) {
             }
         );
 
-        // BUG: Much better use this condition, instead of having to check twice if data has loaded successfully
+        // NOTE: Much better use this condition, instead of having to check twice if data has loaded successfully
         if (!response.ok) {
             const errorData = await response.json();
             console.error('❌ Failed to load participants:', response.status, errorData);
@@ -141,7 +142,6 @@ async function loadParticipants(page = 1) {
 
         console.log(data);
 
-        // BUG: "data.data" is a temporary fix, read another comment above
         if (data) {
             allParticipants = data.data;
             paginationData = data;
@@ -222,7 +222,7 @@ function displayParticipants(participants) {
         const row = document.createElement('tr');
         row.innerHTML = `
             <td>${participant.first_name} ${participant.last_name}</td>
-            <td>${getYearSuffix(participant.year)}</td>
+            <td>${participant.year + getYearSuffix(participant.year)}</td>
             <td>${participant.program || '-'}</td>
             <td>${formatDate(participant.registered_at) || '-'}</td>
             <td>
@@ -429,23 +429,4 @@ async function removeParticipant(participantId) {
         console.error('❌ Error removing participant:', error);
         alert('Error removing participant');
     }
-}
-
-// TODO: Transfer method to utility
-/**
- * Format date to readable format
- */
-function formatDate(dateStr) {
-    if (!dateStr) return '';
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateStr).toLocaleDateString('en-US', options);
-}
-
-/**
- * Get year suffix (1st, 2nd, 3rd, 4th)
- */
-function getYearSuffix(year) {
-    const yearNum = parseInt(year);
-    const suffixes = { 1: 'st', 2: 'nd', 3: 'rd', 4: 'th' };
-    return `${yearNum}${suffixes[yearNum] || 'th'} Year`;
 }

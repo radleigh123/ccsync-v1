@@ -32,3 +32,26 @@ export function parseDate(dateStr) {
 
     return date;
 };
+
+/**
+ * Get year suffix (st, nd, rd, th)
+ */
+export function getYearSuffix(year) {
+    const yearNum = parseInt(year);
+    switch (yearNum) {
+        case 1: return 'st';
+        case 2: return 'nd';
+        case 3: return 'rd';
+        case 4: return 'th';
+        default: return '';
+    }
+}
+
+/**
+ * Format date to readable format
+ */
+export function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateStr).toLocaleDateString('en-US', options);
+}
