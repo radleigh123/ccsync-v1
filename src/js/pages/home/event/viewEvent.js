@@ -1,6 +1,6 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/event/viewEvent.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
@@ -9,7 +9,7 @@ let userData = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  await setSidebar();
+  // await setSidebar();
   loadEvents();
 });
 
@@ -18,6 +18,7 @@ async function initHome() {
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
 }
+
 
 async function loadEvents() {
   try {
@@ -152,8 +153,9 @@ function displayEventSection(events, containerId, sectionType) {
     group.forEach((event, index) => {
       const col = document.createElement('div');
       col.className = 'col-lg-4 col-md-6 col-sm-12';
-      col.style.paddingLeft = '0';
-      col.style.paddingRight = '0';
+      col.style.paddingLeft = "12px";
+      col.style.paddingRight = "12px";
+
 
       const card = document.createElement('div');
       card.id = 'eventCardItem';

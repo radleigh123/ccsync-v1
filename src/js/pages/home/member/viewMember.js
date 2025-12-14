@@ -1,6 +1,6 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/member/viewMember.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 
@@ -17,7 +17,7 @@ let selectedProgram = "all"; // Tier 2: Program filter
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  setSidebar();
+  // setSidebar();
   setupSearchFilter();
   setupYearFilter();
   setupProgramFilter();

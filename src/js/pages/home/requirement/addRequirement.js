@@ -15,7 +15,7 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/requirement/addRequirement.scss";
 import "/scss/confirmationModal.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { createRequirement } from "/js/utils/api.js";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
@@ -24,7 +24,7 @@ import { FormValidator } from "/js/utils/FormValidator.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Initialize sidebar navigation
-    setSidebar();
+    // setSidebar();
 
     // Validate user session
     const session = await getCurrentSession();

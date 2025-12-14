@@ -1,7 +1,7 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/event/viewEventSingle.scss';
 import '/scss/confirmationModal.scss';
-import { setSidebar } from '/components/js/sidebar';
+// import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
@@ -19,7 +19,7 @@ const eventId = new URLSearchParams(window.location.search).get('event_id');
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
-    setSidebar();
+    // setSidebar();
 
     // Setup back button
     const backButton = document.getElementById('backButton');

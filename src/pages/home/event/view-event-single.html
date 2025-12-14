@@ -7,7 +7,98 @@
 	</head>
 
 	<body>
-		<nav id="sidebar"></nav>
+		<nav id="sidebar">
+			<div id="sidebar-header" class="justify-content-center align-items-center">
+				<a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+					<img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
+				</a>
+			</div>
+		
+			<ul class="justify-content-center mb-0">
+		
+				<!-- Dashboard -->
+				<li>
+					<a href="/pages/home/home.html" class="justify-content-center" title="Dashboard" data-bs-toggle="tooltip"
+						data-bs-placement="right">
+						<i class="bi bi-house-fill"></i>
+						<span>Dashboard</span>
+					</a>
+				</li>
+		
+				<!-- Members -->
+				<li>
+					<a href="/pages/home/member/view-member.html" class="justify-content-center" title="Members"
+						data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="bi bi-person-circle"></i>
+						<span>Member management</span>
+					</a>
+				</li>
+		
+				<!-- Events -->
+				<li class="active">
+					<a href="/pages/home/event/view-event.html" class="justify-content-center" title="Events"
+						data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="bi bi-calendar2-week-fill"></i>
+						<span>Event management</span>
+					</a>
+				</li>
+		
+				<!-- Requirements -->
+				<li>
+					<a href="/pages/home/requirement/view-requirement.html" class="justify-content-center" title="Requirements"
+						data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="bi bi-file-text-fill"></i>
+						<span>Requirement management</span>
+					</a>
+				</li>
+		
+				<!-- Officers -->
+				<li>
+					<a href="/pages/home/officer/view-officer.html" class="justify-content-center" title="Officers"
+						data-bs-toggle="tooltip" data-bs-placement="right">
+						<i class="bi bi-hdd-rack-fill"></i>
+						<span>Officer management</span>
+					</a>
+				</li>
+		
+				<!-- User Info -->
+				<li class="user-info dropdown align-items-center mb-0">
+					<div class="container p-0 m-0 border-0">
+						<strong id="user-name">USER NAME</strong>
+						<small id="user-id">ID NUMBER</small>
+					</div>
+		
+					<a href="#" class="more-btn text-decoration-none align-items-center" data-bs-toggle="dropdown"
+						aria-haspopup="true" aria-expanded="false">
+						<i class="bi bi-gear-fill"></i>
+					</a>
+		
+					<button id="toggle-btn">
+						<!-- collapse icon stays -->
+						<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 960 960" fill="#e8eaed">
+							<path
+								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+						</svg>
+					</button>
+		
+					<ul class="dropdown-menu text-small shadow">
+						<li>
+							<a class="dropdown-item" href="/pages/settings/settings.html">Settings</a>
+						</li>
+						<li>
+							<a class="dropdown-item" href="/pages/profile/profile.html">Profile</a>
+						</li>
+						<li>
+							<hr class="dropdown-divider" />
+						</li>
+						<li>
+							<a id="logout-link" class="dropdown-item" href="#">Sign out</a>
+						</li>
+					</ul>
+				</li>
+		
+			</ul>
+		</nav>
 		<!-- Body -->
 		<main class="main-content-bg">
 			<div class="container-fluid px-0">

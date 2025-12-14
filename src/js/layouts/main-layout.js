@@ -1,6 +1,6 @@
 import '/js/utils/core.js';
 import '/scss/styles.scss';
-import { setSidebar } from "/components/js/sidebar.js";
+// import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
 
 // Content mapping for different pages
@@ -19,7 +19,7 @@ const scriptMap = {
 
 document.addEventListener("DOMContentLoaded", async () => {
     // Initialize sidebar
-    await setSidebar();
+    // await setSidebar();
 
     // Load initial content based on current URL
     await loadContentForCurrentPage();

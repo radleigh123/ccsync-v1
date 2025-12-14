@@ -1,6 +1,6 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/event/addEventPerson.scss';
-import { setSidebar } from '/components/js/sidebar';
+// import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { getYearSuffix } from '/js/utils/date';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
@@ -15,7 +15,7 @@ const eventId = new URLSearchParams(window.location.search).get('event_id');
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
-    setSidebar();
+    // setSidebar();
     await loadEventData();
     setupFormHandlers();
 });

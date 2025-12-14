@@ -1,7 +1,7 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/event/addEvent.scss';
 import '/scss/errorSuccessModal.scss';
-import { setSidebar } from '/components/js/sidebar';
+// import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { createEvent } from '/js/utils/api.js';
 import { FormValidator } from '/js/utils/formValidator.js';
@@ -12,7 +12,7 @@ let formValidator = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
-    setSidebar();
+    // setSidebar();
 
     const form = document.getElementById("addEventForm");
     
