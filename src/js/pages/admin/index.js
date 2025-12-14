@@ -1,5 +1,7 @@
 import "/js/utils/core.js";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { responseModal } from "/js/utils/errorSuccessModal";
+import { confirmationModal } from "/js/utils/confirmationModal";
 
 let userData;
 
@@ -98,32 +100,48 @@ function populateUserTable(users) {
 
         btnDelete.addEventListener("click", async () => {
             if (userData.id == user.id) {
-                alert("Cannot delete the currently signed-in user. That is you.");
+                responseModal.showError(
+                    "Cannot Delete Self",
+                    "You cannot delete the currently signed-in user. That is you."
+                );
                 return;
             }
 
-            if (confirm(`Are you sure you want to delete user ${user.display_name}?`)) {
-                try {
-                    const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/${user.id}`, {
-                        method: "DELETE",
-                        headers: {
-                            'Authorization': `Bearer ${userData.firebase_token}`,
-                            'Content-Type': 'application/json',
-                            'Accept': 'application/json',
-                        },
-                    });
+            confirmationModal.show(
+                "Delete User",
+                `Are you sure you want to delete user ${user.display_name}?`,
+                {
+                    onYes: async () => {
+                        try {
+                            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/users/${user.id}`, {
+                                method: "DELETE",
+                                headers: {
+                                    'Authorization': `Bearer ${userData.firebase_token}`,
+                                    'Content-Type': 'application/json',
+                                    'Accept': 'application/json',
+                                },
+                            });
 
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
+                            if (!response.ok) {
+                                throw new Error(`HTTP error! status: ${response.status}`);
+                            }
+
+                            await listUsers();
+                            responseModal.showSuccess(
+                                "User Deleted",
+                                `User ${user.display_name} has been deleted successfully.`
+                            );
+                        } catch (error) {
+                            console.error("Error deleting user:", error);
+                            responseModal.showError(
+                                "Deletion Failed",
+                                `Failed to delete user ${user.display_name}.`,
+                                error.message
+                            );
+                        }
                     }
-
-                    await listUsers();
-                    alert(`User ${user.display_name} deleted successfully.`);
-                } catch (error) {
-                    console.error("Error deleting user:", error);
-                    alert(`Failed to delete user ${user.display_name}.`);
                 }
-            }
+            );
         });
 
         tbody.appendChild(row);

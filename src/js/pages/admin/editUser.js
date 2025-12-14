@@ -1,5 +1,6 @@
 import "/js/utils/core.js";
 import { getCurrentSession } from "/js/utils/sessionManager";
+import { responseModal } from "/js/utils/errorSuccessModal.js";
 
 let userData = null;
 let userIdToEdit = null;
@@ -14,8 +15,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     userIdToEdit = urlParams.get('id');
 
     if (!userIdToEdit) {
-        alert("No user ID provided");
-        window.location.href = "/pages/admin/index.html";
+        responseModal.showError('Error', 'No user ID provided');
+        setTimeout(() => {
+            window.location.href = "/pages/admin/index.html";
+        }, 2000);
         return;
     }
 
@@ -55,7 +58,7 @@ async function loadUserDetails(userIdToEdit) {
 
     } catch (error) {
         console.error("Error fetching user details:", error);
-        alert("Failed to load user details");
+        responseModal.showError('Error', 'Failed to load user details');
     }
 }
 
@@ -90,10 +93,11 @@ async function handleSubmit(event) {
             throw new Error(errorData.message || `HTTP error! Status: ${response.status}`);
         }
 
-        alert("User details updated successfully!");
-        window.location.href = "/pages/admin/index.html";
+        responseModal.showSuccess('Success', 'User details updated successfully!', () => {
+            window.location.href = "/pages/admin/index.html";
+        });
     } catch (error) {
         console.error("Error updating user details:", error);
-        alert(`Failed to update user details: ${error.message}`);
+        responseModal.showError('Update Failed', `Failed to update user details: ${error.message}`);
     }
 }

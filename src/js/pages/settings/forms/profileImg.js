@@ -1,3 +1,5 @@
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+
 export function profileImgForm(userData, form) {
     if (!form) return;
 
@@ -6,7 +8,7 @@ export function profileImgForm(userData, form) {
 
         const fileInput = document.getElementById('profile-image');
         if (fileInput.files.length === 0) {
-            alert('Please select an image to upload');
+            responseModal.showError('No Image Selected', 'Please select an image to upload');
             return;
         }
 
@@ -14,11 +16,11 @@ export function profileImgForm(userData, form) {
 
         // Check if the file is an image
         if (!file.type.startsWith('image/')) {
-            alert('Please select a valid image file');
+            responseModal.showError('Invalid File Type', 'Please select a valid image file');
             return;
         }
 
         // NOTE: call API to update, maybe multer
-        alert('Profile image upload functionality will be implemented in the future');
+        responseModal.showError('Not Implemented', 'Profile image upload functionality will be implemented in the future');
     });
 }

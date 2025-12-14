@@ -1,3 +1,5 @@
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+
 export function profileForm(userData, form) {
     if (!form) return;
 
@@ -10,7 +12,7 @@ export function profileForm(userData, form) {
         };
 
         if (!formData.display_name) {
-            alert('Please provide a display name');
+            responseModal.showError('Missing Display Name', 'Please provide a display name');
             return;
         }
 
@@ -34,8 +36,9 @@ export function profileForm(userData, form) {
             const result = await response.json();
 
             if (result.success) {
-                alert('Successfully edited profile details');
-                window.location.reload();
+                responseModal.showSuccess('Profile Updated', 'Successfully edited profile details', () => {
+                    window.location.reload();
+                });
             }
         } catch (error) {
             console.error('Error editing profile details', error);

@@ -2,6 +2,8 @@ import "/js/utils/core.js";
 import "/scss/pages/home/student/studentProfile.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { getFirebaseToken } from "../../../utils/firebaseAuth";
+import { responseModal } from "/js/utils/errorSuccessModal.js";
+import { confirmationModal } from "/js/utils/confirmationModal.js";
 
 let userData = null;
 let memberData = null;
@@ -44,8 +46,9 @@ function closeEditModal() {
 
 // Save Profile (placeholder logic)
 function saveProfile() {
-  alert("Profile updated successfully!");
-  closeEditModal();
+  responseModal.showSuccess('Success', 'Profile updated successfully!', () => {
+    closeEditModal();
+  });
 }
 
 // Open Change Password Modal
@@ -69,13 +72,14 @@ function changePassword() {
   const confirmPassword = inputs[2].value;
 
   if (newPassword !== confirmPassword) {
-    alert("New passwords do not match!");
+    responseModal.showError('Password Mismatch', 'New passwords do not match!');
     return;
   }
 
-  alert("Password changed successfully!");
-  closePasswordModal();
-  form.reset();
+  responseModal.showSuccess('Password Changed', 'Password changed successfully!', () => {
+    closePasswordModal();
+    form.reset();
+  });
 }
 
 /* -------------------------------------------------------------------------- */

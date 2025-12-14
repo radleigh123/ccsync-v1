@@ -7,6 +7,8 @@
  * @version 1.0
  */
 
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+
 const eventId = new URLSearchParams(window.location.search).get('event_id');
 
 document.getElementById('idNumber').addEventListener('input', async function() {
@@ -57,7 +59,7 @@ document.getElementById('addParticipantForm').addEventListener('submit', async f
 
     const idNumber = document.getElementById('idNumber').value.trim();
     if (!idNumber) {
-        alert('ID number is required.');
+        responseModal.showError('Missing ID', 'ID number is required.');
         return;
     }
 
@@ -72,13 +74,14 @@ document.getElementById('addParticipantForm').addEventListener('submit', async f
 
         const result = await response.json();
         if (result.success) {
-            alert('Participant added successfully.');
-            window.location.href = '?page=event/view-event';
+            responseModal.showSuccess('Participant Added', 'Participant added successfully.', () => {
+                window.location.href = '?page=event/view-event';
+            });
         } else {
-            alert(result.message);
+            responseModal.showError('Error', result.message);
         }
     } catch (error) {
         console.error('Error adding participant:', error);
-        alert('An error occurred.');
+        responseModal.showError('Error', 'An error occurred.');
     }
 });

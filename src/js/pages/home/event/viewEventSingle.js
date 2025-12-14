@@ -4,6 +4,7 @@ import '/scss/confirmationModal.scss';
 // import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
+import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
 import { getYearSuffix, formatDate } from '/js/utils/date.js';
 
@@ -373,7 +374,7 @@ async function markParticipantAttended(participantId) {
 
         if (!response.ok) {
             console.error('Failed to mark attended');
-            alert('Failed to mark as attended');
+            responseModal.showError('Error', 'Failed to mark as attended');
             return;
         }
 
@@ -383,11 +384,11 @@ async function markParticipantAttended(participantId) {
             // Reload participants list (stay on current page)
             await loadParticipants(currentPage);
         } else {
-            alert(data.message || 'Failed to mark as attended');
+            responseModal.showError('Error', data.message || 'Failed to mark as attended');
         }
     } catch (error) {
         console.error('❌ Error marking attended:', error);
-        alert('Error marking participant as attended');
+        responseModal.showError('Error', 'Error marking participant as attended');
     }
 }
 
@@ -412,7 +413,7 @@ async function removeParticipant(participantId) {
 
         if (!response.ok) {
             console.error('Failed to remove participant');
-            alert('Failed to remove participant');
+            responseModal.showError('Error', 'Failed to remove participant');
             return;
         }
 
@@ -423,10 +424,10 @@ async function removeParticipant(participantId) {
             const newPage = allParticipants.length === 1 && currentPage > 1 ? currentPage - 1 : currentPage;
             await loadParticipants(newPage);
         } else {
-            alert(data.message || 'Failed to remove participant');
+            responseModal.showError('Error', data.message || 'Failed to remove participant');
         }
     } catch (error) {
         console.error('❌ Error removing participant:', error);
-        alert('Error removing participant');
+        responseModal.showError('Error', 'Error removing participant');
     }
 }

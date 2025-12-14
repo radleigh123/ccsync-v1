@@ -106,12 +106,13 @@
 				<div id="header" class="d-flex flex-row gap-5 align-items-center">
 					<!-- Back Button and Title Section -->
 					<div class="d-flex flex-row gap-3 align-items-center">
-						<a
-							href="#"
-							class="text-decoration-none"
-							id="backButton">
-							<i class="bi bi-caret-left-fill p-0 m-0"></i>
-						</a>
+						<button
+							type="button"
+							class="btn btn-link text-decoration-none p-0 m-0"
+							id="backButton"
+							aria-label="Go back">
+							<i class="bi bi-caret-left-fill p-0 m-0" style="font-size: 1.5rem;"></i>
+						</button>
 						<div>
 							<p class="p-0 m-0 h1 fw-bold text-dark">Add Student Compliance</p>
 							<p class="text-muted mb-0" id="requirementSubtitle">Record student compliance for this requirement</p>
@@ -194,7 +195,6 @@
 					<div id="complianceStatusSection" class="mb-4" style="display: none;">
 						<label for="complianceStatus" class="form-label fw-bold mb-2">Mark Compliance Status</label>
 						<select class="form-select" id="complianceStatus">
-							<option value="pending">Pending</option>
 							<option value="complied">Complied</option>
 							<option value="not_complied">Not Complied</option>
 						</select>
@@ -208,13 +208,12 @@
 
 					<!-- Action Buttons -->
 					<div class="d-flex flex-row gap-3 mt-4">
-						<a
-							href="#"
-							role="button"
+						<button
+							type="button"
 							id="cancelButton"
 							class="btn btn-secondary flex-fill fw-bold">
 							Cancel
-						</a>
+						</button>
 						<button
 							type="submit"
 							id="submitButton"

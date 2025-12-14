@@ -10,6 +10,7 @@ import "/scss/pages/home/officer/viewOfficer.scss";
 import { setupLogout } from "/js/utils/navigation.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
+import { responseModal } from "/js/utils/errorSuccessModal.js";
 import "bootstrap";
 import { Modal } from "bootstrap";
 
@@ -58,9 +59,20 @@ async function loadOfficers() {
     const data = JSON.parse(text);
 
     displayOfficers(data.officers);
+
+    // Hide shimmer and show officers
+    setTimeout(() => {
+      shimmer.style.display = "none";
+      officerContainer.style.display = "grid";
+    }, 300);
   } catch (error) {
     console.error("❌ Officers load error:", error);
     displayEmptyState();
+    
+    // Hide shimmer on error
+    setTimeout(() => {
+      shimmer.style.display = "none";
+    }, 300);
   }
 }
 
@@ -222,10 +234,11 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      alert("Officer updated!");
-      location.reload();
+      responseModal.showSuccess("Officer Updated", "Officer role has been updated successfully.", () => {
+        location.reload();
+      });
     } else {
-      alert(data.message || "Failed to update officer");
+      responseModal.showError("Update Failed", data.message || "Failed to update officer");
     }
   });
 
@@ -250,10 +263,11 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      alert("Officer removed!");
-      location.reload();
+      responseModal.showSuccess("Officer Removed", "Officer has been successfully demoted to student.", () => {
+        location.reload();
+      });
     } else {
-      alert(data.message || "Failed to remove officer");
+      responseModal.showError("Removal Failed", data.message || "Failed to remove officer");
     }
   });
 

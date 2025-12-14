@@ -72,6 +72,21 @@ i {
         transform: translateY(-4px);
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
     }
+
+    // Glassmorphic shimmer lines for loading state
+    .shimmer-line {
+        background: linear-gradient(
+            90deg,
+            rgba(255, 255, 255, 0.2) 0%,
+            rgba(255, 255, 255, 0.4) 50%,
+            rgba(255, 255, 255, 0.2) 100%
+        );
+        background-size: 200% 100%;
+        animation: shimmer 2s infinite ease-in-out;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+    }
 }
 
 .officer-img {

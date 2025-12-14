@@ -7,12 +7,18 @@
  * @version 1.0
  */
 
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { confirmationModal } from '/js/utils/confirmationModal.js';
+
 /**
  * Placeholder function for editing a requirement.
  * @param {string} requirementId - The ID of the requirement to edit.
  */
 function editRequirement(requirementId) {
-    alert(`Edit requirement with ID: ${requirementId}\n(This feature is not yet implemented.)`);
+    responseModal.showError(
+        'Not Implemented',
+        `Edit requirement with ID: ${requirementId} - This feature is not yet implemented.`
+    );
 }
 
 /**
@@ -20,7 +26,16 @@ function editRequirement(requirementId) {
  * @param {string} requirementId - The ID of the requirement to delete.
  */
 function deleteRequirement(requirementId) {
-    if (confirm(`Are you sure you want to delete requirement with ID: ${requirementId}?`)) {
-        alert(`Delete requirement with ID: ${requirementId}\n(This feature is not yet implemented.)`);
-    }
+    confirmationModal.show(
+        'Delete Requirement',
+        `Are you sure you want to delete requirement with ID: ${requirementId}?`,
+        {
+            onYes: () => {
+                responseModal.showError(
+                    'Not Implemented',
+                    `Delete requirement with ID: ${requirementId} - This feature is not yet implemented.`
+                );
+            }
+        }
+    );
 }

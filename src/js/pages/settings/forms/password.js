@@ -1,3 +1,5 @@
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+
 export function passwordForm(userData, form, updatePasswordBtn, inputs) {
 
     updatePasswordBtn?.addEventListener('click', async function (e) {
@@ -10,12 +12,12 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
         };
 
         if (!formData.current_password || !formData.password || !formData.password_confirmation) {
-            alert('Please fill in all password fields');
+            responseModal.showError('Missing Fields', 'Please fill in all password fields');
             return;
         }
 
         if (formData.password !== formData.password_confirmation) {
-            alert('New Password do not match');
+            responseModal.showError('Password Mismatch', 'New passwords do not match');
             return;
         }
 
@@ -37,12 +39,13 @@ export function passwordForm(userData, form, updatePasswordBtn, inputs) {
             console.log(result);
 
             if (result.success) {
-                alert('Successfully edited password');
-                window.location.reload();
+                responseModal.showSuccess('Password Updated', 'Successfully edited password', () => {
+                    window.location.reload();
+                });
             } else {
                 const message = result.message;
                 console.log(message);
-                alert(message);
+                responseModal.showError('Password Update Failed', message);
             }
         } catch (error) {
             console.error('Error editing password', error);

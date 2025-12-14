@@ -1,5 +1,6 @@
 import '/js/utils/core.js';
 import '/scss/pages/auth/forgot-password.scss';
+import { responseModal } from '/js/utils/errorSuccessModal.js';
 
 document.addEventListener("DOMContentLoaded", () => {
     const backLink = document.getElementById('back-link');
@@ -35,12 +36,13 @@ document.addEventListener("DOMContentLoaded", () => {
             }
 
             console.log('Password reset email sent:', data);
-            alert("Password reset email sent! Please check your inbox.");
-            window.location.href = '/pages/auth/login.html';
+            responseModal.showSuccess('Email Sent', 'Password reset email sent! Please check your inbox.', () => {
+                window.location.href = '/pages/auth/login.html';
+            });
         } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            alert("Error: " + errorMessage);
+            responseModal.showError('Error', 'Error: ' + errorMessage);
             console.error('Error during password reset:', error);
         }
     });

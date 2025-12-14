@@ -7,12 +7,18 @@
  * @version 1.0
  */
 
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { confirmationModal } from '/js/utils/confirmationModal.js';
+
 /**
  * Placeholder function for editing a member.
  * @param {string} memberId - The ID of the member to edit.
  */
 function editMember(memberId) {
-    alert(`Edit member with ID: ${memberId}\n(This feature is not yet implemented.)`);
+    responseModal.showError(
+        'Not Implemented',
+        `Edit member with ID: ${memberId} - This feature is not yet implemented.`
+    );
 }
 
 /**
@@ -20,7 +26,16 @@ function editMember(memberId) {
  * @param {string} memberId - The ID of the member to delete.
  */
 function deleteMember(memberId) {
-    if (confirm(`Are you sure you want to delete member with ID: ${memberId}?`)) {
-        alert(`Delete member with ID: ${memberId}\n(This feature is not yet implemented.)`);
-    }
+    confirmationModal.show(
+        'Delete Member',
+        `Are you sure you want to delete member with ID: ${memberId}?`,
+        {
+            onYes: () => {
+                responseModal.showError(
+                    'Not Implemented',
+                    `Delete member with ID: ${memberId} - This feature is not yet implemented.`
+                );
+            }
+        }
+    );
 }
