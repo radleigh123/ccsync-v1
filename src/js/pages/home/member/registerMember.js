@@ -20,7 +20,7 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/member/registerMember.scss";
 import "/scss/confirmationModal.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
@@ -28,7 +28,7 @@ import { FormValidator } from "/js/utils/FormValidator.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Initialize sidebar navigation
-    setSidebar();
+    // setSidebar();
 
     // Validate user session
     const session = await getCurrentSession();

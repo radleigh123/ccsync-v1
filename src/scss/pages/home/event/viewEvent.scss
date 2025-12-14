@@ -323,3 +323,105 @@ i {
         opacity: 1;
     }
 }
+
+/* ===========================
+   Add Event Button (Themed)
+   =========================== */
+
+.btn-add-event {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 12px 22px;
+    border-radius: 999px;
+
+    font-weight: 600;
+    font-size: 14px;
+    letter-spacing: 0.3px;
+
+    color: var(--primary-dark);
+    text-decoration: none;
+
+    background: linear-gradient(135deg,
+            #FFE8A6 0%,
+            #FED154 40%,
+            #F4B301 70%,
+            #FF9500 100%);
+
+    box-shadow:
+        0 6px 18px rgba(0, 0, 0, 0.15),
+        inset 0 1px 0 rgba(255, 255, 255, 0.6);
+
+    transition: all 0.25s ease;
+}
+
+.btn-add-event i {
+    font-size: 16px;
+    color: var(--primary-dark);
+    transition: transform 0.25s ease;
+}
+
+/* Hover */
+.btn-add-event:hover {
+    transform: translateY(-2px);
+    box-shadow:
+        0 10px 28px rgba(0, 0, 0, 0.2),
+        inset 0 1px 0 rgba(255, 255, 255, 0.7);
+}
+
+/* Icon animation */
+.btn-add-event:hover i {
+    transform: rotate(90deg);
+}
+
+/* Active / Click */
+.btn-add-event:active {
+    transform: translateY(0);
+    box-shadow:
+        0 4px 12px rgba(0, 0, 0, 0.15),
+        inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Mobile refinement */
+@media (max-width: 768px) {
+    .btn-add-event {
+        padding: 10px 18px;
+        font-size: 13px;
+    }
+}
+
+/* Prevent carousel overlap */
+.carousel-inner {
+    overflow: hidden;
+}
+
+.carousel-item .carousel-item-card {
+    transform: none !important;
+    opacity: 1 !important;
+}
+
+/* Reserve space for carousel arrows */
+#incomingEventsCarousel,
+#completedEventsCarousel {
+    position: relative;
+    padding-left: 70px;
+    padding-right: 70px;
+}
+
+.carousel-control-prev {
+    left: 10px;
+}
+
+.carousel-control-next {
+    right: 10px;
+}
+
+.carousel-item .row {
+    width: 100%;
+}
+
+.carousel-item .card {
+    margin: 0 auto;
+}
+

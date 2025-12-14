@@ -1,6 +1,6 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/requirement/viewRequirement.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 
@@ -16,7 +16,7 @@ let selectedStatus = "all"; // Tier 2: Status filter
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  setSidebar();
+  // setSidebar();
   setupSearchFilter();
   setupStatusFilter();
   setupPaginationButtons();

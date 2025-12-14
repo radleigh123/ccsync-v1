@@ -14,7 +14,7 @@
 
 import "/js/utils/core.js";
 import "/scss/pages/home/officer/addOfficer.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { setupLogout } from "/js/utils/navigation.js";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 import "bootstrap";
@@ -22,7 +22,7 @@ import "bootstrap";
 /* ------------------------------- PAGE INIT ------------------------------- */
 document.addEventListener("DOMContentLoaded", () => {
   initAddOfficerPage();
-  setSidebar();
+  // setSidebar();
   setupLogout();
 });
 

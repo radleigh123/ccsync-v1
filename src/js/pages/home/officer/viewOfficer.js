@@ -6,7 +6,7 @@
 
 import "/js/utils/core.js";
 import "/scss/pages/home/officer/viewOfficer.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { setupLogout } from "/js/utils/navigation.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
@@ -19,7 +19,7 @@ const officerContainer = document.getElementById("officerContainer");
 // INIT
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
-  await setSidebar();
+  // await setSidebar();
   setupLogout();
   loadOfficers();
 });
@@ -80,7 +80,43 @@ function displayEmptyState() {
 /*                              RENDER OFFICERS                                 */
 /* -------------------------------------------------------------------------- */
 
+const ROLE_PRIORITY = {
+  president: 1,
+  "vice-president": 2,
+  "vice president": 2,
+  secretary: 3,
+  treasurer: 4,
+  auditor: 5,
+  representative: 6,
+  officer: 99, // always last
+};
+
 function displayOfficers(officers = []) {
+  // Sort officers by role priority
+  officers.sort((a, b) => {
+    const roleA = (a.role || "").toLowerCase();
+    const roleB = (b.role || "").toLowerCase();
+
+    const priorityA = ROLE_PRIORITY[roleA] ?? 50;
+    const priorityB = ROLE_PRIORITY[roleB] ?? 50;
+
+    return priorityA - priorityB;
+  });
+
+  officers.sort((a, b) => {
+    const roleA = (a.role || "").toLowerCase();
+    const roleB = (b.role || "").toLowerCase();
+
+    const priorityA = ROLE_PRIORITY[roleA] ?? 50;
+    const priorityB = ROLE_PRIORITY[roleB] ?? 50;
+
+    if (priorityA !== priorityB) {
+      return priorityA - priorityB;
+    }
+
+    return a.name.localeCompare(b.name);
+  });
+  
   const noUI = document.getElementById("noOfficerUI");
 
   if (officers.length === 0) return displayEmptyState();

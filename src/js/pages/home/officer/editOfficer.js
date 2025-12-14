@@ -1,12 +1,12 @@
 import "/js/utils/core.js";
 import "/scss/pages/home/officer/editOfficer.scss";
-import { setSidebar } from "/components/js/sidebar";
+// import { setSidebar } from "/components/js/sidebar";
 import { setupLogout } from "/js/utils/navigation.js";
 import "bootstrap";
 
 document.addEventListener("DOMContentLoaded", () => {
   initHome();
-  setSidebar();
+  // setSidebar();
   setupLogout();
 });
 

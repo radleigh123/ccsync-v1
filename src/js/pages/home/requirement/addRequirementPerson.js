@@ -1,6 +1,6 @@
 import '/js/utils/core.js';
 import '/scss/pages/home/event/addEventPerson.scss';
-import { setSidebar } from '/components/js/sidebar';
+// import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { responseModal } from '/js/utils/errorSuccessModal';
 
@@ -14,7 +14,7 @@ const requirementId = new URLSearchParams(window.location.search).get('requireme
 
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
-    setSidebar();
+    // setSidebar();
     await loadRequirementData();
     setupFormHandlers();
 });
