@@ -103,6 +103,8 @@ function displayOfficers(officers) {
     const card = document.createElement("div");
     card.className = "officer-card";
 
+    console.log(member);
+
     card.innerHTML = `
       <div class="officer-image">
         <img src="${profilePicture}" class="officer-avatar-img" alt="${escape(
@@ -120,7 +122,7 @@ function displayOfficers(officers) {
         <div class="officer-contact">
           <div class="contact-item">
             <span>📧</span>
-            <span>${member.email || "No email available"}</span>
+            <span>${member?.user?.email || "No email available"}</span>
           </div>
           <div class="contact-item">
             <span>📱</span>

@@ -5,11 +5,15 @@
   "main": "index.js",
   "scripts": {
     "dev": "dotenvx run -f .env.development -- vite --mode development",
-    "preview": "vite preview",
-    "build": "dotenvx run -f .env.production -- vite build --mode production",
+    "preview:dev": "dotenvx run -f .env.development -- vite preview",
+    "build:dev": "dotenvx run -f .env.development -- vite --mode development",
+
+    "prod": "dotenvx run -f .env.production -- vite --mode production",
     "preview:prod": "dotenvx run -f .env.production -- vite preview",
     "build:prod": "dotenvx run -f .env.production -- vite build --mode production",
-    "start": "npm run build && npm run preview",
+
+    "start": "npm run build:prod && npm run preview:prod",
+
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
