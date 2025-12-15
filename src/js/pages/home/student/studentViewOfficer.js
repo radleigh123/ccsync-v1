@@ -92,22 +92,20 @@ function displayOfficers(officers) {
   execBoardGrid.innerHTML = "";
   deptHeadGrid.innerHTML = "";
 
-  officers.forEach((officer) => {
+  officers.forEach(async (officer) => {
     const member = officer.member_info ?? {};
-    const profilePicture =
-      member.profile ??
-      officer.profile ??
-      officer.avatar ??
-      "/assets/no_profile.png";
+
+    // GET API profile picture
+    const avatarUrl = await getProfilePicture(officer?.id);
 
     const card = document.createElement("div");
     card.className = "officer-card";
 
-    console.log(member);
+    console.log("member", member);
 
     card.innerHTML = `
       <div class="officer-image">
-        <img src="${profilePicture}" class="officer-avatar-img" alt="${escape(
+        <img src="${avatarUrl}" class="officer-avatar-img" alt="${escape(
       officer.name
     )}"/>
       </div>
@@ -144,6 +142,31 @@ function displayOfficers(officers) {
       deptHeadGrid.appendChild(card);
     }
   });
+}
+
+async function getProfilePicture(memberId) {
+  try {
+    const token = await getFirebaseToken();
+    // TODO: Manual call, merge in one file like `utils/api.js`
+    const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
+    // const API = "http://localhost:8000/api";
+
+    const res = await fetch(`${API}/profile/${memberId}/profile-picture`, {
+      method: "GET",
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json();
+    // console.log("🔵 JSON RESPONSE TEXT:", data);
+
+    if (!data.success) {
+      return "https://placehold.co/400x400?text=OFFICER";
+    }
+
+    return data.data;
+  } catch (error) {
+    console.error("❌ Error getting profile URL:", error);
+  }
 }
 
 /* -------------------------------------------------------------------------- */

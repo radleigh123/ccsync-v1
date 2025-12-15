@@ -15,6 +15,7 @@ let memberData = null;
 document.addEventListener("DOMContentLoaded", async () => {
   await verifyLogin();
   await loadProfileData();
+  await loadAvatar();
   attachModalEvents();
 });
 
@@ -161,6 +162,31 @@ async function loadProfileData() {
   }
 }
 
+async function loadAvatar() {
+  try {
+    const token = await getFirebaseToken();
+    const baseUrl = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
+    // const baseUrl = "http://localhost:8000/api";
+    const memberId = memberData.id;
+    const response = await fetch(`${baseUrl}/profile/${memberId}/profile-picture`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const result = await response.json();
+    console.log(result);
+
+    if (result.success && result.data) {
+      const avatarUrl = result.data;
+      populateAvatar(avatarUrl);
+    } else {
+      console.error("❌ Invalid API Profile Picture response:", result);
+      // showErrorState();
+    }
+  } catch (err) {
+    console.error("❌ Error loading profile picture:", err.message);
+  }
+}
+
 function populateUI() {
   if (!memberData) return;
 
@@ -190,6 +216,16 @@ function populateUI() {
 
   // Edit Form Modal - Pre-fill with current data
   populateEditForm();
+}
+
+function populateAvatar(url) {
+  const avatarElement = document.querySelector(".profile-avatar");
+  if (avatarElement && url) {
+    avatarElement.style.backgroundImage = `url('${url}')`;
+    avatarElement.style.backgroundSize = "cover";
+    avatarElement.style.backgroundPosition = "center";
+    avatarElement.textContent = "";
+  }
 }
 
 function populateEditForm() {
