@@ -3,6 +3,7 @@ import "/scss/pages/home/member/viewMember.scss";
 // import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
+import { responseModal } from "/js/utils/errorSuccessModal.js";
 
 let userData = null;
 let allMembers = []; // Store all members from API
@@ -310,5 +311,5 @@ function displayMembers(members) {
 
 function handleMemberClick(member) {
   // Add member click functionality here
-  alert(`Member clicked: ${member.first_name} ${member.last_name}`); // Placeholder action
+  responseModal.showError('Feature Placeholder', `Member clicked: ${member.first_name} ${member.last_name}`);
 }

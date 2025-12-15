@@ -3,6 +3,8 @@ import "/scss/pages/home/requirement/viewRequirement.scss";
 // import { setSidebar } from "/components/js/sidebar";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
+import { responseModal } from "/js/utils/errorSuccessModal";
+import { confirmationModal } from "/js/utils/confirmationModal";
 
 let userData = null;
 let allRequirements = []; // Store all requirements from API
@@ -152,36 +154,36 @@ function displayRequirements(requirements) {
 
   if (requirements.length === 0) {
     tbody.innerHTML =
-      '<tr><td colspan="5" class="text-center py-4">No requirements found</td></tr>';
+      '<tr><td colspan="4" class="text-center py-4">No requirements found</td></tr>';
     return;
   }
 
   tbody.innerHTML = requirements
     .map((req) => {
       const statusClass = getStatusBadgeClass(req.status);
-      const formattedDate = formatDate(req.requirement_date);
-      const status = req.is_active ? "open" : "close";
+      const status = req.is_active ? "open" : "closed";
 
       return `
         <tr>
           <td>${escapeHtml(req.name)}</td>
           <td>${escapeHtml(req.description || "—")}</td>
-          <td>${formattedDate}</td>
           <td>
             <span class="badge ${statusClass}">
               ${capitalizeFirst(status)}
             </span>
           </td>
           <td>
-            <button class="btn btn-sm btn-primary view-btn" data-requirement-id="${req.id}">
-              View
-            </button>
-            <button class="btn btn-sm btn-warning edit-btn" data-requirement-id="${req.id}">
-              Edit
-            </button>
-            <button class="btn btn-sm btn-danger delete-btn" data-requirement-id="${req.id}">
-              Delete
-            </button>
+            <div class="d-flex gap-2 justify-content-center">
+              <button class="btn btn-sm btn-primary view-btn" data-requirement-id="${req.id}">
+                <i class="bi bi-eye"></i> View
+              </button>
+              <button class="btn btn-sm btn-warning edit-btn" data-requirement-id="${req.id}">
+                <i class="bi bi-pencil"></i> Edit
+              </button>
+              <button class="btn btn-sm btn-danger delete-btn" data-requirement-id="${req.id}">
+                <i class="bi bi-trash"></i> Delete
+              </button>
+            </div>
           </td>
         </tr>
       `;
@@ -294,23 +296,34 @@ function editRequirement(id) {
     "semester_id": 1
   }
    */
-  alert(`Edit requirement ${id}`);
+  responseModal.showError(
+    "Not Implemented",
+    "Edit requirement functionality is not yet implemented."
+  );
 }
 
 function deleteRequirement(id) {
-  if (!confirm("Are you sure you want to delete this requirement?")) {
-    return;
-  }
-
-  // TODO: Implement edit functionality
-  /*
-  METHOD:
-  DELETE
-
-  API:
-  https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}
-   */
-  console.log("Deleting requirement", id);
+  confirmationModal.show(
+    "Delete Requirement",
+    "Are you sure you want to delete this requirement?",
+    {
+      onYes: async () => {
+        try {
+          // TODO: Implement delete functionality
+          console.log("Deleting requirement", id);
+          responseModal.showError(
+            "Not Implemented",
+            "Delete functionality is not yet implemented."
+          );
+        } catch (error) {
+          responseModal.showError(
+            "Error",
+            error.message
+          );
+        }
+      }
+    }
+  );
 }
 
 // ============================================

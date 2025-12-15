@@ -4,6 +4,7 @@ import '/scss/pages/home/event/addEventPerson.scss';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { getYearSuffix } from '/js/utils/date';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { confirmationModal } from '/js/utils/confirmationModal.js';
 
 let userData = null;
 let selectedEventId = null; // Store the database event ID
@@ -138,18 +139,18 @@ function setupFormHandlers() {
             }
 
             if (idNumber.length === 0) {
-                alert('Please enter a valid ID number');
+                responseModal.showError('Invalid ID Number', 'Please enter a valid ID number');
                 return;
             }
 
             if (!/^\d+$/.test(idNumber)) {
-                alert('ID number must contain only digits');
+                responseModal.showError('Invalid ID Number', 'ID number must contain only digits');
                 return;
             }
 
             // Require exactly 8 digits for school ID
             if (idNumber.length !== 8) {
-                alert('School ID number must be exactly 8 digits');
+                responseModal.showError('Invalid ID Number', 'School ID number must be exactly 8 digits');
                 return;
             }
 
@@ -291,7 +292,7 @@ async function checkIfAlreadyRegistered(memberId) {
  */
 async function registerParticipant() {
     if (!selectedMemberId || !selectedEventId) {
-        alert('Please provide all required information');
+        responseModal.showError('Missing Information', 'Please provide all required information');
         return;
     }
 
@@ -334,7 +335,10 @@ async function registerParticipant() {
         }
     } catch (error) {
         console.error('Error registering participant:', error);
-        alert('An error occurred while registering the participant');
+        responseModal.showError(
+            'Error',
+            'An error occurred while registering the participant'
+        );
     }
 }
 

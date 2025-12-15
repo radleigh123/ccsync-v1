@@ -1,3 +1,5 @@
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+
 export function accountForm(userData, form, iti) {
     if (!form) return;
 
@@ -55,12 +57,13 @@ export function accountForm(userData, form, iti) {
             console.log(result);
 
             if (result.success) {
-                alert('Successfully edited account details');
-                user.email = formData.email;
-                member.phone = phoneNumber;
-                member.gender = formData.gender;
-                localStorage.setItem("member", JSON.stringify(member));
-                window.location.reload();
+                responseModal.showSuccess('Account Updated', 'Successfully edited account details', () => {
+                    user.email = formData.email;
+                    member.phone = phoneNumber;
+                    member.gender = formData.gender;
+                    localStorage.setItem("member", JSON.stringify(member));
+                    window.location.reload();
+                });
             }
         } catch (error) {
             console.error('Error editing account details', error);

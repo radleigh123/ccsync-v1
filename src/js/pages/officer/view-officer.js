@@ -1,4 +1,6 @@
 import { getFirebaseToken } from "/js/firebase/firebase-auth.js";
+import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { confirmationModal } from '/js/utils/confirmationModal.js';
 
 const shimmer = document.getElementById("shimmerContainer");
 const officerContainer = document.getElementById("officerContainer");
@@ -19,7 +21,7 @@ async function loadOfficers() {
     const data = await response.json();
 
     if (!response.ok) {
-      alert("Failed to load officers.");
+      responseModal.showError('Error', 'Failed to load officers.');
       return;
     }
 
@@ -111,7 +113,7 @@ function displayOfficers(officers = []) {
       const id = editBtn.dataset.memberId ?? null;
       if (!id) {
         console.warn("Edit clicked but memberId missing for officer:", officer);
-        alert("Cannot edit this officer — missing member id.");
+        responseModal.showError('Error', 'Cannot edit this officer — missing member id.');
         return;
       }
       openEditOfficer(id, officer.role, officer.name);
@@ -121,7 +123,7 @@ function displayOfficers(officers = []) {
       const id = delBtn.dataset.memberId ?? null;
       if (!id) {
         console.warn("Delete clicked but memberId missing for officer:", officer);
-        alert("Cannot remove this officer — missing member id.");
+        responseModal.showError('Error', 'Cannot remove this officer — missing member id.');
         return;
       }
       openDeleteOfficer(id, officer.name);
@@ -205,10 +207,11 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      alert("Officer updated!");
-      location.reload();
+      responseModal.showSuccess('Officer Updated', 'Officer updated successfully!', () => {
+        location.reload();
+      });
     } else {
-      alert(data.message);
+      responseModal.showError('Update Failed', data.message);
     }
   });
 
@@ -232,9 +235,10 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      alert("Officer removed!");
-      location.reload();
+      responseModal.showSuccess('Officer Removed', 'Officer removed successfully!', () => {
+        location.reload();
+      });
     } else {
-      alert(data.message);
+      responseModal.showError('Removal Failed', data.message);
     }
   });
