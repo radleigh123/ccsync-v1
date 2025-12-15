@@ -5,6 +5,7 @@ import { getCurrentSession } from '/js/utils/sessionManager';
 import { getYearSuffix } from '/js/utils/date';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let selectedEventId = null; // Store the database event ID
@@ -17,6 +18,7 @@ const eventId = new URLSearchParams(window.location.search).get('event_id');
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
     await loadEventData();
     setupFormHandlers();
 });

@@ -5,6 +5,7 @@ import '/scss/confirmationModal.scss';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let selectedRequirement = null;
@@ -19,6 +20,7 @@ const requirementId = new URLSearchParams(window.location.search).get('requireme
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
     
     // Setup back button
     const backButton = document.getElementById('backButton');

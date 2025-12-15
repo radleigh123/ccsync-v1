@@ -21,8 +21,10 @@ import { createRequirement } from "/js/utils/api.js";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
 import { FormValidator } from "/js/utils/FormValidator.js";
+import { setupLogout } from "/js/utils/navigation.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
+    setupLogout();
     // Initialize sidebar navigation
     // setSidebar();
 

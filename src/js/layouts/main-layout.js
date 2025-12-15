@@ -21,6 +21,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     // Initialize sidebar
     // await setSidebar();
 
+    // Set up logout handler
+    await setupLogout();
+
     // Load initial content based on current URL
     await loadContentForCurrentPage();
 

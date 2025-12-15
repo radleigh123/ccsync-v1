@@ -3,7 +3,7 @@ import '/scss/pages/home/event/addEventPerson.scss';
 // import { setSidebar } from '/components/js/sidebar';
 import { getCurrentSession } from '/js/utils/sessionManager';
 import { responseModal } from '/js/utils/errorSuccessModal';
-import { confirmationModal } from '/js/utils/confirmationModal';
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let selectedRequirement = null;
@@ -16,6 +16,7 @@ const requirementId = new URLSearchParams(window.location.search).get('requireme
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
     await loadRequirementData();
     setupFormHandlers();
 });
@@ -37,9 +38,9 @@ async function loadRequirementData() {
     }
 
     try {
-        // Fetch requirement from API using the Laravel API
+        // Fetch all requirements from API
         const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}`,
+            "/ccsync-api-plain/requirement/getRequirements.php",
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -55,34 +56,40 @@ async function loadRequirementData() {
 
         const data = await response.json();
 
-        // Check if requirement data exists
-        if (data.data) {
-            selectedRequirement = data.data;
+        // Find the requirement with matching ID
+        if (data.success && data.requirements && data.requirements.length > 0) {
+            selectedRequirement = data.requirements.find(req => req.id == requirementId);
             
-            // Update requirement information in the form
-            document.getElementById('requirementCardTitle').textContent = selectedRequirement.name;
-            document.getElementById('requirementSubtitle').textContent = `Record compliance for: ${selectedRequirement.name}`;
-            document.getElementById('requirementCardDate').textContent = `Deadline: ${selectedRequirement.requirement_date || 'N/A'}`;
-            
-            // Setup back button
-            const backButton = document.getElementById('backButton');
-            if (backButton) {
-                backButton.addEventListener('click', (e) => {
-                    window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
-                });
+            if (selectedRequirement) {
+                // Update requirement information in the form
+                document.getElementById('requirementCardTitle').textContent = selectedRequirement.name;
+                document.getElementById('requirementSubtitle').textContent = `Record compliance for: ${selectedRequirement.name}`;
+                document.getElementById('requirementCardDate').textContent = `Deadline: ${selectedRequirement.requirement_date}`;
+                
+                // Setup back button
+                const backButton = document.getElementById('backButton');
+                if (backButton) {
+                    backButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
+                    });
+                }
+                
+                // Setup cancel button
+                const cancelButton = document.getElementById('cancelButton');
+                if (cancelButton) {
+                    cancelButton.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
+                    });
+                }
+                
+                console.log('Requirement data loaded successfully:', selectedRequirement);
+            } else {
+                showError('Requirement not found. Please select a valid requirement.');
             }
-            
-            // Setup cancel button
-            const cancelButton = document.getElementById('cancelButton');
-            if (cancelButton) {
-                cancelButton.addEventListener('click', (e) => {
-                    window.location.href = `/pages/home/requirement/view-requirement-single.html?requirement_id=${requirementId}`;
-                });
-            }
-            
-            console.log('Requirement data loaded successfully:', selectedRequirement);
         } else {
-            showError('Requirement not found. Please select a valid requirement.');
+            showError('Unable to load requirements. Please try again.');
         }
     } catch (error) {
         console.error('Error loading requirement data:', error);
@@ -152,18 +159,18 @@ function setupFormHandlers() {
             }
             
             if (idNumber.length === 0) {
-                responseModal.showError('Invalid ID Number', 'Please enter a valid ID number');
+                alert('Please enter a valid ID number');
                 return;
             }
             
             if (!/^\d+$/.test(idNumber)) {
-                responseModal.showError('Invalid ID Number', 'ID number must contain only digits');
+                alert('ID number must contain only digits');
                 return;
             }
             
             // Require exactly 8 digits for school ID
             if (idNumber.length !== 8) {
-                responseModal.showError('Invalid ID Number', 'School ID number must be exactly 8 digits');
+                alert('School ID number must be exactly 8 digits');
                 return;
             }
             
@@ -181,7 +188,7 @@ function setupFormHandlers() {
 /**
  * Load and display student information
  */
-async function loadStudentInfo(schoolIdNumber) {
+async function loadStudentInfo(memberId) {
     try {
         // Show student info section with shimmer loader
         const studentInfoSection = document.getElementById('studentInfoSection');
@@ -192,9 +199,8 @@ async function loadStudentInfo(schoolIdNumber) {
         shimmerLoader.style.display = 'block';
         studentCard.style.display = 'none';
         
-        // Search for the member by school ID number using dedicated endpoint
         const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/member?id_school_number=${schoolIdNumber}`,
+            `/ccsync-api-plain/member/getMember.php?id=${memberId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -213,8 +219,8 @@ async function loadStudentInfo(schoolIdNumber) {
 
         const data = await response.json();
 
-        if (data.data) {
-            const member = data.data;
+        if (data.success && data.member) {
+            const member = data.member;
             
             // Store the member database ID for compliance recording
             selectedMemberId = member.id;
@@ -224,11 +230,10 @@ async function loadStudentInfo(schoolIdNumber) {
             
             let complianceStatusHTML = '<span class="badge bg-info">Not Yet Recorded</span>';
             if (existingCompliance) {
-                const statusField = existingCompliance.status || existingCompliance.compliance_status;
-                const statusBadgeClass = statusField === 'complied' ? 'bg-success' : 
-                                        statusField === 'not_complied' || statusField === 'not complied' ? 'bg-danger' : 'bg-warning';
-                const statusText = (statusField || '').replace('_', ' ').charAt(0).toUpperCase() + 
-                                  (statusField || '').replace('_', ' ').slice(1);
+                const statusBadgeClass = existingCompliance.compliance_status === 'complied' ? 'bg-success' : 
+                                        existingCompliance.compliance_status === 'not_complied' ? 'bg-danger' : 'bg-warning';
+                const statusText = existingCompliance.compliance_status.replace('_', ' ').charAt(0).toUpperCase() + 
+                                  existingCompliance.compliance_status.replace('_', ' ').slice(1);
                 complianceStatusHTML = `<span class="badge ${statusBadgeClass}">${statusText}</span>`;
             }
             
@@ -269,7 +274,7 @@ async function loadStudentInfo(schoolIdNumber) {
 async function checkExistingCompliance(memberId) {
     try {
         const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/compliance-audits?requirement_id=${selectedRequirement.id}&member_id=${memberId}`,
+            `/ccsync-api-plain/requirement/checkCompliance.php?requirement_id=${selectedRequirement.id}&member_id=${memberId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -286,8 +291,8 @@ async function checkExistingCompliance(memberId) {
 
         const data = await response.json();
         
-        if (data.data && data.data.length > 0) {
-            return data.data[0];
+        if (data.success && data.compliance) {
+            return data.compliance;
         }
         
         return null;
@@ -316,7 +321,7 @@ function getYearSuffix(year) {
  */
 async function recordCompliance() {
     if (!selectedMemberId || !selectedRequirement) {
-        responseModal.showError('Missing Information', 'Please provide all required information');
+        alert('Please provide all required information');
         return;
     }
 
@@ -324,7 +329,7 @@ async function recordCompliance() {
 
     try {
         const response = await fetch(
-            'https://ccsync-api-master-ll6mte.laravel.cloud/api/compliance-audits',
+            '/ccsync-api-plain/requirement/recordCompliance.php',
             {
                 method: 'POST',
                 headers: {
@@ -334,14 +339,14 @@ async function recordCompliance() {
                 body: JSON.stringify({
                     requirement_id: selectedRequirement.id,
                     member_id: selectedMemberId,
-                    status: complianceStatus,
+                    compliance_status: complianceStatus,
                 }),
             }
         );
 
         const result = await response.json();
 
-        if (result.data || response.ok) {
+        if (result.success) {
             responseModal.showSuccess(
                 'Compliance Recorded',
                 'The student compliance has been successfully recorded.',
@@ -358,10 +363,7 @@ async function recordCompliance() {
         }
     } catch (error) {
         console.error('Error recording compliance:', error);
-        responseModal.showError(
-            'Error',
-            'An error occurred while recording compliance'
-        );
+        alert('An error occurred while recording compliance');
     }
 }
 

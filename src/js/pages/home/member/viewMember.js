@@ -4,6 +4,7 @@ import "/scss/pages/home/member/viewMember.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
+import { setupLogout } from "/js/utils/navigation.js";
 
 let userData = null;
 let allMembers = []; // Store all members from API
@@ -19,6 +20,7 @@ let selectedProgram = "all"; // Tier 2: Program filter
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
   // setSidebar();
+  setupLogout();
   setupSearchFilter();
   setupYearFilter();
   setupProgramFilter();
@@ -310,6 +312,6 @@ function displayMembers(members) {
 }
 
 function handleMemberClick(member) {
-  // Add member click functionality here
-  responseModal.showError('Feature Placeholder', `Member clicked: ${member.first_name} ${member.last_name}`);
+  // Navigate to studentFullView.html with the member's ID
+  window.location.href = `/pages/home/student/studentFullView.html?id=${member.id_school_number}`;
 }

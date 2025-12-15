@@ -7,13 +7,10 @@
     "dev": "dotenvx run -f .env.development -- vite --mode development",
     "preview:dev": "dotenvx run -f .env.development -- vite preview",
     "build:dev": "dotenvx run -f .env.development -- vite --mode development",
-
     "prod": "dotenvx run -f .env.production -- vite --mode production",
     "preview:prod": "dotenvx run -f .env.production -- vite preview",
     "build:prod": "dotenvx run -f .env.production -- vite build --mode production",
-
     "start": "npm run build:prod && npm run preview:prod",
-
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -23,11 +20,14 @@
   "dependencies": {
     "@dotenvx/dotenvx": "^1.51.0",
     "@popperjs/core": "^2.11.8",
+    "@vitejs/plugin-vue": "^6.0.3",
     "aos": "^2.3.4",
     "bootstrap": "^5.3.8",
     "bootstrap-icons": "^1.13.1",
     "firebase": "^12.2.1",
-    "intl-tel-input": "^25.10.6"
+    "intl-tel-input": "^25.10.6",
+    "swiper": "^12.0.3",
+    "vue": "^3.5.25"
   },
   "devDependencies": {
     "gh-pages": "^6.3.0",

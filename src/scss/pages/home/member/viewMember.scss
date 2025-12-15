@@ -332,7 +332,12 @@ i {
 #userTableBody tr.member-row {
     opacity: 1;
     transform: none;
-    transition: none;
+    transition: background-color 0.2s ease, cursor 0.2s ease;
+    cursor: pointer;
+
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.08);
+    }
 }
 
 @media (max-width: 800px) {
