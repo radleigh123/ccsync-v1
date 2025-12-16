@@ -24,7 +24,7 @@ import "/scss/confirmationModal.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
-import { FormValidator } from "/js/utils/FormValidator.js";
+import { FormValidator } from "/js/utils/formValidator.js";
 import { setupLogout } from "/js/utils/navigation.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
