@@ -4,7 +4,7 @@ import "/scss/pages/home/student/studentViewOfficer.scss";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 
-const officerGridSections = document.querySelectorAll(".officers-grid");
+const officersGrid = document.querySelector(".officers-grid");
 let userData = null;
 
 /* -------------------------------------------------------------------------- */
@@ -21,7 +21,6 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* -------------------------------------------------------------------------- */
 
 async function verifyLogin() {
-  //commented out for testing purposes
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
 }
@@ -32,22 +31,14 @@ async function verifyLogin() {
 
 async function loadOfficers() {
   try {
-    console.log("📋 Fetching officers for student view...");
-
     const token = await getFirebaseToken();
-    // TODO: Manual call, merge in one file like `utils/api.js`
     const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
-    // const API = "http://localhost:8000/api";
 
     const res = await fetch(`${API}/officers`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    const text = await res.text();
-    // console.log("🔴 RAW RESPONSE TEXT:", text);
-
-    const data = JSON.parse(text);
-    // console.log("🔵 JSON RESPONSE TEXT:", data);
+    const data = await res.json();
 
     if (!data.officers || data.officers.length === 0) {
       return showEmptyState();
@@ -61,61 +52,72 @@ async function loadOfficers() {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                           SHOW EMPTY STATE UI                               */
+/*                           EMPTY STATE                                       */
 /* -------------------------------------------------------------------------- */
 
 function showEmptyState() {
-  officerGridSections.forEach((section) => {
-    section.innerHTML = `
-      <div class="text-center text-muted py-5 col-12">
-        <p class="h5">No officers found</p>
-      </div>
-    `;
-  });
+  officersGrid.innerHTML = `
+    <div class="text-center text-muted py-5 col-12">
+      <p class="h5">No officers found</p>
+    </div>
+  `;
 }
 
 /* -------------------------------------------------------------------------- */
-/*                           RENDER OFFICERS FOR STUDENT                       */
+/*                           ROLE SORT ORDER                                   */
 /* -------------------------------------------------------------------------- */
 
-function displayOfficers(officers) {
-  // 🔹 Find sections in HTML: Executive Board and Department Heads
-  const sections = document.querySelectorAll(".officers-section");
+const ROLE_ORDER = {
+  president: 1,
+  "vice-president-internal": 2,
+  "vice-president-external": 3,
+  "vice-president": 2,
+  secretary: 5,
+  "assistant-secretary": 6,
+  treasurer: 7,
+  "assistant-treasurer": 8,
+  auditor: 9,
+  "PIO-internal": 10,
+  "PIO-external": 11,
+  "representative-1": 12,
+  "representative-2": 13,
+  "representative-3": 14,
+  "representative-4": 15,
+  representative: 16,
+  officer: 17,
+};
+  /* -------------------------------------------------------------------------- */
+  /*                           RENDER OFFICERS                                   */
+  /* -------------------------------------------------------------------------- */
 
-  if (sections.length < 2) {
-    console.warn("⚠️ Expected 2 officer sections, found:", sections.length);
-  }
+  async function displayOfficers(officers) {
+    officersGrid.innerHTML = "";
 
-  const execBoardGrid = sections[0].querySelector(".officers-grid");
-  const deptHeadGrid = sections[1].querySelector(".officers-grid");
+    // 🔹 SORT ONLY
+    const sortedOfficers = [...officers].sort((a, b) => {
+      return (ROLE_ORDER[a.role] ?? 999) - (ROLE_ORDER[b.role] ?? 999);
+    });
 
-  execBoardGrid.innerHTML = "";
-  deptHeadGrid.innerHTML = "";
+    for (const officer of sortedOfficers) {
+      const member = officer.member_info ?? {};
+      const avatarUrl = await getProfilePicture(officer?.id);
 
-  officers.forEach(async (officer) => {
-    const member = officer.member_info ?? {};
+      const card = document.createElement("div");
+      card.className = "officer-card";
 
-    // GET API profile picture
-    const avatarUrl = await getProfilePicture(officer?.id);
-
-    const card = document.createElement("div");
-    card.className = "officer-card";
-
-    console.log("member", member);
-
-    card.innerHTML = `
+      card.innerHTML = `
       <div class="officer-image">
         <img src="${avatarUrl}" class="officer-avatar-img" alt="${escape(
-      officer.name
-    )}"/>
+        officer.name
+      )}"/>
       </div>
 
       <div class="officer-content">
         <h3 class="officer-name">${escape(officer.name)}</h3>
         <p class="officer-position">${formatRole(officer.role)}</p>
-        <p class="officer-year">${member.year || "Year N/A"} ${
-      member.program || ""
-    }</p>
+        <p class="officer-year">
+          ${member.year || "Year N/A"} ${member.program || ""}
+        </p>
 
         <div class="officer-contact">
           <div class="contact-item">
@@ -130,42 +132,29 @@ function displayOfficers(officers) {
       </div>
     `;
 
-    // Insert card depending on role
-    if (
-      officer.role === "president" ||
-      officer.role === "vice-president" ||
-      officer.role === "secretary" ||
-      officer.role === "treasurer"
-    ) {
-      execBoardGrid.appendChild(card);
-    } else {
-      deptHeadGrid.appendChild(card);
+      officersGrid.appendChild(card);
     }
-  });
-}
+  };
+
+/* -------------------------------------------------------------------------- */
+/*                           PROFILE PICTURE                                   */
+/* -------------------------------------------------------------------------- */
 
 async function getProfilePicture(memberId) {
   try {
     const token = await getFirebaseToken();
-    // TODO: Manual call, merge in one file like `utils/api.js`
     const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
-    // const API = "http://localhost:8000/api";
 
     const res = await fetch(`${API}/profile/${memberId}/profile-picture`, {
-      method: "GET",
       headers: { Authorization: `Bearer ${token}` },
     });
 
     const data = await res.json();
-    // console.log("🔵 JSON RESPONSE TEXT:", data);
-
-    if (!data.success) {
-      return "https://placehold.co/400x400?text=OFFICER";
-    }
-
-    return data.data;
-  } catch (error) {
-    console.error("❌ Error getting profile URL:", error);
+    return data.success
+      ? data.data
+      : "https://placehold.co/400x400?text=OFFICER";
+  } catch {
+    return "https://placehold.co/400x400?text=OFFICER";
   }
 }
 

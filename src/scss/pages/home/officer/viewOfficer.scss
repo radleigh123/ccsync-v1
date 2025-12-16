@@ -118,15 +118,16 @@ i {
 }
 
 .officer-position {
-    background: linear-gradient(135deg, #FFE8A6 0%, #FFD670 100%);
+    // background: linear-gradient(135deg, #FFE8A6 0%, #FFD670 100%);
     padding: 12px 20px;
     margin: 0;
+    border-radius: 5px 5px 5px 5px;
 
     h5 {
         margin: 0;
-        font-size: 0.95rem;
+        font-size: 1.1rem;
         font-weight: 600;
-        color: #2C2C2C;
+        color: #FF9500;
         text-transform: capitalize;
     }
 }

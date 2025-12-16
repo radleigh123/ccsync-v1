@@ -1,219 +1,208 @@
 /**
- * View Officers Page Script
- * Direct API calls (NO api.js)
- * Consistent with viewEvent.js structure
+ * View Officers (ADMIN)
+ * Same structure as studentViewOfficer.js
+ * WITH getProfilePicture()
  */
 
 import "/js/utils/core.js";
 import "/scss/pages/home/officer/viewOfficer.scss";
-// import { setSidebar } from "/components/js/sidebar";
+
 import { setupLogout } from "/js/utils/navigation.js";
-import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
+import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
-import "bootstrap";
 import { Modal } from "bootstrap";
+import "bootstrap";
 
 const shimmer = document.getElementById("shimmerContainer");
-const officerContainer = document.getElementById("officerContainer");
+const officersGrid = document.getElementById("officerContainer");
 
-// INIT
+let userData = null;
+const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
+
+/* -------------------------------------------------------------------------- */
+/*                                   INIT                                     */
+/* -------------------------------------------------------------------------- */
+
 document.addEventListener("DOMContentLoaded", async () => {
-  await initHome();
-  // await setSidebar();
+  await verifyLogin();
   setupLogout();
   loadOfficers();
 });
 
 /* -------------------------------------------------------------------------- */
-/*                            VERIFY LOGIN SESSION                             */
+/*                               VERIFY LOGIN                                 */
 /* -------------------------------------------------------------------------- */
 
-async function initHome() {
-  const user = await getCurrentSession();
-  if (!user) window.location.href = "/pages/auth/login.html";
+async function verifyLogin() {
+  userData = await getCurrentSession();
+  if (!userData) window.location.href = "/pages/auth/login.html";
 }
 
 /* -------------------------------------------------------------------------- */
-/*                              LOAD OFFICERS API                               */
+/*                               FETCH OFFICERS                               */
 /* -------------------------------------------------------------------------- */
 
 async function loadOfficers() {
   try {
-    console.log("📋 Fetching officers...");
-
     const token = await getFirebaseToken();
-    console.log("🟦 Firebase Token:", token);
-
-    const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
 
     const res = await fetch(`${API}/officers`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
-    const text = await res.text();
-    console.log("🔴 RAW RESPONSE TEXT:", text);
+    const data = await res.json();
 
-    const data = JSON.parse(text);
+    if (!data.officers || data.officers.length === 0) {
+      return showEmptyState();
+    }
 
-    displayOfficers(data.officers);
+    await displayOfficers(data.officers);
 
-    // Hide shimmer and show officers
-    setTimeout(() => {
-      shimmer.style.display = "none";
-      officerContainer.style.display = "grid";
-    }, 300);
+    shimmer.style.display = "none";
+    officersGrid.style.display = "grid";
   } catch (error) {
-    console.error("❌ Officers load error:", error);
-    displayEmptyState();
-    
-    // Hide shimmer on error
-    setTimeout(() => {
-      shimmer.style.display = "none";
-    }, 300);
+    console.error("❌ Error loading officers:", error);
+    showEmptyState();
   }
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                EMPTY STATE UI                               */
+/*                                EMPTY STATE                                 */
 /* -------------------------------------------------------------------------- */
 
-function displayEmptyState() {
+function showEmptyState() {
   shimmer.style.display = "none";
-  officerContainer.style.display = "none";
-
-  const noUI = document.getElementById("noOfficerUI");
-  if (noUI) noUI.style.display = "block";
+  officersGrid.innerHTML = `
+    <div class="text-center text-muted py-5 col-12">
+      <p class="h5">No officers found</p>
+    </div>
+  `;
 }
 
 /* -------------------------------------------------------------------------- */
-/*                              RENDER OFFICERS                                 */
+/*                              ROLE SORT ORDER                               */
 /* -------------------------------------------------------------------------- */
 
-const ROLE_PRIORITY = {
+const ROLE_ORDER = {
   president: 1,
+  "vice-president-internal": 2,
+  "vice-president-external": 3,
   "vice-president": 2,
-  "vice president": 2,
-  secretary: 3,
-  treasurer: 4,
-  auditor: 5,
-  representative: 6,
-  officer: 99, // always last
+  secretary: 5,
+  "assistant-secretary": 6,
+  treasurer: 7,
+  "assistant-treasurer": 8,
+  auditor: 9,
+  "PIO-internal": 10,
+  "PIO-external": 11,
+  "representative-1": 12,
+  "representative-2": 13,
+  "representative-3": 14,
+  "representative-4": 15,
+  representative: 16,
+  officer: 17,
 };
 
-function displayOfficers(officers = []) {
-  // Sort officers by role priority
-  officers.sort((a, b) => {
-    const roleA = (a.role || "").toLowerCase();
-    const roleB = (b.role || "").toLowerCase();
+/* -------------------------------------------------------------------------- */
+/*                               RENDER OFFICERS                              */
+/* -------------------------------------------------------------------------- */
 
-    const priorityA = ROLE_PRIORITY[roleA] ?? 50;
-    const priorityB = ROLE_PRIORITY[roleB] ?? 50;
+async function displayOfficers(officers) {
+  officersGrid.innerHTML = "";
 
-    return priorityA - priorityB;
-  });
+  const sortedOfficers = [...officers].sort(
+    (a, b) => (ROLE_ORDER[a.role] ?? 999) - (ROLE_ORDER[b.role] ?? 999)
+  );
 
-  officers.sort((a, b) => {
-    const roleA = (a.role || "").toLowerCase();
-    const roleB = (b.role || "").toLowerCase();
-
-    const priorityA = ROLE_PRIORITY[roleA] ?? 50;
-    const priorityB = ROLE_PRIORITY[roleB] ?? 50;
-
-    if (priorityA !== priorityB) {
-      return priorityA - priorityB;
-    }
-
-    return a.name.localeCompare(b.name);
-  });
-  
-  const noUI = document.getElementById("noOfficerUI");
-
-  if (officers.length === 0) return displayEmptyState();
-
-  officerContainer.innerHTML = "";
-  officerContainer.style.display = "grid";
-  if (noUI) noUI.style.display = "none";
-
-  officers.forEach((officer) => {
-    const member = officer.member_info ?? null;
+  for (const officer of sortedOfficers) {
+    const member = officer.member_info ?? {};
     const memberId = member?.id ?? officer.id;
 
-    const program = member?.program ?? "Unknown Program";
-    const year = member?.year ? `${member.year} Year` : "N/A";
-
-    const profilePicture =
-      member?.profile ??
-      officer?.profile ??
-      officer?.avatar ??
-      "/assets/no_profile.png";
+    const profile = await getProfilePicture(memberId);
 
     const card = document.createElement("div");
     card.className = "officer-card";
 
     card.innerHTML = `
-      <img src="${profilePicture}" class="officer-img" alt="${escape(
-      officer.name
-    )}" />
+      <img src="${profile}" class="officer-img" alt="${escape(officer.name)}"/>
 
-      <div class="officer-info">
+      <div class="officer-info text-center">
         <h5>${escape(officer.name)}</h5>
-        <p>${escape(program)} - ${escape(year)}</p>
-        
+        <p>
+          ${member.program || "Unknown Program"} - 
+          ${member.year ? `${member.year} Year` : "N/A"}
+        </p>
+
         <div class="officer-position">
           <h5>${formatRole(officer.role)}</h5>
         </div>
       </div>
 
       <div class="officer-actions">
-        <button class="btn btn-warning" data-id="${memberId}">Edit</button>
-        <button class="btn btn-danger" data-id="${memberId}">Remove</button>
+        <button class="btn btn-warning btn-sm">Edit</button>
+        <button class="btn btn-danger btn-sm">Remove</button>
       </div>
     `;
 
-    // Fallback image
     card.querySelector(".officer-img").onerror = (e) => {
-      e.target.src = "/images/default-avatar.png";
+      e.target.src = "https://placehold.co/400x400?text=OFFICER";
     };
 
-    // Attach events
     card.querySelector(".btn-warning").onclick = () =>
       openEditOfficer(memberId, officer.role, officer.name);
 
     card.querySelector(".btn-danger").onclick = () =>
       openDeleteOfficer(memberId, officer.name);
 
-    officerContainer.appendChild(card);
-  });
+    officersGrid.appendChild(card);
+  }
 }
 
 /* -------------------------------------------------------------------------- */
-/*                              MODAL HANDLERS                                 */
+/*                           PROFILE PICTURE API                               */
+/* -------------------------------------------------------------------------- */
+
+async function getProfilePicture(memberId) {
+  try {
+    const token = await getFirebaseToken();
+
+    const res = await fetch(`${API}/profile/${memberId}/profile-picture`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    const data = await res.json();
+
+    return data.success
+      ? data.data
+      : "https://placehold.co/400x400?text=OFFICER";
+  } catch (error) {
+    console.error("❌ Profile picture error:", error);
+    return "https://placehold.co/400x400?text=OFFICER";
+  }
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               MODALS                                       */
 /* -------------------------------------------------------------------------- */
 
 window.openEditOfficer = function (memberId, role, name) {
   window.editOfficerId = memberId;
-
   document.getElementById("editOfficerName").value = name;
   document.getElementById("editOfficerPosition").value = role;
-
   new Modal(document.getElementById("editOfficerModal")).show();
 };
 
 window.openDeleteOfficer = function (memberId, name) {
   window.deleteOfficerId = memberId;
-
   document.getElementById(
     "deleteOfficerText"
   ).innerHTML = `Remove <strong>${escape(name)}</strong> as officer?`;
-
   new Modal(document.getElementById("deleteOfficerModal")).show();
 };
 
 /* -------------------------------------------------------------------------- */
-/*                         SAVE EDIT (PROMOTE OFFICER)                         */
+/*                               SAVE EDIT                                    */
 /* -------------------------------------------------------------------------- */
 
 document
@@ -222,7 +211,7 @@ document
     const role = document.getElementById("editOfficerPosition").value;
     const token = await getFirebaseToken();
 
-    const res = await fetch(`/api/role/${window.editOfficerId}/promote`, {
+    const res = await fetch(`${API}/role/${window.editOfficerId}/promote`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -234,16 +223,21 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      responseModal.showSuccess("Officer Updated", "Officer role has been updated successfully.", () => {
-        location.reload();
-      });
+      responseModal.showSuccess(
+        "Officer Updated",
+        "Officer role updated successfully.",
+        () => location.reload()
+      );
     } else {
-      responseModal.showError("Update Failed", data.message || "Failed to update officer");
+      responseModal.showError(
+        "Update Failed",
+        data.message || "Failed to update officer"
+      );
     }
   });
 
 /* -------------------------------------------------------------------------- */
-/*                       DELETE OFFICER (DEMOTE TO STUDENT)                    */
+/*                               DELETE OFFICER                               */
 /* -------------------------------------------------------------------------- */
 
 document
@@ -251,7 +245,7 @@ document
   .addEventListener("click", async () => {
     const token = await getFirebaseToken();
 
-    const res = await fetch(`/api/role/${window.deleteOfficerId}/demote`, {
+    const res = await fetch(`${API}/role/${window.deleteOfficerId}/demote`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -263,23 +257,34 @@ document
     const data = await res.json();
 
     if (res.ok) {
-      responseModal.showSuccess("Officer Removed", "Officer has been successfully demoted to student.", () => {
-        location.reload();
-      });
+      responseModal.showSuccess(
+        "Officer Removed",
+        "Officer demoted to student.",
+        () => location.reload()
+      );
     } else {
-      responseModal.showError("Removal Failed", data.message || "Failed to remove officer");
+      responseModal.showError(
+        "Removal Failed",
+        data.message || "Failed to remove officer"
+      );
     }
   });
 
 /* -------------------------------------------------------------------------- */
-/*                                HELPERS                                      */
+/*                                 HELPERS                                    */
 /* -------------------------------------------------------------------------- */
 
 function escape(str) {
   return typeof str === "string"
     ? str.replace(
         /[&<>"]/g,
-        (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c])
+        (c) =>
+          ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+          }[c])
       )
     : "";
 }
