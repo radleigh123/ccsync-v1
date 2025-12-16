@@ -7,6 +7,7 @@ import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
 import { getYearSuffix, formatDate } from '/js/utils/date.js';
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let selectedEvent = null;
@@ -21,6 +22,7 @@ const eventId = new URLSearchParams(window.location.search).get('event_id');
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
 
     // Setup back button
     const backButton = document.getElementById('backButton');

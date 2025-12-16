@@ -8,6 +8,7 @@ import { updateEvent } from '/js/utils/api.js';
 import { FormValidator } from '/js/utils/formValidator.js';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { parseTime, parseDate } from "/js/utils/date.js";
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let formValidator = null;
@@ -16,6 +17,7 @@ let selectedEvent = null;
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
 
     const form = document.getElementById("editEventForm");
 

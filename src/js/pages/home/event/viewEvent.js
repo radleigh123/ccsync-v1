@@ -4,12 +4,14 @@ import "/scss/pages/home/event/viewEvent.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
   // await setSidebar();
+  setupLogout();
   loadEvents();
 });
 

@@ -16,6 +16,9 @@ body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
     min-height: 100vh;
+    min-height: 100dvh;
+    display: grid;
+    grid-template-columns: auto 1fr;
 }
 
 .navbar {
@@ -85,11 +88,58 @@ body {
 
 .container {
     max-width: 1200px;
-    margin: 2rem auto;
+    margin: 0 auto;
     padding: 0 2rem;
 }
 
+.container-fluid {
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.main-content-bg {
+    position: relative;
+    padding: 2rem;
+    color: #fff;
+    min-height: 100vh;
+    min-height: 100dvh;
+    z-index: 1;
+
+    &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
+        background-size: cover;
+        background-position: center;
+        z-index: -1;
+    }
+}
+
+.main-content-bg > * {
+    position: relative;
+    z-index: 2;
+}
+
+.main-content-bg #header {
+    color: white;
+    margin-bottom: 1rem;
+}
+
 .profile-wrapper {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    gap: 2rem;
+}
+
+// Adjust layout when navigation sidebar is present
+main.main-content-bg .profile-layout {
     display: grid;
     grid-template-columns: 350px 1fr;
     gap: 2rem;
@@ -508,5 +558,120 @@ body {
 
     .modal-title {
         font-size: 1.5rem;
+    }
+}
+
+/* Shimmer Loader Styles */
+@keyframes shimmer-animation {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+.shimmer {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e0e0e0 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+    );
+    background-size: 1000px 100%;
+    animation: shimmer-animation 2s infinite;
+}
+
+.shimmer-line {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e0e0e0 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+    ) !important;
+    background-size: 1000px 100% !important;
+    animation: shimmer-animation 2s infinite;
+    border-radius: 4px;
+    display: block;
+}
+
+.shimmer-line.stopped {
+    animation: none !important;
+    background: transparent !important;
+}
+
+// Shimmer state styling for profile elements
+.profile-name.shimmer-line {
+    height: 24px;
+    margin: 16px 0;
+}
+
+.profile-role.shimmer-line {
+    height: 16px;
+    margin: 8px 0;
+}
+
+.profile-year.shimmer-line {
+    height: 16px;
+    margin: 8px 0;
+    width: 80%;
+}
+
+.shimmer-avatar {
+    background: linear-gradient(
+        90deg,
+        #f0f0f0 0%,
+        #e0e0e0 20%,
+        #f0f0f0 40%,
+        #f0f0f0 100%
+    ) !important;
+    background-size: 1000px 100% !important;
+    animation: shimmer-animation 2s infinite !important;
+    font-size: 0 !important;
+}
+
+.shimmer-avatar.stopped {
+    animation: none !important;
+    background: transparent !important;
+}
+
+.shimmer-stats {
+    .stat-item {
+        & > span {
+            background: linear-gradient(
+                90deg,
+                #f0f0f0 0%,
+                #e0e0e0 20%,
+                #f0f0f0 40%,
+                #f0f0f0 100%
+            );
+            background-size: 1000px 100%;
+            animation: shimmer-animation 2s infinite;
+            border-radius: 4px;
+        }
+    }
+}
+
+.shimmer-stats.stopped {
+    .stat-item {
+        & > span {
+            animation: none !important;
+            background: transparent !important;
+        }
+    }
+}
+
+.shimmer-fade-out {
+    animation: shimmer-fade 0.6s ease forwards;
+}
+
+@keyframes shimmer-fade {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
     }
 }

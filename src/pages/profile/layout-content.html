@@ -4,79 +4,47 @@
                 <div class="tab-content py-4" id="v-pills-tabContent">
                     <div class="tab-pane fade show active">
                         <section class="row mb-5">
-                            <div
-                                class="col-lg-3 col-md-4 text-center mb-4 mb-md-0">
-                                <div
-                                    class="rounded-circle overflow-hidden mx-auto"
-                                    style="width: 150px; height: 150px">
-                                    <img
-                                        id="img-profile"
-                                        src="https://www.meowbox.com/cdn/shop/articles/Screen_Shot_2024-03-15_at_10.53.41_AM.png?v=1710525250"
-                                        alt="User Profile Picture"
-                                        style="
-                                            width: 100%;
-                                            height: 100%;
-                                            object-fit: cover;
-                                            object-position: 30% center;
-                                        "
-                                        class="img-fluid" />
-                                </div>
-                            </div>
-                            <div class="col-lg-9 col-md-8">
-                                <h2
-                                    id="user-name-full"
-                                    class="fw-bold mb-1">
-                                    High Car
-                                </h2>
-                                <p id="user-email" class="text-muted mb-3">
-                                    high_car123@email.com
-                                </p>
-                                <p id="user-bio" class="mb-4">
-                                    BIOGRAPHY
-                                </p>
-                                <!-- TODO: Functionality add -->
-                                <button
-                                    id="edit-profile-btn"
-                                    class="btn btn-primary-ccsync">
-                                    Edit Profile
-                                </button>
-                            </div>
-                        </section>
-                        <section class="row mb-5">
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <div
-                                    class="card text-center h-100 border-0 shadow-sm">
-                                    <div class="card-body">
-                                        <h3 class="h5 card-title">
-                                            Projects
-                                        </h3>
-                                        <p class="card-text display-6">
-                                            9999999999999
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4 mb-3 mb-md-0">
-                                <div
-                                    class="card text-center h-100 border-0 shadow-sm">
-                                    <div class="card-body">
-                                        <h3 class="h5 card-title">Tasks</h3>
-                                        <p class="card-text display-6">
-                                            9999999999999
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div
-                                    class="card text-center h-100 border-0 shadow-sm">
-                                    <div class="card-body">
-                                        <h3 class="h5 card-title">
-                                            Completed
-                                        </h3>
-                                        <p class="card-text display-6">
-                                            9999999999999
-                                        </p>
+                            <div class="col-12">
+                                <div class="card border-0 shadow-sm">
+                                    <div class="card-body p-4">
+                                        <div class="row">
+                                            <div class="col-lg-4 col-md-5 text-center mb-4 mb-md-0">
+                                                <div
+                                                    class="rounded-circle overflow-hidden mx-auto"
+                                                    style="width: 150px; height: 150px">
+                                                    <img
+                                                        id="img-profile"
+                                                        src="https://www.meowbox.com/cdn/shop/articles/Screen_Shot_2024-03-15_at_10.53.41_AM.png?v=1710525250"
+                                                        alt="User Profile Picture"
+                                                        style="
+                                                            width: 100%;
+                                                            height: 100%;
+                                                            object-fit: cover;
+                                                            object-position: 30% center;
+                                                        "
+                                                        class="img-fluid" />
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-8 col-md-7">
+                                                <h2
+                                                    id="user-name-full"
+                                                    class="fw-bold mb-1">
+                                                    High Car
+                                                </h2>
+                                                <p id="user-email" class="text-muted mb-3">
+                                                    high_car123@email.com
+                                                </p>
+                                                <p id="user-bio" class="mb-4">
+                                                    BIOGRAPHY
+                                                </p>
+                                                <!-- TODO: Functionality add -->
+                                                <button
+                                                    id="edit-profile-btn"
+                                                    class="btn btn-primary-ccsync">
+                                                    Edit Profile
+                                                </button>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -85,122 +53,42 @@
                         <section
                             class="card card-no-hover border-0 shadow-sm">
                             <div class="card-header bg-white">
-                                <ul
-                                    class="nav nav-tabs card-header-tabs"
-                                    id="profileTabs"
-                                    role="tablist">
-                                    <li
-                                        class="nav-item"
-                                        role="presentation">
-                                        <button
-                                            class="nav-link active"
-                                            id="activity-tab"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#activity"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="activity"
-                                            aria-selected="true">
-                                            Recent Activity
-                                        </button>
-                                    </li>
-                                    <li
-                                        class="nav-item"
-                                        role="presentation">
-                                        <button
-                                            class="nav-link"
-                                            id="projects-tab"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#projects"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="projects"
-                                            aria-selected="false">
-                                            Projects
-                                        </button>
-                                    </li>
-                                    <li
-                                        class="nav-item"
-                                        role="presentation">
-                                        <button
-                                            class="nav-link"
-                                            id="tasks-tab"
-                                            data-bs-toggle="tab"
-                                            data-bs-target="#tasks"
-                                            type="button"
-                                            role="tab"
-                                            aria-controls="tasks"
-                                            aria-selected="false">
-                                            Tasks
-                                        </button>
-                                    </li>
-                                </ul>
+                                <h3 class="h4 mb-0">Recent Activity</h3>
                             </div>
                             <div class="card-body">
-                                <div
-                                    class="tab-content"
-                                    id="profileTabContent">
-                                    <div
-                                        class="tab-pane fade show active"
-                                        id="activity"
-                                        role="tabpanel"
-                                        aria-labelledby="activity-tab">
-                                        <h3 class="h4 mb-4">
-                                            Recent Activity
-                                        </h3>
-                                        <ul
-                                            class="list-group list-group-flush">
-                                            <li
-                                                class="list-group-item px-0">
-                                                <small
-                                                    class="text-muted d-block mb-1">
-                                                    August 28, 2025
-                                                </small>
-                                                <p class="mb-0">
-                                                    Bought catnip from
-                                                    carbon
-                                                </p>
-                                            </li>
-                                            <li
-                                                class="list-group-item px-0">
-                                                <small
-                                                    class="text-muted d-block mb-1">
-                                                    September 10, 2025
-                                                </small>
-                                                <p class="mb-0">
-                                                    Bought another catnip
-                                                    from carbon
-                                                </p>
-                                            </li>
-                                            <li
-                                                class="list-group-item px-0">
-                                                <small
-                                                    class="text-muted d-block mb-1">
-                                                    September 19, 2025
-                                                </small>
-                                                <p class="mb-0">Raid</p>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div
-                                        class="tab-pane fade"
-                                        id="projects"
-                                        role="tabpanel"
-                                        aria-labelledby="projects-tab">
-                                        <h3 class="h4 mb-4">Projects</h3>
-                                        <p>
-                                            Your projects will appear here.
+                                <ul
+                                    class="list-group list-group-flush">
+                                    <li
+                                        class="list-group-item px-0">
+                                        <small
+                                            class="text-muted d-block mb-1">
+                                            August 28, 2025
+                                        </small>
+                                        <p class="mb-0">
+                                            Bought catnip from
+                                            carbon
                                         </p>
-                                    </div>
-                                    <div
-                                        class="tab-pane fade"
-                                        id="tasks"
-                                        role="tabpanel"
-                                        aria-labelledby="tasks-tab">
-                                        <h3 class="h4 mb-4">Tasks</h3>
-                                        <p>Your tasks will appear here.</p>
-                                    </div>
-                                </div>
+                                    </li>
+                                    <li
+                                        class="list-group-item px-0">
+                                        <small
+                                            class="text-muted d-block mb-1">
+                                            September 10, 2025
+                                        </small>
+                                        <p class="mb-0">
+                                            Bought another catnip
+                                            from carbon
+                                        </p>
+                                    </li>
+                                    <li
+                                        class="list-group-item px-0">
+                                        <small
+                                            class="text-muted d-block mb-1">
+                                            September 19, 2025
+                                        </small>
+                                        <p class="mb-0">Raid</p>
+                                    </li>
+                                </ul>
                             </div>
                         </section>
                     </div>

@@ -3,51 +3,142 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Student Profile</title>
 </head>
 <body>
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo">
-                <span>CCSync</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/pages/home/student/student-dashboard.html">Dashboard</a></li>
-                <li><a href="/pages/home/student/studentViewOfficer.html">Officers</a></li>
-                <li><a href="#" class="active">Profile</a></li>
-            </ul>
+    <nav id="sidebar">
+        <div id="sidebar-header" class="justify-content-center align-items-center">
+            <a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+                <img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
+            </a>
         </div>
+
+        <ul class="justify-content-center mb-0">
+
+            <!-- Dashboard -->
+            <li>
+                <a href="/pages/home/home.html" class="justify-content-center" title="Dashboard" data-bs-toggle="tooltip"
+                    data-bs-placement="right">
+                    <i class="bi bi-house-fill"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <!-- Members -->
+            <li class="active">
+                <a href="/pages/home/member/view-member.html" class="justify-content-center" title="Members"
+                    data-bs-toggle="tooltip" data-bs-placement="right">
+                    <i class="bi bi-person-circle"></i>
+                    <span>Member management</span>
+                </a>
+            </li>
+
+            <!-- Events -->
+            <li>
+                <a href="/pages/home/event/view-event.html" class="justify-content-center" title="Events" data-bs-toggle="tooltip"
+                    data-bs-placement="right">
+                    <i class="bi bi-calendar2-week-fill"></i>
+                    <span>Event management</span>
+                </a>
+            </li>
+
+            <!-- Requirements -->
+            <li>
+                <a href="/pages/home/requirement/view-requirement.html" class="justify-content-center" title="Requirements"
+                    data-bs-toggle="tooltip" data-bs-placement="right">
+                    <i class="bi bi-file-text-fill"></i>
+                    <span>Requirement management</span>
+                </a>
+            </li>
+
+            <!-- Officers -->
+            <li>
+                <a href="/pages/home/officer/view-officer.html" class="justify-content-center" title="Officers"
+                    data-bs-toggle="tooltip" data-bs-placement="right">
+                    <i class="bi bi-hdd-rack-fill"></i>
+                    <span>Officer management</span>
+                </a>
+            </li>
+
+            <!-- User Info -->
+            <li class="user-info dropdown align-items-center mb-0">
+                <div class="container p-0 m-0 border-0">
+                    <strong id="user-name">USER NAME</strong>
+                    <small id="user-id">ID NUMBER</small>
+                </div>
+
+                <a href="#" class="more-btn text-decoration-none align-items-center" data-bs-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="bi bi-gear-fill"></i>
+                </a>
+
+                <button id="toggle-btn">
+                    <!-- collapse icon stays -->
+                    <svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 960 960" fill="#e8eaed">
+                        <path
+                            d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
+                    </svg>
+                </button>
+
+                <ul class="dropdown-menu text-small shadow">
+                    <li>
+                        <a class="dropdown-item" href="/pages/settings/settings.html">Settings</a>
+                    </li>
+                    <li>
+                        <a class="dropdown-item" href="/pages/profile/profile.html">Profile</a>
+                    </li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li>
+                        <a id="logout-link" class="dropdown-item" href="#">Sign out</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
     </nav>
 
-    <div class="container">
-        <div class="profile-wrapper">
-            <!-- Sidebar -->
-            <div class="profile-sidebar">
-                <div class="profile-avatar shimmer-avatar" id="shimmerAvatar">👤</div>
-                <h1 class="profile-name shimmer-line" id="shimmerName"></h1>
-                <p class="profile-role shimmer-line" id="shimmerRole"></p>
-                <p class="profile-year shimmer-line" id="shimmerYear"></p>
-
-                <div class="profile-stats shimmer-stats" id="shimmerStats">
-                    <div class="stat-item">
-                        <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
-                        <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
-                        <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
-                    </div>
-                </div>
-
-                <div class="profile-actions" id="profileActions" style="display: none;">
-                    <button class="btn btn-primary" onclick="openEditModal()">Edit Profile</button>
-                    <button class="btn btn-secondary" onclick="openPasswordModal()">Change Password</button>
-                </div>
+    <!-- Body -->
+    <main class="main-content-bg">
+        <div class="container-fluid px-0">
+            <div id="header" class="d-flex flex-row gap-3 align-items-center">
+                <!-- BACK -->
+                <a href="/pages/home/member/view-member.html" class="text-decoration-none">
+                    <i class="bi bi-caret-left-fill p-0 m-0"></i>
+                </a>
+                <p class="p-0 m-0 h3 fw-bold">Student Profile</p>
             </div>
+        </div>
 
-            <!-- Main Content -->
-            <div class="profile-main">
+        <div class="container-fluid px-0">
+            <div class="profile-layout">
+                <!-- Profile Sidebar -->
+                <div class="profile-sidebar">
+                    <div class="profile-avatar shimmer-avatar" id="shimmerAvatar">👤</div>
+                    <h1 class="profile-name shimmer-line" id="shimmerName"></h1>
+                    <p class="profile-role shimmer-line" id="shimmerRole"></p>
+                    <p class="profile-year shimmer-line" id="shimmerYear"></p>
+
+                    <div class="profile-stats shimmer-stats" id="shimmerStats">
+                        <div class="stat-item">
+                            <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
+                            <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
+                        </div>
+                        <div class="stat-item">
+                            <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
+                            <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
+                        </div>
+                    </div>
+
+                    <div class="profile-actions" id="profileActions" style="display: none;">
+                        <button class="btn btn-primary" onclick="openEditModal()">Edit Profile</button>
+                        <button class="btn btn-secondary" onclick="openPasswordModal()">Change Password</button>
+                    </div>
+                </div>
+
+                <!-- Main Content -->
+                <div class="profile-main">
                 <!-- Personal Information -->
                 <div class="profile-section">
                     <div class="section-header">
@@ -133,7 +224,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </main>
 
     <!-- Edit Profile Modal -->
     <div id="editModal" class="modal">

@@ -5,6 +5,7 @@ import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 import { responseModal } from "/js/utils/errorSuccessModal";
 import { confirmationModal } from "/js/utils/confirmationModal";
+import { setupLogout } from "/js/utils/navigation.js";
 
 let userData = null;
 let allRequirements = []; // Store all requirements from API
@@ -19,6 +20,7 @@ let selectedStatus = "all"; // Tier 2: Status filter
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
   // setSidebar();
+  setupLogout();
   setupSearchFilter();
   setupStatusFilter();
   setupPaginationButtons();

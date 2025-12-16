@@ -6,6 +6,7 @@ import { getCurrentSession } from '/js/utils/sessionManager';
 import { createEvent } from '/js/utils/api.js';
 import { FormValidator } from '/js/utils/formValidator.js';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
+import { setupLogout } from '/js/utils/navigation.js';
 
 let userData = null;
 let formValidator = null;
@@ -13,6 +14,7 @@ let formValidator = null;
 document.addEventListener("DOMContentLoaded", async () => {
     await initHome();
     // setSidebar();
+    setupLogout();
 
     const form = document.getElementById("addEventForm");
     

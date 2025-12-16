@@ -4,15 +4,36 @@ import { getCurrentSession } from "/js/utils/sessionManager";
 import { getFirebaseToken } from "../../../utils/firebaseAuth";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
+import { shimmerLoader } from "/js/utils/shimmerLoader.js";
+import { setupLogout } from "/js/utils/navigation.js";
 
 let userData = null;
 let memberData = null;
+
+/* -------------------------------------------------------------------------- */
+/*                               UTILITY FUNCTIONS                            */
+/* -------------------------------------------------------------------------- */
+
+function setUserInfo(name, id) {
+    const userName = document.getElementById('user-name');
+    const userId = document.getElementById('user-id');
+
+    if (userName) userName.textContent = name;
+    if (userId) userId.textContent = id;
+}
 
 /* -------------------------------------------------------------------------- */
 /*                               INIT PAGE                                     */
 /* -------------------------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // Show shimmer loaders on individual shimmer elements
+  const shimmerElements = document.querySelectorAll('.shimmer-line, .shimmer-avatar, .shimmer-stats');
+  shimmerElements.forEach(el => {
+    el.classList.add('shimmer');
+  });
+  
+  setupLogout();
   await verifyLogin();
   await loadProfileData();
   await loadAvatar();
@@ -27,6 +48,11 @@ async function verifyLogin() {
     //commented out for testing purposes
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
+  
+  // Set user info in sidebar
+  const userName = userData.name || 'USER NAME';
+  const userId = userData.id_school_number || 'ID NUMBER';
+  setUserInfo(userName, userId);
 }
 
 /* -------------------------------------------------------------------------- */
@@ -136,7 +162,14 @@ async function loadProfileData() {
     const token = await getFirebaseToken();
     const baseUrl = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
     // const baseUrl = "http://localhost:8000/api";
-    const idSchoolNumber = userData.id_school_number;
+    
+    // Get the selected member's ID from URL query parameter
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedMemberId = urlParams.get('id');
+    
+    // Use selected member's ID if provided, otherwise use logged-in user's ID
+    const idSchoolNumber = selectedMemberId || userData.id_school_number;
+    
     const response = await fetch(`${baseUrl}/members/member?id_school_number=${idSchoolNumber}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -193,11 +226,33 @@ function populateUI() {
   const user = memberData.user || {};
   const fullName = `${memberData.first_name} ${memberData.middle_name || ""} ${memberData.last_name}`.trim();
 
-  // Sidebar
-  document.querySelector(".profile-name").textContent = fullName;
-  document.querySelector(".profile-role").textContent = "Student Member";
-  document.querySelector(".profile-year").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year ${memberData.program}`;
+  // First, remove shimmer classes from all elements that will display data
+  const dataElements = document.querySelectorAll('.info-value, .profile-name, .profile-role, .profile-year, .activity-title, .activity-desc, .activity-date, .activity-icon, .stat-number, .stat-label');
+  dataElements.forEach(el => {
+    el.classList.remove('shimmer-line');
+    el.classList.remove('shimmer');
+    el.classList.remove('shimmer-fade-out');
+    el.classList.remove('stopped');
+  });
 
+  // Also remove shimmer from avatar and stats
+  const avatarEl = document.querySelector('.profile-avatar');
+  if (avatarEl) {
+    avatarEl.classList.remove('shimmer-avatar');
+    avatarEl.classList.remove('shimmer');
+    avatarEl.classList.remove('shimmer-fade-out');
+    avatarEl.classList.remove('stopped');
+  }
+
+  const statsEl = document.querySelector('.profile-stats');
+  if (statsEl) {
+    statsEl.classList.remove('shimmer-stats');
+    statsEl.classList.remove('shimmer');
+    statsEl.classList.remove('shimmer-fade-out');
+    statsEl.classList.remove('stopped');
+  }
+
+  // Now populate all the text content
   // Personal Information
   const infoItems = document.querySelectorAll(".info-grid")[0].querySelectorAll(".info-item");
   infoItems[0].querySelector(".info-value").textContent = fullName;
@@ -213,6 +268,19 @@ function populateUI() {
   academicItems[1].querySelector(".info-value").textContent = memberData.program || "N/A";
   academicItems[2].querySelector(".info-value").textContent = memberData.is_paid ? "Regular" : "Pending";
   academicItems[3].querySelector(".info-value").textContent = memberData.semester?.title || "N/A";
+
+  // Sidebar
+  document.querySelector(".profile-name").textContent = fullName;
+  document.querySelector(".profile-role").textContent = "Student Member";
+  document.querySelector(".profile-year").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year ${memberData.program}`;
+
+  // Show profile actions after data loads
+  setTimeout(() => {
+    const profileActions = document.getElementById("profileActions");
+    if (profileActions) {
+      profileActions.style.display = "flex";
+    }
+  }, 450);
 
   // Edit Form Modal - Pre-fill with current data
   populateEditForm();
