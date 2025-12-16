@@ -40,7 +40,7 @@ async function loadRequirementData() {
     try {
         // Fetch all requirements from API
         const response = await fetch(
-            "/ccsync-api-plain/requirement/getRequirements.php",
+            "/ccsync-api-plain/requirement/getRequirements",
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -200,7 +200,7 @@ async function loadStudentInfo(memberId) {
         studentCard.style.display = 'none';
         
         const response = await fetch(
-            `/ccsync-api-plain/member/getMember.php?id=${memberId}`,
+            `/ccsync-api-plain/member/getMember?id=${memberId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -274,7 +274,7 @@ async function loadStudentInfo(memberId) {
 async function checkExistingCompliance(memberId) {
     try {
         const response = await fetch(
-            `/ccsync-api-plain/requirement/checkCompliance.php?requirement_id=${selectedRequirement.id}&member_id=${memberId}`,
+            `/ccsync-api-plain/requirement/checkCompliance?requirement_id=${selectedRequirement.id}&member_id=${memberId}`,
             {
                 headers: {
                     Authorization: `Bearer ${userData.firebase_token}`,
@@ -329,7 +329,7 @@ async function recordCompliance() {
 
     try {
         const response = await fetch(
-            '/ccsync-api-plain/requirement/recordCompliance.php',
+            '/ccsync-api-plain/requirement/recordCompliance',
             {
                 method: 'POST',
                 headers: {

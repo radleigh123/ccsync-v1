@@ -15,8 +15,8 @@ export async function setupLogout() {
                 const firebaseToken = userData?.firebase_token || null;
 
                 // Call logout endpoint for server-side cleanup
-                try {
-                    const response = await fetch("/ccsync-api-plain/auth/logout.php", {
+                /* try {
+                    const response = await fetch("/ccsync-api-plain/auth/logout", {
                         method: "POST",
                         headers: {
                             "Content-Type": "application/json",
@@ -36,7 +36,7 @@ export async function setupLogout() {
                 } catch (error) {
                     console.error("⚠️ Server logout API call failed:", error);
                     // Continue with client-side logout even if API fails
-                }
+                } */
 
                 // Clear local state
                 localStorage.removeItem("user");

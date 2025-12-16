@@ -4,7 +4,7 @@
  * Manages the requirement creation workflow:
  * 1. Validate form inputs with FormValidator (inline validation)
  * 2. Show confirmation modal with requirement details
- * 3. Submit requirement creation to createRequirement.php
+ * 3. Submit requirement creation to createRequirement
  * 4. Show success/error modal with response
  * 5. Redirect to view-requirement.html on success
  *

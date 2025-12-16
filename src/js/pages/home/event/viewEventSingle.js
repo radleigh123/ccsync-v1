@@ -359,7 +359,7 @@ async function markParticipantAttended(participantId) {
         console.log('📤 Marking participant as attended:', participantId);
 
         const response = await fetch(
-            '/ccsync-api-plain/event/markAttended.php',
+            '/ccsync-api-plain/event/markAttended',
             {
                 method: 'POST',
                 headers: {
@@ -402,7 +402,7 @@ async function removeParticipant(participantId) {
         console.log('📤 Removing participant:', participantId);
 
         const response = await fetch(
-            `/ccsync-api-plain/event/removeParticipant.php?event_id=${eventId}&participant_id=${participantId}`,
+            `/ccsync-api-plain/event/removeParticipant?event_id=${eventId}&participant_id=${participantId}`,
             {
                 method: 'DELETE',
                 headers: {

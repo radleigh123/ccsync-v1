@@ -1,6 +1,5 @@
 import '/js/utils/core.js';
 import '/scss/pages/profile/profile.scss';
-import { setSidebar } from "/components/js/sidebar.js";
 import { setupLogout } from "/js/utils/navigation.js";
 import { fetchUser } from "/js/utils/api.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
@@ -22,14 +21,7 @@ export async function initProfile() {
         return;
     }
 
-    // Load layout-content
-    try {
-        const response = await fetch('/pages/profile/layout-content.html');
-        const content = await response.text();
-        document.getElementById('main-content').innerHTML = content;
-    } catch (error) {
-        console.error('Error loading profile content', error);
-    }
+    await setupLogout();
 
     // Continue with existing profile logic
     await setupProfile();

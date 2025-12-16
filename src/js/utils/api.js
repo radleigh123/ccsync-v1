@@ -135,7 +135,7 @@ export async function fetchEvents(upcoming = false) {
  * @returns {Promise<object>} - User data
  */
 export async function fetchUser() {
-    return apiFetch('/ccsync-api-plain/user/getUser.php');
+    return apiFetch('/ccsync-api-plain/user/getUser');
 }
 
 /**
@@ -291,7 +291,7 @@ export async function createRequirement(requirementData) {
 
         console.log("requirement data:", requirementData);
 
-        return await apiFetch('/ccsync-api-plain/requirement/createRequirement.php', {
+        return await apiFetch('/ccsync-api-plain/requirement/createRequirement', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${token}`,

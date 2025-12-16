@@ -2,15 +2,15 @@
  * Register Member Page Handler
  *
  * Manages the member registration workflow:
- * 1. Search for a user by ID number (API call to getUserByIdNumber.php)
+ * 1. Search for a user by ID number
  * 2. Auto-fill readonly fields (firstName, lastName, email)
  * 3. Enable editable fields (birthDate, yearLevel, program, isPaid)
  * 4. User fills in member details with inline validation
  * 5. On form submit, validate with FormValidator (shows inline errors)
  * 6. Show confirmation modal with complete details
- * 7. Submit member registration to createMember.php
+ * 7. Submit member registration to createMember
  *
- * IMPORTANT: userId is intentionally NOT sent to createMember.php
+ * IMPORTANT: userId is intentionally NOT sent to createMember
  * Members are identified by idNumber (school ID), allowing independent tracking
  *
  * @author CCSync Development Team

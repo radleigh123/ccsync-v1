@@ -27,14 +27,7 @@ export async function initSettings() {
         return;
     }
 
-    // Load layout-content
-    try {
-        const response = await fetch('/pages/settings/layout-content.html');
-        const content = await response.text();
-        document.getElementById('main-content').innerHTML = content;
-    } catch (error) {
-        console.error('Error loading settings content', error);
-    }
+    await setupLogout();
 
     // Handle tab switching via URL parameters
     const urlParams = new URLSearchParams(window.location.search);
