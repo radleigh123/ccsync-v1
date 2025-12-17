@@ -91,6 +91,7 @@ export async function logout() {
         
         // Clear localStorage
         localStorage.removeItem('user');
+        localStorage.removeItem('member');
         localStorage.removeItem('ccsync_active_sidebar_href');
         localStorage.removeItem('ccsync_active_sidebar_text');
         console.log("✓ Cleared local storage");
@@ -102,6 +103,7 @@ export async function logout() {
         // Still redirect even if there's an error
         window.isLoggingOut = true;
         localStorage.removeItem('user');
+        localStorage.removeItem('member');
         window.location.href = '/pages/auth/login.html';
     }
 }

@@ -4,6 +4,7 @@ import { Popover } from 'bootstrap';
 import { auth } from "/js/utils/firebaseAuth.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getCurrentSession } from '/js/utils/sessionManager';
+import { register } from '/js/utils/api/auth.js';
 
 async function initRegister() {
     const userData = await getCurrentSession();
@@ -30,27 +31,14 @@ document.addEventListener("DOMContentLoaded", () => {
         const password_confirmation = document.querySelector("#confirmPasswordInput").value;
 
         try {
-            const response = await fetch('https://ccsync-api-master-ll6mte.laravel.cloud/api/auth/register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Accept': 'application/json',
-                },
-                body: JSON.stringify({
-                    first_name: firstName,
-                    last_name: lastName,
-                    email: email,
-                    password: password,
-                    password_confirmation: password_confirmation,
-                    id_school_number: idNumber
-                }),
+            const data = await register({
+                first_name: firstName,
+                last_name: lastName,
+                email: email,
+                password: password,
+                password_confirmation: password_confirmation,
+                id_school_number: idNumber
             });
-
-            const data = await response.json();
-
-            if (!response.ok) {
-                throw new Error(data.message || data.errors?.email?.[0] || 'Registration failed');
-            }
 
             console.log('Registration successful:', data);
             window.location.href = '/pages/auth/login.html';

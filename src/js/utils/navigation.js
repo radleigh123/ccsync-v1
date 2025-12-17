@@ -14,32 +14,9 @@ export async function setupLogout() {
                 const userId = userData?.user?.id || null;
                 const firebaseToken = userData?.firebase_token || null;
 
-                // Call logout endpoint for server-side cleanup
-                /* try {
-                    const response = await fetch("/ccsync-api-plain/auth/logout", {
-                        method: "POST",
-                        headers: {
-                            "Content-Type": "application/json",
-                            Authorization: firebaseToken ? `Bearer ${firebaseToken}` : "",
-                        },
-                        body: JSON.stringify({
-                            user_id: userId
-                        })
-                    });
-
-                    const result = await response.json();
-                    if (result.success) {
-                        console.log("✓ Server-side logout successful");
-                    } else {
-                        console.warn("⚠️ Server-side logout warning:", result.message);
-                    }
-                } catch (error) {
-                    console.error("⚠️ Server logout API call failed:", error);
-                    // Continue with client-side logout even if API fails
-                } */
-
                 // Clear local state
                 localStorage.removeItem("user");
+                localStorage.removeItem("member");
                 localStorage.removeItem("ccsync_active_sidebar_href");
                 localStorage.removeItem("ccsync_active_sidebar_text");
                 
@@ -60,6 +37,7 @@ export async function setupLogout() {
                 console.error("Error in logout handler:", error);
                 // Fallback: just clear localStorage and redirect
                 localStorage.removeItem("user");
+                localStorage.removeItem("member");
                 window.location.href = "/pages/auth/login.html";
             }
         });

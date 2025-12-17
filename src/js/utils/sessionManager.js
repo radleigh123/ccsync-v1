@@ -14,6 +14,7 @@ export function initSessionManager() {
         if (window.isLoggingOut) {
             console.log("⏸️ Logout in progress, skipping session restoration");
             localStorage.removeItem('user');
+            localStorage.removeItem('member');
             return;
         }
 
@@ -21,6 +22,7 @@ export function initSessionManager() {
             // User is signed out
             console.log("👤 No Firebase user detected");
             localStorage.removeItem('user');
+            localStorage.removeItem('member');
             return;
         }
 

@@ -2,6 +2,7 @@ import "/js/utils/core.js";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { responseModal } from "/js/utils/errorSuccessModal";
 import { confirmationModal } from "/js/utils/confirmationModal";
+import { fetchUsers } from "/js/utils/api/user.js";
 
 let userData;
 
@@ -24,44 +25,8 @@ async function listUsers() {
 
     tbody.innerHTML = ''; // Clear existing rows
 
-    // Mock user data
-    /* const users = [
-        { id: 1, name: 'John Doe', email: 'john@example.com', emailVerifiedAt: '2023-01-01 19:29:31', schoolId: '20200937', role: 'Admin' },
-    ]; */
-    const users = [];
-
-    // Populate the table with user data
-    users.forEach(user => {
-        const row = document.createElement('tr');
-        row.innerHTML = `
-            <td>${user.id}</td>
-            <td>${user.name}</td>
-            <td>${user.email}</td>
-            <td>${user.emailVerifiedAt}</td>
-            <td>${user.schoolId}</td>
-            <td>${user.role}</td>
-            <td>
-                <button>Edit</button>
-                <button>Delete</button>
-            </td>
-        `;
-        tbody.appendChild(row);
-    });
-
     try {
-        const response = await fetch("https://ccsync-api-master-ll6mte.laravel.cloud/api/users", {
-            headers: {
-                'Authorization': `Bearer ${userData.firebase_token}`,
-                'Accept': 'application/json',
-            }
-        });
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-
+        const data = await fetchUsers();
         populateUserTable(data.users);
     } catch (error) {
         console.error("Error fetching users:", error);
