@@ -160,7 +160,7 @@ async function displayOfficers(officers, token) {
           <div class="officer-contact">
             <div class="contact-item">
               <span>📧</span>
-              <span>${member?.user?.email || "No email available"}</span>
+              <span>${officer?.email || "No email available"}</span>
             </div>
             <div class="contact-item">
               <span>📱</span>
