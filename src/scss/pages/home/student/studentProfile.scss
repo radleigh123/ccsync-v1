@@ -17,8 +17,7 @@ body {
     background: linear-gradient(135deg, #FFE8A6 0%, #FED154 33%, #F4B301 66%, #F5A302 100%);
     min-height: 100vh;
     min-height: 100dvh;
-    display: grid;
-    grid-template-columns: auto 1fr;
+    display: block; // Ensure navbar spans full width above content
 }
 
 .navbar {
@@ -136,6 +135,7 @@ body {
     display: grid;
     grid-template-columns: 350px 1fr;
     gap: 2rem;
+    margin-top: 2.5rem; // add breathing room below navbar
 }
 
 // Adjust layout when navigation sidebar is present

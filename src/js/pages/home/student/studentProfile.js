@@ -7,6 +7,9 @@ import { confirmationModal } from "/js/utils/confirmationModal.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader.js";
 import { setupLogout } from "/js/utils/navigation.js";
 
+// Show body after styles are loaded
+document.body.classList.add("loaded");
+
 let userData = null;
 let memberData = null;
 
@@ -15,11 +18,11 @@ let memberData = null;
 /* -------------------------------------------------------------------------- */
 
 function setUserInfo(name, id) {
-    const userName = document.getElementById('user-name');
-    const userId = document.getElementById('user-id');
+  const userName = document.getElementById("user-name");
+  const userId = document.getElementById("user-id");
 
-    if (userName) userName.textContent = name;
-    if (userId) userId.textContent = id;
+  if (userName) userName.textContent = name;
+  if (userId) userId.textContent = id;
 }
 
 /* -------------------------------------------------------------------------- */
@@ -28,15 +31,20 @@ function setUserInfo(name, id) {
 
 document.addEventListener("DOMContentLoaded", async () => {
   // Show shimmer loaders on individual shimmer elements
-  const shimmerElements = document.querySelectorAll('.shimmer-line, .shimmer-avatar, .shimmer-stats');
-  shimmerElements.forEach(el => {
-    el.classList.add('shimmer');
+  const shimmerElements = document.querySelectorAll(
+    ".shimmer-line, .shimmer-avatar, .shimmer-stats"
+  );
+  shimmerElements.forEach((el) => {
+    el.classList.add("shimmer");
   });
-  
+
   setupLogout();
   await verifyLogin();
   await loadProfileData();
-  await loadAvatar();
+  // Only attempt to load avatar if member data is available
+  if (memberData?.id) {
+    await loadAvatar();
+  }
   attachModalEvents();
 });
 
@@ -45,13 +53,13 @@ document.addEventListener("DOMContentLoaded", async () => {
 /* -------------------------------------------------------------------------- */
 
 async function verifyLogin() {
-    //commented out for testing purposes
+  //commented out for testing purposes
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
-  
+
   // Set user info in sidebar
-  const userName = userData.name || 'USER NAME';
-  const userId = userData.id_school_number || 'ID NUMBER';
+  const userName = userData.name || "USER NAME";
+  const userId = userData.id_school_number || "ID NUMBER";
   setUserInfo(userName, userId);
 }
 
@@ -73,7 +81,7 @@ function closeEditModal() {
 
 // Save Profile (placeholder logic)
 function saveProfile() {
-  responseModal.showSuccess('Success', 'Profile updated successfully!', () => {
+  responseModal.showSuccess("Success", "Profile updated successfully!", () => {
     closeEditModal();
   });
 }
@@ -99,14 +107,18 @@ function changePassword() {
   const confirmPassword = inputs[2].value;
 
   if (newPassword !== confirmPassword) {
-    responseModal.showError('Password Mismatch', 'New passwords do not match!');
+    responseModal.showError("Password Mismatch", "New passwords do not match!");
     return;
   }
 
-  responseModal.showSuccess('Password Changed', 'Password changed successfully!', () => {
-    closePasswordModal();
-    form.reset();
-  });
+  responseModal.showSuccess(
+    "Password Changed",
+    "Password changed successfully!",
+    () => {
+      closePasswordModal();
+      form.reset();
+    }
+  );
 }
 
 /* -------------------------------------------------------------------------- */
@@ -123,10 +135,13 @@ function attachModalEvents() {
 
   // Close buttons in headers
   const editCloseBtn = document.querySelector("#editModal .modal-close");
-  const passwordCloseBtn = document.querySelector("#passwordModal .modal-close");
+  const passwordCloseBtn = document.querySelector(
+    "#passwordModal .modal-close"
+  );
 
   if (editCloseBtn) editCloseBtn.addEventListener("click", closeEditModal);
-  if (passwordCloseBtn) passwordCloseBtn.addEventListener("click", closePasswordModal);
+  if (passwordCloseBtn)
+    passwordCloseBtn.addEventListener("click", closePasswordModal);
 
   // Modal action buttons
   const saveChangesBtn = document.querySelector("#editModal .btn-primary");
@@ -162,23 +177,26 @@ async function loadProfileData() {
     const token = await getFirebaseToken();
     const baseUrl = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
     // const baseUrl = "http://localhost:8000/api";
-    
+
     // Get the selected member's ID from URL query parameter
     const urlParams = new URLSearchParams(window.location.search);
-    const selectedMemberId = urlParams.get('id');
-    
+    const selectedMemberId = urlParams.get("id");
+
     // Use selected member's ID if provided, otherwise use logged-in user's ID
     const idSchoolNumber = selectedMemberId || userData.id_school_number;
-    
-    const response = await fetch(`${baseUrl}/members/member?id_school_number=${idSchoolNumber}`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
 
-    if (response.status == 404) {
-      // TODO: Need ERROR MODAL
-      // REDIRECT for now, if student isn't yet registered
-      window.location.href = "/pages/home/student/student-dashboard.html";
-      throw new Error("User has not been registered as a member.");
+    const response = await fetch(
+      `${baseUrl}/members/member?id_school_number=${idSchoolNumber}`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
+
+    if (response.status === 404) {
+      // Student isn't registered as a member yet – stay on page and show message
+      showErrorState();
+      console.warn("User has not been registered as a member.");
+      return;
     }
 
     const result = await response.json();
@@ -192,18 +210,23 @@ async function loadProfileData() {
     }
   } catch (err) {
     console.error("❌ Error loading profile:", err.message);
+    showErrorState();
   }
 }
 
 async function loadAvatar() {
   try {
+    if (!memberData?.id) return;
     const token = await getFirebaseToken();
     const baseUrl = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
     // const baseUrl = "http://localhost:8000/api";
     const memberId = memberData.id;
-    const response = await fetch(`${baseUrl}/profile/${memberId}/profile-picture`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    const response = await fetch(
+      `${baseUrl}/profile/${memberId}/profile-picture`,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
 
     const result = await response.json();
     console.log(result);
@@ -224,55 +247,75 @@ function populateUI() {
   if (!memberData) return;
 
   const user = memberData.user || {};
-  const fullName = `${memberData.first_name} ${memberData.middle_name || ""} ${memberData.last_name}`.trim();
+  const fullName = `${memberData.first_name} ${memberData.middle_name || ""} ${
+    memberData.last_name
+  }`.trim();
 
   // First, remove shimmer classes from all elements that will display data
-  const dataElements = document.querySelectorAll('.info-value, .profile-name, .profile-role, .profile-year, .activity-title, .activity-desc, .activity-date, .activity-icon, .stat-number, .stat-label');
-  dataElements.forEach(el => {
-    el.classList.remove('shimmer-line');
-    el.classList.remove('shimmer');
-    el.classList.remove('shimmer-fade-out');
-    el.classList.remove('stopped');
+  const dataElements = document.querySelectorAll(
+    ".info-value, .profile-name, .profile-role, .profile-year, .activity-title, .activity-desc, .activity-date, .activity-icon, .stat-number, .stat-label"
+  );
+  dataElements.forEach((el) => {
+    el.classList.remove("shimmer-line");
+    el.classList.remove("shimmer");
+    el.classList.remove("shimmer-fade-out");
+    el.classList.remove("stopped");
   });
 
   // Also remove shimmer from avatar and stats
-  const avatarEl = document.querySelector('.profile-avatar');
+  const avatarEl = document.querySelector(".profile-avatar");
   if (avatarEl) {
-    avatarEl.classList.remove('shimmer-avatar');
-    avatarEl.classList.remove('shimmer');
-    avatarEl.classList.remove('shimmer-fade-out');
-    avatarEl.classList.remove('stopped');
+    avatarEl.classList.remove("shimmer-avatar");
+    avatarEl.classList.remove("shimmer");
+    avatarEl.classList.remove("shimmer-fade-out");
+    avatarEl.classList.remove("stopped");
   }
 
-  const statsEl = document.querySelector('.profile-stats');
+  const statsEl = document.querySelector(".profile-stats");
   if (statsEl) {
-    statsEl.classList.remove('shimmer-stats');
-    statsEl.classList.remove('shimmer');
-    statsEl.classList.remove('shimmer-fade-out');
-    statsEl.classList.remove('stopped');
+    statsEl.classList.remove("shimmer-stats");
+    statsEl.classList.remove("shimmer");
+    statsEl.classList.remove("shimmer-fade-out");
+    statsEl.classList.remove("stopped");
   }
 
   // Now populate all the text content
   // Personal Information
-  const infoItems = document.querySelectorAll(".info-grid")[0].querySelectorAll(".info-item");
+  const infoItems = document
+    .querySelectorAll(".info-grid")[0]
+    .querySelectorAll(".info-item");
   infoItems[0].querySelector(".info-value").textContent = fullName;
-  infoItems[1].querySelector(".info-value").textContent = memberData.id_school_number || "N/A";
+  infoItems[1].querySelector(".info-value").textContent =
+    memberData.id_school_number || "N/A";
   infoItems[2].querySelector(".info-value").textContent = user.email || "N/A";
-  infoItems[3].querySelector(".info-value").textContent = memberData.phone || "N/A";
-  infoItems[4].querySelector(".info-value").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year`;
-  infoItems[5].querySelector(".info-value").textContent = memberData.program || "N/A";
+  infoItems[3].querySelector(".info-value").textContent =
+    memberData.phone || "N/A";
+  infoItems[4].querySelector(".info-value").textContent = `${
+    memberData.year
+  }${getOrdinalSuffix(memberData.year)} Year`;
+  infoItems[5].querySelector(".info-value").textContent =
+    memberData.program || "N/A";
 
   // Academic Information
-  const academicItems = document.querySelectorAll(".info-grid")[1].querySelectorAll(".info-item");
-  academicItems[0].querySelector(".info-value").textContent = "College of Computer Studies";
-  academicItems[1].querySelector(".info-value").textContent = memberData.program || "N/A";
-  academicItems[2].querySelector(".info-value").textContent = memberData.is_paid ? "Regular" : "Pending";
-  academicItems[3].querySelector(".info-value").textContent = memberData.semester?.title || "N/A";
+  const academicItems = document
+    .querySelectorAll(".info-grid")[1]
+    .querySelectorAll(".info-item");
+  academicItems[0].querySelector(".info-value").textContent =
+    "College of Computer Studies";
+  academicItems[1].querySelector(".info-value").textContent =
+    memberData.program || "N/A";
+  academicItems[2].querySelector(".info-value").textContent = memberData.is_paid
+    ? "Regular"
+    : "Pending";
+  academicItems[3].querySelector(".info-value").textContent =
+    memberData.semester?.title || "N/A";
 
   // Sidebar
   document.querySelector(".profile-name").textContent = fullName;
   document.querySelector(".profile-role").textContent = "Student Member";
-  document.querySelector(".profile-year").textContent = `${memberData.year}${getOrdinalSuffix(memberData.year)} Year ${memberData.program}`;
+  document.querySelector(".profile-year").textContent = `${
+    memberData.year
+  }${getOrdinalSuffix(memberData.year)} Year ${memberData.program}`;
 
   // Show profile actions after data loads
   setTimeout(() => {
@@ -314,7 +357,8 @@ function populateEditForm() {
   // Program
   const programSelect = form.querySelectorAll("select")[1];
   if (programSelect) {
-    const programValue = memberData.program?.toLowerCase().replace(" ", "") || "bsit";
+    const programValue =
+      memberData.program?.toLowerCase().replace(" ", "") || "bsit";
     programSelect.value = programValue;
   }
 

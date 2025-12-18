@@ -4,16 +4,31 @@ import "/scss/pages/home/student/studentViewOfficer.scss";
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 
+// Show body after styles are loaded
+document.body.classList.add("loaded");
+
 const officersGrid = document.querySelector(".officers-grid");
 let userData = null;
+
+// Simple session cache so returning to this page is instant
+const CACHE_KEY = "studentViewOfficer:v1";
+const CACHE_TTL_MS = 1000 * 60 * 10; // 10 minutes
 
 /* -------------------------------------------------------------------------- */
 /*                               INIT PAGE                                    */
 /* -------------------------------------------------------------------------- */
 
 document.addEventListener("DOMContentLoaded", async () => {
+  // Render instantly from cache if available
+  const cached = tryShowFromCache();
+
+  // Verify session, then refresh in the background
   await verifyLogin();
-  loadOfficers();
+
+  // Only fetch if cache is missing or stale
+  if (!cached) {
+    loadOfficers();
+  }
 });
 
 /* -------------------------------------------------------------------------- */
@@ -44,7 +59,11 @@ async function loadOfficers() {
       return showEmptyState();
     }
 
-    displayOfficers(data.officers);
+    // Pass token so we don't re-fetch it per officer
+    await displayOfficers(data.officers, token);
+
+    // Cache rendered HTML for instant subsequent loads
+    safeSetCache({ html: officersGrid.innerHTML, ts: Date.now() });
   } catch (error) {
     console.error("❌ Error loading officers:", error);
     showEmptyState();
@@ -86,63 +105,70 @@ const ROLE_ORDER = {
   representative: 16,
   officer: 17,
 };
-  /* -------------------------------------------------------------------------- */
-  /*                           RENDER OFFICERS                                   */
-  /* -------------------------------------------------------------------------- */
+/* -------------------------------------------------------------------------- */
+/*                           RENDER OFFICERS                                   */
+/* -------------------------------------------------------------------------- */
 
-  async function displayOfficers(officers) {
-    officersGrid.innerHTML = "";
+async function displayOfficers(officers, token) {
+  officersGrid.innerHTML = "";
 
-    // 🔹 SORT ONLY
-    const sortedOfficers = [...officers].sort((a, b) => {
-      return (ROLE_ORDER[a.role] ?? 999) - (ROLE_ORDER[b.role] ?? 999);
-    });
+  // 🔹 SORT ONLY
+  const sortedOfficers = [...officers].sort((a, b) => {
+    return (ROLE_ORDER[a.role] ?? 999) - (ROLE_ORDER[b.role] ?? 999);
+  });
 
-    for (const officer of sortedOfficers) {
-      const member = officer.member_info ?? {};
-      const avatarUrl = await getProfilePicture(officer?.id);
+  // 🔹 Fetch profile pictures IN PARALLEL and reuse token
+  const avatarUrls = await Promise.all(
+    sortedOfficers.map((o) => getProfilePicture(o?.id, token))
+  );
 
-      const card = document.createElement("div");
-      card.className = "officer-card";
+  const frag = document.createDocumentFragment();
+  sortedOfficers.forEach((officer, idx) => {
+    const member = officer.member_info ?? {};
+    const avatarUrl = avatarUrls[idx];
 
-      card.innerHTML = `
-      <div class="officer-image">
-        <img src="${avatarUrl}" class="officer-avatar-img" alt="${escape(
-        officer.name
-      )}"/>
-      </div>
+    const card = document.createElement("div");
+    card.className = "officer-card";
 
-      <div class="officer-content">
-        <h3 class="officer-name">${escape(officer.name)}</h3>
-        <p class="officer-position">${formatRole(officer.role)}</p>
-        <p class="officer-year">
-          ${member.year || "Year N/A"} ${member.program || ""}
-        </p>
+    card.innerHTML = `
+        <div class="officer-image">
+          <img src="${avatarUrl}" loading="lazy" class="officer-avatar-img" alt="${escape(
+      officer.name
+    )}"/>
+        </div>
 
-        <div class="officer-contact">
-          <div class="contact-item">
-            <span>📧</span>
-            <span>${member?.user?.email || "No email available"}</span>
-          </div>
-          <div class="contact-item">
-            <span>📱</span>
-            <span>${member.phone || "No phone number"}</span>
+        <div class="officer-content">
+          <h3 class="officer-name">${escape(officer.name)}</h3>
+          <p class="officer-position">${formatRole(officer.role)}</p>
+          <p class="officer-year">
+            ${member.year || "Year N/A"} ${member.program || ""}
+          </p>
+
+          <div class="officer-contact">
+            <div class="contact-item">
+              <span>📧</span>
+              <span>${member?.user?.email || "No email available"}</span>
+            </div>
+            <div class="contact-item">
+              <span>📱</span>
+              <span>${member.phone || "No phone number"}</span>
+            </div>
           </div>
         </div>
-      </div>
-    `;
+      `;
 
-      officersGrid.appendChild(card);
-    }
-  };
+    frag.appendChild(card);
+  });
+
+  officersGrid.appendChild(frag);
+}
 
 /* -------------------------------------------------------------------------- */
 /*                           PROFILE PICTURE                                   */
 /* -------------------------------------------------------------------------- */
 
-async function getProfilePicture(memberId) {
+async function getProfilePicture(memberId, token) {
   try {
-    const token = await getFirebaseToken();
     const API = "https://ccsync-api-master-ll6mte.laravel.cloud/api";
 
     const res = await fetch(`${API}/profile/${memberId}/profile-picture`, {
@@ -177,4 +203,38 @@ function formatRole(role = "") {
     .split(" ")
     .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
     .join(" ");
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               CACHING HELPERS                               */
+/* -------------------------------------------------------------------------- */
+
+function tryShowFromCache() {
+  try {
+    const cached = safeGetCache();
+    if (cached && typeof cached.html === "string") {
+      officersGrid.innerHTML = cached.html;
+      return cached; // Return cache object if found
+    }
+  } catch {}
+  return null; // Return null if no valid cache
+}
+
+function safeGetCache() {
+  try {
+    const raw = sessionStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.ts !== "number") return null;
+    const isFresh = Date.now() - parsed.ts < CACHE_TTL_MS;
+    return isFresh ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeSetCache(value) {
+  try {
+    sessionStorage.setItem(CACHE_KEY, JSON.stringify(value));
+  } catch {}
 }

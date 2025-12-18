@@ -1,245 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Student Profile - CCSync</title>
+    <style>
+      body {
+        visibility: hidden;
+      }
+      body.loaded {
+        visibility: visible;
+      }
+    </style>
+  </head>
+  <body>
+    <script
+      type="module"
+      src="/js/pages/home/student/studentProfile.js"
+    ></script>
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo">
-                <span>CCSync</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/pages/home/student/student-dashboard.html">Dashboard</a></li>
-                <li><a href="/pages/home/student/studentViewOfficer.html">Officers</a></li>
-                <li><a href="#" class="active">Profile</a></li>
-            </ul>
+      <div
+        class="nav-container"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <div class="nav-brand">
+          <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo" />
+          <span>CCSync</span>
         </div>
+        <ul
+          class="nav-links"
+          style="display: flex; align-items: center; margin: 0"
+        >
+          <li>
+            <a href="/pages/home/student/student-dashboard.html">Dashboard</a>
+          </li>
+          <li>
+            <a href="/pages/home/student/studentViewOfficer.html">Officers</a>
+          </li>
+          <li>
+            <a href="/pages/home/student/studentProfile.html" class="active"
+              >Profile</a
+            >
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <div class="container">
-        <div class="profile-wrapper">
-            <!-- Sidebar -->
-            <div class="profile-sidebar">
-                <div class="profile-avatar shimmer-avatar" id="shimmerAvatar">👤</div>
-                <h1 class="profile-name shimmer-line" id="shimmerName"></h1>
-                <p class="profile-role shimmer-line" id="shimmerRole"></p>
-                <p class="profile-year shimmer-line" id="shimmerYear"></p>
+      <div class="profile-wrapper">
+        <!-- Sidebar -->
+        <div class="profile-sidebar">
+          <div class="profile-avatar shimmer-avatar" id="shimmerAvatar">👤</div>
+          <h1 class="profile-name shimmer-line" id="shimmerName"></h1>
+          <p class="profile-role shimmer-line" id="shimmerRole"></p>
+          <p class="profile-year shimmer-line" id="shimmerYear"></p>
 
-                <div class="profile-stats shimmer-stats" id="shimmerStats">
-                    <div class="stat-item">
-                        <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
-                        <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
-                    </div>
-                    <div class="stat-item">
-                        <span class="stat-number shimmer-line" style="height: 24px; width: 40px; display: inline-block;"></span>
-                        <span class="stat-label shimmer-line" style="height: 14px; width: 60px; display: block; margin-top: 8px;"></span>
-                    </div>
-                </div>
-
-                <div class="profile-actions" id="profileActions" style="display: none;">
-                    <button class="btn btn-primary" onclick="openEditModal()">Edit Profile</button>
-                    <button class="btn btn-secondary" onclick="openPasswordModal()">Change Password</button>
-                </div>
+          <div class="profile-stats shimmer-stats" id="shimmerStats">
+            <div class="stat-item">
+              <span
+                class="stat-number shimmer-line"
+                style="height: 24px; width: 40px; display: inline-block"
+              ></span>
+              <span
+                class="stat-label shimmer-line"
+                style="
+                  height: 14px;
+                  width: 60px;
+                  display: block;
+                  margin-top: 8px;
+                "
+              ></span>
             </div>
-
-            <!-- Main Content -->
-            <div class="profile-main">
-                <!-- Personal Information -->
-                <div class="profile-section">
-                    <div class="section-header">
-                        <h2 class="section-title">Personal Information</h2>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Full Name</span>
-                            <span class="info-value shimmer-line" style="height: 18px;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Student ID</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 70%;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Email Address</span>
-                            <span class="info-value shimmer-line" style="height: 18px;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Phone Number</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 75%;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Year Level</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 60%;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Program</span>
-                            <span class="info-value shimmer-line" style="height: 18px;"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Academic Information -->
-                <div class="profile-section">
-                    <div class="section-header">
-                        <h2 class="section-title">Academic Information</h2>
-                    </div>
-                    <div class="info-grid">
-                        <div class="info-item">
-                            <span class="info-label">Department</span>
-                            <span class="info-value shimmer-line" style="height: 18px;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Major</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 70%;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Enrollment Status</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 60%;"></span>
-                        </div>
-                        <div class="info-item">
-                            <span class="info-label">Academic Year</span>
-                            <span class="info-value shimmer-line" style="height: 18px; width: 65%;"></span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Recent Activity -->
-                <div class="profile-section">
-                    <div class="section-header">
-                        <h2 class="section-title">Recent Activity</h2>
-                        <a href="#" class="edit-btn">View All</a>
-                    </div>
-                    <div class="activity-list">
-                        <div class="activity-item">
-                            <div class="activity-icon shimmer-line" style="height: 50px; width: 50px;"></div>
-                            <div class="activity-content">
-                                <div class="activity-title shimmer-line" style="height: 18px;"></div>
-                                <div class="activity-desc shimmer-line" style="height: 14px; width: 80%; margin-top: 8px;"></div>
-                                <div class="activity-date shimmer-line" style="height: 12px; width: 60%; margin-top: 8px;"></div>
-                            </div>
-                        </div>
-                        <div class="activity-item">
-                            <div class="activity-icon shimmer-line" style="height: 50px; width: 50px;"></div>
-                            <div class="activity-content">
-                                <div class="activity-title shimmer-line" style="height: 18px;"></div>
-                                <div class="activity-desc shimmer-line" style="height: 14px; width: 75%; margin-top: 8px;"></div>
-                                <div class="activity-date shimmer-line" style="height: 12px; width: 55%; margin-top: 8px;"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="stat-item">
+              <span
+                class="stat-number shimmer-line"
+                style="height: 24px; width: 40px; display: inline-block"
+              ></span>
+              <span
+                class="stat-label shimmer-line"
+                style="
+                  height: 14px;
+                  width: 60px;
+                  display: block;
+                  margin-top: 8px;
+                "
+              ></span>
             </div>
+          </div>
+
+          <div
+            class="profile-actions"
+            id="profileActions"
+            style="display: none"
+          >
+            <button class="btn btn-primary" onclick="openEditModal()">
+              Edit Profile
+            </button>
+            <button class="btn btn-secondary" onclick="openPasswordModal()">
+              Change Password
+            </button>
+          </div>
         </div>
+
+        <!-- Main Content -->
+        <div class="profile-main">
+          <!-- Personal Information -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h2 class="section-title">Personal Information</h2>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Full Name</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Student ID</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 70%"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Email Address</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Phone Number</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 75%"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Year Level</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 60%"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Program</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Academic Information -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h2 class="section-title">Academic Information</h2>
+            </div>
+            <div class="info-grid">
+              <div class="info-item">
+                <span class="info-label">Department</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Major</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 70%"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Enrollment Status</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 60%"
+                ></span>
+              </div>
+              <div class="info-item">
+                <span class="info-label">Academic Year</span>
+                <span
+                  class="info-value shimmer-line"
+                  style="height: 18px; width: 65%"
+                ></span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Activity -->
+          <div class="profile-section">
+            <div class="section-header">
+              <h2 class="section-title">Recent Activity</h2>
+              <a href="#" class="edit-btn">View All</a>
+            </div>
+            <div class="activity-list">
+              <div class="activity-item">
+                <div
+                  class="activity-icon shimmer-line"
+                  style="height: 50px; width: 50px"
+                ></div>
+                <div class="activity-content">
+                  <div
+                    class="activity-title shimmer-line"
+                    style="height: 18px"
+                  ></div>
+                  <div
+                    class="activity-desc shimmer-line"
+                    style="height: 14px; width: 80%; margin-top: 8px"
+                  ></div>
+                  <div
+                    class="activity-date shimmer-line"
+                    style="height: 12px; width: 60%; margin-top: 8px"
+                  ></div>
+                </div>
+              </div>
+              <div class="activity-item">
+                <div
+                  class="activity-icon shimmer-line"
+                  style="height: 50px; width: 50px"
+                ></div>
+                <div class="activity-content">
+                  <div
+                    class="activity-title shimmer-line"
+                    style="height: 18px"
+                  ></div>
+                  <div
+                    class="activity-desc shimmer-line"
+                    style="height: 14px; width: 75%; margin-top: 8px"
+                  ></div>
+                  <div
+                    class="activity-date shimmer-line"
+                    style="height: 12px; width: 55%; margin-top: 8px"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Edit Profile Modal -->
     <div id="editModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Edit Profile</h2>
-                <button type="button" class="modal-close" onclick="closeEditModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="editProfileForm">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">First Name</label>
-                            <input type="text" class="form-input" value="Juan" required>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Last Name</label>
-                            <input type="text" class="form-input" value="Dela Cruz" required>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Email Address</label>
-                        <input type="email" class="form-input" value="juan.delacruz@example.com" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Phone Number</label>
-                        <input type="tel" class="form-input" value="+63 912 345 6789" required>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label class="form-label">Year Level</label>
-                            <select class="form-input" required>
-                                <option value="1">1st Year</option>
-                                <option value="2">2nd Year</option>
-                                <option value="3" selected>3rd Year</option>
-                                <option value="4">4th Year</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Program</label>
-                            <select class="form-input" required>
-                                <option value="bsit" selected>BS Information Technology</option>
-                                <option value="bscs">BS Computer Science</option>
-                                <option value="bsis">BS Information Systems</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Major</label>
-                        <input type="text" class="form-input" value="Web Development" required>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancel" onclick="closeEditModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="saveProfile()">Save Changes</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Edit Profile</h2>
+          <button type="button" class="modal-close" onclick="closeEditModal()">
+            ×
+          </button>
         </div>
+        <div class="modal-body">
+          <form id="editProfileForm">
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">First Name</label>
+                <input type="text" class="form-input" value="Juan" required />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Last Name</label>
+                <input
+                  type="text"
+                  class="form-input"
+                  value="Dela Cruz"
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Email Address</label>
+              <input
+                type="email"
+                class="form-input"
+                value="juan.delacruz@example.com"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Phone Number</label>
+              <input
+                type="tel"
+                class="form-input"
+                value="+63 912 345 6789"
+                required
+              />
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label class="form-label">Year Level</label>
+                <select class="form-input" required>
+                  <option value="1">1st Year</option>
+                  <option value="2">2nd Year</option>
+                  <option value="3" selected>3rd Year</option>
+                  <option value="4">4th Year</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Program</label>
+                <select class="form-input" required>
+                  <option value="bsit" selected>
+                    BS Information Technology
+                  </option>
+                  <option value="bscs">BS Computer Science</option>
+                  <option value="bsis">BS Information Systems</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Major</label>
+              <input
+                type="text"
+                class="form-input"
+                value="Web Development"
+                required
+              />
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" onclick="closeEditModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="saveProfile()">
+            Save Changes
+          </button>
+        </div>
+      </div>
     </div>
 
     <!-- Change Password Modal -->
     <div id="passwordModal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 class="modal-title">Change Password</h2>
-                <button type="button" class="modal-close" onclick="closePasswordModal()">×</button>
-            </div>
-            <div class="modal-body">
-                <form id="changePasswordForm">
-                    <div class="form-group">
-                        <label class="form-label">Current Password</label>
-                        <input type="password" class="form-input" placeholder="Enter current password" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">New Password</label>
-                        <input type="password" class="form-input" placeholder="Enter new password" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label">Confirm New Password</label>
-                        <input type="password" class="form-input" placeholder="Confirm new password" required>
-                    </div>
-
-                    <div
-                        style="background: #fff3cd; padding: 1rem; border-radius: 10px; margin-top: 1rem; border-left: 4px solid var(--card-orange);">
-                        <p style="margin: 0; font-size: 0.9rem; color: #856404;">
-                            <strong>Password Requirements:</strong><br>
-                            • At least 8 characters long<br>
-                            • Include uppercase and lowercase letters<br>
-                            • Include at least one number
-                        </p>
-                    </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-cancel" onclick="closePasswordModal()">Cancel</button>
-                <button class="btn btn-primary" onclick="changePassword()">Update Password</button>
-            </div>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title">Change Password</h2>
+          <button
+            type="button"
+            class="modal-close"
+            onclick="closePasswordModal()"
+          >
+            ×
+          </button>
         </div>
-    </div>
+        <div class="modal-body">
+          <form id="changePasswordForm">
+            <div class="form-group">
+              <label class="form-label">Current Password</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="Enter current password"
+                required
+              />
+            </div>
 
-    <script type="module" src="/js/pages/home/student/studentProfile.js" defer></script>
-</body>
+            <div class="form-group">
+              <label class="form-label">New Password</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="Enter new password"
+                required
+              />
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Confirm New Password</label>
+              <input
+                type="password"
+                class="form-input"
+                placeholder="Confirm new password"
+                required
+              />
+            </div>
+
+            <div
+              style="
+                background: #fff3cd;
+                padding: 1rem;
+                border-radius: 10px;
+                margin-top: 1rem;
+                border-left: 4px solid var(--card-orange);
+              "
+            >
+              <p style="margin: 0; font-size: 0.9rem; color: #856404">
+                <strong>Password Requirements:</strong><br />
+                • At least 8 characters long<br />
+                • Include uppercase and lowercase letters<br />
+                • Include at least one number
+              </p>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-cancel" onclick="closePasswordModal()">
+            Cancel
+          </button>
+          <button class="btn btn-primary" onclick="changePassword()">
+            Update Password
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

@@ -1,40 +1,67 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Officers - CCSync</title>
-</head>
+    <style>
+      body {
+        visibility: hidden;
+      }
+      body.loaded {
+        visibility: visible;
+      }
+    </style>
+  </head>
 
-<body>
+  <body>
+    <script
+      type="module"
+      src="/js/pages/home/student/studentViewOfficer.js"
+    ></script>
     <nav class="navbar">
-        <div class="nav-container">
-            <div class="nav-brand">
-                <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo" />
-                <span>CCSync</span>
-            </div>
-            <ul class="nav-links">
-                <li><a href="/pages/home/student/student-dashboard.html">Dashboard</a></li>
-                <li><a href="/pages/home/student/studentViewOfficer.html" class="active">Officers</a></li>
-                <li><a href="/pages/home/student/studentProfile.html">Profile</a></li>
-            </ul>
+      <div
+        class="nav-container"
+        style="
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+        "
+      >
+        <div class="nav-brand">
+          <img src="/assets/PSITSlogo.png" alt="PSITS Logo" class="nav-logo" />
+          <span>CCSync</span>
         </div>
+        <ul
+          class="nav-links"
+          style="display: flex; align-items: center; margin: 0"
+        >
+          <li>
+            <a href="/pages/home/student/student-dashboard.html">Dashboard</a>
+          </li>
+          <li>
+            <a href="/pages/home/student/studentViewOfficer.html" class="active"
+              >Officers</a
+            >
+          </li>
+          <li><a href="/pages/home/student/studentProfile.html">Profile</a></li>
+        </ul>
+      </div>
     </nav>
 
     <div class="container">
-        <div class="header">
-            <h1>Our Officers</h1>
-            <p>Meet the leadership team of PSITS Organization</p>
-        </div>
+      <div class="header">
+        <h1>Our Officers</h1>
+        <p>Meet the leadership team of PSITS Organization</p>
+      </div>
 
-        <!-- 🔹 SINGLE OFFICERS GRID -->
-        <div class="officers-section">
-            <div class="officers-grid"></div>
-        </div>
+      <!-- Shimmer Loader -->
+      <div id="officersShimmerContainer"></div>
+
+      <!-- Officers Grid -->
+      <div class="officers-section">
+        <div class="officers-grid"></div>
+      </div>
     </div>
-
-    <script type="module" src="/js/pages/home/student/studentViewOfficer.js" defer></script>
-</body>
-
+  </body>
 </html>

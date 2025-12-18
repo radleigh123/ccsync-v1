@@ -4,9 +4,20 @@ import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 
+// Show body after styles are loaded
+document.body.classList.add("loaded");
+
 let userData = null;
 
+// Cache so navigating back is instant
+const DASHBOARD_CACHE_KEY = "studentDashboard:events:v1";
+const DASHBOARD_CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
+
 document.addEventListener("DOMContentLoaded", async () => {
+  // 1) Try to render immediately from cache (no shimmer)
+  tryShowFromCache();
+
+  // 2) Verify session, then refresh in background
   await initDashboard();
   loadEvents();
 });
@@ -31,12 +42,15 @@ async function loadEvents() {
       displayEmptyState();
     }
 
-    shimmerLoader.hide("#eventsShimmerContainer", 600);
+    // Cache rendered HTML for instant subsequent loads
+    cacheCurrentHTML();
 
+    // Ensure visibility in case we didn't render from cache first
+    shimmerLoader.hide("#eventsShimmerContainer", 300);
     setTimeout(() => {
       document.getElementById("eventsShimmerContainer").style.display = "none";
       document.getElementById("eventsContainer").style.display = "grid";
-    }, 600);
+    }, 300);
   } catch (error) {
     console.error("❌ Error loading events:", error);
     displayEmptyState();
@@ -129,4 +143,48 @@ function displayEmptyState() {
       <p class="h5">No events found</p>
     </div>
   `;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                             CACHING HELPERS                                */
+/* -------------------------------------------------------------------------- */
+
+function tryShowFromCache() {
+  try {
+    const cached = safeGetCache(DASHBOARD_CACHE_KEY, DASHBOARD_CACHE_TTL_MS);
+    if (!cached || typeof cached.html !== "string") return;
+
+    const container = document.getElementById("eventsContainer");
+    container.innerHTML = cached.html;
+
+    // Show instantly, hide shimmer
+    const shimmer = document.getElementById("eventsShimmerContainer");
+    if (shimmer) shimmer.style.display = "none";
+    container.style.display = "grid";
+  } catch {}
+}
+
+function cacheCurrentHTML() {
+  try {
+    const container = document.getElementById("eventsContainer");
+    const html = container?.innerHTML ?? "";
+    if (!html) return;
+    sessionStorage.setItem(
+      DASHBOARD_CACHE_KEY,
+      JSON.stringify({ html, ts: Date.now() })
+    );
+  } catch {}
+}
+
+function safeGetCache(key, ttlMs) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.ts !== "number") return null;
+    const fresh = Date.now() - parsed.ts < ttlMs;
+    return fresh ? parsed : null;
+  } catch {
+    return null;
+  }
 }
