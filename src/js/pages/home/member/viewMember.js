@@ -5,6 +5,7 @@ import { getCurrentSession } from "/js/utils/sessionManager";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
 import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import { fetchMembersPagination } from "/js/utils/api.js";
 
 let userData = null;
 let allMembers = []; // Store all members from API
@@ -40,33 +41,16 @@ async function loadMembers(page = 1) {
     const tbody = document.getElementById("userTableBody");
     tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Loading...</td></tr>';
 
-    // Call API with pagination parameters
-    const response = await fetch(
-      `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/list?page=${page}&per_page=${currentLimit}`,
-      {
-        headers: {
-          Authorization: `Bearer ${userData.firebase_token}`,
-          Accept: "application/json",
-        },
-      }
-    );
+    const response = await fetchMembersPagination(page, currentLimit);
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const data = await response.json();
-    const members = data.data.members;
+    const members = response.data.members;
 
     const membersLengthPage = Object.keys(members).length;
 
     // Check if members exists and has data
     if (membersLengthPage > 0) {
       allMembers = members;
-      paginationData = data;
+      paginationData = response;
       currentPage = paginationData.meta.current_page;
     } else {
       allMembers = [];

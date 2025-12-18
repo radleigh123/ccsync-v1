@@ -9,6 +9,7 @@ import { FormValidator } from '/js/utils/formValidator.js';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { parseTime, parseDate } from "/js/utils/date.js";
 import { setupLogout } from '/js/utils/navigation.js';
+import { fetchEvent } from '/js/utils/api.js';
 
 let userData = null;
 let formValidator = null;
@@ -63,35 +64,14 @@ async function loadEventData() {
         }
 
         console.log('📥 Loading event data for ID:', eventId);
-
-        // Fetch all events from API
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-        );
-
-        if (!response.ok) {
-            responseModal.showError('Error', 'Failed to load events');
-            return;
-        }
-
-        const data = await response.json();
-        const event = data.data;
-
-        if (!event) {
+        const response = await fetchEvent(eventId);
+        if (!response) {
             responseModal.showError('Error', 'Event not found');
             return;
         }
 
-        selectedEvent = event;
-        populateForm(event);
-        console.log('✅ Event data loaded:', event);
+        selectedEvent = response.data;
+        populateForm(selectedEvent);
 
     } catch (error) {
         console.error('❌ Error loading event data:', error);
@@ -200,24 +180,9 @@ async function handleSubmit(event) {
             status: selectedEvent.status
         };
 
-        // Note: this returns JSON not a Response object
-        const response = await updateEvent(eventId, payload); // BROKEN
-
-        /* const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`, {
-            method: 'PUT',
-            headers: {
-                Authorization: `Bearer ${userData.firebase_token}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload),
-        });
-
-        console.log(await response.json()); */
-
-        // Note: If Response object, `response.ok` status is enough if api worked
-        // Temporary check statement, since return response is in JSON format
+        const response = await updateEvent(eventId, payload);
+        console.log(response);
         if (response.success === true) {
-            // console.log("✓ Event updated successfully:", response.data);
             responseModal.showSuccess("Success!", "Event updated successfully!", null, () => {
                 window.location.href = `/pages/home/event/view-event.html?event_id=${eventId}`;
             });

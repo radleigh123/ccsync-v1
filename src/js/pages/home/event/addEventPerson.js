@@ -6,6 +6,10 @@ import { getYearSuffix } from '/js/utils/date';
 import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { setupLogout } from '/js/utils/navigation.js';
+import { fetchEvent } from '/js/utils/api.js';
+import { fetchMemberBySchoolId } from '/js/utils/api.js';
+import { checkEventParticipantRegistered } from "/js/utils/api.js";
+import { registerEventParticipant } from '/js/utils/api';
 
 let userData = null;
 let selectedEventId = null; // Store the database event ID
@@ -50,30 +54,14 @@ async function loadEventData() {
 
         console.log('📥 Loading event data for ID:', eventId);
 
-        // Fetch all events from API
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        const event = data.data;
+        const response = await fetchEvent(eventId);
+        const event = response.data;
 
         if (event) {
             // Update event information in the form
             document.getElementById('eventCardTitle').textContent = event.name;
             document.getElementById('eventSubtitle').textContent = `Register a participant for: ${event.name}`;
             document.getElementById('eventCardDate').textContent = `Event Date: ${event.event_date}`;
-            console.log('Event data loaded successfully:', event);
         } else {
             showError('Unable to load events. Please try again.');
         }
@@ -181,35 +169,16 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
         shimmerLoader.style.display = 'block';
         participantCard.style.display = 'none';
 
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/member?id_school_number=${memberIdSchoolNumber}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
+        const response = await fetchMemberBySchoolId(memberIdSchoolNumber);
 
-        if (!response.ok) {
-            shimmerLoader.style.display = 'none';
-            participantInfoSection.style.display = 'none';
-            showParticipantError('Member not found0');
-            return;
-        }
-
-        const data = await response.json();
-
-        console.log(data);
-
-        if (!data?.data) {
+        if (!response.success) {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
             showParticipantError('Member not found');
             return;
         }
 
-        const member = data.data;
+        const member = response.data;
 
         if (member) {
             // Store the member database ID for registration
@@ -242,7 +211,7 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
                 document.getElementById('registerButton').textContent = 'Register Participant';
             }
 
-            console.log('Participant data loaded:', member);
+            // console.log('Participant data loaded:', member);
         } else {
             shimmerLoader.style.display = 'none';
             participantInfoSection.style.display = 'none';
@@ -264,25 +233,8 @@ async function loadParticipantInfo(memberIdSchoolNumber) {
 async function checkIfAlreadyRegistered(memberId) {
     try {
         const eventId = new URLSearchParams(window.location.search).get('event_id');
-
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/members/${memberId}/check?event_id=${eventId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    "Content-Type": "application/json",
-                },
-            }
-        );
-
-        if (!response.ok) {
-            console.error('Failed to check registration status');
-            return false;
-        }
-
-        const data = await response.json();
-
-        return data.data.length > 0;
+        const response = await checkEventParticipantRegistered(eventId, memberId);
+        return response.success;
     } catch (error) {
         console.error('Error checking registration status:', error);
         return false;
@@ -299,27 +251,9 @@ async function registerParticipant() {
     }
 
     try {
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${selectedEventId}/add`,
-            {
-                method: 'POST',
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    member_id: selectedMemberId,  // Use the stored member database ID
-                }),
-            }
-        );
+        const response = await registerEventParticipant(selectedEventId, selectedMemberId);
 
-        const data = await response.json();
-
-        console.log(data);
-
-
-        if (response.ok) {
-            console.log(response.ok);
+        if (response.success) {
             responseModal.showSuccess(
                 'Participant Registered',
                 'The participant has been successfully registered for this event.',
@@ -329,10 +263,9 @@ async function registerParticipant() {
                     window.location.href = '/pages/home/event/view-event.html';
                 });
         } else {
-            console.log(`ERROR:`, response.ok);
             responseModal.showError(
                 'Registration Failed',
-                data.message || 'Failed to register participant'
+                response.message || 'Failed to register participant'
             );
         }
     } catch (error) {

@@ -94,3 +94,16 @@ export async function updatePassword(userId, passwordData) {
         body: JSON.stringify(passwordData),
     });
 }
+
+/**
+ * Fetches a user by school ID
+ * @async
+ * @param {string} idSchoolNumber - School ID number
+ * @returns {Promise<object>} - User data
+ * @throws {Error} - If user not found
+ */
+export async function fetchUserBySchoolId(idSchoolNumber) {
+    return request(`/user?id_school_number=${encodeURIComponent(idSchoolNumber)}`, {
+        method: 'GET',
+    });
+}

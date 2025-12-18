@@ -8,6 +8,8 @@ import { responseModal } from '/js/utils/errorSuccessModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
 import { getYearSuffix, formatDate } from '/js/utils/date.js';
 import { setupLogout } from '/js/utils/navigation.js';
+import { fetchEvent } from "/js/utils/api.js";
+import { fetchEventParticipants } from "/js/utils/api.js";
 
 let userData = null;
 let selectedEvent = null;
@@ -81,7 +83,7 @@ async function loadEventData() {
         console.log('📥 Loading event data for ID:', eventId);
 
         // TODO: Manual call, merge all fetches in one file
-        const response = await fetch(
+        /* const response = await fetch(
             `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}`,
             {
                 headers: {
@@ -90,18 +92,17 @@ async function loadEventData() {
                     Accept: "application/json",
                 },
             }
-        );
+        ); */
+        const response = await fetchEvent(eventId);
 
-        if (!response.ok) {
+        if (!response.success) {
             console.error('Failed to load event');
             return;
         }
 
-        const data = await response.json();
-        const event = data.data;
+        const event = response.data;
 
         populateEventInfo(event);
-        console.log('✅ Event data loaded:', data);
 
     } catch (error) {
         console.error('❌ Error loading event data:', error);
@@ -117,7 +118,7 @@ async function loadParticipants(page = 1) {
     try {
         console.log('📥 Loading participants for event:', eventId, 'page:', page);
 
-        const response = await fetch(
+        /* const response = await fetch(
             `https://ccsync-api-master-ll6mte.laravel.cloud/api/events/${eventId}/members?page=${page}&per_page=${currentLimit}`,
             {
                 headers: {
@@ -126,10 +127,10 @@ async function loadParticipants(page = 1) {
                     Accept: "application/json",
                 },
             }
-        );
+        ); */
+        const response = await fetchEventParticipants(eventId, page, currentLimit);
 
-        // NOTE: Much better use this condition, instead of having to check twice if data has loaded successfully
-        if (!response.ok) {
+        if (response.data?.members === undefined) {
             const errorData = await response.json();
             console.error('❌ Failed to load participants:', response.status, errorData);
             displayParticipants([]);
@@ -141,13 +142,9 @@ async function loadParticipants(page = 1) {
             return;
         }
 
-        const data = await response.json();
-
-        console.log(data);
-
-        if (data) {
-            allParticipants = data.data;
-            paginationData = data;
+        if (response) {
+            allParticipants = response.data;
+            paginationData = response;
             currentPage = paginationData.meta.current_page;
 
             displayParticipants(allParticipants);

@@ -12,10 +12,12 @@ export {
     updateUserProfile,
     updateUserAccount,
     updatePassword,
+    fetchUserBySchoolId,
 } from './api/user.js';
 
 export {
     fetchMembers,
+    fetchMembersPagination,
     searchMembers,
     fetchMember,
     fetchOfficers,
@@ -23,6 +25,7 @@ export {
     demoteOfficer,
     createMember,
     fetchMemberBySchoolId,
+    checkEventParticipantRegistered,
 } from './api/member.js';
 
 export {

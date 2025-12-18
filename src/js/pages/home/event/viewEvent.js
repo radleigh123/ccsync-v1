@@ -29,7 +29,7 @@ async function loadEvents() {
     // Use the API utility function
     const events = await fetchEvents();
 
-    console.log(events);
+    // console.log(events);
 
     if (events.data && events.data.length > 0) {
       console.log("✓ Events loaded:", events.data.length);

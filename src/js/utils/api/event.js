@@ -49,6 +49,9 @@ export async function createEvent(eventData) {
     return request('/events', {
         method: 'POST',
         body: JSON.stringify(eventData),
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        }
     });
 }
 
@@ -99,7 +102,7 @@ export async function fetchEvent(eventId) {
  * @throws {Error} - If fetch fails
  */
 export async function fetchEventParticipants(eventId, page = 1, limit = 20) {
-    return request(`/events/${eventId}/participants?page=${page}&limit=${limit}`, {
+    return request(`/events/${eventId}/members?page=${page}&limit=${limit}`, {
         method: 'GET',
     });
 }
@@ -108,15 +111,19 @@ export async function fetchEventParticipants(eventId, page = 1, limit = 20) {
  * Registers a participant for an event
  * @async
  * @param {number|string} eventId - Event ID
- * @param {object} registrationData - Registration data
- * @param {number|string} registrationData.member_id - Member ID
+ * @param {number|string} memberId - Member ID
  * @returns {Promise<object>} - Registration confirmation
  * @throws {Error} - If registration fails
  */
-export async function registerEventParticipant(eventId, registrationData) {
-    return request(`/events/${eventId}/participants`, {
+export async function registerEventParticipant(eventId, memberId) {
+    return request(`/events/${eventId}/add`, {
         method: 'POST',
-        body: JSON.stringify(registrationData),
+        body: JSON.stringify({
+            member_id: memberId,
+        }),
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        }
     });
 }
 

@@ -26,6 +26,8 @@ import { responseModal } from "/js/utils/errorSuccessModal.js";
 import { confirmationModal } from "/js/utils/confirmationModal.js";
 import { FormValidator } from "/js/utils/formValidator.js";
 import { setupLogout } from "/js/utils/navigation.js";
+import { fetchUserBySchoolId } from "/js/utils/api.js";
+import { createMember } from "/js/utils/api.js";
 
 document.addEventListener('DOMContentLoaded', async function () {
     // Initialize sidebar navigation
@@ -85,22 +87,15 @@ document.addEventListener('DOMContentLoaded', async function () {
             // First, search for the user
 
             const memberIdSchoolNumber = encodeURIComponent(idNumber);
-            const response = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/user?id_school_number=${memberIdSchoolNumber}`, {
-                headers: {
-                    Authorization: `Bearer ${session.firebase_token}`,
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                }
-            });
+            const response = await fetchUserBySchoolId(memberIdSchoolNumber);
 
-            const user = await response.json();
-            console.log(user);
+            if (response.success) {
+                foundUser = response.data;
 
-            if (response.ok) {
-                foundUser = user;
+                console.log(foundUser);
 
-                if (user?.member !== undefined) {
-                    showSearchMessage('User is already registered', 'warning');
+                if (foundUser?.member !== undefined && foundUser?.member !== null) {
+                    showSearchMessage('Student is already a member', 'warning');
                     clearForm();
                     enableEditableFields(false);
                     registerBtn.disabled = true;
@@ -122,7 +117,11 @@ document.addEventListener('DOMContentLoaded', async function () {
             }
         } catch (error) {
             console.error('Error searching user:', error);
-            showSearchMessage('An error occurred while searching. Please try again.', 'danger');
+            if (error.message.includes('not found') || error.message.includes('does not exist')) {
+                showSearchMessage("Student\'s ID does not exist.", 'danger');
+            } else {
+                showSearchMessage('An error occurred while searching. Please try again.', 'danger');
+            }
             enableEditableFields(false);
             registerBtn.disabled = true;
             foundUser = null;
@@ -280,7 +279,7 @@ document.addEventListener('DOMContentLoaded', async function () {
             registerBtn.disabled = true;
             registerBtn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Registering...';
 
-            const response = await fetch('https://ccsync-api-master-ll6mte.laravel.cloud/api/members', {
+            /* const response = await fetch('https://ccsync-api-master-ll6mte.laravel.cloud/api/members', {
                 method: 'POST',
                 headers: {
                     Authorization: `Bearer ${session.firebase_token}`,
@@ -290,9 +289,10 @@ document.addEventListener('DOMContentLoaded', async function () {
                 body: JSON.stringify(memberData)
             });
 
-            const result = await response.json();
+            const result = await response.json(); */
+            const response = await createMember(memberData);
 
-            if (response.ok) {
+            if (response.success) {
                 responseModal.showSuccess(
                     'Member Registered Successfully!',
                     `${memberData.first_name} ${memberData.last_name} has been registered as a member.`
@@ -310,12 +310,12 @@ document.addEventListener('DOMContentLoaded', async function () {
                 // Handle specific error cases
                 if (response.status === 409) {
                     // Duplicate member - show in search message area
-                    showSearchMessage(result.message || 'This student is already registered as a member', 'danger');
+                    showSearchMessage(response.message || 'This student is already registered as a member', 'danger');
                 } else {
                     // Other errors - show in modal
                     responseModal.showError(
                         'Registration Failed',
-                        result.message || 'An error occurred while registering the member.'
+                        response.message || 'An error occurred while registering the member.'
                     );
                 }
             }

@@ -15,6 +15,12 @@ export async function fetchMembers() {
     });
 }
 
+export async function fetchMembersPagination(page = 1, perPage = 20) {
+    return request(`/members/list?page=${page}&per_page=${perPage}`, {
+        method: 'GET',
+    });
+}
+
 /**
  * Searches for members by query
  * @async
@@ -93,6 +99,9 @@ export async function createMember(memberData) {
     return request('/members', {
         method: 'POST',
         body: JSON.stringify(memberData),
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+        },
     });
 }
 
@@ -105,6 +114,12 @@ export async function createMember(memberData) {
  */
 export async function fetchMemberBySchoolId(idSchoolNumber) {
     return request(`/members/member?id_school_number=${encodeURIComponent(idSchoolNumber)}`, {
+        method: 'GET',
+    });
+}
+
+export async function checkEventParticipantRegistered(eventId, memberId) {
+    return request(`/members/${memberId}/check?event_id=${eventId}`, {
         method: 'GET',
     });
 }
