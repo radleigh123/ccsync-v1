@@ -44,6 +44,7 @@ export {
     createRequirement,
     fetchRequirements,
     fetchRequirement,
+    fetchComplianceRecordsOld,
     fetchComplianceRecords,
     recordCompliance,
     updateRequirement,

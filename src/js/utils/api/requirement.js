@@ -27,7 +27,7 @@ export async function createRequirement(requirementData) {
  * @throws {Error} - If fetch fails
  */
 export async function fetchRequirements(page = 1, limit = 20) {
-    return request(`/requirements?page=${page}&limit=${limit}`, {
+    return request(`/requirements/list?page=${page}&limit=${limit}`, {
         method: 'GET',
     });
 }
@@ -46,16 +46,27 @@ export async function fetchRequirement(requirementId) {
 }
 
 /**
+ * Fetches all compliance records (deprecated)
+ * @async
+ * @returns {Promise<object>} - All compliance records
+ * @throws {Error} - If fetch fails
+ */
+export async function fetchComplianceRecordsOld() {
+    return request(`/compliances`, {
+        method: 'GET',
+    });
+}
+
+/**
  * Fetches compliance records for a requirement with pagination
  * @async
- * @param {number|string} requirementId - Requirement ID
  * @param {number} [page=1] - Page number
  * @param {number} [limit=20] - Items per page
  * @returns {Promise<object>} - Compliance records with pagination
  * @throws {Error} - If fetch fails
  */
-export async function fetchComplianceRecords(requirementId, page = 1, limit = 20) {
-    return request(`/requirements/${requirementId}/compliance?page=${page}&limit=${limit}`, {
+export async function fetchComplianceRecords(page = 1, limit = 20) {
+    return request(`/compliances/list?page=${page}&per_page=${limit}`, {
         method: 'GET',
     });
 }

@@ -6,6 +6,8 @@ import { getCurrentSession } from '/js/utils/sessionManager';
 import { confirmationModal } from '/js/utils/confirmationModal.js';
 import { shimmerLoader } from '/js/utils/shimmerLoader.js';
 import { setupLogout } from '/js/utils/navigation.js';
+import { fetchRequirement } from '/js/utils/api.js';
+import { fetchComplianceRecords } from '/js/utils/api.js';
 
 let userData = null;
 let selectedRequirement = null;
@@ -78,30 +80,14 @@ async function loadRequirementData() {
     try {
         console.log('📥 Loading requirement data for ID:', requirementId);
         
-        const response = await fetch(
-            `https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/${requirementId}`,
-            {
-                headers: {
-                    Authorization: `Bearer ${userData.firebase_token}`,
-                    "Content-Type": "application/json",
-                    Accept: "application/json",
-                },
-            }
-        );
+        const response = await fetchRequirement(requirementId);
 
-        if (!response.ok) {
-            console.error('Failed to load requirements');
-            return;
-        }
-
-        const data = await response.json();
-
-        if (!data.success || !data.data) {
+        if (!response.success || !response.data) {
             console.error('Failed to parse requirements');
             return;
         }
 
-        selectedRequirement = data.data;
+        selectedRequirement = response.data;
         
         if (!selectedRequirement) {
             console.error('Requirement not found');
@@ -109,8 +95,6 @@ async function loadRequirementData() {
         }
 
         populateRequirementInfo(selectedRequirement);
-        console.log('✅ Requirement data loaded:', selectedRequirement);
-
     } catch (error) {
         console.error('❌ Error loading requirement data:', error);
     }
@@ -125,7 +109,7 @@ async function loadCompliance(page = 1) {
     try {
         console.log('📥 Loading compliance for requirement:', requirementId, 'page:', page);
         
-        const response = await fetch(
+        /* const response = await fetch(
             `https://ccsync-api-master-ll6mte.laravel.cloud/api/compliances`,
             {
                 headers: {
@@ -148,18 +132,17 @@ async function loadCompliance(page = 1) {
             return;
         }
 
-        const apiResponse = await response.json();
+        const apiResponse = await response.json(); */
+        const response = await fetchComplianceRecords(page, currentLimit);
 
-        if (apiResponse) {
-            allCompliance = apiResponse;
-            paginationData = apiResponse?.pagination;
-            currentPage = paginationData?.page;
+        if (response.data) {
+            allCompliance = response.data;
+            paginationData = response;
+            currentPage = paginationData?.meta.current_page;
             
             displayCompliance(allCompliance);
             updatePaginationControls();
-            
-            console.log('✅ Compliance records loaded:', allCompliance);
-            
+
             // Update compliance stats in requirement info
             if (selectedRequirement) {
                 populateRequirementInfo(selectedRequirement);
@@ -233,7 +216,7 @@ function displayCompliance(compliance) {
             <td>${getYearSuffix(record.member.year)}</td>
             <td>${record.member.program || '-'}</td>
             <td>${statusBadge}</td>
-            <td>${formatDate(record.submitted_at) || '-'}</td>
+            <td>${formatDate(record.created_at) || '-'}</td>
         `;
         tbody.appendChild(row);
     });
@@ -290,7 +273,7 @@ function updatePaginationControls() {
 
         // Update page info display
         if (pageInfo) {
-            pageInfo.textContent = `Page ${paginationData.page} of ${paginationData.pages} (${paginationData.total} total records)`;
+            pageInfo.textContent = `Page ${paginationData.meta.current_page} of ${paginationData.meta.last_page} (${paginationData.meta.total} total records)`;
         }
     }
 }
