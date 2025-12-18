@@ -3,6 +3,7 @@ import "/scss/pages/home/student/studentDashboard.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
+import { setupLogout } from "/js/utils/navigation.js";
 
 // Show body after styles are loaded
 document.body.classList.add("loaded");
@@ -20,6 +21,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   // 2) Verify session, then refresh in background
   await initDashboard();
   loadEvents();
+  // Enable logout in navbar
+  setupLogout();
 });
 
 async function initDashboard() {

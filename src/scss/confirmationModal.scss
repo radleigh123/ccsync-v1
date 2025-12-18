@@ -192,6 +192,17 @@
             }
         }
 
+        /* Destructive confirm (e.g., logout) */
+        .yes-btn.danger {
+            background-color: #d9534f;
+            color: #fff;
+
+            &:hover {
+                background-color: #c9302c;
+                box-shadow: 0 4px 12px rgba(201, 48, 44, 0.3);
+            }
+        }
+
         .no-btn {
             background-color: #6c757d;
             color: white;

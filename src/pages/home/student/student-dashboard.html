@@ -46,6 +46,7 @@
             <a href="/pages/home/student/studentViewOfficer.html">Officers</a>
           </li>
           <li><a href="/pages/home/student/studentProfile.html">Profile</a></li>
+          <li><a href="#" id="logout-link">Logout</a></li>
         </ul>
       </div>
     </nav>
@@ -68,6 +69,29 @@
           class="events-grid"
           style="display: none"
         ></div>
+      </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationBackdrop" class="modal-backdrop"></div>
+    <div id="confirmationModal" class="confirmation-modal">
+      <div class="confirmation-header">
+        <h5 id="confirmationTitle">Confirm Action</h5>
+        <button class="close-btn" id="confirmationCloseBtn">
+          <span>&times;</span>
+        </button>
+      </div>
+      <div class="confirmation-body">
+        <p id="confirmationMessage">Are you sure?</p>
+        <div id="confirmationDetails" class="details"></div>
+      </div>
+      <div class="confirmation-footer">
+        <button type="button" class="no-btn" id="confirmationNoBtn">
+          Cancel
+        </button>
+        <button type="button" class="yes-btn" id="confirmationYesBtn">
+          Confirm
+        </button>
       </div>
     </div>
   </body>

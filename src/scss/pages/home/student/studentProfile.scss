@@ -85,6 +85,14 @@ body {
     background: var(--primary-gold);
 }
 
+/* Logout link styling */
+#logout-link {
+    color: #d9534f;
+}
+#logout-link:hover {
+    color: #c9302c;
+}
+
 .container {
     max-width: 1200px;
     margin: 0 auto;

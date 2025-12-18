@@ -3,6 +3,8 @@ import "/scss/pages/home/student/studentViewOfficer.scss";
 
 import { getFirebaseToken } from "/js/utils/firebaseAuth.js";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
+import { shimmerLoader } from "/js/utils/shimmerLoader.js";
+import { setupLogout } from "/js/utils/navigation.js";
 
 // Show body after styles are loaded
 document.body.classList.add("loaded");
@@ -22,8 +24,15 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Render instantly from cache if available
   const cached = tryShowFromCache();
 
+  // Show shimmer only if no cache available
+  if (!cached) {
+    shimmerLoader.show("#officersShimmerContainer", "officer-cards", 6);
+  }
+
   // Verify session, then refresh in the background
   await verifyLogin();
+  // Enable logout in navbar
+  setupLogout();
 
   // Only fetch if cache is missing or stale
   if (!cached) {
@@ -56,7 +65,9 @@ async function loadOfficers() {
     const data = await res.json();
 
     if (!data.officers || data.officers.length === 0) {
-      return showEmptyState();
+      showEmptyState();
+      hideShimmerShowContent();
+      return;
     }
 
     // Pass token so we don't re-fetch it per officer
@@ -64,9 +75,11 @@ async function loadOfficers() {
 
     // Cache rendered HTML for instant subsequent loads
     safeSetCache({ html: officersGrid.innerHTML, ts: Date.now() });
+    hideShimmerShowContent();
   } catch (error) {
     console.error("❌ Error loading officers:", error);
     showEmptyState();
+    hideShimmerShowContent();
   }
 }
 
@@ -214,6 +227,10 @@ function tryShowFromCache() {
     const cached = safeGetCache();
     if (cached && typeof cached.html === "string") {
       officersGrid.innerHTML = cached.html;
+      // Show instantly, hide shimmer if present
+      const shimmer = document.getElementById("officersShimmerContainer");
+      if (shimmer) shimmer.style.display = "none";
+      officersGrid.style.display = "grid";
       return cached; // Return cache object if found
     }
   } catch {}
@@ -237,4 +254,13 @@ function safeSetCache(value) {
   try {
     sessionStorage.setItem(CACHE_KEY, JSON.stringify(value));
   } catch {}
+}
+
+function hideShimmerShowContent() {
+  shimmerLoader.hide("#officersShimmerContainer", 300);
+  setTimeout(() => {
+    const shimmer = document.getElementById("officersShimmerContainer");
+    if (shimmer) shimmer.style.display = "none";
+    officersGrid.style.display = "grid";
+  }, 300);
 }
