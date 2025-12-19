@@ -319,6 +319,19 @@ i {
     opacity: 0.8;
     transition: opacity 0.3s ease;
 
+    /* Pull controls outward so they don't hug the carousel content */
+    width: 5rem;
+
+    @media (min-width: 769px) {
+        &.carousel-control-prev {
+            left: -1rem;
+        }
+
+        &.carousel-control-next {
+            right: -1rem;
+        }
+    }
+
     &:hover {
         opacity: 1;
     }

@@ -13,6 +13,10 @@ let currentPage = 1;
 let currentLimit = 20; // Items per page
 let paginationData = null;
 
+// Cache (5 min TTL)
+const MEMBERS_CACHE_KEY = "viewMembers:list:v1";
+const MEMBERS_CACHE_TTL_MS = 1000 * 60 * 5;
+
 // Filter state
 let searchText = ""; // Tier 1: Text search
 let selectedYear = "all"; // Tier 2: Year level filter
@@ -26,7 +30,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   setupYearFilter();
   setupProgramFilter();
   setupPaginationButtons();
-  loadMembers();
+
+  // Try instant render from cache; skip fetch if fresh
+  const hadCache = tryShowFromCache();
+  if (!hadCache) {
+    const shimmer = document.getElementById("shimmerTable");
+    if (shimmer) shimmer.style.display = "table";
+    loadMembers();
+  }
 });
 
 async function initHome() {
@@ -39,7 +50,8 @@ async function loadMembers(page = 1) {
   try {
     // Show loading state
     const tbody = document.getElementById("userTableBody");
-    tbody.innerHTML = '<tr><td colspan="4" class="text-center py-4">Loading...</td></tr>';
+    tbody.innerHTML =
+      '<tr><td colspan="4" class="text-center py-4">Loading...</td></tr>';
 
     const response = await fetchMembersPagination(page, currentLimit);
 
@@ -60,6 +72,9 @@ async function loadMembers(page = 1) {
     // Apply all filters and display
     applyAllFilters();
     updatePaginationControls();
+
+    // Cache current render for fast revisits
+    cacheCurrentHTML();
 
     // Hide shimmer and show table
     shimmerLoader.hide("#shimmerTable", 600);
@@ -112,12 +127,12 @@ function setupYearFilter() {
           selectedYear === "all"
             ? "All"
             : selectedYear === "1"
-              ? "1st Year"
-              : selectedYear === "2"
-                ? "2nd Year"
-                : selectedYear === "3"
-                  ? "3rd Year"
-                  : "4th Year";
+            ? "1st Year"
+            : selectedYear === "2"
+            ? "2nd Year"
+            : selectedYear === "3"
+            ? "3rd Year"
+            : "4th Year";
 
         if (yearFilterLabel) {
           yearFilterLabel.textContent = `Year Level: ${yearText}`;
@@ -147,12 +162,12 @@ function setupProgramFilter() {
           selectedProgram === "all"
             ? "All"
             : selectedProgram === "BSCS"
-              ? "BSCS"
-              : selectedProgram === "BSIS"
-                ? "BSIS"
-                : selectedProgram === "BSIT"
-                  ? "BSIT"
-                  : "BSCE";
+            ? "BSCS"
+            : selectedProgram === "BSIS"
+            ? "BSIS"
+            : selectedProgram === "BSIT"
+            ? "BSIT"
+            : "BSCE";
 
         if (programFilterLabel) {
           programFilterLabel.textContent = `Program: ${programText}`;
@@ -250,8 +265,9 @@ function displayMembers(members) {
 
   if (members.length > 0) {
     members.forEach((member, index) => {
-      const fullName = `${member.first_name} ${member.last_name}${member.suffix ? " " + member.suffix : ""
-        }`;
+      const fullName = `${member.first_name} ${member.last_name}${
+        member.suffix ? " " + member.suffix : ""
+      }`;
 
       const row = document.createElement("tr");
       row.className = "member-row";
@@ -298,4 +314,102 @@ function displayMembers(members) {
 function handleMemberClick(member) {
   // Navigate to studentFullView.html with the member's ID
   window.location.href = `/pages/home/student/studentFullView.html?id=${member.id_school_number}`;
+}
+
+/* -------------------------------------------------------------------------- */
+/*                               CACHING HELPERS                              */
+/* -------------------------------------------------------------------------- */
+
+function safeGetCache() {
+  try {
+    const raw = sessionStorage.getItem(MEMBERS_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      typeof parsed.ts !== "number" ||
+      typeof parsed.html !== "string"
+    )
+      return null;
+    const fresh = Date.now() - parsed.ts < MEMBERS_CACHE_TTL_MS;
+    return fresh ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function cacheCurrentHTML() {
+  try {
+    const tbody = document.getElementById("userTableBody");
+    const html = tbody?.innerHTML ?? "";
+    const countEl = document.getElementById("memberCount");
+    const count = countEl ? countEl.textContent : "0";
+    const pageMeta = paginationData?.meta ?? null;
+    const pageLinks = paginationData?.links ?? null;
+    sessionStorage.setItem(
+      MEMBERS_CACHE_KEY,
+      JSON.stringify({
+        html,
+        count,
+        page: currentPage,
+        meta: pageMeta,
+        links: pageLinks,
+        filters: { searchText, selectedYear, selectedProgram },
+        ts: Date.now(),
+      })
+    );
+  } catch {}
+}
+
+function tryShowFromCache() {
+  try {
+    const cached = safeGetCache();
+    if (!cached) return false;
+
+    const tbody = document.getElementById("userTableBody");
+    if (tbody) tbody.innerHTML = cached.html;
+
+    const countEl = document.getElementById("memberCount");
+    if (countEl) countEl.textContent = cached.count ?? "0";
+
+    if (cached.filters) {
+      searchText = cached.filters.searchText || "";
+      selectedYear = cached.filters.selectedYear || "all";
+      selectedProgram = cached.filters.selectedProgram || "all";
+      const yearFilterLabel = document.getElementById("yearFilterLabel");
+      const programFilterLabel = document.getElementById("programFilterLabel");
+      if (yearFilterLabel) {
+        const yearText =
+          selectedYear === "all"
+            ? "All"
+            : selectedYear === "1"
+            ? "1st Year"
+            : selectedYear === "2"
+            ? "2nd Year"
+            : selectedYear === "3"
+            ? "3rd Year"
+            : "4th Year";
+        yearFilterLabel.textContent = `Year Level: ${yearText}`;
+      }
+      if (programFilterLabel) {
+        const programText = selectedProgram === "all" ? "All" : selectedProgram;
+        programFilterLabel.textContent = `Program: ${programText}`;
+      }
+    }
+
+    if (cached.meta) {
+      paginationData = { meta: cached.meta, links: cached.links || {} };
+      currentPage = cached.page || 1;
+      updatePaginationControls();
+    }
+
+    const shimmer = document.getElementById("shimmerTable");
+    if (shimmer) shimmer.style.display = "none";
+    const table = document.getElementById("dataTable");
+    if (table) table.style.display = "table";
+
+    return true;
+  } catch {
+    return false;
+  }
 }

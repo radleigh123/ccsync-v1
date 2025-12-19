@@ -16,11 +16,15 @@ async function initLogin() {
   const userData = await getCurrentSession();
 
   if (userData) {
-    window.location.href = "/pages/home/home.html";
+    const roles = userData.role_names || [];
+    const isOfficer = roles.includes("officer");
+    window.location.href = isOfficer
+      ? "/pages/home/home.html"
+      : "/pages/home/student/student-dashboard.html";
   }
 }
 
-import { login } from '/js/utils/api/auth.js';
+import { login } from "/js/utils/api/auth.js";
 
 document.addEventListener("DOMContentLoaded", () => {
   initLogin();
@@ -59,7 +63,11 @@ document.addEventListener("DOMContentLoaded", () => {
       console.log("Verified user: ", userData);
       localStorage.setItem("user", JSON.stringify(userData));
 
-      window.location.href = "/pages/home/home.html";
+      const roles = userData.role_names || [];
+      const isOfficer = roles.includes("officer");
+      window.location.href = isOfficer
+        ? "/pages/home/home.html"
+        : "/pages/home/student/student-dashboard.html";
     } catch (error) {
       errorMsg.textContent = error.message;
       console.error("Error during login: ", error);

@@ -2,12 +2,21 @@ import "/js/utils/core.js";
 import "/scss/pages/home/home.scss";
 import { getCurrentSession } from "/js/utils/sessionManager.js";
 import { renderStatsCard } from "/components/js/stats-card.js";
-import { fetchMembers, fetchUsers, fetchThisMonthEvents } from "/js/utils/api.js";
+import {
+  fetchMembers,
+  fetchUsers,
+  fetchThisMonthEvents,
+} from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader.js";
 import { setupLogout } from "/js/utils/navigation.js";
 
 let userData = null;
 let allMembers = []; // Store all members
+
+// Cache keys and TTL for instant revisits
+const HOME_STATS_CACHE_KEY = "home:stats:v1";
+const HOME_EVENTS_CACHE_KEY = "home:events:v1";
+const HOME_CACHE_TTL_MS = 1000 * 60 * 5; // 5 minutes
 
 /**
  * Initializes the home page by checking user session and loading data.
@@ -18,7 +27,8 @@ let allMembers = []; // Store all members
 async function initHome() {
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
-  if (!userData.role_names.includes("officer")) window.location.href = "/pages/home/student/student-dashboard.html";
+  if (!userData.role_names.includes("officer"))
+    window.location.href = "/pages/home/student/student-dashboard.html";
   await setupLogout();
 }
 
@@ -35,19 +45,21 @@ async function loadHero() {
     // Fetch all required data
     const membersData = await fetchMembers();
     const usersData = await fetchUsers();
-    
+
     allMembers = membersData.members || [];
     const usersLength = Object.keys(usersData.users).length;
 
     // Calculate stats from actual database data
     const registeredMembersValue = allMembers.length;
     const totalCssStudentsValue = usersLength || 0;
-    const paidMembersCount = allMembers.filter((member) => member.is_paid === 1 || member.is_paid === true).length;
+    const paidMembersCount = allMembers.filter(
+      (member) => member.is_paid === 1 || member.is_paid === true
+    ).length;
 
-    console.log('✓ Dashboard stats loaded:');
-    console.log('  - Registered Members:', registeredMembersValue);
-    console.log('  - Total CCS Students:', totalCssStudentsValue);
-    console.log('  - Paid Members:', paidMembersCount);
+    console.log("✓ Dashboard stats loaded:");
+    console.log("  - Registered Members:", registeredMembersValue);
+    console.log("  - Total CCS Students:", totalCssStudentsValue);
+    console.log("  - Paid Members:", paidMembersCount);
 
     // Render stats cards
     const cards = [
@@ -88,6 +100,9 @@ async function loadHero() {
       );
       statsCardsContainer.insertAdjacentHTML("beforeend", cardHtml);
     }
+
+    // Cache rendered HTML for instant subsequent revisits
+    safeSetCache(HOME_STATS_CACHE_KEY, statsCardsContainer.innerHTML);
 
     // Hide shimmer and show stats
     shimmerLoader.hide("#statsShimmerContainer", 600);
@@ -184,6 +199,8 @@ async function printEventList() {
             </div>
         </div>
     `;
+    // Cache empty state too
+    safeSetCache(HOME_EVENTS_CACHE_KEY, eventList.innerHTML);
     // Hide shimmer and show event list
     shimmerLoader.hide("#eventShimmerList", 600);
     setTimeout(() => {
@@ -208,7 +225,9 @@ async function printEventList() {
                     style="height: 200px; object-fit: cover; border-radius: 20px 20px 0 0;"
                 />
                 <div class="card-body p-4">
-                    <h5 class="card-title fw-bold mb-2 text-white">${event.name}</h5>
+                    <h5 class="card-title fw-bold mb-2 text-white">${
+                      event.name
+                    }</h5>
                     <p class="card-text text-white-50 small mb-2">
                         <i class="bi bi-calendar-event me-1"></i>
                         ${new Date(event.event_date).toLocaleDateString(
@@ -237,6 +256,8 @@ async function printEventList() {
   });
 
   // Hide shimmer and show event list
+  // Cache rendered events for instant revisits
+  safeSetCache(HOME_EVENTS_CACHE_KEY, eventList.innerHTML);
   shimmerLoader.hide("#eventShimmerList", 600);
   setTimeout(() => {
     document.getElementById("eventShimmerList").style.display = "none";
@@ -247,7 +268,78 @@ async function printEventList() {
 // Initialize the home page
 initHome()
   .then(() => {
-    loadHero();
-    printEventList();
+    // Try to render immediately from cache (no shimmer/loader)
+    const hasStatsCache = tryShowStatsFromCache();
+    const hasEventsCache = tryShowEventsFromCache();
+
+    // Only fetch when cache is missing or stale
+    if (!hasStatsCache) {
+      loadHero();
+    }
+    if (!hasEventsCache) {
+      printEventList();
+    }
   })
   .catch((error) => console.error("Initialization error:", error));
+
+/* -------------------------------------------------------------------------- */
+/*                              CACHE HELPERS                                 */
+/* -------------------------------------------------------------------------- */
+
+function safeGetCache(key, ttlMs) {
+  try {
+    const raw = sessionStorage.getItem(key);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (
+      !parsed ||
+      typeof parsed.ts !== "number" ||
+      typeof parsed.html !== "string"
+    )
+      return null;
+    const fresh = Date.now() - parsed.ts < ttlMs;
+    return fresh ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function safeSetCache(key, htmlString) {
+  try {
+    if (typeof htmlString !== "string") return;
+    sessionStorage.setItem(
+      key,
+      JSON.stringify({ html: htmlString, ts: Date.now() })
+    );
+  } catch {}
+}
+
+function tryShowStatsFromCache() {
+  try {
+    const cached = safeGetCache(HOME_STATS_CACHE_KEY, HOME_CACHE_TTL_MS);
+    if (!cached) return false;
+    const container = document.getElementById("statsCards");
+    const shimmer = document.getElementById("statsShimmerContainer");
+    container.innerHTML = cached.html;
+    if (shimmer) shimmer.style.display = "none";
+    container.style.display = "";
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+function tryShowEventsFromCache() {
+  try {
+    const cached = safeGetCache(HOME_EVENTS_CACHE_KEY, HOME_CACHE_TTL_MS);
+    if (!cached) return false;
+    const container = document.getElementById("eventList");
+    const shimmer = document.getElementById("eventShimmerList");
+    container.innerHTML = cached.html;
+    if (shimmer) shimmer.style.display = "none";
+    container.style.display = "";
+    return true;
+  } catch {
+    return false;
+  }
+}

@@ -24,9 +24,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   // Render instantly from cache if available
   const cached = tryShowFromCache();
 
-  // Show shimmer only if no cache available
+  // Show loading spinner if no cache available
   if (!cached) {
-    shimmerLoader.show("#officersShimmerContainer", "officer-cards", 6);
+    showLoadingSpinner();
   }
 
   // Verify session, then refresh in the background
@@ -75,11 +75,11 @@ async function loadOfficers() {
 
     // Cache rendered HTML for instant subsequent loads
     safeSetCache({ html: officersGrid.innerHTML, ts: Date.now() });
-    hideShimmerShowContent();
+    hideLoadingSpinner();
   } catch (error) {
     console.error("❌ Error loading officers:", error);
     showEmptyState();
-    hideShimmerShowContent();
+    hideLoadingSpinner();
   }
 }
 
@@ -228,8 +228,7 @@ function tryShowFromCache() {
     if (cached && typeof cached.html === "string") {
       officersGrid.innerHTML = cached.html;
       // Show instantly, hide shimmer if present
-      const shimmer = document.getElementById("officersShimmerContainer");
-      if (shimmer) shimmer.style.display = "none";
+      hideLoadingSpinner();
       officersGrid.style.display = "grid";
       return cached; // Return cache object if found
     }
@@ -256,11 +255,14 @@ function safeSetCache(value) {
   } catch {}
 }
 
-function hideShimmerShowContent() {
-  shimmerLoader.hide("#officersShimmerContainer", 300);
-  setTimeout(() => {
-    const shimmer = document.getElementById("officersShimmerContainer");
-    if (shimmer) shimmer.style.display = "none";
-    officersGrid.style.display = "grid";
-  }, 300);
+function showLoadingSpinner() {
+  const spinner = document.getElementById("loadingSpinner");
+  if (spinner) spinner.style.display = "flex";
+  officersGrid.style.display = "none";
+}
+
+function hideLoadingSpinner() {
+  const spinner = document.getElementById("loadingSpinner");
+  if (spinner) spinner.style.display = "none";
+  officersGrid.style.display = "grid";
 }

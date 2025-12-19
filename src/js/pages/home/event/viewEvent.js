@@ -4,15 +4,27 @@ import "/scss/pages/home/event/viewEvent.scss";
 import { getCurrentSession } from "/js/utils/sessionManager";
 import { fetchEvents } from "/js/utils/api.js";
 import { shimmerLoader } from "/js/utils/shimmerLoader";
-import { setupLogout } from '/js/utils/navigation.js';
+import { setupLogout } from "/js/utils/navigation.js";
 
 let userData = null;
+
+// Cache (5 min TTL)
+const EVENTS_CACHE_KEY = "viewEvents:sections:v1";
+const EVENTS_CACHE_TTL_MS = 1000 * 60 * 5;
 
 document.addEventListener("DOMContentLoaded", async () => {
   await initHome();
   // await setSidebar();
   setupLogout();
-  loadEvents();
+
+  const hadCache = tryShowFromCache();
+  if (!hadCache) {
+    const incomingShim = document.getElementById("incomingShimmerContainer");
+    const completedShim = document.getElementById("completedShimmerContainer");
+    if (incomingShim) incomingShim.style.display = "block";
+    if (completedShim) completedShim.style.display = "block";
+    loadEvents();
+  }
 });
 
 async function initHome() {
@@ -20,7 +32,6 @@ async function initHome() {
   userData = await getCurrentSession();
   if (!userData) window.location.href = "/pages/auth/login.html";
 }
-
 
 async function loadEvents() {
   try {
@@ -34,6 +45,7 @@ async function loadEvents() {
     if (events.data && events.data.length > 0) {
       console.log("✓ Events loaded:", events.data.length);
       categorizeAndDisplayEvents(events.data);
+      cacheCurrentHTML();
     } else {
       console.log("ℹ️  No events found");
       displayEmptyState();
@@ -43,10 +55,13 @@ async function loadEvents() {
     shimmerLoader.hide("#incomingShimmerContainer", 600);
     shimmerLoader.hide("#completedShimmerContainer", 600);
     setTimeout(() => {
-      document.getElementById("incomingShimmerContainer").style.display = "none";
+      document.getElementById("incomingShimmerContainer").style.display =
+        "none";
       document.getElementById("incomingEventsCarousel").style.display = "block";
-      document.getElementById("completedShimmerContainer").style.display = "none";
-      document.getElementById("completedEventsCarousel").style.display = "block";
+      document.getElementById("completedShimmerContainer").style.display =
+        "none";
+      document.getElementById("completedEventsCarousel").style.display =
+        "block";
     }, 600);
   } catch (error) {
     console.error("❌ Error loading events:", error);
@@ -55,10 +70,13 @@ async function loadEvents() {
     shimmerLoader.hide("#incomingShimmerContainer", 300);
     shimmerLoader.hide("#completedShimmerContainer", 300);
     setTimeout(() => {
-      document.getElementById("incomingShimmerContainer").style.display = "none";
+      document.getElementById("incomingShimmerContainer").style.display =
+        "none";
       document.getElementById("incomingEventsCarousel").style.display = "block";
-      document.getElementById("completedShimmerContainer").style.display = "none";
-      document.getElementById("completedEventsCarousel").style.display = "block";
+      document.getElementById("completedShimmerContainer").style.display =
+        "none";
+      document.getElementById("completedEventsCarousel").style.display =
+        "block";
     }, 300);
   }
 }
@@ -74,7 +92,7 @@ function categorizeAndDisplayEvents(events) {
 
   // Parse event date string to local date
   const parseEventDate = (dateStr) => {
-    const [year, month, day] = dateStr.split('-');
+    const [year, month, day] = dateStr.split("-");
     return new Date(year, parseInt(month) - 1, day, 0, 0, 0, 0);
   };
 
@@ -106,8 +124,8 @@ function categorizeAndDisplayEvents(events) {
   });
 
   // Display both sections
-  displayEventSection(incomingEvents, 'incomingEventsContainer', 'Incoming');
-  displayEventSection(completedEvents, 'completedEventsContainer', 'Completed');
+  displayEventSection(incomingEvents, "incomingEventsContainer", "Incoming");
+  displayEventSection(completedEvents, "completedEventsContainer", "Completed");
 }
 
 /**
@@ -118,12 +136,12 @@ function categorizeAndDisplayEvents(events) {
  */
 function displayEventSection(events, containerId, sectionType) {
   const container = document.getElementById(containerId);
-  container.innerHTML = '';
+  container.innerHTML = "";
 
   if (events.length === 0) {
     // Create a single carousel item with empty state
-    const emptyItem = document.createElement('div');
-    emptyItem.className = 'carousel-item active';
+    const emptyItem = document.createElement("div");
+    emptyItem.className = "carousel-item active";
     emptyItem.innerHTML = `
       <div class="text-center text-muted py-5">
         <p class="h5">No ${sectionType.toLowerCase()} events</p>
@@ -143,28 +161,29 @@ function displayEventSection(events, containerId, sectionType) {
 
   // Create carousel items for each group
   eventGroups.forEach((group, groupIndex) => {
-    const carouselItem = document.createElement('div');
-    carouselItem.className = `carousel-item ${groupIndex === 0 ? 'active' : ''}`;
+    const carouselItem = document.createElement("div");
+    carouselItem.className = `carousel-item ${
+      groupIndex === 0 ? "active" : ""
+    }`;
 
     // Create a row for the items centered
-    const row = document.createElement('div');
-    row.className = 'row px-2 justify-content-center';
-    row.style.marginLeft = '0';
-    row.style.marginRight = '0';
+    const row = document.createElement("div");
+    row.className = "row px-2 justify-content-center";
+    row.style.marginLeft = "0";
+    row.style.marginRight = "0";
 
     group.forEach((event, index) => {
-      const col = document.createElement('div');
-      col.className = 'col-lg-4 col-md-6 col-sm-12';
+      const col = document.createElement("div");
+      col.className = "col-lg-4 col-md-6 col-sm-12";
       col.style.paddingLeft = "12px";
       col.style.paddingRight = "12px";
 
-
-      const card = document.createElement('div');
-      card.id = 'eventCardItem';
+      const card = document.createElement("div");
+      card.id = "eventCardItem";
       card.className = `card px-0 h-100 carousel-item-card`;
 
-      const cardBody = document.createElement('div');
-      cardBody.className = 'card-body d-flex flex-column';
+      const cardBody = document.createElement("div");
+      cardBody.className = "card-body d-flex flex-column";
       cardBody.innerHTML = `
         <h5 class="card-title">${event.name}</h5>
 
@@ -177,7 +196,7 @@ function displayEventSection(events, containerId, sectionType) {
           <div class="d-flex">
             <i class="bi bi-people"></i>
             <span class="event-label">Attendees:</span>
-            <p class="event-value">${event.max_participants || 'Unlimited'}</p>
+            <p class="event-value">${event.max_participants || "Unlimited"}</p>
           </div>
           <div class="d-flex">
             <i class="bi bi-geo-alt"></i>
@@ -187,9 +206,9 @@ function displayEventSection(events, containerId, sectionType) {
         </div>
       `;
 
-      const actions = document.createElement('div');
-      actions.id = 'eventCardActions';
-      actions.className = 'mt-auto';
+      const actions = document.createElement("div");
+      actions.id = "eventCardActions";
+      actions.className = "mt-auto";
       actions.innerHTML = `
         <div class="d-flex justify-content-around">
           <a href="/pages/home/event/add-event-person.html?event_id=${event.id}" class="text-decoration-none" title="Add participant">
@@ -219,12 +238,14 @@ function displayEventSection(events, containerId, sectionType) {
  * Display empty state when no events exist
  */
 function displayEmptyState() {
-  const incomingContainer = document.getElementById('incomingEventsContainer');
-  const completedContainer = document.getElementById('completedEventsContainer');
+  const incomingContainer = document.getElementById("incomingEventsContainer");
+  const completedContainer = document.getElementById(
+    "completedEventsContainer"
+  );
 
   // Create empty carousel item for incoming
-  const incomingEmptyItem = document.createElement('div');
-  incomingEmptyItem.className = 'carousel-item active';
+  const incomingEmptyItem = document.createElement("div");
+  incomingEmptyItem.className = "carousel-item active";
   incomingEmptyItem.innerHTML = `
     <div class="text-center text-muted py-5">
       <p class="h5">No incoming events</p>
@@ -233,12 +254,77 @@ function displayEmptyState() {
   incomingContainer.appendChild(incomingEmptyItem);
 
   // Create empty carousel item for completed
-  const completedEmptyItem = document.createElement('div');
-  completedEmptyItem.className = 'carousel-item active';
+  const completedEmptyItem = document.createElement("div");
+  completedEmptyItem.className = "carousel-item active";
   completedEmptyItem.innerHTML = `
     <div class="text-center text-muted py-5">
       <p class="h5">No completed events</p>
     </div>
   `;
   completedContainer.appendChild(completedEmptyItem);
+}
+
+// ------------------------------- Caching ---------------------------------
+function safeGetCache() {
+  try {
+    const raw = sessionStorage.getItem(EVENTS_CACHE_KEY);
+    if (!raw) return null;
+    const parsed = JSON.parse(raw);
+    if (!parsed || typeof parsed.ts !== "number") return null;
+    const fresh = Date.now() - parsed.ts < EVENTS_CACHE_TTL_MS;
+    return fresh ? parsed : null;
+  } catch {
+    return null;
+  }
+}
+
+function cacheCurrentHTML() {
+  try {
+    const incomingHtml =
+      document.getElementById("incomingEventsContainer")?.innerHTML ?? "";
+    const completedHtml =
+      document.getElementById("completedEventsContainer")?.innerHTML ?? "";
+    sessionStorage.setItem(
+      EVENTS_CACHE_KEY,
+      JSON.stringify({
+        htmlIncoming: incomingHtml,
+        htmlCompleted: completedHtml,
+        ts: Date.now(),
+      })
+    );
+  } catch {}
+}
+
+function tryShowFromCache() {
+  try {
+    const cached = safeGetCache();
+    if (!cached) return false;
+
+    const incomingContainer = document.getElementById(
+      "incomingEventsContainer"
+    );
+    const completedContainer = document.getElementById(
+      "completedEventsContainer"
+    );
+    if (incomingContainer)
+      incomingContainer.innerHTML = cached.htmlIncoming || "";
+    if (completedContainer)
+      completedContainer.innerHTML = cached.htmlCompleted || "";
+
+    const incomingShim = document.getElementById("incomingShimmerContainer");
+    const completedShim = document.getElementById("completedShimmerContainer");
+    if (incomingShim) incomingShim.style.display = "none";
+    if (completedShim) completedShim.style.display = "none";
+
+    const incomingCarousel = document.getElementById("incomingEventsCarousel");
+    const completedCarousel = document.getElementById(
+      "completedEventsCarousel"
+    );
+    if (incomingCarousel) incomingCarousel.style.display = "block";
+    if (completedCarousel) completedCarousel.style.display = "block";
+
+    return true;
+  } catch {
+    return false;
+  }
 }

@@ -1,252 +1,375 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>Add Student Compliance</title>
-	</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Student Compliance</title>
+    <link rel="stylesheet" href="/scss/styles.scss" />
+  </head>
 
-	<body>
-		<nav id="sidebar">
-			<div id="sidebar-header" class="justify-content-center align-items-center">
-				<a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
-					<img src="/assets/PSITSlogo.png" alt="Logo" class="sidebar-logo me-2" />
-				</a>
-			</div>
-		
-			<ul class="justify-content-center mb-0">
-		
-				<!-- Dashboard -->
-				<li>
-					<a href="/pages/home/home.html" class="justify-content-center" title="Dashboard" data-bs-toggle="tooltip"
-						data-bs-placement="right">
-						<i class="bi bi-house-fill"></i>
-						<span>Dashboard</span>
-					</a>
-				</li>
-		
-				<!-- Members -->
-				<li>
-					<a href="/pages/home/member/view-member.html" class="justify-content-center" title="Members"
-						data-bs-toggle="tooltip" data-bs-placement="right">
-						<i class="bi bi-person-circle"></i>
-						<span>Member management</span>
-					</a>
-				</li>
-		
-				<!-- Events -->
-				<li>
-					<a href="/pages/home/event/view-event.html" class="justify-content-center" title="Events"
-						data-bs-toggle="tooltip" data-bs-placement="right">
-						<i class="bi bi-calendar2-week-fill"></i>
-						<span>Event management</span>
-					</a>
-				</li>
-		
-				<!-- Requirements -->
-				<li class="active">
-					<a href="/pages/home/requirement/view-requirement.html" class="justify-content-center" title="Requirements"
-						data-bs-toggle="tooltip" data-bs-placement="right">
-						<i class="bi bi-file-text-fill"></i>
-						<span>Requirement management</span>
-					</a>
-				</li>
-		
-				<!-- Officers -->
-				<li>
-					<a href="/pages/home/officer/view-officer.html" class="justify-content-center" title="Officers"
-						data-bs-toggle="tooltip" data-bs-placement="right">
-						<i class="bi bi-hdd-rack-fill"></i>
-						<span>Officer management</span>
-					</a>
-				</li>
-		
-				<!-- User Info -->
-				<li class="user-info dropdown align-items-center mb-0">
-					<div class="container p-0 m-0 border-0">
-						<strong id="user-name">USER NAME</strong>
-						<small id="user-id">ID NUMBER</small>
-					</div>
-		
-					<a href="#" class="more-btn text-decoration-none align-items-center" data-bs-toggle="dropdown"
-						aria-haspopup="true" aria-expanded="false">
-						<i class="bi bi-gear-fill"></i>
-					</a>
-		
-					<button id="toggle-btn">
-						<!-- collapse icon stays -->
-						<svg xmlns="http://www.w3.org/2000/svg" height="20" width="20" viewBox="0 0 960 960" fill="#e8eaed">
-							<path
-								d="m313-480 155 156q11 11 11.5 27.5T468-268q-11 11-28 11t-28-11L228-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T468-692q11 11 11 28t-11 28L313-480Zm264 0 155 156q11 11 11.5 27.5T732-268q-11 11-28 11t-28-11L492-452q-6-6-8.5-13t-2.5-15q0-8 2.5-15t8.5-13l184-184q11-11 27.5-11.5T732-692q11 11 11 28t-11 28L577-480Z" />
-						</svg>
-					</button>
-		
-					<ul class="dropdown-menu text-small shadow">
-						<li>
-							<a class="dropdown-item" href="/pages/settings/settings.html">Settings</a>
-						</li>
-						<li>
-							<a class="dropdown-item" href="/pages/profile/profile.html">Profile</a>
-						</li>
-						<li>
-							<hr class="dropdown-divider" />
-						</li>
-						<li>
-							<a id="logout-link" class="dropdown-item" href="#">Sign out</a>
-						</li>
-					</ul>
-				</li>
-		
-			</ul>
-		</nav>
-		
-		<!-- Main Content -->
-		<main class="main-content-bg">
-			<div class="container-fluid">
-				<div id="header" class="d-flex flex-row gap-5 align-items-center">
-					<!-- Back Button and Title Section -->
-					<div class="d-flex flex-row gap-3 align-items-center">
-						<button
-							type="button"
-							class="btn btn-link text-decoration-none p-0 m-0"
-							id="backButton"
-							aria-label="Go back">
-							<i class="bi bi-caret-left-fill p-0 m-0" style="font-size: 1.5rem;"></i>
-						</button>
-						<div>
-							<p class="p-0 m-0 h1 fw-bold text-dark">Add Student Compliance</p>
-							<p class="text-muted mb-0" id="requirementSubtitle">Record student compliance for this requirement</p>
-						</div>
-					</div>
-				</div>
-			</div>
+  <body>
+    <nav id="sidebar">
+      <div
+        id="sidebar-header"
+        class="justify-content-center align-items-center"
+      >
+        <a class="navbar-brand d-flex p-1" href="/pages/home/home.html">
+          <img
+            src="/assets/PSITSlogo.png"
+            alt="Logo"
+            class="sidebar-logo me-2"
+          />
+        </a>
+      </div>
 
-			<!-- Form Body Section -->
-			<div id="body" class="container-fluid mt-4">
-				<form id="complianceForm">
-					<!-- Requirement Information Card -->
-					<div class="card mb-4 border-0">
-						<div class="card-body">
-							<h5 class="card-title mb-3">Requirement Information</h5>
-							<p class="mb-2"><strong id="requirementCardTitle">REQUIREMENT TITLE</strong></p>
-							<p class="text-muted mb-0 small" id="requirementCardDate">Deadline: --</p>
-						</div>
-					</div>
+      <ul class="justify-content-center mb-0">
+        <!-- Dashboard -->
+        <li>
+          <a
+            href="/pages/home/home.html"
+            class="justify-content-center"
+            title="Dashboard"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-house-fill"></i>
+            <span>Dashboard</span>
+          </a>
+        </li>
 
-					<!-- Student ID Section -->
-					<div class="mb-4">
-						<label for="idNumber" class="form-label fw-bold mb-2">Student ID Number</label>
-						<div class="position-relative">
-							<i class="bi bi-search position-absolute"></i>
-							<input
-								type="text"
-								class="form-control"
-								id="idNumber"
-								placeholder="Enter student ID number..."
-							/>
-						</div>
-						<small class="text-muted">Enter the school ID number of the student</small>
-					</div>
+        <!-- Members -->
+        <li>
+          <a
+            href="/pages/home/member/view-member.html"
+            class="justify-content-center"
+            title="Members"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-person-circle"></i>
+            <span>Member management</span>
+          </a>
+        </li>
 
-					<!-- Student Information Display -->
-					<div id="studentInfoSection" class="mb-4" style="display: none;">
-						<!-- Shimmer Skeleton (shows during loading) -->
-						<div id="studentInfoShimmer" class="card border-0" style="display: none;">
-							<div class="card-header">
-								<p class="my-0 fw-bold">Student Information</p>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<p class="mb-2"><small class="text-muted">Compliance Status</small><br><div class="shimmer-line" style="width: 60%; height: 20px;"></div></p>
-										<p class="mb-2"><small class="text-muted">Full Name</small><br><div class="shimmer-line" style="width: 70%; height: 20px;"></div></p>
-										<p class="mb-0"><small class="text-muted">Email</small><br><div class="shimmer-line" style="width: 80%; height: 20px;"></div></p>
-									</div>
-									<div class="col-md-6">
-										<p class="mb-2"><small class="text-muted">Program</small><br><div class="shimmer-line" style="width: 65%; height: 20px;"></div></p>
-										<p class="mb-0"><small class="text-muted">Year Level</small><br><div class="shimmer-line" style="width: 50%; height: 20px;"></div></p>
-									</div>
-								</div>
-							</div>
-						</div>
+        <!-- Events -->
+        <li>
+          <a
+            href="/pages/home/event/view-event.html"
+            class="justify-content-center"
+            title="Events"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-calendar2-week-fill"></i>
+            <span>Event management</span>
+          </a>
+        </li>
 
-						<!-- Actual Data Card (shows after loading) -->
-						<div id="studentCard" class="card border-0" style="display: none;">
-							<div class="card-header">
-								<p class="my-0 fw-bold">Student Information</p>
-							</div>
-							<div class="card-body">
-								<div class="row">
-									<div class="col-md-6">
-										<p class="mb-2"><small class="text-muted">Compliance Status</small><br><strong id="studentComplianceStatus">--</strong></p>
-										<p class="mb-2"><small class="text-muted">Full Name</small><br><strong id="studentName">--</strong></p>
-										<p class="mb-0"><small class="text-muted">Email</small><br><strong id="studentEmail">--</strong></p>
-									</div>
-									<div class="col-md-6">
-										<p class="mb-2"><small class="text-muted">Program</small><br><strong id="studentProgram">--</strong></p>
-										<p class="mb-0"><small class="text-muted">Year Level</small><br><strong id="studentYear">--</strong></p>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
+        <!-- Requirements -->
+        <li class="active">
+          <a
+            href="/pages/home/requirement/view-requirement.html"
+            class="justify-content-center"
+            title="Requirements"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-file-text-fill"></i>
+            <span>Requirement management</span>
+          </a>
+        </li>
 
-					<!-- Compliance Status Selection -->
-					<div id="complianceStatusSection" class="mb-4" style="display: none;">
-						<label for="complianceStatus" class="form-label fw-bold mb-2">Mark Compliance Status</label>
-						<select class="form-select" id="complianceStatus">
-							<option value="complied">Complied</option>
-							<option value="not_complied">Not Complied</option>
-						</select>
-						<small class="text-muted">Select the compliance status for this student</small>
-					</div>
+        <!-- Officers -->
+        <li>
+          <a
+            href="/pages/home/officer/view-officer.html"
+            class="justify-content-center"
+            title="Officers"
+            data-bs-toggle="tooltip"
+            data-bs-placement="right"
+          >
+            <i class="bi bi-hdd-rack-fill"></i>
+            <span>Officer management</span>
+          </a>
+        </li>
 
-					<!-- Status Message -->
-					<div id="statusMessage" class="alert alert-info mb-4" style="display: none;">
-						<p class="mb-0" id="statusText">Status: Waiting for input</p>
-					</div>
+        <!-- User Info -->
+        <li class="user-info dropdown align-items-center mb-0">
+          <div class="container p-0 m-0 border-0">
+            <strong id="user-name">USER NAME</strong>
+            <small id="user-id">ID NUMBER</small>
+          </div>
 
-					<!-- Action Buttons -->
-					<div class="d-flex flex-row gap-3 mt-4">
-						<button
-							type="button"
-							id="cancelButton"
-							class="btn btn-secondary flex-fill fw-bold">
-							Cancel
-						</button>
-						<button
-							type="submit"
-							id="submitButton"
-							class="btn btn-primary-ccsync flex-fill fw-bold"
-							disabled>
-							Record Compliance
-						</button>
-					</div>
-				</form>
-			</div>
-		</main>
+          <a
+            href="#"
+            class="more-btn text-decoration-none align-items-center"
+            data-bs-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            <i class="bi bi-gear-fill"></i>
+          </a>
 
-		<!-- Error/Success Modal -->
-		<div id="modalBackdrop" class="modal-backdrop"></div>
-		<div id="responseModal" class="response-modal">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 id="modalTitle" class="modal-title">Modal Title</h5>
-					<button type="button" class="btn-close" id="modalClose" aria-label="Close"></button>
-				</div>
-				<div class="modal-body">
-					<p id="modalMessage">Modal message here</p>
-					<small id="modalDetails" class="text-muted d-none">Details</small>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-primary" id="modalActionBtn">OK</button>
-				</div>
-			</div>
-		</div>
 
-		<script
-			type="module"
-			src="/js/pages/home/requirement/addRequirementPerson.js"
-			defer></script>
-	</body>
+
+          <ul class="dropdown-menu text-small shadow">
+            <li>
+              <a class="dropdown-item" href="/pages/settings/settings.html"
+                >Settings</a
+              >
+            </li>
+            <li>
+              <a class="dropdown-item" href="/pages/profile/profile.html"
+                >Profile</a
+              >
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li>
+              <a id="logout-link" class="dropdown-item" href="#">Sign out</a>
+            </li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content-bg">
+      <div class="container-fluid">
+        <div id="header" class="d-flex flex-row gap-5 align-items-center">
+          <!-- Back Button and Title Section -->
+          <div class="d-flex flex-row gap-3 align-items-center">
+            <button
+              type="button"
+              class="btn btn-link text-decoration-none p-0 m-0"
+              id="backButton"
+              aria-label="Go back"
+            >
+              <i
+                class="bi bi-caret-left-fill p-0 m-0"
+                style="font-size: 1.5rem"
+              ></i>
+            </button>
+            <div>
+              <p class="p-0 m-0 h1 fw-bold text-dark">Add Student Compliance</p>
+              <p class="text-muted mb-0" id="requirementSubtitle">
+                Record student compliance for this requirement
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Body Section -->
+      <div id="body" class="container-fluid mt-4">
+        <form id="complianceForm">
+          <!-- Requirement Information Card -->
+          <div class="card mb-4 border-0">
+            <div class="card-body">
+              <h5 class="card-title mb-3">Requirement Information</h5>
+              <p class="mb-2">
+                <strong id="requirementCardTitle">REQUIREMENT TITLE</strong>
+              </p>
+              <p class="text-muted mb-0 small" id="requirementCardDate">
+                Deadline: --
+              </p>
+            </div>
+          </div>
+
+          <!-- Student ID Section -->
+          <div class="mb-4">
+            <label for="idNumber" class="form-label fw-bold mb-2"
+              >Student ID Number</label
+            >
+            <div class="position-relative">
+              <i class="bi bi-search position-absolute"></i>
+              <input
+                type="text"
+                class="form-control"
+                id="idNumber"
+                placeholder="Enter student ID number..."
+              />
+            </div>
+            <small class="text-muted"
+              >Enter the school ID number of the student</small
+            >
+          </div>
+
+          <!-- Student Information Display -->
+          <div id="studentInfoSection" class="mb-4" style="display: none">
+            <!-- Shimmer Skeleton (shows during loading) -->
+            <div
+              id="studentInfoShimmer"
+              class="card border-0"
+              style="display: none"
+            >
+              <div class="card-header">
+                <p class="my-0 fw-bold">Student Information</p>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <small class="text-muted">Compliance Status</small><br />
+                      <div
+                        class="shimmer-line"
+                        style="width: 60%; height: 20px"
+                      ></div>
+                    </p>
+                    <p class="mb-2">
+                      <small class="text-muted">Full Name</small><br />
+                      <div
+                        class="shimmer-line"
+                        style="width: 70%; height: 20px"
+                      ></div>
+                    </p>
+                    <p class="mb-0">
+                      <small class="text-muted">Email</small><br />
+                      <div
+                        class="shimmer-line"
+                        style="width: 80%; height: 20px"
+                      ></div>
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <small class="text-muted">Program</small><br />
+                      <div
+                        class="shimmer-line"
+                        style="width: 65%; height: 20px"
+                      ></div>
+                    </p>
+                    <p class="mb-0">
+                      <small class="text-muted">Year Level</small><br />
+                      <div
+                        class="shimmer-line"
+                        style="width: 50%; height: 20px"
+                      ></div>
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actual Data Card (shows after loading) -->
+            <div id="studentCard" class="card border-0" style="display: none">
+              <div class="card-header">
+                <p class="my-0 fw-bold">Student Information</p>
+              </div>
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <small class="text-muted">Compliance Status</small
+                      ><br /><strong id="studentComplianceStatus">--</strong>
+                    </p>
+                    <p class="mb-2">
+                      <small class="text-muted">Full Name</small><br /><strong
+                        id="studentName"
+                        >--</strong
+                      >
+                    </p>
+                    <p class="mb-0">
+                      <small class="text-muted">Email</small><br /><strong
+                        id="studentEmail"
+                        >--</strong
+                      >
+                    </p>
+                  </div>
+                  <div class="col-md-6">
+                    <p class="mb-2">
+                      <small class="text-muted">Program</small><br /><strong
+                        id="studentProgram"
+                        >--</strong
+                      >
+                    </p>
+                    <p class="mb-0">
+                      <small class="text-muted">Year Level</small><br /><strong
+                        id="studentYear"
+                        >--</strong
+                      >
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Compliance Status Selection -->
+          <div id="complianceStatusSection" class="mb-4" style="display: none">
+            <label for="complianceStatus" class="form-label fw-bold mb-2"
+              >Mark Compliance Status</label
+            >
+            <select class="form-select" id="complianceStatus">
+              <option value="complied">Complied</option>
+              <option value="not_complied">Not Complied</option>
+            </select>
+            <small class="text-muted"
+              >Select the compliance status for this student</small
+            >
+          </div>
+
+          <!-- Status Message -->
+          <div
+            id="statusMessage"
+            class="alert alert-info mb-4"
+            style="display: none"
+          >
+            <p class="mb-0" id="statusText">Status: Waiting for input</p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="d-flex flex-row gap-3 mt-4">
+            <button
+              type="button"
+              id="cancelButton"
+              class="btn btn-secondary flex-fill fw-bold"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              id="submitButton"
+              class="btn btn-primary-ccsync flex-fill fw-bold"
+              disabled
+            >
+              Record Compliance
+            </button>
+          </div>
+        </form>
+      </div>
+    </main>
+
+    <!-- Error/Success Modal -->
+    <div id="modalBackdrop" class="modal-backdrop"></div>
+    <div id="responseModal" class="response-modal">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 id="modalTitle" class="modal-title">Modal Title</h5>
+          <button
+            type="button"
+            class="btn-close"
+            id="modalClose"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p id="modalMessage">Modal message here</p>
+          <small id="modalDetails" class="text-muted d-none">Details</small>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" id="modalActionBtn">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <script
+      type="module"
+      src="/js/pages/home/requirement/addRequirementPerson.js"
+      defer
+    ></script>
+  </body>
 </html>

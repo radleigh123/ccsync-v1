@@ -1,8 +1,35 @@
 export async function setupLogout() {
-  const logout = document.querySelector("#logout-link");
-  if (!logout) return;
+  const logoutLinks = Array.from(
+    document.querySelectorAll("#logout-link, .logout-link")
+  );
+  if (!logoutLinks.length) return;
 
-  logout.addEventListener("click", async (e) => {
+  const ensureConfirmationModal = () => {
+    let modal = document.getElementById("confirmationModal");
+    if (modal) return modal;
+
+    const template = `
+      <div id="confirmationBackdrop"></div>
+      <div id="confirmationModal" class="confirmation-modal">
+        <div class="confirmation-header">
+          <h5 id="confirmationTitle"></h5>
+          <button id="confirmationCloseBtn" class="close-btn" aria-label="Close">&times;</button>
+        </div>
+        <div class="confirmation-body">
+          <p class="message" id="confirmationMessage"></p>
+          <div class="details" id="confirmationDetails"></div>
+        </div>
+        <div class="confirmation-footer" style="justify-content: center">
+          <button id="confirmationNoBtn" class="no-btn">Cancel</button>
+          <button id="confirmationYesBtn" class="yes-btn">Yes</button>
+        </div>
+      </div>`;
+
+    document.body.insertAdjacentHTML("beforeend", template);
+    return document.getElementById("confirmationModal");
+  };
+
+  const onLogoutClick = async (e) => {
     e.preventDefault();
 
     // Helper to perform the actual logout
@@ -39,7 +66,8 @@ export async function setupLogout() {
     // Try to use shared confirmation modal if present; fallback to native confirm
     try {
       const modalEl = document.getElementById("confirmationModal");
-      if (modalEl) {
+      const ensuredModal = modalEl || ensureConfirmationModal();
+      if (ensuredModal) {
         const { confirmationModal } = await import(
           "/js/utils/confirmationModal.js"
         );
@@ -60,6 +88,10 @@ export async function setupLogout() {
       const ok = window.confirm("Are you sure you want to log out?");
       if (ok) await performLogout();
     }
+  };
+
+  logoutLinks.forEach((link) => {
+    link.addEventListener("click", onLogoutClick);
   });
 }
 

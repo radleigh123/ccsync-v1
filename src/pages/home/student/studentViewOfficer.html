@@ -56,12 +56,18 @@
         <p>Meet the leadership team of PSITS Organization</p>
       </div>
 
+      <!-- Loading Spinner -->
+      <div id="loadingSpinner" class="loading-spinner" style="display: none">
+        <div class="spinner"></div>
+        <p>Loading officers...</p>
+      </div>
+
       <!-- Shimmer Loader -->
-      <div id="officersShimmerContainer"></div>
+      <div id="officersShimmerContainer" style="display: none"></div>
 
       <!-- Officers Grid -->
       <div class="officers-section">
-        <div class="officers-grid"></div>
+        <div class="officers-grid" style="display: none"></div>
       </div>
     </div>
 
@@ -78,7 +84,7 @@
         <p id="confirmationMessage">Are you sure?</p>
         <div id="confirmationDetails" class="details"></div>
       </div>
-      <div class="confirmation-footer">
+      <div class="confirmation-footer" style="justify-content: center">
         <button type="button" class="no-btn" id="confirmationNoBtn">
           Cancel
         </button>

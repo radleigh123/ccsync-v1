@@ -1,82 +1,87 @@
-import '/js/utils/core.js';
-import '/scss/pages/auth/register.scss';
-import { Popover } from 'bootstrap';
+import "/js/utils/core.js";
+import "/scss/pages/auth/register.scss";
+import { Popover } from "bootstrap";
 import { auth } from "/js/utils/firebaseAuth.js";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { getCurrentSession } from '/js/utils/sessionManager';
-import { register } from '/js/utils/api/auth.js';
+import { getCurrentSession } from "/js/utils/sessionManager";
+import { register } from "/js/utils/api/auth.js";
 
 async function initRegister() {
-    const userData = await getCurrentSession();
+  const userData = await getCurrentSession();
 
-    if (userData) {
-        window.location.href = "/pages/home/home.html";
-    }
+  if (userData) {
+    window.location.href = "/pages/home/home.html";
+  }
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    initRegister();
+  initRegister();
 
-    const form = document.querySelector(".needs-validation");
+  const form = document.querySelector(".needs-validation");
 
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
 
-        const firstName = document.querySelector("#firstNameInput").value;
-        const lastName = document.querySelector("#lastNameInput").value;
-        const displayName = `${firstName} ${lastName}`;
-        const idNumber = document.querySelector("#idinput").value;
-        const email = document.querySelector("#emailinput").value;
-        const password = document.querySelector("#passwordInput").value;
-        const password_confirmation = document.querySelector("#confirmPasswordInput").value;
+    const firstName = document.querySelector("#firstNameInput").value;
+    const lastName = document.querySelector("#lastNameInput").value;
+    const displayName = `${firstName} ${lastName}`;
+    const idNumber = document.querySelector("#idinput").value;
+    const email = document.querySelector("#emailinput").value;
+    const password = document.querySelector("#passwordInput").value;
+    const password_confirmation = document.querySelector(
+      "#confirmPasswordInput"
+    ).value;
 
-        try {
-            const data = await register({
-                first_name: firstName,
-                last_name: lastName,
-                email: email,
-                password: password,
-                password_confirmation: password_confirmation,
-                id_school_number: idNumber
-            });
+    try {
+      const data = await register({
+        first_name: firstName,
+        last_name: lastName,
+        email: email,
+        password: password,
+        password_confirmation: password_confirmation,
+        id_school_number: idNumber,
+      });
 
-            console.log('Registration successful:', data);
-            window.location.href = '/pages/auth/login.html';
-        } catch (error) {
-            console.error("Registration error:", error);
-            let errorContainer = document.querySelector("#error-msg");
-            if (!errorContainer) {
-                errorContainer = document.createElement("div");
-                errorContainer.id = "error-msg";
-                errorContainer.classList.add("alert", "alert-danger", "mt-3");
-                form.appendChild(errorContainer);
-            }
-            errorContainer.textContent = error.message || "Registration failed";
-            errorContainer.style.display = "block";
-        }
-    });
+      console.log("Registration successful:", data);
+      window.location.href = "/pages/auth/login.html";
+    } catch (error) {
+      console.error("Registration error:", error);
+      let errorContainer = document.querySelector("#error-msg");
+      if (!errorContainer) {
+        errorContainer = document.createElement("div");
+        errorContainer.id = "error-msg";
+        errorContainer.classList.add("alert", "alert-danger", "mt-3");
+        form.appendChild(errorContainer);
+      }
+      errorContainer.textContent = error.message || "Registration failed";
+      errorContainer.style.display = "block";
+    }
+  });
 });
 
 // For disabling form submissions if there are invalid fields
 (() => {
-    'use strict'
+  "use strict";
 
-    // Fetch all the forms we want to apply custom Bootstrap validation styles to
-    const forms = document.querySelectorAll('.needs-validation')
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  const forms = document.querySelectorAll(".needs-validation");
 
-    Array.from(forms).forEach(form => {
-        form.addEventListener('submit', event => {
-            if (!form.checkValidity()) {
-                event.preventDefault()
-                event.stopPropagation()
-            }
+  Array.from(forms).forEach((form) => {
+    form.addEventListener(
+      "submit",
+      (event) => {
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
 
-            form.classList.add('was-validated')
-        }, false)
-    })
-})()
+        form.classList.add("was-validated");
+      },
+      false
+    );
+  });
+})();
 
-document.querySelectorAll('[data-bs-toggle="popover"]')
-    .forEach(popover => {
-        new Popover(popover)
-    });
+document.querySelectorAll('[data-bs-toggle="popover"]').forEach((popover) => {
+  new Popover(popover);
+});
