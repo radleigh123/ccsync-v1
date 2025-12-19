@@ -6,6 +6,7 @@ import { shimmerLoader } from "/js/utils/shimmerLoader";
 import { responseModal } from "/js/utils/errorSuccessModal";
 import { confirmationModal } from "/js/utils/confirmationModal";
 import { setupLogout } from "/js/utils/navigation.js";
+import { fetchRequirements } from "/js/utils/api.js";
 
 let userData = null;
 let allRequirements = []; // Store all requirements from API
@@ -41,34 +42,12 @@ async function loadRequirements(page = 1) {
       tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4">Loading...</td></tr>';
     }
 
-    // Build query parameters
-    let url = `https://ccsync-api-master-ll6mte.laravel.cloud/api/requirements/list?page=${page}&per_page=${currentLimit}`; // TODO: On laravel, add pagination
-    if (selectedStatus !== "all") {
-      url += `&status=${selectedStatus}`;
-    }
-
-    // Call API with pagination parameters
-    const response = await fetch(url, {
-      headers: {
-        Authorization: `Bearer ${userData.firebase_token}`,
-        'Content-Type': 'application/json',
-      },
-    });
-
-    if (!response.ok) {
-      const errorData = await response.json();
-      throw new Error(
-        errorData.message || `HTTP error! status: ${response.status}`
-      );
-    }
-
-    const json = await response.json();
+    const response = await fetchRequirements(page, currentLimit);
 
     // Check if requirements exists and has data
-    if (json.data && json.data.requirements.length > 0) {
-      allRequirements = json.data.requirements;
-      console.log(allRequirements);
-      paginationData = json;
+    if (response.data && response.data.meta.count > 0) {
+      allRequirements = response.data.requirements;
+      paginationData = response;
       currentPage = paginationData.meta.current_page;
     } else {
       allRequirements = [];
@@ -229,7 +208,7 @@ function updatePaginationControls() {
   const nextBtn = document.getElementById("nextBtn");
 
   if (pageInfo && paginationData) {
-    pageInfo.textContent = `Page ${currentPage} of ${paginationData.meta.to} (${paginationData.meta.total} total requirements)`;
+    pageInfo.textContent = `Page ${currentPage} of ${paginationData.meta.last_page} (${paginationData.meta.total} total requirements)`;
   }
 
   if (prevBtn) {

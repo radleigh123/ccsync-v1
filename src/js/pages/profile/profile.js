@@ -55,10 +55,21 @@ async function setupProfile() {
         };
         populateUserData(userProfile, elements);
 
-        // Set profile image based on role
         const imgEl = document.querySelector("#img-profile");
-        if (userData.role == "ADMIN" && imgEl) {
-            imgEl.src = "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXfJd8GSrBKC5rkiuwyqorIs8LJboDjI2IYw&s";
+        try {
+            const res = await fetch(`https://ccsync-api-master-ll6mte.laravel.cloud/api/profile/${userProfile.id}/profile-picture`, {
+                method: "GET",
+                headers: { "Authorization": `Bearer ${userData.firebase_token}` },
+            });
+
+            const data = await res.json();
+
+            console.log(data);
+            if (data.success && data.data) {
+                imgEl.src = data.data;
+            }
+        } catch (error) {
+            console.error("❌ Profile picture error:", error);
         }
     } catch (error) {
         console.error('Error fetching user profile', error);
